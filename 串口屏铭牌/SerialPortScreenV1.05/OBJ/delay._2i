@@ -1,0 +1,6 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\CORE -I ..\STM32F10x_FWLib\inc -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HARDWARE\LED -I ..\HARDWARE\test -I ..\HARDWARE\USART2 -I ..\HARDWARE\TIMER -I ..\HARDWARE\ModbusCRC16 -I ..\HARDWARE\tool_test -I ..\HARDWARE\t_List
+-I.\RTE\_Template
+-IC:\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include
+-IC:\Keil\ARM\CMSIS\Include
+-D__UVISION_VERSION="526" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
+-o ..\obj\delay.o --omf_browse ..\obj\delay.crf --depend ..\obj\delay.d --feedback "..\OBJ\Template.fed" "..\SYSTEM\delay\delay.c"

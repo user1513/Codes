@@ -1,0 +1,16 @@
+..\obj\my1680u.o: ..\HARDWARE\test\MY1680U.c
+..\obj\my1680u.o: ..\HARDWARE\test\MY1680U.h
+..\obj\my1680u.o: ..\SYSTEM\sys\sys.h
+..\obj\my1680u.o: ..\USER\stm32f10x.h
+..\obj\my1680u.o: ..\CORE\core_cm3.h
+..\obj\my1680u.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\my1680u.o: ..\USER\system_stm32f10x.h
+..\obj\my1680u.o: ..\USER\stm32f10x_conf.h
+..\obj\my1680u.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\my1680u.o: ..\USER\stm32f10x.h
+..\obj\my1680u.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\my1680u.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\my1680u.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\my1680u.o: ..\STM32F10x_FWLib\inc\misc.h
+..\obj\my1680u.o: ..\HARDWARE\USART2\usart2.h
+..\obj\my1680u.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\string.h
