@@ -1,0 +1,56 @@
+C51 COMPILER V9.59.0.0   DEMO                                                              04/09/2019 22:44:58 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE DEMO
+OBJECT MODULE PLACED IN ..\Objects\demo.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE ..\HARDWARE\demo\demo.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\CORE;..\USER;..\
+                    -HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo) DEBUG OBJECTEXTEND PRINT(..\Listings\demo.lst) TABS(2
+                    -) OBJECT(..\Objects\demo.obj)
+
+line level    source
+
+   1          /**
+   2            ************************************* Copyright ****************************** 
+   3            *
+   4            *                 (C) Copyright 2019,海康平头哥,China, GCU.
+   5            *                            All Rights Reserved
+   6            *                              
+   7            *                     By(华南理工大学广州学院机器人野狼队)
+   8            *                     https://github.com/GCUWildwolfteam
+   9            *    
+  10            * FileName   : demo.c   
+  11            * Version    : v1.0   
+  12            * Author     : 海康平头哥      
+  13            * Date       : 2019-04-09         
+  14            * Description:    
+  15            * Function List:  
+  16              1. ....
+  17                 <version>:     
+  18            <modify staff>:
+  19                  <data>:
+  20             <description>:  
+  21              2. ...
+  22            ******************************************************************************
+  23           */
+  24          #include "demo.h"
+  25          
+  26          void init(void)
+  27          {
+  28   1        while(1);
+  29   1      }
+  30            
+  31          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      2    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

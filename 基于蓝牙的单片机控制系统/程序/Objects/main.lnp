@@ -1,0 +1,8 @@
+"..\Objects\main.obj",
+"..\Objects\STARTUP.obj",
+"..\Objects\led.obj",
+"..\Objects\timer.obj",
+"..\Objects\usart.obj",
+"..\Objects\demo.obj" 
+TO "..\Objects\main" 
+PRINT("..\Listings\main.m51") RAMSIZE(256) 
