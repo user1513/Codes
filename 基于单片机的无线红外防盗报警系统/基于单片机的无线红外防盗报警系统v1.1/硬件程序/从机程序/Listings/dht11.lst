@@ -1,0 +1,159 @@
+C51 COMPILER V9.56.0.0   DHT11                                                             04/27/2018 16:13:50 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE DHT11
+OBJECT MODULE PLACED IN .\Objects\dht11.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE dht11.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\dht11.lst) OBJECT(.\Objects\dht11.obj)
+
+line level    source
+
+   1          #include "dht11.h"
+   2          //
+   3          U8  U8FLAG,k;
+   4          U8  U8count,U8temp;
+   5          U8  U8T_data_H=0,U8T_data_L=0,U8RH_data_H=0,U8RH_data_L=0,U8checkdata;
+   6          U8  U8T_data_H_temp,U8T_data_L_temp,U8RH_data_H_temp,U8RH_data_L_temp,U8checkdata_temp;
+   7          U8  U8comdata;
+   8          U8 xdata  outdata[5];  //定义发送的字节数          
+   9          U8 xdata indata[5];
+  10          U8  count, count_r=0;
+  11          U8 xdata str[5];
+  12          U16 U16temp1,U16temp2;
+  13          
+  14          void Delay20ms()                //@11.0592MHz
+  15          {
+  16   1              unsigned char i, j, k;
+  17   1      
+  18   1              i = 1;
+  19   1              j = 216;
+  20   1              k = 35;
+  21   1              do
+  22   1              {
+  23   2                      do
+  24   2                      {
+  25   3                              while (--k);
+  26   3                      } while (--j);
+  27   2              } while (--i);
+  28   1      }
+  29          
+  30               void Delay_10us()          //@11.0592MHz
+  31          {
+  32   1              unsigned char i;
+  33   1      
+  34   1              _nop_();
+  35   1              _nop_();
+  36   1              _nop_();
+  37   1              i = 24;
+  38   1              while (--i);
+  39   1      }
+  40                  
+  41                  void  COM(void)
+  42                {
+  43   1           
+  44   1                      U8 i;
+  45   1                
+  46   1             for(i=0;i<8;i++)    
+  47   1                  {
+  48   2                      
+  49   2                          U8FLAG=2;   
+  50   2                      while((!dht11_data)&&U8FLAG++);
+  51   2                              Delay_10us();
+  52   2                          Delay_10us();
+  53   2                              Delay_10us();
+  54   2                              U8temp=0;
+C51 COMPILER V9.56.0.0   DHT11                                                             04/27/2018 16:13:50 PAGE 2   
+
+  55   2                   if(dht11_data)U8temp=1;
+  56   2                          U8FLAG=2;
+  57   2                       while((dht11_data)&&U8FLAG++);
+  58   2                      //超时则跳出for循环               
+  59   2                       if(U8FLAG==1)break;
+  60   2                      //判断数据位是0还是1     
+  61   2                         
+  62   2                      // 如果高电平高过预定0高电平值则数据位为 1 
+  63   2                       
+  64   2                         U8comdata<<=1;
+  65   2                         U8comdata|=U8temp;        //0
+  66   2                   }//rof
+  67   1                 
+  68   1              }
+  69          
+  70                  //--------------------------------
+  71                  //-----湿度读取子程序 ------------
+  72                  //--------------------------------
+  73                  //----以下变量均为全局变量--------
+  74                  //----温度高8位== U8T_data_H------
+  75                  //----温度低8位== U8T_data_L------
+  76                  //----湿度高8位== U8RH_data_H-----
+  77                  //----湿度低8位== U8RH_data_L-----
+  78                  //----校验 8位 == U8checkdata-----
+  79                  //----调用相关子程序如下----------
+  80                  //---- Delay();, Delay_10us();,COM(); 
+  81                  //--------------------------------
+  82          
+  83                  void RH(void)
+  84                  {
+  85   1                //主机拉低18ms 
+  86   1             dht11_data=0;
+  87   1                Delay20ms();
+  88   1                 dht11_data=1;
+  89   1               //总线由上拉电阻拉高 主机延时20us
+  90   1                 Delay_10us();
+  91   1                 Delay_10us();
+  92   1                 Delay_10us();
+  93   1                 Delay_10us();
+  94   1               //主机设为输入 判断从机响应信号 
+  95   1                 dht11_data=1;
+  96   1               //判断从机是否有低电平响应信号 如不响应则跳出，响应则向下运行    
+  97   1                 if(!dht11_data)               //T !    
+  98   1                 {
+  99   2                 U8FLAG=2;
+ 100   2               //判断从机是否发出 80us 的低电平响应信号是否结束        
+ 101   2                 while((!dht11_data)&&U8FLAG++);
+ 102   2                 U8FLAG=2;
+ 103   2               //判断从机是否发出 80us 的高电平，如发出则进入数据接收状态
+ 104   2                 while((dht11_data)&&U8FLAG++);
+ 105   2               //数据接收状态          
+ 106   2                 COM();
+ 107   2                 U8RH_data_H_temp=U8comdata;
+ 108   2                 COM();
+ 109   2                 U8RH_data_L_temp=U8comdata*10;
+ 110   2                 COM();
+ 111   2                 U8T_data_H_temp=U8comdata;
+ 112   2                 COM();
+ 113   2                 U8T_data_L_temp=U8comdata*10;
+ 114   2                 COM();
+ 115   2                 U8checkdata_temp=U8comdata;
+ 116   2                 dht11_data=1;
+C51 COMPILER V9.56.0.0   DHT11                                                             04/27/2018 16:13:50 PAGE 3   
+
+ 117   2               //数据校验 
+ 118   2               
+ 119   2                 U8temp=(U8T_data_H_temp+U8T_data_L_temp+U8RH_data_H_temp+U8RH_data_L_temp);
+ 120   2                 if(U8temp==U8checkdata_temp)
+ 121   2                 {
+ 122   3                        U8RH_data_H=U8RH_data_H_temp;
+ 123   3                        U8RH_data_L=U8RH_data_L_temp;
+ 124   3                        U8T_data_H=U8T_data_H_temp;
+ 125   3                        U8T_data_L=U8T_data_L_temp;
+ 126   3                        U8checkdata=U8checkdata_temp;
+ 127   3                 }//fi
+ 128   2                 }//fi
+ 129   1      
+ 130   1              }
+ 131                  
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    203    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     15    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     21    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

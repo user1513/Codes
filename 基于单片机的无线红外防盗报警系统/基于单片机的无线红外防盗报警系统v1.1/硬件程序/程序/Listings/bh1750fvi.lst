@@ -1,0 +1,270 @@
+C51 COMPILER V9.56.0.0   BH1750FVI                                                         04/27/2018 16:13:50 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE BH1750FVI
+OBJECT MODULE PLACED IN .\Objects\bh1750fvi.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE bh1750fvi.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\bh1750fvi.lst) OBJECT(.\Objects\bh1750fvi.obj)
+
+line level    source
+
+   1          #include "bh1750fvi.h"
+   2          #include  <INTRINS.H>
+   3          
+   4          
+   5          
+   6          #define   SlaveAddress   0x46 //定义器件在IIC总线中的从地址,根据ALT  ADDRESS地址引脚不同修改
+   7                                        //ALT  ADDRESS引脚接地时地址为0xA6，接电源时地址为0x3A
+   8          
+   9          
+  10           xdata unsigned char    BUF[8];                         //接收数据缓存区        
+  11           xdata unsigned char   ge,shi,bai,qian,wan;            //显示变量
+  12           xdata int     dis_data;                       //变量
+  13          
+  14          
+  15          
+  16          //-----------------------------------
+  17          
+  18          //*********************************************************
+  19          void conversion(unsigned int temp_data)  //  数据转换出 个，十，百，千，万
+  20          {  
+  21   1          wan=temp_data/10000+0x30 ;
+  22   1          temp_data=temp_data%10000;   //取余运算
+  23   1              qian=temp_data/1000+0x30 ;
+  24   1          temp_data=temp_data%1000;    //取余运算
+  25   1          bai=temp_data/100+0x30   ;
+  26   1          temp_data=temp_data%100;     //取余运算
+  27   1          shi=temp_data/10+0x30    ;
+  28   1          temp_data=temp_data%10;      //取余运算
+  29   1          ge=temp_data+0x30;  
+  30   1      }
+  31          void delay_nms(unsigned int k)
+  32          {
+  33   1      
+  34   1              unsigned char i, j;
+  35   1              while(k--)
+  36   1              {
+  37   2                      _nop_();
+  38   2                      i = 11;
+  39   2                      j = 190;
+  40   2                      do
+  41   2                      {
+  42   3                              while (--j);
+  43   3                      } while (--i);
+  44   2              }
+  45   1      
+  46   1      }
+  47          /**************************************
+  48          延时5微秒(STC90C52RC@12M)
+  49          不同的工作环境,需要调整此函数，注意时钟过快时需要修改
+  50          当改用1T的MCU时,请调整此延时函数
+  51          **************************************/
+  52          void Delay5us()         //@11.0592MHz
+  53          {
+  54   1              unsigned char i;
+C51 COMPILER V9.56.0.0   BH1750FVI                                                         04/27/2018 16:13:50 PAGE 2   
+
+  55   1      
+  56   1              _nop_();
+  57   1              _nop_();
+  58   1              _nop_();
+  59   1              i = 10;
+  60   1              while (--i);
+  61   1      }
+  62          
+  63          /**************************************
+  64          延时5毫秒STC12C5A60S2
+  65          不同的工作环境,需要调整此函数
+  66          当改用1T的MCU时,请调整此延时函数
+  67          **************************************/
+  68          
+  69          void Delay5ms()         //@11.0592MHz
+  70          {
+  71   1              unsigned char i, j;
+  72   1      
+  73   1              _nop_();
+  74   1              _nop_();
+  75   1              i = 54;
+  76   1              j = 198;
+  77   1              do
+  78   1              {
+  79   2                      while (--j);
+  80   2              } while (--i);
+  81   1      }
+  82          
+  83          
+  84          
+  85          /**************************************
+  86          起始信号
+  87          **************************************/
+  88          void BH1750_Start()
+  89          {
+  90   1          SDA = 1;                    //拉高数据线
+  91   1          SCL = 1;                    //拉高时钟线
+  92   1          Delay5us();                 //延时
+  93   1          SDA = 0;                    //产生下降沿
+  94   1          Delay5us();                 //延时
+  95   1          SCL = 0;                    //拉低时钟线
+  96   1      }
+  97          
+  98          /**************************************
+  99          停止信号
+ 100          **************************************/
+ 101          void BH1750_Stop()
+ 102          {
+ 103   1          SDA = 0;                    //拉低数据线
+ 104   1          SCL = 1;                    //拉高时钟线
+ 105   1          Delay5us();                 //延时
+ 106   1          SDA = 1;                    //产生上升沿
+ 107   1          Delay5us();                 //延时
+ 108   1      }
+ 109          
+ 110          /**************************************
+ 111          发送应答信号
+ 112          入口参数:ack (0:ACK 1:NAK)
+ 113          **************************************/
+ 114          void BH1750_SendACK(bit ack)
+ 115          {
+ 116   1          SDA = ack;                  //写应答信号
+C51 COMPILER V9.56.0.0   BH1750FVI                                                         04/27/2018 16:13:50 PAGE 3   
+
+ 117   1          SCL = 1;                    //拉高时钟线
+ 118   1          Delay5us();                 //延时
+ 119   1          SCL = 0;                    //拉低时钟线
+ 120   1          Delay5us();                 //延时
+ 121   1      }
+ 122          
+ 123          /**************************************
+ 124          接收应答信号
+ 125          **************************************/
+ 126          bit BH1750_RecvACK()
+ 127          {
+ 128   1          SCL = 1;                    //拉高时钟线
+ 129   1          Delay5us();                 //延时
+ 130   1          CY = SDA;                   //读应答信号
+ 131   1          SCL = 0;                    //拉低时钟线
+ 132   1          Delay5us();                 //延时
+ 133   1      
+ 134   1          return CY;
+ 135   1      }
+ 136          
+ 137          /**************************************
+ 138          向IIC总线发送一个字节数据
+ 139          **************************************/
+ 140          void BH1750_SendByte(unsigned char dat)
+ 141          {
+ 142   1          unsigned char i;
+ 143   1      
+ 144   1          for (i=0; i<8; i++)         //8位计数器
+ 145   1          {
+ 146   2              dat <<= 1;              //移出数据的最高位
+ 147   2              SDA = CY;               //送数据口
+ 148   2              SCL = 1;                //拉高时钟线
+ 149   2              Delay5us();             //延时
+ 150   2              SCL = 0;                //拉低时钟线
+ 151   2              Delay5us();             //延时
+ 152   2          }
+ 153   1          BH1750_RecvACK();
+ 154   1      }
+ 155          
+ 156          /**************************************
+ 157          从IIC总线接收一个字节数据
+ 158          **************************************/
+ 159          unsigned char BH1750_RecvByte()
+ 160          {
+ 161   1          unsigned char i;
+ 162   1          unsigned char dat = 0;
+ 163   1      
+ 164   1          SDA = 1;                    //使能内部上拉,准备读取数据,
+ 165   1          for (i=0; i<8; i++)         //8位计数器
+ 166   1          {
+ 167   2              dat <<= 1;
+ 168   2              SCL = 1;                //拉高时钟线
+ 169   2              Delay5us();             //延时
+ 170   2              dat |= SDA;             //读数据               
+ 171   2              SCL = 0;                //拉低时钟线
+ 172   2              Delay5us();             //延时
+ 173   2          }
+ 174   1          return dat;
+ 175   1      }
+ 176          
+ 177          //*********************************
+ 178          
+C51 COMPILER V9.56.0.0   BH1750FVI                                                         04/27/2018 16:13:50 PAGE 4   
+
+ 179          void Single_Write_BH1750(unsigned char REG_Address)
+ 180          {
+ 181   1          BH1750_Start();                  //起始信号
+ 182   1          BH1750_SendByte(SlaveAddress);   //发送设备地址+写信号
+ 183   1          BH1750_SendByte(REG_Address);    //内部寄存器地址，请参考中文pdf22页 
+ 184   1        //  BH1750_SendByte(REG_data);       //内部寄存器数据，请参考中文pdf22页 
+ 185   1          BH1750_Stop();                   //发送停止信号
+ 186   1      }
+ 187          
+ 188          //********单字节读取*****************************************
+ 189          /*
+ 190          uchar Single_Read_BH1750(uchar REG_Address)
+ 191          {  uchar REG_data;
+ 192              BH1750_Start();                          //起始信号
+ 193              BH1750_SendByte(SlaveAddress);           //发送设备地址+写信号
+ 194              BH1750_SendByte(REG_Address);                   //发送存储单元地址，从0开始 
+ 195              BH1750_Start();                          //起始信号
+ 196              BH1750_SendByte(SlaveAddress+1);         //发送设备地址+读信号
+ 197              REG_data=BH1750_RecvByte();              //读出寄存器数据
+ 198                  BH1750_SendACK(1);   
+ 199                  BH1750_Stop();                           //停止信号
+ 200              return REG_data; 
+ 201          }
+ 202          */
+ 203          //*********************************************************
+ 204          //
+ 205          //连续读出BH1750内部数据
+ 206          //
+ 207          //*********************************************************
+ 208          void Multiple_read_BH1750(void)
+ 209          {   unsigned char i;    
+ 210   1          BH1750_Start();                          //起始信号
+ 211   1          BH1750_SendByte(SlaveAddress+1);         //发送设备地址+读信号
+ 212   1              
+ 213   1               for (i=0; i<3; i++)                      //连续读取6个地址数据，存储中BUF
+ 214   1          {
+ 215   2              BUF[i] = BH1750_RecvByte();          //BUF[0]存储0x32地址中的数据
+ 216   2              if (i == 3)
+ 217   2              {
+ 218   3      
+ 219   3                 BH1750_SendACK(1);                //最后一个数据需要回NOACK
+ 220   3              }
+ 221   2              else
+ 222   2              {               
+ 223   3                BH1750_SendACK(0);                //回应ACK
+ 224   3             }
+ 225   2         }
+ 226   1      
+ 227   1          BH1750_Stop();                          //停止信号
+ 228   1          Delay5ms();
+ 229   1      }
+ 230          
+ 231          
+ 232          //初始化BH1750，根据需要请参考pdf进行修改****
+ 233          void Init_BH1750()
+ 234          {
+ 235   1         Single_Write_BH1750(0x01);  
+ 236   1      
+ 237   1      }
+ 238          
+
+
+C51 COMPILER V9.56.0.0   BH1750FVI                                                         04/27/2018 16:13:50 PAGE 5   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    358    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     15    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

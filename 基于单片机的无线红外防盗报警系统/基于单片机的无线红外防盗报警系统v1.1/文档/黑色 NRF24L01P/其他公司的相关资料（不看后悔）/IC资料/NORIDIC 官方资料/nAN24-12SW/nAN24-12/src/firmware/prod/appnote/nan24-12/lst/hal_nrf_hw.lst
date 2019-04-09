@@ -1,0 +1,54 @@
+C51 COMPILER V8.16   HAL_NRF_HW                                                            04/03/2009 08:18:47 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE HAL_NRF_HW
+OBJECT MODULE PLACED IN .\obj\hal_nrf_hw.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\arch\hal\nrf24lu1\hal_nrf_hw.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\l
+                    -u1_bfb;..\..\..\arch\hal\include;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEN
+                    -D PRINT(.\lst\hal_nrf_hw.lst) OBJECT(.\obj\hal_nrf_hw.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2006 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is confidential property of 
+   4           * Nordic Semiconductor. The use, copying, transfer or disclosure of such
+   5           * information is prohibited except by express written agreement with 
+   6           * Nordic Semiconductor.
+   7           */
+   8          
+   9          /** @file
+  10           * Implementation of #hal_nrf_rw.
+  11           * #hal_nrf_rw is an SPI function which is hardware dependent. This file
+  12           * contains an implementation for nRF24LU1.
+  13           */
+  14          
+  15          #include <Nordic\reg24lu1.h>
+  16          #include <stdint.h>
+  17          #include "hal_nrf.h"
+  18          
+  19          uint8_t hal_nrf_rw(uint8_t value)
+  20          {
+  21   1        RFDAT = value;
+  22   1        RFSPIF = 0;     // ! IMPORTANT ! Clear RF SPI ready flag
+  23   1                        // after data written to RFDAT..
+  24   1        while(!RFSPIF); // wait for byte transfer finished
+  25   1          ;
+  26   1        return RFDAT;   // return SPI read value
+  27   1      }
+  28          
+  29          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     10    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

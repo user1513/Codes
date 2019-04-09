@@ -1,0 +1,181 @@
+   1               		.file	"uart.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	Uart_Init
+  20               	Uart_Init:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	.LVL0:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26               	.LM2:
+  27 0000 8130      		cpi r24,lo8(1)
+  28 0002 01F4      		brne .L3
+  29               	.LM3:
+  30 0004 1092 C000 		sts 192,__zero_reg__
+  31               	.LM4:
+  32 0008 1092 C100 		sts 193,__zero_reg__
+  33               	.LM5:
+  34 000c 1092 C500 		sts 197,__zero_reg__
+  35               	.LM6:
+  36 0010 8DE0      		ldi r24,lo8(13)
+  37               	.LVL1:
+  38 0012 8093 C400 		sts 196,r24
+  39               	.LM7:
+  40 0016 86E0      		ldi r24,lo8(6)
+  41 0018 8093 C200 		sts 194,r24
+  42               	.LM8:
+  43 001c 88E9      		ldi r24,lo8(-104)
+  44 001e 8093 C100 		sts 193,r24
+  45               	.LVL2:
+  46               	.L3:
+  47 0022 0895      		ret
+  48               	.LFE2:
+  50               	.global	Uart_SendChar
+  52               	Uart_SendChar:
+  53               	.LFB3:
+  54               	.LM9:
+  55               	.LVL3:
+  56               	/* prologue: function */
+  57               	/* frame size = 0 */
+  58 0024 982F      		mov r25,r24
+  59               	.LVL4:
+  60               	.L5:
+  61               	.LM10:
+  62 0026 8091 C000 		lds r24,192
+  63 002a 85FF      		sbrs r24,5
+  64 002c 00C0      		rjmp .L5
+  65               	.LM11:
+  66 002e 9093 C600 		sts 198,r25
+  67               	.L6:
+  68               	.LM12:
+  69 0032 8091 C000 		lds r24,192
+  70 0036 86FF      		sbrs r24,6
+  71 0038 00C0      		rjmp .L6
+  72               	.LM13:
+  73 003a 8091 C000 		lds r24,192
+  74 003e 8064      		ori r24,lo8(64)
+  75 0040 8093 C000 		sts 192,r24
+  76               	/* epilogue start */
+  77               	.LM14:
+  78 0044 0895      		ret
+  79               	.LFE3:
+  81               	.global	Uart_SendStr
+  83               	Uart_SendStr:
+  84               	.LFB4:
+  85               	.LM15:
+  86               	.LVL5:
+  87               	/* prologue: function */
+  88               	/* frame size = 0 */
+  89 0046 FC01      		movw r30,r24
+  90 0048 00C0      		rjmp .L11
+  91               	.LVL6:
+  92               	.L15:
+  93               	.LBB6:
+  94               	.LBB7:
+  95               	.LM16:
+  96 004a 8091 C000 		lds r24,192
+  97 004e 85FF      		sbrs r24,5
+  98 0050 00C0      		rjmp .L15
+  99               	.LM17:
+ 100 0052 9093 C600 		sts 198,r25
+ 101               	.L13:
+ 102               	.LM18:
+ 103 0056 8091 C000 		lds r24,192
+ 104 005a 86FF      		sbrs r24,6
+ 105 005c 00C0      		rjmp .L13
+ 106               	.LBE7:
+ 107               	.LBE6:
+ 108               	.LM19:
+ 109 005e 3196      		adiw r30,1
+ 110               	.LBB9:
+ 111               	.LBB8:
+ 112               	.LM20:
+ 113 0060 8091 C000 		lds r24,192
+ 114 0064 8064      		ori r24,lo8(64)
+ 115 0066 8093 C000 		sts 192,r24
+ 116               	.LVL7:
+ 117               	.L11:
+ 118               	.LBE8:
+ 119               	.LBE9:
+ 120               	.LM21:
+ 121 006a 9081      		ld r25,Z
+ 122 006c 9923      		tst r25
+ 123 006e 01F4      		brne .L15
+ 124               	/* epilogue start */
+ 125               	.LM22:
+ 126 0070 0895      		ret
+ 127               	.LFE4:
+ 129               	.global	Uart_SendBuff
+ 131               	Uart_SendBuff:
+ 132               	.LFB5:
+ 133               	.LM23:
+ 134               	.LVL8:
+ 135               	/* prologue: function */
+ 136               	/* frame size = 0 */
+ 137 0072 FC01      		movw r30,r24
+ 138 0074 00C0      		rjmp .L19
+ 139               	.LVL9:
+ 140               	.L22:
+ 141               	.LM24:
+ 142 0076 9081      		ld r25,Z
+ 143               	.L20:
+ 144               	.LBB10:
+ 145               	.LBB11:
+ 146               	.LM25:
+ 147 0078 8091 C000 		lds r24,192
+ 148 007c 85FF      		sbrs r24,5
+ 149 007e 00C0      		rjmp .L20
+ 150               	.LM26:
+ 151 0080 9093 C600 		sts 198,r25
+ 152               	.L21:
+ 153               	.LM27:
+ 154 0084 8091 C000 		lds r24,192
+ 155 0088 86FF      		sbrs r24,6
+ 156 008a 00C0      		rjmp .L21
+ 157               	.LBE11:
+ 158               	.LBE10:
+ 159               	.LM28:
+ 160 008c 3196      		adiw r30,1
+ 161               	.LBB13:
+ 162               	.LBB12:
+ 163               	.LM29:
+ 164 008e 8091 C000 		lds r24,192
+ 165 0092 8064      		ori r24,lo8(64)
+ 166 0094 8093 C000 		sts 192,r24
+ 167 0098 6150      		subi r22,lo8(-(-1))
+ 168               	.LVL10:
+ 169               	.L19:
+ 170               	.LBE12:
+ 171               	.LBE13:
+ 172               	.LM30:
+ 173 009a 6623      		tst r22
+ 174 009c 01F4      		brne .L22
+ 175               	/* epilogue start */
+ 176               	.LM31:
+ 177 009e 0895      		ret
+ 178               	.LFE5:
+ 228               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 uart.c
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:20     .text:00000000 Uart_Init
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:52     .text:00000024 Uart_SendChar
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:83     .text:00000046 Uart_SendStr
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc0ZSUkk.s:131    .text:00000072 Uart_SendBuff
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,470 @@
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE NRF24L01
+OBJECT MODULE PLACED IN .\output\nRF24L01.obj
+COMPILER INVOKED BY: g:\program files\Keil uv3\C51\BIN\C51.EXE ..\Source\nRF24L01.c LARGE BROWSE DEBUG OBJECTEXTEND PRIN
+                    -T(.\list\nRF24L01.lst) OBJECT(.\output\nRF24L01.obj)
+
+line level    source
+
+   1          /*
+   2          ================================================================================
+   3          Copyright(c)  Yihe Embedded Studio, All rights reserved.
+   4                        www.yh-mcu.com
+   5                        http://yh-mcu.taobao.com
+   6          
+   7          File Name   : nRF24L01.c
+   8          Description : nRF24L01 low level operations and configurations.
+   9          Author      : ShawZhang,LiYong
+  10          Date        : 2009-4-17 9:08:36
+  11          Version     : 1.0
+  12          Compiler    : Any
+  13          Note        : None
+  14          ================================================================================
+  15          */
+  16          #define _nRF24L01_C_
+  17          #include "nRF24L01.h"
+  18          
+  19          
+  20          
+  21          #if DATA_SPEED == 0   //250Kbps
+              #define REG_SETUP_SPD
+              #elif DATA_SPEED == 1 //1Mbps
+  24          #define REG_SETUP_SPD
+  25          #elif DATA_SPEED == 2 //2Mbps
+              #else
+              #error "Error : Your macro 'DATA_SPEED' is not supported for nRF24L01+ !"
+              #endif
+  29          
+  30          
+  31          
+  32          /*
+  33          ================================================================================
+  34          Function : L01_ReadSingleReg( )
+  35          Description : Read a single register of nRF24L01
+  36          Input : -Addr, The address of the register
+  37          Output: The value read from the register
+  38          ================================================================================
+  39          */
+  40          INT8U L01_ReadSingleReg( INT8U Addr )
+  41          {
+  42   1          INT8U btmp;
+  43   1          L01_CSN_LOW( );
+  44   1          SPI_ExchangeByte( R_REGISTER | Addr );
+  45   1          btmp = SPI_ExchangeByte( 0xFF );
+  46   1          L01_CSN_HIGH( );
+  47   1          return btmp;
+  48   1      }
+  49          /*
+  50          ================================================================================
+  51          Function : L01_ReadMultiReg( )
+  52          Description : Read several registers of nRF24L01
+  53          Input : -StartAddr, The start address of the registers
+  54                  -nBytes, How many registers do you want to read
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 2   
+
+  55                  -pBuff, The buffer to save the values
+  56          Output: None
+  57          ================================================================================
+  58          */
+  59          void L01_ReadMultiReg( INT8U StartAddr, INT8U nBytes, INT8U *pBuff )
+  60          {
+  61   1          INT8U btmp;
+  62   1          L01_CSN_LOW( );
+  63   1          SPI_ExchangeByte( R_REGISTER | StartAddr );
+  64   1          for( btmp = 0; btmp < nBytes; btmp ++ )
+  65   1          {
+  66   2              *( pBuff + btmp ) = SPI_ExchangeByte( 0xFF );
+  67   2          }
+  68   1          L01_CSN_HIGH( );
+  69   1      }
+  70          /*
+  71          ================================================================================
+  72          Function : L01_WriteSingleReg( )
+  73          Description : Write a single byte to a register
+  74          Input : -Addr, The address of the register
+  75                  -Value, The value to be written
+  76          Output: None
+  77          ================================================================================
+  78          */
+  79          void L01_WriteSingleReg( INT8U Addr, INT8U Value )
+  80          {
+  81   1          L01_CSN_LOW( );
+  82   1          SPI_ExchangeByte( W_REGISTER | Addr );
+  83   1          SPI_ExchangeByte( Value );
+  84   1          L01_CSN_HIGH( );
+  85   1      }
+  86          /*
+  87          ================================================================================
+  88          Function : L01_WriteMultiReg( )
+  89          Description : Read several registers of nRF24L01
+  90          Input : -StartAddr, The start address of the registers
+  91                  -pBuff, The buffer store the values
+  92                  -Length, How many registers do you want to write
+  93          Output: None
+  94          ================================================================================
+  95          */
+  96          void L01_WriteMultiReg( INT8U StartAddr, INT8U *pBuff, INT8U Length )
+  97          {
+  98   1          INT8U i;
+  99   1          L01_CSN_LOW( );
+ 100   1          SPI_ExchangeByte( W_REGISTER | StartAddr );
+ 101   1          for( i = 0; i < Length; i ++ )
+ 102   1          {
+ 103   2              SPI_ExchangeByte( *( pBuff + i ) );
+ 104   2          }
+ 105   1          L01_CSN_HIGH( );
+ 106   1      }
+ 107          /*
+ 108          ================================================================================
+ 109          Function : L01_FlushTX( )
+ 110          Description : Flush the TX buffer
+ 111          Input : None
+ 112          Output: None
+ 113          ================================================================================
+ 114          */
+ 115          void L01_FlushTX( void )
+ 116          {
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 3   
+
+ 117   1          L01_CSN_LOW( );
+ 118   1          SPI_ExchangeByte( FLUSH_TX );
+ 119   1          L01_CSN_HIGH( );
+ 120   1      }
+ 121          /*
+ 122          ================================================================================
+ 123          Function : L01_FlushRX( )
+ 124          Description : Flush the RX buffer
+ 125          Input : None
+ 126          Output: None
+ 127          ================================================================================
+ 128          */
+ 129          void L01_FlushRX( void )
+ 130          {
+ 131   1          L01_CSN_LOW( );
+ 132   1          SPI_ExchangeByte( FLUSH_RX );
+ 133   1          L01_CSN_HIGH( );
+ 134   1      }
+ 135          /*
+ 136          ================================================================================
+ 137          Function : L01_ReuseTXPayload( )
+ 138          Description : Reuse the last transmitted payload
+ 139          Input : None
+ 140          Output: None
+ 141          ================================================================================
+ 142          */
+ 143          void L01_ReuseTXPayload( void )
+ 144          {
+ 145   1          L01_CSN_LOW( );
+ 146   1          SPI_ExchangeByte( REUSE_TX_PL );
+ 147   1          L01_CSN_HIGH( );
+ 148   1      }
+ 149          /*
+ 150          ================================================================================
+ 151          Function : L01_Nop( )
+ 152          Description : nop operation of nRF24L01
+ 153          Input : None
+ 154          Output: None
+ 155          ================================================================================
+ 156          */
+ 157          void L01_Nop( void )
+ 158          {
+ 159   1          L01_CSN_LOW( );
+ 160   1          SPI_ExchangeByte( L01_NOP );
+ 161   1          L01_CSN_HIGH( );
+ 162   1      }
+ 163          /*
+ 164          ================================================================================
+ 165          Function : L01_ReadStatusReg( )
+ 166          Description : Read statu register of nRF24L01
+ 167          Input : None
+ 168          Output: Statu register of nRF24L01
+ 169          ================================================================================
+ 170          */
+ 171          INT8U L01_ReadStatusReg( void )
+ 172          {
+ 173   1          INT8U Status;
+ 174   1          L01_CSN_LOW( );
+ 175   1          Status = SPI_ExchangeByte( R_REGISTER + L01REG_STATUS );
+ 176   1          L01_CSN_HIGH( );
+ 177   1          return Status;
+ 178   1      }
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 4   
+
+ 179          /*
+ 180          ================================================================================
+ 181          Function : L01_ClearIRQ( )
+ 182          Description : Clear IRQ cuased by nRF24L01
+ 183          Input : None
+ 184          Output: None
+ 185          ================================================================================
+ 186          */
+ 187          void L01_ClearIRQ( INT8U IRQ_Source )
+ 188          {
+ 189   1          INT8U btmp = 0;
+ 190   1      
+ 191   1          IRQ_Source &= ( 1<<RX_DR ) | ( 1<<TX_DS ) | ( 1<<MAX_RT );
+ 192   1          btmp = L01_ReadStatusReg( );
+ 193   1          L01_CSN_LOW( );
+ 194   1          SPI_ExchangeByte( W_REGISTER + L01REG_STATUS );
+ 195   1          SPI_ExchangeByte( IRQ_Source | btmp );
+ 196   1          L01_CSN_HIGH( );
+ 197   1          L01_ReadStatusReg( );
+ 198   1      }
+ 199          /*
+ 200          ================================================================================
+ 201          Function : L01_ReadIRQSource( )
+ 202          Description : Read the IRQ source of nRF24L01+
+ 203          Input : None
+ 204          Output: IRQ source mask code
+ 205          ================================================================================
+ 206          */
+ 207          INT8U L01_ReadIRQSource( void )
+ 208          {
+ 209   1          return ( L01_ReadStatusReg( ) & ( ( 1<<RX_DR ) | ( 1<<TX_DS ) | ( 1<<MAX_RT ) ) );
+ 210   1      }
+ 211          /*
+ 212          ================================================================================
+ 213          Function : L01_ReadTopFIFOWidth( )
+ 214          Description : Read the payload width of the top buffer of FIFO
+ 215          Input : None
+ 216          Output: The width of the pipe buffer
+ 217          ================================================================================
+ 218          */
+ 219          INT8U L01_ReadTopFIFOWidth( void )
+ 220          {
+ 221   1          INT8U btmp;
+ 222   1          L01_CSN_LOW( );
+ 223   1          SPI_ExchangeByte( R_RX_PL_WID );
+ 224   1          btmp = SPI_ExchangeByte( 0xFF );
+ 225   1          L01_CSN_HIGH( );
+ 226   1          return btmp;
+ 227   1      }
+ 228          /*
+ 229          ================================================================================
+ 230          Function : L01_ReadRXPayload( )
+ 231          Description : Read the RX payload from internal buffer
+ 232          Input : -pBuff, buffer to store the data
+ 233          Output: The length of data read
+ 234          ================================================================================
+ 235          */
+ 236          INT8U L01_ReadRXPayload( INT8U *pBuff )
+ 237          {
+ 238   1          INT8U width, PipeNum;
+ 239   1          PipeNum = ( L01_ReadSingleReg( L01REG_STATUS ) >> 1 ) & 0x07;
+ 240   1          width = L01_ReadTopFIFOWidth( );
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 5   
+
+ 241   1      
+ 242   1          L01_CSN_LOW( );
+ 243   1          SPI_ExchangeByte( R_RX_PAYLOAD );
+ 244   1          for( PipeNum = 0; PipeNum < width; PipeNum ++ )
+ 245   1          {
+ 246   2              *( pBuff + PipeNum ) = SPI_ExchangeByte( 0xFF );
+ 247   2          }
+ 248   1          L01_CSN_HIGH( );
+ 249   1          L01_FlushRX( );
+ 250   1          return width;
+ 251   1      }
+ 252          /*
+ 253          ================================================================================
+ 254          Function : L01_WriteTXPayload( )
+ 255          Description : Write TX payload to a pipe and prx will return ack back
+ 256          Input : -PipeNum, number of the pipe
+ 257                  -pBuff, A buffer stores the data
+ 258                  -nBytes, How many bytes to be wrote to
+ 259          Output: None
+ 260          ================================================================================
+ 261          */
+ 262          void L01_WriteTXPayload_Ack( INT8U *pBuff, INT8U nBytes )
+ 263          {
+ 264   1          INT8U btmp;
+ 265   1          INT8U length = ( nBytes > 32 ) ? 32 : nBytes;
+ 266   1      
+ 267   1          L01_FlushTX( );
+ 268   1          L01_CSN_LOW( );
+ 269   1          SPI_ExchangeByte( W_TX_PAYLOAD );
+ 270   1          for( btmp = 0; btmp < length; btmp ++ )
+ 271   1          {
+ 272   2              SPI_ExchangeByte( *( pBuff + btmp ) );
+ 273   2          }
+ 274   1          L01_CSN_HIGH( );
+ 275   1      }
+ 276          /*
+ 277          ================================================================================
+ 278          Function : L01_WritePayload_NoAck( )
+ 279          Description : write data in tx mode, and prx won't return ack back
+ 280          Input : -Data, A buffer stores the address data
+ 281                  -Data_Length, How many bytes of the data buff
+ 282          Output: None
+ 283          ================================================================================
+ 284          */
+ 285          void L01_WriteTXPayload_NoAck( INT8U *Data, INT8U Data_Length )
+ 286          {
+ 287   1          if( Data_Length > 32 || Data_Length == 0 )
+ 288   1          {
+ 289   2              return ;
+ 290   2          }
+ 291   1          L01_CSN_LOW( );
+ 292   1          SPI_ExchangeByte( W_TX_PAYLOAD_NOACK );
+ 293   1          while( Data_Length-- )
+ 294   1          {
+ 295   2              SPI_ExchangeByte( *Data++ );
+ 296   2          }
+ 297   1          L01_CSN_HIGH( );
+ 298   1      }
+ 299          /*
+ 300          ================================================================================
+ 301          Function : L01_WritePayload_InAck( )
+ 302          Description : write data in tx fifo when rx mode
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 6   
+
+ 303          Input : -Data, A buffer stores the address data
+ 304                  -Data_Length, How many bytes of the data buff
+ 305          Output: None
+ 306          ================================================================================
+ 307          */
+ 308          void L01_WriteRXPayload_InAck( INT8U *pData, INT8U Data_Length )
+ 309          {
+ 310   1          INT8U length = ( Data_Length > 32 ) ? 32 : Data_Length;
+ 311   1          INT8U btmp;
+ 312   1      
+ 313   1          L01_CSN_LOW( );
+ 314   1          SPI_ExchangeByte( W_ACK_PAYLOAD );
+ 315   1          for( btmp = 0; btmp < length; btmp ++ )
+ 316   1          {
+ 317   2              SPI_ExchangeByte( *( pData + btmp ) );
+ 318   2          }
+ 319   1          L01_CSN_HIGH( );
+ 320   1      }
+ 321          /*
+ 322          ================================================================================
+ 323          Function : L01_SetTXAddr( )
+ 324          Description : Write address for the own device
+ 325          Input : -pAddr, A buffer stores the address data
+ 326                  -Addr_Length, How many bytes of the address
+ 327          Output: None
+ 328          ================================================================================
+ 329          */
+ 330          void L01_SetTXAddr( INT8U *pAddr, INT8U Addr_Length )
+ 331          {
+ 332   1          INT8U Length = ( Addr_Length > 5 ) ? 5 : Addr_Length;
+ 333   1          L01_WriteMultiReg( L01REG_TX_ADDR, pAddr, Length );
+ 334   1      }
+ 335          /*
+ 336          ================================================================================
+ 337          Function : L01_SetRXAddr( )
+ 338          Description : Write address for a RX pipe
+ 339          Input : -PipeNum, number of the pipe
+ 340                  -pAddr, A buffer stores the address data
+ 341                  -Addr_Length, How many bytes of the address
+ 342          Output: None
+ 343          ================================================================================
+ 344          */
+ 345          void L01_SetRXAddr( INT8U PipeNum, INT8U *pAddr, INT8U Addr_Length )
+ 346          {
+ 347   1          INT8U Length = ( Addr_Length > 5 ) ? 5 : Addr_Length;
+ 348   1          INT8U pipe = ( PipeNum > 5 ) ? 5 : PipeNum;
+ 349   1      
+ 350   1          L01_WriteMultiReg( L01REG_RX_ADDR_P0 + pipe, pAddr, Length );
+ 351   1      }
+ 352          /*
+ 353          ================================================================================
+ 354          Function : L01_WriteHoppingPoint( )
+ 355          Description : Set frequency for the device,must be 0-125
+ 356          Input : -FreqPoint, The hopping point
+ 357          Output: None
+ 358          ================================================================================
+ 359          */
+ 360          void L01_WriteHoppingPoint( INT8U FreqPoint )
+ 361          {
+ 362   1          L01_WriteSingleReg( L01REG_RF_CH, FreqPoint & 0x7F );
+ 363   1      }
+ 364          /*
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 7   
+
+ 365          ================================================================================
+ 366          Function : L01_SetTXMode( )
+ 367          Description : Set the device as PTX
+ 368          Input : None
+ 369          Output: None
+ 370          ================================================================================
+ 371          */
+ 372          void L01_SetTXMode( void )
+ 373          {
+ 374   1          INT8U controlreg = L01_ReadSingleReg( L01REG_CONFIG );
+ 375   1          L01_WriteSingleReg( L01REG_CONFIG, controlreg & ~( 1<<PRIM_RX ) );
+ 376   1      }
+ 377          /*
+ 378          ================================================================================
+ 379          Function : L01_SetRXMode )
+ 380          Description : Set the device as PRX
+ 381          Input : None
+ 382          Output: None
+ 383          ================================================================================
+ 384          */
+ 385          void L01_SetRXMode( void )
+ 386          {
+ 387   1          INT8U controlreg = L01_ReadSingleReg( L01REG_CONFIG );
+ 388   1          L01_WriteSingleReg( L01REG_CONFIG, controlreg | ( 1<<PRIM_RX ) );
+ 389   1      }
+ 390          /*
+ 391          ================================================================================
+ 392          Function : L01_Init( )
+ 393          Description : Initialize the nRF24L01
+ 394          Input : None
+ 395          Output: None
+ 396          ================================================================================
+ 397          */
+ 398          void L01_Init( void )
+ 399          {
+ 400   1          INT8U addr[5] = {INIT_ADDR};
+ 401   1      
+ 402   1          L01_CE_HIGH( );
+ 403   1          L01_ClearIRQ( IRQ_ALL );
+ 404   1      #if DYNAMIC_PACKET == 1
+ 405   1          //dynamic payload length
+ 406   1          L01_WriteSingleReg( L01REG_DYNPD, ( 1<<0 ) );//Enable pipe 0 dynamic payload length
+ 407   1          L01_WriteSingleReg( L01REG_FEATRUE, 0x07 );
+ 408   1          L01_ReadSingleReg( L01REG_DYNPD );
+ 409   1          L01_ReadSingleReg( L01REG_FEATRUE );
+ 410   1      #elif DYNAMIC_PACKET == 0
+                  //Fixed packet length
+                  L01_WriteSingleReg( L01REG_RX_PW_P0, FIXED_PACKET_LEN );
+              #endif//DYNAMIC_PACKET
+ 414   1      
+ 415   1          L01_WriteSingleReg( L01REG_CONFIG, /*( 1<<MASK_RX_DR ) |*///receive interrupt
+ 416   1                                            ( 1<<EN_CRC ) |     //Enable CRC, 1 byte
+ 417   1                                            ( 1<<PWR_UP ) );    //Power up the device
+ 418   1          L01_WriteSingleReg( L01REG_EN_AA, ( 1<<ENAA_P0 ) );   //Auto ack in pipe 0
+ 419   1          L01_WriteSingleReg( L01REG_EN_RXADDR, ( 1<<ERX_P0 ) );//Enable pipe 0 receive
+ 420   1          L01_WriteSingleReg( L01REG_SETUP_AW, AW_5BYTES );     //Address width : 5Byte
+ 421   1          L01_WriteSingleReg( L01REG_RETR, ARD_4000US |
+ 422   1                              ( REPEAT_CNT & 0x0F ) );         //repeat wait : 250us
+ 423   1          L01_WriteSingleReg( L01REG_RF_CH, 0x00 );             //Initial channel
+ 424   1          L01_WriteSingleReg( L01REG_RF_SETUP, 0x26 );
+ 425   1          L01_SetTXAddr( &addr[0], 5 );                          //Set TX address
+ 426   1          L01_SetRXAddr( 0, &addr[0], 5 );                       //Set RX address
+C51 COMPILER V8.16   NRF24L01                                                              11/09/2011 23:37:10 PAGE 8   
+
+ 427   1      }
+ 428          /*
+ 429          ================================================================================
+ 430          ====================================End of file=================================
+ 431          ================================================================================
+ 432          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    995    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----      43
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

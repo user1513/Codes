@@ -1,0 +1,5 @@
+".\output\nRF24L01.obj",
+".\output\main.obj",
+".\output\STARTUP.obj" 
+TO ".\output\TX-nRF24L01+" 
+PRINT(".\list\TX-nRF24L01+.m51") RAMSIZE(256) 

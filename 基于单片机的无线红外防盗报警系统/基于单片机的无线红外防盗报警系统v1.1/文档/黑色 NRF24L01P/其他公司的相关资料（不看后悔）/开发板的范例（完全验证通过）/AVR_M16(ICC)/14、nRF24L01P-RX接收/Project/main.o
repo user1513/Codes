@@ -1,0 +1,212 @@
+XL
+H 4 areas 14 global symbols
+M main.c
+S _L01_WriteRXPayload_InAck Ref0000
+S _L01_FlushRX Ref0000
+S _L01_FlushTX Ref0000
+S push_xgset00FC Ref0000
+S _L01_ClearIRQ Ref0000
+S _L01_WriteHoppingPoint Ref0000
+S _L01_ReadRXPayload Ref0000
+S _L01_ReadStatusReg Ref0000
+S pop_xgset00FC Ref0000
+S _L01_SetRXMode Ref0000
+S asgnblk Ref0000
+S _L01_Init Ref0000
+A text size 134 flags 0
+dbfile ..\..\..\..\..\YHTPRO~1\YHT02-M32EVB\Demo_V2\14、nRF24L01P-RX接收\Source\main.c
+dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\14、nRF24L01P-RX接收\Source\main.c
+dbfunc e USART_SendChar 0 fV
+dbsym r dt 10 c
+dbline FFFFFFFF 0
+dbline 1C 0
+dbline 1D 0
+dbline 1E 2
+dbline 1F 4
+dbline 1F 4
+dbline FFFFFFFE 8
+dbline 0 8
+dbfunc e USART_SendArray A fV
+dbsym r btmp A c
+dbsym r nBytes C c
+dbsym r pBuff E pc
+dbline FFFFFFFF 12
+dbline 2B 12
+dbline 2D 12
+dbline 2E 16
+dbline 2F 16
+dbline 30 22
+dbline 2D 22
+dbline 2D 24
+dbline FFFFFFFE 28
+dbline 0 28
+dbfunc e USART_SendStr 2C fV
+dbsym r pstr A pc
+dbline FFFFFFFF 32
+dbline 3B 32
+dbline 3D 34
+dbline 3E 34
+dbline 3F 3C
+dbline 3C 3C
+dbline FFFFFFFE 44
+dbline 0 44
+dbfunc e USART_Init 4A fV
+dbline FFFFFFFF 4A
+dbline 4C 4A
+dbline 4E 4A
+dbline 4F 4E
+dbline 50 50
+dbline 51 54
+dbline 52 58
+dbline 53 5A
+dbline FFFFFFFE 5E
+dbline 0 5E
+dbfunc e SPI_Init 60 fV
+dbline FFFFFFFF 60
+dbline 68 60
+dbline 6A 60
+dbline 6B 66
+dbline 6C 6C
+dbline 6D 6E
+dbline FFFFFFFE 72
+dbline 0 72
+dbfunc e SPI_ExchangeByte 74 fc
+dbsym r value 10 c
+dbline FFFFFFFF 74
+dbline 78 74
+dbline 79 74
+dbline 7A 76
+dbline 7A 76
+dbline 7B 7A
+dbline FFFFFFFE 7C
+dbline 0 7C
+dbfunc e main 7E fI
+dbsym l ReplayData 0 A[11:11]c
+dbsym r tmp 14 c
+dbline FFFFFFFF 80
+dbline 80 80
+dbline 82 80
+dbline 85 96
+dbline 86 98
+dbline 87 9A
+dbline 88 9E
+dbline 89 A2
+dbline 8A A8
+dbline 8C B0
+dbline 8D B0
+dbline 8E B4
+dbline 8F B4
+dbline 90 C6
+dbline 8D C6
+dbline 8D C8
+dbline 91 CC
+dbline 92 D0
+dbline 93 D4
+dbline 95 DE
+dbline 96 DE
+dbline 98 E4
+dbline 99 E6
+dbline 9A E8
+dbline 9B E8
+dbline 9D EA
+dbline 94 EA
+dbline 9F EC
+dbline A0 F0
+dbline A2 F0
+dbline A3 F2
+dbline A4 F6
+dbline A6 F6
+dbline A7 F8
+dbline A8 FC
+dbline A9 FC
+dbline AA 106
+dbline AB 10C
+dbline AC 116
+dbline AD 11E
+dbline AE 124
+dbline AF 128
+dbline B0 128
+dbline B1 12E
+dbline 8B 12E
+dbline FFFFFFFE 130
+dbline 0 130
+S _main Def007E
+S _USART_SendStr Def002C
+S _SPI_Init Def0060
+S _USART_SendChar Def0000
+S _SPI_ExchangeByte Def0074
+S _USART_SendArray Def000A
+S _USART_Init Def004A
+A data size 39 flags 20
+dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\14、nRF24L01P-RX接收\Source\main.c
+A idata size 39 flags 0
+A bss size 20 flags 20
+dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\14、nRF24L01P-RX接收\Source\main.c
+dbsym e testbuffer 0 A[32:32]c
+S _testbuffer Def0000
+T 00 00 5E 9A 0C B9 5E 9B FE CF 08 95
+R 00 00 00 00
+T 0A 00 0E 94 00 00 C2 2E 78 01 AA 24 07 C0 EA 2D
+R 00 00 00 00 12 04 03 00
+T 18 00 FF 27 EE 0D FF 1D 00 81 EF DF A3 94 AC 14
+R 00 00 00 00
+T 26 00 B8 F3 0C 94 00 00
+R 00 00 00 00 12 06 08 00
+T 2C 00 AA 92 BA 92 58 01 04 C0 F5 01 01 91 5F 01
+R 00 00 00 00
+T 3A 00 E2 DF F5 01 20 80 22 20 C1 F7 B9 90 A9 90
+R 00 00 00 00
+T 48 00 08 95
+R 00 00 00 00
+T 4A 00 22 24 2A B8 2B B8 86 E8 80 BD 8D E4 89 B9
+R 00 00 00 00
+T 58 00 20 BC 88 E9 8A B9 08 95
+R 00 00 00 00
+T 60 00 88 B3 81 6F 88 BB 87 B3 81 6B 87 BB BE 98
+R 00 00 00 00
+T 6E 00 80 E5 8D B9 08 95
+R 00 00 00 00
+T 74 00 0F B9 77 9B FE CF 0F B1 08 95
+R 00 00 00 00
+T 00 00 CE D2 BA DC BA C3 A3 A1 0D 0A 00
+R 00 00 02 00
+T 7E 00 2B 97 80 E0 90 E0 FE 01 0B E0 10 E0 FA 93
+R 00 00 00 00 20 04 01 00 00 00 40 06 01 00 00 00
+T 8C 00 EA 93 9A 93 8A 93 0E 94 00 00 E4 DF D8 DF
+R 00 00 00 00 12 0A 0A 00
+T 9A 00 0E 94 00 00 0E 94 00 00 00 27 0E 94 00 00
+R 00 00 00 00 12 04 0B 00 12 08 09 00 12 0E 05 00
+T A8 00 00 E0 10 E0 BF DF 3F C0 44 27 0A C0
+R 00 00 00 00 20 02 01 00 1F 00 40 04 01 00 1F 00
+T B4 00 80 E0 90 E0 E4 2F FF 27 E8 0F F9 1F 84 2F
+R 00 00 00 00 20 02 03 00 00 00 40 04 03 00 00 00
+T C2 00 80 5E 80 83 43 95 40 32 A0 F3 0E 94 00 00
+R 00 00 00 00 12 0E 01 00
+T D0 00 0E 94 00 00 2B E0 8E 01 0E 94 00 00 06 C0
+R 00 00 00 00 12 04 02 00 12 0C 00 00
+T DE 00 0E 94 00 00 40 2F 40 77 09 F0 01 C0 F9 CF
+R 00 00 00 00 12 04 07 00
+T EC 00 45 FF 01 C0 1B C0 44 FF 01 C0 18 C0 46 FF
+R 00 00 00 00
+T FA 00 16 C0 20 E2 00 E0 10 E0
+R 00 00 00 00 20 06 03 00 00 00 40 08 03 00 00 00
+T 02 01 0E 94 00 00 00 E0
+R 00 00 00 00 12 04 00 00 20 06 01 00 15 00
+T 08 01 10 E0 90 DF 00 E0
+R 00 00 00 00 40 02 01 00 15 00 20 06 03 00 00 00
+T 0E 01 10 E0 0E 94 00 00 40 2F 24 2F
+R 00 00 00 00 40 02 03 00 00 00 12 06 06 00
+T 18 01 00 E0 10 E0 76 DF
+R 00 00 00 00 20 02 03 00 00 00 40 04 03 00 00 00
+T 1E 01 00 E0 10 E0 84 DF 8E 01 82 DF 00 E7
+R 00 00 00 00 20 02 01 00 0B 00 40 04 01 00 0B 00
+T 2A 01 0E 94 00 00 C0 CF 2B 96 08 95
+R 00 00 00 00 12 04 04 00
+T 0B 00 BB D8 B8 B4 CA FD BE DD 3A 00
+R 00 00 02 00
+T 15 00 CA D5 B5 BD CA FD BE DD 3A 00
+R 00 00 02 00
+T 1F 00 6E 52 46 32 34 4C 30 31 50 BD D3 CA D5 B2
+R 00 00 02 00
+T 2D 00 E2 CA D4 BF AA CA BC A3 A1 0D 0A 00
+R 00 00 02 00

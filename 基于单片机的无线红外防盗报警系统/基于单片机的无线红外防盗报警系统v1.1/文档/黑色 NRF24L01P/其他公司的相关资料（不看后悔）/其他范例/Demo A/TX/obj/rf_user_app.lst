@@ -1,0 +1,136 @@
+   1               		.file	"rf_user_app.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	Rf_Init
+  20               	Rf_Init:
+  21               	.LFB2:
+  22               	.LM1:
+  23 0000 0F93      		push r16
+  24 0002 1F93      		push r17
+  25 0004 DF93      		push r29
+  26 0006 CF93      		push r28
+  27 0008 00D0      		rcall .
+  28 000a 00D0      		rcall .
+  29 000c 0F92      		push __tmp_reg__
+  30 000e CDB7      		in r28,__SP_L__
+  31 0010 DEB7      		in r29,__SP_H__
+  32               	/* prologue: function */
+  33               	/* frame size = 5 */
+  34               	.LM2:
+  35 0012 DE01      		movw r26,r28
+  36 0014 1196      		adiw r26,1
+  37 0016 E0E0      		ldi r30,lo8(C.0.1259)
+  38 0018 F0E0      		ldi r31,hi8(C.0.1259)
+  39 001a 85E0      		ldi r24,lo8(5)
+  40               	.L2:
+  41 001c 0190      		ld r0,Z+
+  42 001e 0D92      		st X+,r0
+  43 0020 8150      		subi r24,lo8(-(-1))
+  44 0022 01F4      		brne .L2
+  45               	.LM3:
+  46 0024 8AB1      		in r24,42-32
+  47 0026 8066      		ori r24,lo8(96)
+  48 0028 8AB9      		out 42-32,r24
+  49               	.LM4:
+  50 002a 8BB1      		in r24,43-32
+  51 002c 8066      		ori r24,lo8(96)
+  52 002e 8BB9      		out 43-32,r24
+  53               	.LM5:
+  54 0030 81E0      		ldi r24,lo8(1)
+  55 0032 0E94 0000 		call Spi_Init
+  56               	.LM6:
+  57 0036 2B98      		cbi 37-32,3
+  58               	.LM7:
+  59 0038 80E2      		ldi r24,lo8(32)
+  60 003a 6EE0      		ldi r22,lo8(14)
+  61 003c 0E94 0000 		call L01_Wr_Reg
+  62               	.LM8:
+  63 0040 81E2      		ldi r24,lo8(33)
+  64 0042 61E0      		ldi r22,lo8(1)
+  65 0044 0E94 0000 		call L01_Wr_Reg
+  66               	.LM9:
+  67 0048 82E2      		ldi r24,lo8(34)
+  68 004a 61E0      		ldi r22,lo8(1)
+  69 004c 0E94 0000 		call L01_Wr_Reg
+  70               	.LM10:
+  71 0050 83E2      		ldi r24,lo8(35)
+  72 0052 63E0      		ldi r22,lo8(3)
+  73 0054 0E94 0000 		call L01_Wr_Reg
+  74               	.LM11:
+  75 0058 84E2      		ldi r24,lo8(36)
+  76 005a 6AE3      		ldi r22,lo8(58)
+  77 005c 0E94 0000 		call L01_Wr_Reg
+  78               	.LM12:
+  79 0060 85E2      		ldi r24,lo8(37)
+  80 0062 68E2      		ldi r22,lo8(40)
+  81 0064 0E94 0000 		call L01_Wr_Reg
+  82               	.LM13:
+  83 0068 86E2      		ldi r24,lo8(38)
+  84 006a 66E2      		ldi r22,lo8(38)
+  85 006c 0E94 0000 		call L01_Wr_Reg
+  86               	.LM14:
+  87 0070 87E0      		ldi r24,lo8(7)
+  88 0072 0E94 0000 		call L01_Clear_Irq
+  89               	.LM15:
+  90 0076 8AE2      		ldi r24,lo8(42)
+  91 0078 8E01      		movw r16,r28
+  92 007a 0F5F      		subi r16,lo8(-(1))
+  93 007c 1F4F      		sbci r17,hi8(-(1))
+  94 007e B801      		movw r22,r16
+  95 0080 45E0      		ldi r20,lo8(5)
+  96 0082 0E94 0000 		call L01_Wr_Buff
+  97               	.LM16:
+  98 0086 80E3      		ldi r24,lo8(48)
+  99 0088 B801      		movw r22,r16
+ 100 008a 45E0      		ldi r20,lo8(5)
+ 101 008c 0E94 0000 		call L01_Wr_Buff
+ 102               	.LM17:
+ 103 0090 81E3      		ldi r24,lo8(49)
+ 104 0092 65E0      		ldi r22,lo8(5)
+ 105 0094 0E94 0000 		call L01_Wr_Reg
+ 106               	/* epilogue start */
+ 107               	.LM18:
+ 108 0098 0F90      		pop __tmp_reg__
+ 109 009a 0F90      		pop __tmp_reg__
+ 110 009c 0F90      		pop __tmp_reg__
+ 111 009e 0F90      		pop __tmp_reg__
+ 112 00a0 0F90      		pop __tmp_reg__
+ 113 00a2 CF91      		pop r28
+ 114 00a4 DF91      		pop r29
+ 115 00a6 1F91      		pop r17
+ 116 00a8 0F91      		pop r16
+ 117 00aa 0895      		ret
+ 118               	.LFE2:
+ 120               		.data
+ 123               	C.0.1259:
+ 124 0000 B2        		.byte	-78
+ 125 0001 B3        		.byte	-77
+ 126 0002 B4        		.byte	-76
+ 127 0003 B5        		.byte	-75
+ 128 0004 03        		.byte	3
+ 153               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 rf_user_app.c
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:20     .text:00000000 Rf_Init
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccrRNhOh.s:123    .data:00000000 C.0.1259
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+Spi_Init
+L01_Wr_Reg
+L01_Clear_Irq
+L01_Wr_Buff

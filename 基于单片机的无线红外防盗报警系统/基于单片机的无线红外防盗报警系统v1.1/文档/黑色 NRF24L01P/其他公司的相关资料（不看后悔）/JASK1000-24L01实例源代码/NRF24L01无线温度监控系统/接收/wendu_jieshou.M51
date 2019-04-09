@@ -1,0 +1,445 @@
+BL51 BANKED LINKER/LOCATER V6.20                                                        04/02/2010  15:33:30  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.20, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE wendu_jieshou.obj TO wendu_jieshou RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  wendu_jieshou.obj (WENDU_JIESHOU)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  wendu_jieshou (WENDU_JIESHOU)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0009H     UNIT         _DATA_GROUP_
+            DATA    0011H     0003H     UNIT         ?DT?_NRF24L01_TXPACKET?WENDU_JIESHOU
+                    0014H     000CH                  *** GAP ***
+            DATA    0020H     0001H     BIT_ADDR     ?BA?WENDU_JIESHOU
+            DATA    0021H     0038H     UNIT         ?DT?WENDU_JIESHOU
+            IDATA   0059H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0072H     UNIT         ?PR?MAIN?WENDU_JIESHOU
+            CODE    0101H     0043H     UNIT         ?PR?INIT_NRF24L01?WENDU_JIESHOU
+            CODE    0144H     0042H     UNIT         ?PR?DISDIGNIT?WENDU_JIESHOU
+            CODE    0186H     003DH     UNIT         ?C_INITSEG
+            CODE    01C3H     003BH     UNIT         ?C?LIB_CODE
+            CODE    01FEH     0039H     UNIT         ?PR?_SPI_WRITE_BUF?WENDU_JIESHOU
+            CODE    0237H     0031H     UNIT         ?PR?_SPI_READ_BUF?WENDU_JIESHOU
+            CODE    0268H     002EH     UNIT         ?PR?_NRF24L01_RXPACKET?WENDU_JIESHOU
+            CODE    0296H     002BH     UNIT         ?PR?_NRF24L01_TXPACKET?WENDU_JIESHOU
+            CODE    02C1H     0023H     UNIT         ?PR?_DELAY?WENDU_JIESHOU
+            CODE    02E4H     0019H     UNIT         ?PR?_SPI_RW?WENDU_JIESHOU
+            CODE    02FDH     0012H     UNIT         ?PR?STARTUART?WENDU_JIESHOU
+            CODE    030FH     0011H     UNIT         ?PR?_SPI_RW_REG?WENDU_JIESHOU
+            CODE    0320H     0010H     UNIT         ?PR?SETRX_MODE?WENDU_JIESHOU
+            CODE    0330H     000DH     UNIT         ?PR?_SPI_READ?WENDU_JIESHOU
+            CODE    033DH     000BH     UNIT         ?PR?_INERDELAY_US?WENDU_JIESHOU
+            CODE    0348H     0008H     UNIT         ?PR?_R_S_BYTE?WENDU_JIESHOU
+
+
+
+OVERLAY MAP OF MODULE:   wendu_jieshou (WENDU_JIESHOU)
+
+
+SEGMENT                                        DATA_GROUP 
+  +--> CALLED SEGMENT                        START    LENGTH
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 2
+
+
+------------------------------------------------------------
+?C_C51STARTUP                                -----    -----
+  +--> ?PR?MAIN?WENDU_JIESHOU
+  +--> ?C_INITSEG
+
+?PR?MAIN?WENDU_JIESHOU                       0008H    0001H
+  +--> ?PR?INIT_NRF24L01?WENDU_JIESHOU
+  +--> ?PR?STARTUART?WENDU_JIESHOU
+  +--> ?PR?_DELAY?WENDU_JIESHOU
+  +--> ?PR?SETRX_MODE?WENDU_JIESHOU
+  +--> ?PR?_NRF24L01_RXPACKET?WENDU_JIESHOU
+  +--> ?PR?DISDIGNIT?WENDU_JIESHOU
+  +--> ?PR?_R_S_BYTE?WENDU_JIESHOU
+
+?PR?INIT_NRF24L01?WENDU_JIESHOU              -----    -----
+  +--> ?PR?_INERDELAY_US?WENDU_JIESHOU
+  +--> ?PR?_SPI_WRITE_BUF?WENDU_JIESHOU
+  +--> ?PR?_SPI_RW_REG?WENDU_JIESHOU
+
+?PR?_SPI_WRITE_BUF?WENDU_JIESHOU             0009H    0005H
+  +--> ?PR?_SPI_RW?WENDU_JIESHOU
+
+?PR?_SPI_RW_REG?WENDU_JIESHOU                -----    -----
+  +--> ?PR?_SPI_RW?WENDU_JIESHOU
+
+?PR?SETRX_MODE?WENDU_JIESHOU                 -----    -----
+  +--> ?PR?_SPI_RW_REG?WENDU_JIESHOU
+  +--> ?PR?_INERDELAY_US?WENDU_JIESHOU
+
+?PR?_NRF24L01_RXPACKET?WENDU_JIESHOU         0009H    0003H
+  +--> ?PR?_SPI_READ?WENDU_JIESHOU
+  +--> ?PR?_SPI_READ_BUF?WENDU_JIESHOU
+  +--> ?PR?_SPI_RW_REG?WENDU_JIESHOU
+
+?PR?_SPI_READ?WENDU_JIESHOU                  -----    -----
+  +--> ?PR?_SPI_RW?WENDU_JIESHOU
+
+?PR?_SPI_READ_BUF?WENDU_JIESHOU              000CH    0005H
+  +--> ?PR?_SPI_RW?WENDU_JIESHOU
+
+?PR?DISDIGNIT?WENDU_JIESHOU                  -----    -----
+  +--> ?PR?_R_S_BYTE?WENDU_JIESHOU
+  +--> ?PR?_DELAY?WENDU_JIESHOU
+
+
+
+SYMBOL TABLE OF MODULE:  wendu_jieshou (WENDU_JIESHOU)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        WENDU_JIESHOU
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 3
+
+
+  B:0090H.1       PUBLIC        CE
+  D:00A8H         PUBLIC        IE
+  C:0101H         PUBLIC        init_NRF24L01
+  D:0021H         PUBLIC        RX_ADDRESS
+  D:0026H         PUBLIC        TX_ADDRESS
+  D:00B8H         PUBLIC        IP
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.4       PUBLIC        BELL
+  B:0020H.6       PUBLIC        RX_DR
+  B:0020H.5       PUBLIC        TX_DS
+  C:0268H         PUBLIC        _nRF24L01_RxPacket
+  C:0296H         PUBLIC        _nRF24L01_TxPacket
+  C:008FH         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:002BH         PUBLIC        temp
+  B:0090H.4       PUBLIC        MOSI
+  B:0090H.3       PUBLIC        MISO
+  C:0320H         PUBLIC        SetRX_Mode
+  D:0031H         PUBLIC        seg
+  C:014AH         PUBLIC        disdignit
+  D:0020H         PUBLIC        sta
+  C:0237H         PUBLIC        _SPI_Read_Buf
+  C:0330H         PUBLIC        _SPI_Read
+  D:008DH         PUBLIC        TH1
+  C:02FDH         PUBLIC        StartUART
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  C:0205H         PUBLIC        _SPI_Write_Buf
+  B:0090H.2       PUBLIC        SCK
+  B:00B0H.2       PUBLIC        CSN
+  B:00A0H.3       PUBLIC        led0
+  B:00A0H.2       PUBLIC        led1
+  D:00C8H         PUBLIC        T2CON
+  B:00A0H.1       PUBLIC        led2
+  D:003BH         PUBLIC        RxBuf
+  B:00A0H.0       PUBLIC        led3
+  C:033DH         PUBLIC        _inerDelay_us
+  B:0020H.4       PUBLIC        MAX_RT
+  C:02C1H         PUBLIC        _Delay
+  D:004FH         PUBLIC        seg1
+  C:030FH         PUBLIC        _SPI_RW_Reg
+  C:02E4H         PUBLIC        _SPI_RW
+  D:00D0H         PUBLIC        PSW
+  C:0348H         PUBLIC        _R_S_Byte
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        s
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:02C1H         LINE#         82
+  C:02C1H         LINE#         83
+  C:02C1H         LINE#         85
+  C:02D2H         LINE#         86
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 4
+
+
+  C:02E3H         LINE#         87
+  -------         ENDPROC       _DELAY
+  -------         PROC          _INERDELAY_US
+  D:0007H         SYMBOL        n
+  C:033DH         LINE#         96
+  C:033DH         LINE#         97
+  C:033DH         LINE#         98
+  C:0343H         LINE#         99
+  C:0347H         LINE#         100
+  -------         ENDPROC       _INERDELAY_US
+  -------         PROC          INIT_NRF24L01
+  C:0101H         LINE#         104
+  C:0101H         LINE#         105
+  C:0101H         LINE#         106
+  C:0106H         LINE#         107
+  C:0108H         LINE#         108
+  C:010AH         LINE#         109
+  C:010CH         LINE#         110
+  C:011AH         LINE#         111
+  C:0121H         LINE#         112
+  C:0128H         LINE#         113
+  C:012FH         LINE#         114
+  C:0136H         LINE#         115
+  C:013DH         LINE#         116
+  -------         ENDPROC       INIT_NRF24L01
+  -------         PROC          _SPI_RW
+  D:0007H         SYMBOL        uchar
+  -------         DO            
+  D:0006H         SYMBOL        bit_ctr
+  -------         ENDDO         
+  C:02E4H         LINE#         123
+  C:02E4H         LINE#         124
+  C:02E4H         LINE#         126
+  C:02E6H         LINE#         127
+  C:02E6H         LINE#         128
+  C:02EAH         LINE#         129
+  C:02EEH         LINE#         130
+  C:02F0H         LINE#         131
+  C:02F6H         LINE#         132
+  C:02F8H         LINE#         133
+  C:02FCH         LINE#         134
+  C:02FCH         LINE#         135
+  -------         ENDPROC       _SPI_RW
+  -------         PROC          _SPI_READ
+  D:0007H         SYMBOL        reg
+  -------         DO            
+  D:0007H         SYMBOL        reg_val
+  -------         ENDDO         
+  C:0330H         LINE#         141
+  C:0330H         LINE#         142
+  C:0330H         LINE#         145
+  C:0332H         LINE#         146
+  C:0335H         LINE#         147
+  C:033AH         LINE#         148
+  C:033CH         LINE#         150
+  C:033CH         LINE#         151
+  -------         ENDPROC       _SPI_READ
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 5
+
+
+  -------         PROC          _SPI_RW_REG
+  D:0007H         SYMBOL        reg
+  D:0005H         SYMBOL        value
+  -------         DO            
+  D:0004H         SYMBOL        status
+  -------         ENDDO         
+  C:030FH         LINE#         155
+  C:030FH         LINE#         156
+  C:030FH         LINE#         159
+  C:0311H         LINE#         160
+  C:0316H         LINE#         161
+  C:031BH         LINE#         162
+  C:031DH         LINE#         164
+  C:031FH         LINE#         165
+  -------         ENDPROC       _SPI_RW_REG
+  -------         PROC          _SPI_READ_BUF
+  D:0007H         SYMBOL        reg
+  D:000DH         SYMBOL        pBuf
+  D:0010H         SYMBOL        uchars
+  -------         DO            
+  D:0005H         SYMBOL        status
+  D:0004H         SYMBOL        uchar_ctr
+  -------         ENDDO         
+  C:0237H         LINE#         170
+  C:023DH         LINE#         171
+  C:023DH         LINE#         174
+  C:023FH         LINE#         175
+  C:0244H         LINE#         177
+  C:024CH         LINE#         178
+  C:0263H         LINE#         180
+  C:0265H         LINE#         182
+  C:0267H         LINE#         183
+  -------         ENDPROC       _SPI_READ_BUF
+  -------         PROC          L?0046
+  -------         ENDPROC       L?0046
+  -------         PROC          _SPI_WRITE_BUF
+  D:0007H         SYMBOL        reg
+  D:000AH         SYMBOL        pBuf
+  D:000DH         SYMBOL        uchars
+  -------         DO            
+  D:0005H         SYMBOL        status
+  D:0004H         SYMBOL        uchar_ctr
+  -------         ENDDO         
+  C:0205H         LINE#         188
+  C:020BH         LINE#         189
+  C:020BH         LINE#         192
+  C:020DH         LINE#         193
+  C:0212H         LINE#         194
+  C:021AH         LINE#         195
+  C:0232H         LINE#         196
+  C:0234H         LINE#         197
+  C:0236H         LINE#         198
+  -------         ENDPROC       _SPI_WRITE_BUF
+  -------         PROC          SETRX_MODE
+  C:0320H         LINE#         203
+  C:0320H         LINE#         204
+  C:0320H         LINE#         205
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 6
+
+
+  C:0322H         LINE#         206
+  C:0329H         LINE#         207
+  C:032BH         LINE#         208
+  -------         ENDPROC       SETRX_MODE
+  -------         PROC          _NRF24L01_RXPACKET
+  D:0009H         SYMBOL        rx_buf
+  -------         DO            
+  D:0003H         SYMBOL        revale
+  -------         ENDDO         
+  C:0268H         LINE#         214
+  C:026EH         LINE#         215
+  C:026EH         LINE#         216
+  C:0270H         LINE#         217
+  C:0277H         LINE#         218
+  C:027AH         LINE#         219
+  C:027AH         LINE#         220
+  C:027CH         LINE#         221
+  C:028AH         LINE#         222
+  C:028CH         LINE#         223
+  C:028CH         LINE#         224
+  C:0293H         LINE#         225
+  C:0295H         LINE#         226
+  -------         ENDPROC       _NRF24L01_RXPACKET
+  -------         PROC          _NRF24L01_TXPACKET
+  D:0011H         SYMBOL        tx_buf
+  C:0296H         LINE#         231
+  C:029CH         LINE#         232
+  C:029CH         LINE#         233
+  C:029EH         LINE#         234
+  C:02A5H         LINE#         235
+  C:02B3H         LINE#         236
+  C:02BAH         LINE#         237
+  C:02BCH         LINE#         238
+  -------         ENDPROC       _NRF24L01_TXPACKET
+  -------         PROC          STARTUART
+  C:02FDH         LINE#         241
+  C:02FDH         LINE#         242
+  C:02FDH         LINE#         243
+  C:0300H         LINE#         244
+  C:0303H         LINE#         245
+  C:0306H         LINE#         246
+  C:0309H         LINE#         247
+  C:030CH         LINE#         248
+  C:030EH         LINE#         249
+  -------         ENDPROC       STARTUART
+  -------         PROC          _R_S_BYTE
+  D:0007H         SYMBOL        R_Byte
+  C:0348H         LINE#         251
+  C:0348H         LINE#         252
+  C:0348H         LINE#         253
+  C:034AH         LINE#         254
+  C:034DH         LINE#         255
+  C:034FH         LINE#         256
+  -------         ENDPROC       _R_S_BYTE
+  -------         PROC          L?0045
+  -------         ENDPROC       L?0045
+  -------         PROC          DISDIGNIT
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 7
+
+
+  C:014AH         LINE#         258
+  C:014AH         LINE#         259
+  C:014AH         LINE#         260
+  C:014DH         LINE#         261
+  C:014FH         LINE#         262
+  C:0156H         LINE#         263
+  C:0158H         LINE#         264
+  C:0160H         LINE#         265
+  C:0162H         LINE#         266
+  C:0165H         LINE#         267
+  C:0167H         LINE#         268
+  C:016FH         LINE#         269
+  C:0171H         LINE#         270
+  C:0174H         LINE#         271
+  C:0176H         LINE#         272
+  C:017EH         LINE#         273
+  C:0180H         LINE#         274
+  C:0183H         LINE#         275
+  C:0185H         LINE#         276
+  -------         ENDPROC       DISDIGNIT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:008FH         LINE#         278
+  C:008FH         LINE#         279
+  C:008FH         LINE#         280
+  C:0092H         LINE#         281
+  C:0095H         LINE#         282
+  C:0098H         LINE#         283
+  C:009FH         LINE#         284
+  C:00A1H         LINE#         285
+  C:00A1H         LINE#         286
+  C:00A1H         LINE#         288
+  C:00A4H         LINE#         289
+  C:00B0H         LINE#         290
+  C:00B0H         LINE#         291
+  C:00B3H         LINE#         292
+  C:00BCH         LINE#         293
+  C:00BFH         LINE#         294
+  C:00C2H         LINE#         295
+  C:00C5H         LINE#         296
+  C:00C8H         LINE#         297
+  C:00CAH         LINE#         298
+  C:00CAH         LINE#         299
+  C:00CDH         LINE#         300
+  C:00D5H         LINE#         301
+  C:00DDH         LINE#         302
+  C:00E2H         LINE#         303
+  C:00E7H         LINE#         304
+  C:00E7H         LINE#         305
+  C:00EAH         LINE#         306
+  C:00EDH         LINE#         312
+  C:00EDH         LINE#         313
+  C:00F0H         LINE#         315
+  C:00F9H         LINE#         316
+  C:00F9H         LINE#         317
+BL51 BANKED LINKER/LOCATER V6.20                                                      04/02/2010  15:33:30  PAGE 8
+
+
+  C:00FBH         LINE#         319
+  C:00FDH         LINE#         321
+  C:00FDH         LINE#         322
+  C:00FFH         LINE#         323
+  C:00FFH         LINE#         327
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        WENDU_JIESHOU
+
+  -------         MODULE        ?C?CLDPTR
+  C:01C3H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CSTOPTR
+  C:01DCH         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_NRF24L01_TXPACKET?WENDU_JIESHOU
+
+Program Size: data=78.0 xdata=0 code=848
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

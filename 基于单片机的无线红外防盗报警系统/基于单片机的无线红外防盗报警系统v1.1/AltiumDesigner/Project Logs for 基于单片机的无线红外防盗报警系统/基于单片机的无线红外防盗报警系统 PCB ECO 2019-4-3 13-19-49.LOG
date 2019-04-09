@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=LCD12864_RST Pin=U1-25
+Removed Pin From Net: NetName=LCD12864_E Pin=U1-26
+Removed Pin From Net: NetName=LCD12864_R/W Pin=U1-27
+Removed Pin From Net: NetName=LCD12864_RS Pin=U1-28
+Added Pin To Net: NetName=LCD12864_RS Pin=U1-25
+Added Pin To Net: NetName=LCD12864_R/W Pin=U1-26
+Added Pin To Net: NetName=LCD12864_E Pin=U1-27
+Added Pin To Net: NetName=LCD12864_RST Pin=U1-28
+Added Room: Name=基于单片机的无线红外防盗报警系统

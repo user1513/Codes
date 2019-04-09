@@ -1,0 +1,113 @@
+C51 COMPILER V9.59.0.0   123                                                               02/21/2019 13:46:17 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE 123
+OBJECT MODULE PLACED IN 123.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 123.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          
+   3          sbit key = P1^7;
+   4          void sendData(unsigned char Data);
+   5          void uart_init();
+   6          void Delay100ms()   //@11.0592MHz
+   7          {
+   8   1        unsigned char i, j;
+   9   1      
+  10   1        i = 180;
+  11   1        j = 73;
+  12   1        do
+  13   1        {
+  14   2          while (--j);
+  15   2        } while (--i);
+  16   1      }
+  17          
+  18          
+  19          void main(void)
+  20          {
+  21   1        uart_init();
+  22   1        while(1)
+  23   1        {
+  24   2          if(key == 0)
+  25   2          {
+  26   3            sendData('O');
+  27   3            sendData('K');
+  28   3          }
+  29   2          else
+  30   2          {
+  31   3            sendData('N');
+  32   3            sendData('O');
+  33   3          }
+  34   2          Delay100ms();
+  35   2        }
+  36   1      }
+  37          
+  38          void sendData(unsigned char Data)
+  39          {
+  40   1          SBUF = Data; //将收到的数据发送至缓冲区 
+  41   1      
+  42   1          while(!TI); //等待数据发送结束
+  43   1      
+  44   1          TI=0; // 将发送结束标志清零
+  45   1      }
+  46          
+  47          void uart_init()
+  48          {
+  49   1      
+  50   1          TMOD |= 0x20; // 设置定时器1 为方式2
+  51   1      
+  52   1          TH1=0xfd;  //装入初值 
+  53   1      
+  54   1          TL1=0xfd; 
+  55   1      
+C51 COMPILER V9.59.0.0   123                                                               02/21/2019 13:46:17 PAGE 2   
+
+  56   1          TR1=1; //启动定时器1 
+  57   1      
+  58   1          SM0=0; 
+  59   1      
+  60   1          SM1=1; //设置串口为方式1
+  61   1      
+  62   1          REN=1;  // 接受使能
+  63   1      
+  64   1          EA=1; // 打开总中断开关
+  65   1      
+  66   1          ES=0; // 打开串口中断开关 
+  67   1      
+  68   1      }
+  69          
+  70          
+  71          
+  72          
+  73          void serial() interrupt 4   // 串口中断服务函数
+  74          { 
+  75   1      //    unsigned char Data_usart = 0;
+  76   1      //    static num = 0; 
+  77   1      //    Data_usart = SBUF; // 读出接收到的数据
+  78   1      //    switch(num)
+  79   1      //    {
+  80   1      //      case 0:if(Data_usart == 'O'||Data_usart == 'N') {able[num] =Data_usart; num++; }
+  81   1      //             else num = 0;
+  82   1      //             break;
+  83   1      //      case 1:able[num] =Data_usart;flag=1; num = 0; //标志位
+  84   1      //      break;
+  85   1      //      default:num = 0; break;
+  86   1      //    }
+  87   1          RI=0; // 清零接收标志位 
+  88   1      } 
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     72    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

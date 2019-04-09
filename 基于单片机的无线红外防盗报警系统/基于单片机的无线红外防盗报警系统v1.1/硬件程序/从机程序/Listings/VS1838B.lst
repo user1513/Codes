@@ -1,0 +1,124 @@
+C51 COMPILER V9.59.0.0   VS1838B                                                           04/05/2019 11:22:19 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE VS1838B
+OBJECT MODULE PLACED IN .\Objects\VS1838B.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE VS1838B.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\VS18
+                    -38B.lst) TABS(2) OBJECT(.\Objects\VS1838B.obj)
+
+line level    source
+
+   1          #include "VS1838B.h"
+   2          
+   3          xdata unsigned char IRCOM[7];
+   4          
+   5          
+   6          //     SendByte(IRCOM[6]);        //第一位数显示          
+   7          //     SendByte(IRCOM[5]);        //第二位数显示
+   8          
+   9          void vs1838b_Init(void)
+  10          {
+  11   1          IE |= 0x81;                 //允许总中断中断,使能 INT0 外部中断
+  12   1        TCON |= 0x01;               //触发方式为脉冲负边沿触发
+  13   1      }
+  14          
+  15          void IR_IN() interrupt 0 using 0
+  16          {
+  17   1        unsigned char j,k,N=0;
+  18   1        EA = 0;
+  19   1           EX0 = 0;   
+  20   1         delay_014ms(15);
+  21   1         if (IRIN==1) 
+  22   1           { EX0 =1;
+  23   2              EA = 1;
+  24   2           return;
+  25   2          } 
+  26   1                                 //确认IR信号出现
+  27   1        while (!IRIN)            //等IR变为高电平，跳过9ms的前导低电平信号。
+  28   1          {delay_014ms(1);}
+  29   1      
+  30   1       for (j=0;j<4;j++)         //收集四组数据
+  31   1       { 
+  32   2        for (k=0;k<8;k++)        //每组数据有8位
+  33   2        {
+  34   3         while (IRIN)            //等 IR 变为低电平，跳过4.5ms的前导高电平信号。
+  35   3           {delay_014ms(1);}
+  36   3          while (!IRIN)          //等 IR 变为高电平
+  37   3           {delay_014ms(1);}
+  38   3           while (IRIN)           //计算IR高电平时长
+  39   3            {
+  40   4          delay_014ms(1);
+  41   4          N++;           
+  42   4          if (N>=30)
+  43   4         { EX0=1;
+  44   5            EA = 1;
+  45   5         return;}                  //0.14ms计数过长自动离开。
+  46   4            }                        //高电平计数完毕                
+  47   3           IRCOM[j]=IRCOM[j] >> 1;                  //数据最高位补“0”
+  48   3           if (N>=8) {IRCOM[j] = IRCOM[j] | 0x80;}  //数据最高位补“1”
+  49   3           N=0;
+  50   3        }//end for k
+  51   2       }//end for j
+  52   1         
+  53   1         if (IRCOM[2]!=~IRCOM[3])
+  54   1         { EX0=1;
+C51 COMPILER V9.59.0.0   VS1838B                                                           04/05/2019 11:22:19 PAGE 2   
+
+  55   2            EA = 1;
+  56   2           return; }
+  57   1      
+  58   1         IRCOM[5]=IRCOM[2] & 0x0F;     //取键码的低四位
+  59   1         IRCOM[6]=IRCOM[2] >> 4;       //右移4次，高四位变为低四位
+  60   1      
+  61   1         if(IRCOM[5]>9)
+  62   1          { IRCOM[5]=IRCOM[5]+0x37;}
+  63   1         else
+  64   1          IRCOM[5]=IRCOM[5]+0x30;
+  65   1      
+  66   1         if(IRCOM[6]>9)
+  67   1          { IRCOM[6]=IRCOM[6]+0x37;}
+  68   1         else
+  69   1          IRCOM[6]=IRCOM[6]+0x30;
+  70   1         
+  71   1           SendByte(IRCOM[6]);        //第一位数显示          
+  72   1           SendByte(IRCOM[5]);        //第二位数显示
+  73   1           EX0 = 1; 
+  74   1         EA = 1;
+  75   1      } 
+  76          
+  77          
+  78          /**********************************************************/
+  79          void delay_014ms(unsigned char x)    //x*0.14MS,不同单片机，不同晶振频率，需要配置不同的delay
+  80          {
+  81   1       unsigned char i, j;
+  82   1        while(x--)
+  83   1       {
+  84   2        _nop_();
+  85   2        _nop_();
+  86   2        i = 2;
+  87   2        j = 125;
+  88   2        do
+  89   2        {
+  90   3          while (--j);
+  91   3        } while (--i);
+  92   2       }
+  93   1      }
+  94          
+  95          
+  96          
+  97          
+  98          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    308    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      7    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

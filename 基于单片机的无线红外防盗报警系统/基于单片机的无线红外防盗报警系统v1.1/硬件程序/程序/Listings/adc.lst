@@ -1,0 +1,72 @@
+C51 COMPILER V9.56.0.0   ADC                                                               04/27/2018 16:13:50 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN .\Objects\adc.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE adc.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\a
+                    -dc.lst) OBJECT(.\Objects\adc.obj)
+
+line level    source
+
+   1          #include "adc.h"
+   2          //u32 ADC_10_RES;
+   3          /*----------------------------
+   4          Software delay function
+   5          ----------------------------*/
+   6          void Delay1(u8 n)
+   7          {
+   8   1          u8 x;
+   9   1      
+  10   1          while (n--)
+  11   1          {
+  12   2              x = 5000;
+  13   2              while (x--);
+  14   2          }
+  15   1      }
+  16          
+  17          
+  18          
+  19          /*----------------------------
+  20          Get ADC result
+  21          ----------------------------*/
+  22          u8 GetADCResult(u8 ch)
+  23          {
+  24   1          ADC_CONTR = ADC_POWER | ADC_SPEEDLL | ch | ADC_START;
+  25   1          _nop_();                        //Must wait before inquiry
+  26   1          _nop_();
+  27   1          _nop_();
+  28   1          _nop_();
+  29   1          while (!(ADC_CONTR & ADC_FLAG));//Wait complete flag
+  30   1          ADC_CONTR &= ~ADC_FLAG;         //Close ADC
+  31   1          //ADC_10_RES=(ADC_RES<<2)+ADC_LOW2;
+  32   1              
+  33   1          //return ADC_10_RES;                 //Return ADC result
+  34   1              return ADC_RES;
+  35   1      }
+  36          
+  37          /*----------------------------
+  38          Initial ADC sfr
+  39          ----------------------------*/
+  40          void InitADC()
+  41          {
+  42   1          P1ASF = 0x01;                   //Open 8 channels ADC function
+  43   1          ADC_RES = 0;                    //Clear previous result
+  44   1          ADC_CONTR = ADC_POWER | ADC_SPEEDLL;
+  45   1          Delay1(2);                       //ADC power-on and delay
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     51    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.56.0.0   ADC                                                               04/27/2018 16:13:50 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

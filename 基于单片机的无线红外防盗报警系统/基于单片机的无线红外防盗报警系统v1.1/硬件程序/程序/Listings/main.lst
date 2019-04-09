@@ -1,0 +1,144 @@
+C51 COMPILER V9.59.0.0   MAIN                                                              04/06/2019 17:40:37 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.ls
+                    -t) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "app.h"
+   2          #include "NRF24L01.h"
+   3          #include "ds1302.h"
+   4          #include "usart.h"
+   5          #include "timer.h"
+   6          #include "lcd12864.h"
+   7          #include "stdio.h"
+   8          #include "temp.h"
+   9          #include "VS1838B.h"
+  10          
+  11          
+  12          extern xdata unsigned char IRCOM[];
+  13          extern uint8_t xdata RX_BUF[];
+  14          
+  15          
+  16          
+  17          
+  18          uint32_t STATE_FLAG = 0; //状态标志位
+  19          
+  20          
+  21          bit vs1838b_flag = 0;
+  22          void Delay1000ms()    //@11.0592MHz
+  23          {
+  24   1        unsigned char i, j, k;
+  25   1      
+  26   1        i = 43;
+  27   1        j = 6;
+  28   1        k = 203;
+  29   1        do
+  30   1        {
+  31   2          do
+  32   2          {
+  33   3            while (--k);
+  34   3          } while (--j);
+  35   2        } while (--i);
+  36   1      }
+  37          xdata uint8_t able[16] = {0};
+  38          void main()
+  39          {
+  40   1        
+  41   1        uint8_t data_ = 0;
+  42   1        uint16_t temp = 0;
+  43   1        P3M0=0x08;
+  44   1        P33 = 0;
+  45   1        UartInit();
+  46   1        Delay1000ms();
+  47   1        Lcm_Init();
+  48   1        Delay1000ms();
+  49   1        Lcm_Init();
+  50   1        Delay1000ms();
+  51   1        Lcm_Init();
+  52   1        Wr_Data_String(0x80, (unsigned char *)"基于单片机的无线");
+  53   1        Wr_Data_String(0x90, (unsigned char *)"红外防盗报警系统");
+  54   1        Wr_Data_String(0x88, (unsigned char *)"姓名：管荣龙    ");
+C51 COMPILER V9.59.0.0   MAIN                                                              04/06/2019 17:40:37 PAGE 2   
+
+  55   1        Wr_Data_String(0x98, (unsigned char *)"学号：150401211 ");
+  56   1        Delay1000ms();
+  57   1        Delay1000ms();
+  58   1        Delay1000ms();
+  59   1        //NRF24L01初始化
+  60   1        init_io();               //无线初始化IO
+  61   1        RX_Mode();               //设置为接收模式
+  62   1        
+  63   1        Lcd12864Clean();
+  64   1        //Ds1302Init();
+  65   1        Timer0Init();
+  66   1        vs1838b_Init();
+  67   1        while(1)
+  68   1        {
+  69   2          if(STATE_FLAG & (1 << 0 ))
+  70   2          {
+  71   3            Ds1302ReadTime();
+  72   3            STATE_FLAG &= ~(1 << 0);
+  73   3            sprintf(able, "日期：%02d-%02d-%02d  ",(uint16_t)TIME[6],(uint16_t)TIME[4],(uint16_t)TIME[3]);
+  74   3            //Send_String(able);
+  75   3            Wr_Data_String(0x80, able);
+  76   3            sprintf(able, "时间：%02d-%02d-%02d  ",(uint16_t)TIME[2],(uint16_t)TIME[1],(uint16_t)TIME[0]);
+  77   3            //Send_String(able);
+  78   3            Wr_Data_String(0x90, able);
+  79   3            temp = LcdDisplay(Ds18b20ReadTemp());
+  80   3            sprintf(able, "温度：%02d.%d    度",(uint16_t)temp/10, (uint16_t)temp%10);
+  81   3            //Send_String(able);
+  82   3            Wr_Data_String(0x88, able);
+  83   3            if(IRCOM[6] == 0x34 && IRCOM[5] == 0x36)
+  84   3            {
+  85   4              IRCOM[6] = 0;
+  86   4              IRCOM[5] = 0;
+  87   4              vs1838b_flag = ~vs1838b_flag;
+  88   4            }
+  89   3            if(vs1838b_flag == 0)
+  90   3              {
+  91   4                //Send_String("模式：布防      ");
+  92   4                Wr_Data_String(0x98, "模式：布防      ");
+  93   4              }
+  94   3              else
+  95   3              {
+  96   4                //Send_String("模式：撤防      ");
+  97   4                Wr_Data_String(0x98, "模式：撤防      ");
+  98   4              }
+  99   3            if(vs1838b_flag == 0 && RX_BUF[2] == 0x01)
+ 100   3            {
+ 101   4              SendByte(0x88);
+ 102   4              P33 = ~P33;
+ 103   4            } 
+ 104   3            else
+ 105   3            {
+ 106   4              P33 = 0;
+ 107   4            }
+ 108   3            
+ 109   3            NRF24L01_Send();
+ 110   3          }
+ 111   2            
+ 112   2            
+ 113   2      //    Delay1000ms();
+ 114   2          
+ 115   2        }
+ 116   1      }
+C51 COMPILER V9.59.0.0   MAIN                                                              04/06/2019 17:40:37 PAGE 3   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    381    ----
+   CONSTANT SIZE    =    168    ----
+   XDATA SIZE       =     16    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

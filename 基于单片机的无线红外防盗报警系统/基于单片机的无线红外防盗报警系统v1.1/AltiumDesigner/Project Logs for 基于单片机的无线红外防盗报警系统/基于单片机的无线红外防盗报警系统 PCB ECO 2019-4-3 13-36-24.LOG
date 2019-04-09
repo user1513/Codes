@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=NRF24L01_IRQ Pin=U1-1
+Removed Pin From Net: NetName=NRF24L01_MISO Pin=U1-2
+Removed Pin From Net: NetName=NRF24L01_MISI Pin=U1-3
+Removed Pin From Net: NetName=NRF24L01_SCK Pin=U1-4
+Removed Pin From Net: NetName=NRF24L01_CSN Pin=U1-5
+Removed Pin From Net: NetName=NRF24L01_CE Pin=U1-6
+Added Pin To Net: NetName=NRF24L01_CSN Pin=U1-1
+Added Pin To Net: NetName=NRF24L01_MISI Pin=U1-2
+Added Pin To Net: NetName=NRF24L01_IRQ Pin=U1-3
+Added Pin To Net: NetName=NRF24L01_CE Pin=U1-4
+Added Pin To Net: NetName=NRF24L01_SCK Pin=U1-5
+Added Pin To Net: NetName=NRF24L01_MISO Pin=U1-6
+Added Room: Name=基于单片机的无线红外防盗报警系统

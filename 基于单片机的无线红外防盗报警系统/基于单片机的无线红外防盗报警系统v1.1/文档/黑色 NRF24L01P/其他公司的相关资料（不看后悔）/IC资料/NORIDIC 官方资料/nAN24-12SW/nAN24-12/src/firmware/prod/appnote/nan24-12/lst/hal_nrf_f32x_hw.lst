@@ -1,0 +1,52 @@
+C51 COMPILER V7.50   HAL_NRF_F32X_HW                                                       02/04/2009 09:14:24 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE HAL_NRF_F32X_HW
+OBJECT MODULE PLACED IN .\obj\hal_nrf_f32x_hw.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE l01_bfb\hal_nrf_f32x_hw.c LARGE OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(l01_bf
+                    -b;..\..\..\arch\hal\include) DEFINE(nRF24L01__) DEBUG PRINT(.\lst\hal_nrf_f32x_hw.lst) OBJECT(.\obj\hal_nrf_f32x_hw.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2006 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is confidential property of Nordic Semiconductor. The use,
+   4           * copying, transfer or disclosure of such information is prohibited except by express written
+   5           * agreement with Nordic Semiconductor.
+   6           */
+   7          
+   8          /** @file
+   9           * MCU depenent source code for accessing the nRF24L01 radio
+  10           *
+  11           * @author Runar Kjellhaug
+  12           *
+  13           */
+  14          
+  15          #include <stdint.h>
+*** WARNING C318 IN LINE 15 OF l01_bfb\hal_nrf_f32x_hw.c: can't open file 'stdint.h'
+  16          #include <Cygnal\C8051F320.h>
+  17          
+  18          uint8_t hal_nrf_rw(uint8_t value)
+*** ERROR C129 IN LINE 18 OF L01_BFB\HAL_NRF_F32X_HW.C: missing ';' before 'hal_nrf_rw'
+  19          {
+  20            SPIDAT = value;
+  21            while(!SPIF)                  // wait for byte transfer finished
+  22              ;
+  23            SPIF = 0;                     // and clear SPI flag
+  24          
+  25            return SPIDAT;                // return SPI read value.
+  26          }
+  27          
+  28          void hal_spi_init(uint8_t spi_speed)
+  29          {
+  30            SPI0CKR = spi_speed;          // Set SPI(nRF24L01) speed    
+  31          
+  32            SPI0CFG = 0x40;               // SPI Master mode
+  33            NSSMD0 = 0;                   // 3-Wire SPI mode
+  34            NSSMD1 = 0;                   // NSS not used..
+  35              
+  36            XBR0 |= 0x02;                 // XBAR SPI I/O enable
+  37            SPIEN = 1;                 // SPI enable
+  38          }
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  1 ERROR(S)

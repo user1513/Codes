@@ -1,0 +1,671 @@
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ..\..\..\..\..\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0000                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0000                   .dbfunc e USART_SendChar _USART_SendChar fV
+ 0000           ;             dt -> R16
+                        .even
+ 0000           _USART_SendChar::
+ 0000                   .dbline -1
+ 0000                   .dbline 28
+ 0000           ; 
+ 0000           ; #include "main.h"
+ 0000           ; #include "nRF24L01.h"
+ 0000           ; 
+ 0000           ; 
+ 0000           ; /*Bit field operations*/
+ 0000           ; #define SetBit( Byte, Bit )  ( Byte ) |= ( 1<<( Bit ) )
+ 0000           ; #define ClrBit( Byte, Bit )  ( Byte ) &= ~( 1<<( Bit ) )
+ 0000           ; #define GetBit( Byte, Bit )  ( ( Byte ) & ( 1<<( Bit ) ) )
+ 0000           ; #define ComBit( Byte, Bit )  ( Bytes ) ^= ( 1<<( Bit ) )
+ 0000           ; #define SetBits( Byte, Bits ) ( Byte ) |= ( Bits )
+ 0000           ; #define ClrBits( Byte, Bits ) ( Byte ) &= ~( Bits )
+ 0000           ; #define GetBits( Byte, Bits ) ( ( Byte ) & ( Bits ) )
+ 0000           ; #define ComBits( Byte, Bits ) ( Byte ) ^= ( Bits )
+ 0000           ; 
+ 0000           ; #define M32_MOSI   PB5
+ 0000           ; #define M32_MISO   PB6
+ 0000           ; #define M32_SCK    PB7
+ 0000           ; /*
+ 0000           ; ================================================================================
+ 0000           ; Function   : USART_SendChar( )
+ 0000           ; Description: Send a single byte via the USART
+ 0000           ; InPut      : -dt, The value you want to send
+ 0000           ; Output     : None
+ 0000           ; ================================================================================
+ 0000           ; */
+ 0000           ; void USART_SendChar( unsigned char dt )
+ 0000           ; {
+ 0000                   .dbline 29
+ 0000           ;               UCSRA |= ( 1<<TXC );
+ 0000 5E9A              sbi 0xb,6
+ 0002                   .dbline 30
+ 0002           ;               UDR = dt;
+ 0002 0CB9              out 0xc,R16
+ 0004           L3:
+ 0004                   .dbline 31
+ 0004           ;               while( !( UCSRA & ( 1<<TXC ) ) );
+ 0004           L4:
+ 0004                   .dbline 31
+ 0004 5E9B              sbis 0xb,6
+ 0006 FECF              rjmp L3
+ 0008           X0:
+ 0008                   .dbline -2
+ 0008           L2:
+ 0008                   .dbline 0 ; func end
+ 0008 0895              ret
+ 000A                   .dbsym r dt 16 c
+ 000A                   .dbend
+ 000A                   .dbfunc e USART_SendArray _USART_SendArray fV
+ 000A           ;           btmp -> R10
+ 000A           ;         nBytes -> R12
+ 000A           ;          pBuff -> R14,R15
+                        .even
+ 000A           _USART_SendArray::
+ 000A 0E940000          xcall push_xgset00FC
+ 000E C22E              mov R12,R18
+ 0010 7801              movw R14,R16
+ 0012                   .dbline -1
+ 0012                   .dbline 43
+ 0012           ; }
+ 0012           ; /*
+ 0012           ; ================================================================================
+ 0012           ; Function   : USART_SendArray( )
+ 0012           ; Description: Send a array of data via the USART port
+ 0012           ; InPut      : -pBuff, The buffer to store the data
+ 0012           ;              -nBytes, How many bytes do you want to send ?
+ 0012           ; Output     : None
+ 0012           ; ================================================================================
+ 0012           ; */
+ 0012           ; void USART_SendArray( unsigned char* pBuff, unsigned char nBytes )
+ 0012           ; {
+ 0012                   .dbline 45
+ 0012           ;       unsigned char btmp;
+ 0012           ;       for( btmp = 0; btmp < nBytes; btmp ++ )
+ 0012 AA24              clr R10
+ 0014 07C0              xjmp L10
+ 0016           L7:
+ 0016                   .dbline 46
+ 0016           ;       {
+ 0016                   .dbline 47
+ 0016           ;               USART_SendChar( *( pBuff + btmp ) );
+ 0016 EA2D              mov R30,R10
+ 0018 FF27              clr R31
+ 001A EE0D              add R30,R14
+ 001C FF1D              adc R31,R15
+ 001E 0081              ldd R16,z+0
+ 0020 EFDF              xcall _USART_SendChar
+ 0022                   .dbline 48
+ 0022           ;       }
+ 0022           L8:
+ 0022                   .dbline 45
+ 0022 A394              inc R10
+ 0024           L10:
+ 0024                   .dbline 45
+ 0024 AC14              cp R10,R12
+ 0026 B8F3              brlo L7
+ 0028           X1:
+ 0028                   .dbline -2
+ 0028           L6:
+ 0028                   .dbline 0 ; func end
+ 0028 0C940000          xjmp pop_xgset00FC
+ 002C                   .dbsym r btmp 10 c
+ 002C                   .dbsym r nBytes 12 c
+ 002C                   .dbsym r pBuff 14 pc
+ 002C                   .dbend
+ 002C                   .dbfunc e USART_SendStr _USART_SendStr fV
+ 002C           ;           pstr -> R10,R11
+                        .even
+ 002C           _USART_SendStr::
+ 002C AA92              st -y,R10
+ 002E BA92              st -y,R11
+ 0030 5801              movw R10,R16
+ 0032                   .dbline -1
+ 0032                   .dbline 59
+ 0032           ; }
+ 0032           ; /*
+ 0032           ; ================================================================================
+ 0032           ; Function   : USART_SendStr( )
+ 0032           ; Description: Send a string of data via the USART port
+ 0032           ; InPut      : pstr->the string to be sent
+ 0032           ; Output     : None
+ 0032           ; ================================================================================
+ 0032           ; */
+ 0032           ; void USART_SendStr( char *pstr )
+ 0032           ; {
+ 0032 04C0              xjmp L13
+ 0034           L12:
+ 0034                   .dbline 61
+ 0034           ;     while( *pstr )
+ 0034           ;     {
+ 0034                   .dbline 62
+ 0034           ;         USART_SendChar( *pstr++ );
+ 0034 F501              movw R30,R10
+ 0036 0191              ld R16,Z+
+ 0038 5F01              movw R10,R30
+ 003A E2DF              xcall _USART_SendChar
+ 003C                   .dbline 63
+ 003C           ;     }
+ 003C           L13:
+ 003C                   .dbline 60
+ 003C F501              movw R30,R10
+ 003E 2080              ldd R2,z+0
+ 0040 2220              tst R2
+ 0042 C1F7              brne L12
+ 0044           X2:
+ 0044                   .dbline -2
+ 0044           L11:
+ 0044                   .dbline 0 ; func end
+ 0044 B990              ld R11,y+
+ 0046 A990              ld R10,y+
+ 0048 0895              ret
+ 004A                   .dbsym r pstr 10 pc
+ 004A                   .dbend
+ 004A                   .dbfunc e USART_Init _USART_Init fV
+                        .even
+ 004A           _USART_Init::
+ 004A                   .dbline -1
+ 004A                   .dbline 76
+ 004A           ; }
+ 004A           ; /*
+ 004A           ; ================================================================================
+ 004A           ; Function   : USART_Init( ),
+ 004A           ; Description: Initialize the USART port
+ 004A           ; InPut      : None
+ 004A           ; Output     : None
+ 004A           ; ================================================================================
+ 004A           ; */
+ 004A           ; #define Bandrate    9600
+ 004A           ; #define F_CPU       12000000
+ 004A           ; void USART_Init( void )
+ 004A           ; {
+ 004A                   .dbline 78
+ 004A           ; 
+ 004A           ;       UCSRB = 0x00; //disable while setting baud rate
+ 004A 2224              clr R2
+ 004C 2AB8              out 0xa,R2
+ 004E                   .dbline 79
+ 004E           ;       UCSRA = 0x00;
+ 004E 2BB8              out 0xb,R2
+ 0050                   .dbline 80
+ 0050           ;       UCSRC = 0x86;
+ 0050 86E8              ldi R24,134
+ 0052 80BD              out 0x20,R24
+ 0054                   .dbline 81
+ 0054           ;       UBRRL = ( F_CPU / 16 / Bandrate - 1 ) % 256;
+ 0054 8DE4              ldi R24,77
+ 0056 89B9              out 0x9,R24
+ 0058                   .dbline 82
+ 0058           ;       UBRRH = ( F_CPU / 16 / Bandrate - 1 ) >> 8;
+ 0058 20BC              out 0x20,R2
+ 005A                   .dbline 83
+ 005A           ;       UCSRB = 0x98;
+ 005A 88E9              ldi R24,152
+ 005C 8AB9              out 0xa,R24
+ 005E                   .dbline -2
+ 005E           L15:
+ 005E                   .dbline 0 ; func end
+ 005E 0895              ret
+ 0060                   .dbend
+ 0060                   .dbfunc e SPI_Init _SPI_Init fV
+                        .even
+ 0060           _SPI_Init::
+ 0060                   .dbline -1
+ 0060                   .dbline 95
+ 0060           ; 
+ 0060           ; }
+ 0060           ; /*
+ 0060           ; ================================================================================
+ 0060           ; Function : SPI_Init( )
+ 0060           ; Description : Initialize the SPI bus
+ 0060           ; Input : None
+ 0060           ; Output: None
+ 0060           ; ================================================================================
+ 0060           ; */
+ 0060           ; void SPI_Init( void )
+ 0060           ; {
+ 0060                   .dbline 97
+ 0060           ;     /*IO config*/
+ 0060           ;     PORTB |= ( 1<<0 ) | ( 1<<5 ) | ( 1<<6 ) | ( 1<<7 ) | ( 1<<4 );
+ 0060 88B3              in R24,0x18
+ 0062 816F              ori R24,241
+ 0064 88BB              out 0x18,R24
+ 0066                   .dbline 98
+ 0066           ;     DDRB |= ( 1<<7 ) | ( 1<<5 ) | ( 1<<0 ) | ( 1<<4 );
+ 0066 87B3              in R24,0x17
+ 0068 816B              ori R24,177
+ 006A 87BB              out 0x17,R24
+ 006C                   .dbline 99
+ 006C           ;     DDRB &= ~( 1<<6 );
+ 006C BE98              cbi 0x17,6
+ 006E                   .dbline 100
+ 006E           ;     SPCR = (1<<SPE) | (1<<MSTR);
+ 006E 80E5              ldi R24,80
+ 0070 8DB9              out 0xd,R24
+ 0072                   .dbline -2
+ 0072           L16:
+ 0072                   .dbline 0 ; func end
+ 0072 0895              ret
+ 0074                   .dbend
+ 0074                   .dbfunc e SPI_ExchangeByte _SPI_ExchangeByte fc
+ 0074           ;          value -> R16
+                        .even
+ 0074           _SPI_ExchangeByte::
+ 0074                   .dbline -1
+ 0074                   .dbline 111
+ 0074           ; }
+ 0074           ; /*
+ 0074           ; ================================================================================
+ 0074           ; Function : SPI_ExchangeByte( )
+ 0074           ; Description : Exchange a byte via the SPI bus
+ 0074           ; Input : -value, The byte sent
+ 0074           ; Output: The byte read.
+ 0074           ; ================================================================================
+ 0074           ; */
+ 0074           ; INT8U SPI_ExchangeByte( INT8U value )
+ 0074           ; {
+ 0074                   .dbline 112
+ 0074           ;     SPDR = value;
+ 0074 0FB9              out 0xf,R16
+ 0076           L18:
+ 0076                   .dbline 113
+ 0076           ;       while ( !(SPSR & (1<<SPIF)) );
+ 0076           L19:
+ 0076                   .dbline 113
+ 0076 779B              sbis 0xe,7
+ 0078 FECF              rjmp L18
+ 007A           X3:
+ 007A                   .dbline 114
+ 007A           ;       return SPDR;
+ 007A 0FB1              in R16,0xf
+ 007C                   .dbline -2
+ 007C           L17:
+ 007C                   .dbline 0 ; func end
+ 007C 0895              ret
+ 007E                   .dbsym r value 16 c
+ 007E                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0000           L22:
+ 0000                   .blkb 11
+                        .area idata
+ 0000 C4FABAC3C2F0A3BF0D0A00    .byte 196,250,186,195,194,240,163,191,13,10,0
+                        .area data(ram, con, rel)
+ 000B                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+                        .area text(rom, con, rel)
+ 007E                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 007E                   .dbfunc e main _main fI
+ 007E           ;        AskData -> y+0
+ 007E           ;            tmp -> R20
+ 007E           ;              x -> R22
+                        .even
+ 007E           _main::
+ 007E 2B97              sbiw R28,11
+ 0080                   .dbline -1
+ 0080                   .dbline 119
+ 0080           ; }
+ 0080           ; 
+ 0080           ; INT8U testbuffer[32];
+ 0080           ; int main( void )
+ 0080           ; {
+ 0080                   .dbline 121
+ 0080           ;     INT8U tmp, x;
+ 0080           ;       INT8U AskData[] = {"您好吗？\r\n"};
+ 0080 80E0              ldi R24,<L22
+ 0082 90E0              ldi R25,>L22
+ 0084 FE01              movw R30,R28
+ 0086 0BE0              ldi R16,11
+ 0088 10E0              ldi R17,0
+ 008A FA93              st -y,R31
+ 008C EA93              st -y,R30
+ 008E 9A93              st -y,R25
+ 0090 8A93              st -y,R24
+ 0092 0E940000          xcall asgnblk
+ 0096                   .dbline 124
+ 0096           ;       
+ 0096           ; 
+ 0096           ;       DDRB |= ( 1<<4 );
+ 0096 BC9A              sbi 0x17,4
+ 0098                   .dbline 125
+ 0098           ;       PORTB |= ( 1<<4 );
+ 0098 C49A              sbi 0x18,4
+ 009A                   .dbline 126
+ 009A           ;       SPI_Init( );
+ 009A E2DF              xcall _SPI_Init
+ 009C                   .dbline 127
+ 009C           ;       USART_Init( );
+ 009C D6DF              xcall _USART_Init
+ 009E                   .dbline 128
+ 009E           ;       L01_Init( );    
+ 009E 0E940000          xcall _L01_Init
+ 00A2                   .dbline 129
+ 00A2           ;       L01_SetTXMode( );
+ 00A2 0E940000          xcall _L01_SetTXMode
+ 00A6                   .dbline 130
+ 00A6           ;       L01_WriteHoppingPoint( 0 );
+ 00A6 0027              clr R16
+ 00A8 0E940000          xcall _L01_WriteHoppingPoint
+ 00AC                   .dbline 131
+ 00AC           ;       USART_SendStr( "nRF24L01P发送测试开始！\r\n" );
+ 00AC 00E0              ldi R16,<L23
+ 00AE 10E0              ldi R17,>L23
+ 00B0 BDDF              xcall _USART_SendStr
+ 00B2 65C0              xjmp L25
+ 00B4           L24:
+ 00B4                   .dbline 134
+ 00B4           ; 
+ 00B4           ;       while( 1 )
+ 00B4           ;     {
+ 00B4                   .dbline 135
+ 00B4           ;         for( tmp = 0; tmp < 250; tmp ++ )
+ 00B4 4427              clr R20
+ 00B6 24C0              xjmp L30
+ 00B8           L27:
+ 00B8                   .dbline 136
+ 00B8           ;         {
+ 00B8                   .dbline 137
+ 00B8           ;             for( x = 0; x< 250; x ++ );
+ 00B8 6627              clr R22
+ 00BA 01C0              xjmp L34
+ 00BC           L31:
+ 00BC                   .dbline 137
+ 00BC           L32:
+ 00BC                   .dbline 137
+ 00BC 6395              inc R22
+ 00BE           L34:
+ 00BE                   .dbline 137
+ 00BE 6A3F              cpi R22,250
+ 00C0 E8F3              brlo L31
+ 00C2           X4:
+ 00C2                   .dbline 138
+ 00C2           ;                       for( x = 0; x< 250; x ++ );
+ 00C2 6627              clr R22
+ 00C4 01C0              xjmp L38
+ 00C6           L35:
+ 00C6                   .dbline 138
+ 00C6           L36:
+ 00C6                   .dbline 138
+ 00C6 6395              inc R22
+ 00C8           L38:
+ 00C8                   .dbline 138
+ 00C8 6A3F              cpi R22,250
+ 00CA E8F3              brlo L35
+ 00CC           X5:
+ 00CC                   .dbline 139
+ 00CC           ;                       for( x = 0; x< 250; x ++ );
+ 00CC 6627              clr R22
+ 00CE 01C0              xjmp L42
+ 00D0           L39:
+ 00D0                   .dbline 139
+ 00D0           L40:
+ 00D0                   .dbline 139
+ 00D0 6395              inc R22
+ 00D2           L42:
+ 00D2                   .dbline 139
+ 00D2 6A3F              cpi R22,250
+ 00D4 E8F3              brlo L39
+ 00D6           X6:
+ 00D6                   .dbline 140
+ 00D6           ;                       for( x = 0; x< 250; x ++ );
+ 00D6 6627              clr R22
+ 00D8 01C0              xjmp L46
+ 00DA           L43:
+ 00DA                   .dbline 140
+ 00DA           L44:
+ 00DA                   .dbline 140
+ 00DA 6395              inc R22
+ 00DC           L46:
+ 00DC                   .dbline 140
+ 00DC 6A3F              cpi R22,250
+ 00DE E8F3              brlo L43
+ 00E0           X7:
+ 00E0                   .dbline 141
+ 00E0           ;                       for( x = 0; x< 250; x ++ );
+ 00E0 6627              clr R22
+ 00E2 01C0              xjmp L50
+ 00E4           L47:
+ 00E4                   .dbline 141
+ 00E4           L48:
+ 00E4                   .dbline 141
+ 00E4 6395              inc R22
+ 00E6           L50:
+ 00E6                   .dbline 141
+ 00E6 6A3F              cpi R22,250
+ 00E8 E8F3              brlo L47
+ 00EA           X8:
+ 00EA                   .dbline 142
+ 00EA           ;                       for( x = 0; x< 250; x ++ );
+ 00EA 6627              clr R22
+ 00EC 01C0              xjmp L54
+ 00EE           L51:
+ 00EE                   .dbline 142
+ 00EE           L52:
+ 00EE                   .dbline 142
+ 00EE 6395              inc R22
+ 00F0           L54:
+ 00F0                   .dbline 142
+ 00F0 6A3F              cpi R22,250
+ 00F2 E8F3              brlo L51
+ 00F4           X9:
+ 00F4                   .dbline 143
+ 00F4           ;                       for( x = 0; x< 250; x ++ );
+ 00F4 6627              clr R22
+ 00F6 01C0              xjmp L58
+ 00F8           L55:
+ 00F8                   .dbline 143
+ 00F8           L56:
+ 00F8                   .dbline 143
+ 00F8 6395              inc R22
+ 00FA           L58:
+ 00FA                   .dbline 143
+ 00FA 6A3F              cpi R22,250
+ 00FC E8F3              brlo L55
+ 00FE           X10:
+ 00FE                   .dbline 144
+ 00FE           ;         }
+ 00FE           L28:
+ 00FE                   .dbline 135
+ 00FE 4395              inc R20
+ 0100           L30:
+ 0100                   .dbline 135
+ 0100 4A3F              cpi R20,250
+ 0102 D0F2              brlo L27
+ 0104           X11:
+ 0104                   .dbline 145
+ 0104           ;               L01_FlushRX( );
+ 0104 0E940000          xcall _L01_FlushRX
+ 0108                   .dbline 146
+ 0108           ;               L01_FlushTX( );
+ 0108 0E940000          xcall _L01_FlushTX
+ 010C                   .dbline 147
+ 010C           ;               USART_SendStr( "发送数据：" );
+ 010C 00E0              ldi R16,<L59
+ 010E 10E0              ldi R17,>L59
+ 0110 8DDF              xcall _USART_SendStr
+ 0112                   .dbline 148
+ 0112           ;               USART_SendStr( (char*)AskData );
+ 0112 8E01              movw R16,R28
+ 0114 8BDF              xcall _USART_SendStr
+ 0116                   .dbline 149
+ 0116           ;         L01_WriteTXPayload_Ack( AskData, sizeof( AskData ) );
+ 0116 2BE0              ldi R18,11
+ 0118 8E01              movw R16,R28
+ 011A 0E940000          xcall _L01_WriteTXPayload_Ack
+ 011E 06C0              xjmp L61
+ 0120           L60:
+ 0120                   .dbline 152
+ 0120           ; 
+ 0120           ;               while( 1 )
+ 0120           ;               {
+ 0120                   .dbline 153
+ 0120           ;                       tmp = L01_ReadStatusReg( );
+ 0120 0E940000          xcall _L01_ReadStatusReg
+ 0124 402F              mov R20,R16
+ 0126                   .dbline 155
+ 0126           ;                       //USART_SendChar(tmp); //for test
+ 0126           ;                       tmp &= ( 1<<TX_DS ) | ( 1<<MAX_RT ) | ( 1<<RX_DR );     
+ 0126 4077              andi R20,112
+ 0128                   .dbline 156
+ 0128           ;                       if( tmp != 0 )
+ 0128 09F0              breq L63
+ 012A           X12:
+ 012A                   .dbline 157
+ 012A           ;                       {
+ 012A                   .dbline 158
+ 012A           ;                               break;
+ 012A 01C0              xjmp L62
+ 012C           L63:
+ 012C                   .dbline 161
+ 012C           ;                       }
+ 012C           ; 
+ 012C           ;               }
+ 012C           L61:
+ 012C                   .dbline 151
+ 012C F9CF              xjmp L60
+ 012E           L62:
+ 012E                   .dbline 163
+ 012E           ; 
+ 012E           ;         if( tmp & ( 1<<TX_DS ) )
+ 012E 45FF              sbrs R20,5
+ 0130 1CC0              rjmp L65
+ 0132           X13:
+ 0132                   .dbline 164
+ 0132           ;         {
+ 0132                   .dbline 165
+ 0132           ;             USART_SendStr( "发送成功！\r\n" );
+ 0132 00E0              ldi R16,<L67
+ 0134 10E0              ldi R17,>L67
+ 0136 7ADF              xcall _USART_SendStr
+ 0138                   .dbline 166
+ 0138           ;                       for( tmp = 0; tmp < 32; tmp ++ )
+ 0138 4427              clr R20
+ 013A 09C0              xjmp L71
+ 013C           L68:
+ 013C                   .dbline 167
+ 013C           ;               {
+ 013C                   .dbline 168
+ 013C           ;                   testbuffer[tmp] = 0;
+ 013C 80E0              ldi R24,<_testbuffer
+ 013E 90E0              ldi R25,>_testbuffer
+ 0140 E42F              mov R30,R20
+ 0142 FF27              clr R31
+ 0144 E80F              add R30,R24
+ 0146 F91F              adc R31,R25
+ 0148 2224              clr R2
+ 014A 2082              std z+0,R2
+ 014C                   .dbline 169
+ 014C           ;               }
+ 014C           L69:
+ 014C                   .dbline 166
+ 014C 4395              inc R20
+ 014E           L71:
+ 014E                   .dbline 166
+ 014E 4032              cpi R20,32
+ 0150 A8F3              brlo L68
+ 0152           X14:
+ 0152                   .dbline 170
+ 0152           ;                       x = L01_ReadRXPayload( testbuffer );
+ 0152 00E0              ldi R16,<_testbuffer
+ 0154 10E0              ldi R17,>_testbuffer
+ 0156 0E940000          xcall _L01_ReadRXPayload
+ 015A 602F              mov R22,R16
+ 015C                   .dbline 171
+ 015C           ;                       USART_SendStr( "收到回复：" );
+ 015C 00E0              ldi R16,<L72
+ 015E 10E0              ldi R17,>L72
+ 0160 65DF              xcall _USART_SendStr
+ 0162                   .dbline 172
+ 0162           ;                       USART_SendArray( testbuffer, x );
+ 0162 262F              mov R18,R22
+ 0164 00E0              ldi R16,<_testbuffer
+ 0166 10E0              ldi R17,>_testbuffer
+ 0168 50DF              xcall _USART_SendArray
+ 016A                   .dbline 173
+ 016A           ;         }
+ 016A           L65:
+ 016A                   .dbline 174
+ 016A           ;         if( tmp & ( 1<<MAX_RT ) )
+ 016A 44FF              sbrs R20,4
+ 016C 03C0              rjmp L73
+ 016E           X15:
+ 016E                   .dbline 175
+ 016E           ;         {
+ 016E                   .dbline 176
+ 016E           ;             USART_SendStr( "发送失败！\r\n" ); 
+ 016E 00E0              ldi R16,<L75
+ 0170 10E0              ldi R17,>L75
+ 0172 5CDF              xcall _USART_SendStr
+ 0174                   .dbline 177
+ 0174           ;         }
+ 0174           L73:
+ 0174                   .dbline 178
+ 0174           ;         if( tmp & ( 1<<RX_DR )  )
+ 0174 46FF              sbrs R20,6
+ 0176 00C0              rjmp L76
+ 0178           X16:
+ 0178                   .dbline 179
+ 0178           ;         {
+ 0178                   .dbline 181
+ 0178           ;             
+ 0178           ;         }
+ 0178           L76:
+ 0178                   .dbline 182
+ 0178           ;         L01_ClearIRQ( IRQ_ALL );
+ 0178 00E7              ldi R16,112
+ 017A 0E940000          xcall _L01_ClearIRQ
+ 017E                   .dbline 183
+ 017E           ;     }
+ 017E           L25:
+ 017E                   .dbline 133
+ 017E 9ACF              xjmp L24
+ 0180           X17:
+ 0180                   .dbline -2
+ 0180           L21:
+ 0180                   .dbline 0 ; func end
+ 0180 2B96              adiw R28,11
+ 0182 0895              ret
+ 0184                   .dbsym l AskData 0 A[11:11]c
+ 0184                   .dbsym r tmp 20 c
+ 0184                   .dbsym r x 22 c
+ 0184                   .dbend
+                        .area bss(ram, con, rel)
+ 0000                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0000           _testbuffer::
+ 0000                   .blkb 32
+ 0020                   .dbsym e testbuffer _testbuffer A[32:32]c
+                        .area data(ram, con, rel)
+ 000B                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 000B           L75:
+ 000B                   .blkb 13
+                        .area idata
+ 000B B7A2CBCDCAA7B0DCA3A10D0A00        .byte 183,162,203,205,202,167,176,220,163,161,13,10,0
+                        .area data(ram, con, rel)
+ 0018                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0018           L72:
+ 0018                   .blkb 11
+                        .area idata
+ 0018 CAD5B5BDBBD8B8B4A3BA00    .byte 202,213,181,189,187,216,184,180,163,186,0
+                        .area data(ram, con, rel)
+ 0023                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0023           L67:
+ 0023                   .blkb 13
+                        .area idata
+ 0023 B7A2CBCDB3C9B9A6A3A10D0A00        .byte 183,162,203,205,179,201,185,166,163,161,13,10,0
+                        .area data(ram, con, rel)
+ 0030                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0030           L59:
+ 0030                   .blkb 11
+                        .area idata
+ 0030 B7A2CBCDCAFDBEDDA3BA00    .byte 183,162,203,205,202,253,190,221,163,186,0
+                        .area data(ram, con, rel)
+ 003B                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 003B           L23:
+ 003B                   .blkb 26
+                        .area idata
+ 003B 6E524632344C303150B7A2CBCDB2E2CA  .byte 'n,'R,'F,50,52,'L,48,49,'P,183,162,203,205,178,226,202
+ 004B D4BFAACABCA3A10D0A00      .byte 212,191,170,202,188,163,161,13,10,0
+                        .area data(ram, con, rel)
+ 0055                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\main.c
+ 0055           ;       return 0;
+ 0055           ; }
+ 0055           ; 

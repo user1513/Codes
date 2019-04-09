@@ -1,0 +1,343 @@
+C51 COMPILER V8.16   MAIN                                                                  04/03/2009 08:18:45 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\obj\main.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch\hal\include;
+                    -..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\main.lst) OBJECT(.\
+                    -obj\main.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2477 $
+  12           */ 
+  13          
+  14          /**
+  15           * @file
+  16           * @ingroup Main
+  17           * This file contain the main initialisation and allows users to make their 
+  18           * choices of operational mode. Implements a state machine through the enum 
+  19           * @c state, the @c state_machine array, and the get_next_state() function.
+  20           *
+  21           * To choose between the differnt modes, after startup press:
+  22           * - B1 for PTX mode
+  23           *   - B1 for ShockBurst in PTX mode. Indicate with @b LED1 on
+  24           *   - B2 for Enhanced ShockBurst in PTX mode. Indicate with @b LED2 on
+  25           *   - B3 for Enhanced ShockBurst with Bidirectional data in PTX mode. Indicate with @b LED1 and @b LED2 o
+             -n
+  26           * - B2 for PRX mode
+  27           *   - B1 for ShockBurst in PRX mode. Indicate with @b LED1 and @b LED3 on
+  28           *   - B2 for Enhanced ShockBurst in PRX mode. Indicate with @b LED2 and @b LED3 on
+  29           *   - B3 for Enhanced ShockBurst with Bidirectional data in PRX mode. Indicate with @b LED1, @b LED2 and 
+             -@b LED3 on
+  30           *
+  31           * @author Per Kristian Schanke 
+  32           */
+  33          
+  34          #include <stdint.h>
+  35          #include <stdbool.h>
+  36          
+  37          #include "hal_nrf.h"
+  38          #include "target_includes.h"
+  39          
+  40          /** Contain the common radio functions, implemented in radio.c */
+  41          #include "radio.h"                
+  42          /** Contain the specific radio functions for a radio in ShockBurst, 
+  43           * implemented in sb/radio_sb.c */
+  44          #include "sb/radio_sb.h"          
+  45          /** Contain the specific radio functions for a radio in Enhanced ShockBurst, 
+  46           * implemented in esb/radio_esb.c */
+  47          #include "esb/radio_esb.h"        
+  48          /** Contain the specific radio functions for a radio in Enhanced ShockBurst 
+  49           * with Bidirectional data, implemented in pl/radio_pl.c */
+  50          #include "pl/radio_pl.h"          
+  51          /** Contain the application functions for a radio in ShockBurst, 
+C51 COMPILER V8.16   MAIN                                                                  04/03/2009 08:18:45 PAGE 2   
+
+  52           * implemented in sb/application_sb.c */
+  53          #include "sb/application_sb.h"    
+  54          /** Contain the application functions for a radio in Enhanced ShockBurst, 
+  55           * implemented in esb/application_esb.c */
+  56          #include "esb/application_esb.h"  
+  57          /** Contain the application functions for a radio in Enhanced ShockBurst 
+  58           * with Bidirectional data, implemented in pl/application_pl.c */
+  59          #include "pl/application_pl.h"    
+  60          /** Contain the functions for delays, system functions and some timers, 
+  61           * implemented in system.c */
+  62          #include "system.h"               
+  63          
+  64          /**
+  65           * The possible states of the system.
+  66           */
+  67          typedef enum {
+  68            DEVICE_IDLE = 0, /**< The device is idle */
+  69            DEVICE_PRX_IDLE, /**< The device will operate in @b PRX mode */
+  70            DEVICE_PTX_IDLE, /**< The device will operate in @b PTX mode */
+  71            DEVICE_PRX_SB,   /**< The device will operate in @b PRX mode with ShockBurst functionailty */
+  72            DEVICE_PRX_ESB,  /**< The device will operate in @b PRX mode with Enhanced ShockBurst functionailty */
+  73            DEVICE_PRX_PL,   /**< The device will operate in @b PRX mode with Enhanced ShockBurst functionailty with
+             - Bidirectional data */
+  74            DEVICE_PTX_SB,   /**< The device will operate in @b PTX mode with ShockBurst functionailty */
+  75            DEVICE_PTX_ESB,  /**< The device will operate in @b PTX mode with Enhanced ShockBurst functionailty */
+  76            DEVICE_PTX_PL,   /**< The device will operate in @b PTX mode with Enhanced ShockBurst functionailty with
+             - Bidirectional data */
+  77            NO_CHANGE        /**< No state change */
+  78          } state_t;
+  79          
+  80          /**
+  81           * The state transistion table. Indicates which state the statemachine
+  82           * should jump to as next state. 
+  83           *
+  84           * Example on use:@code
+  85            next_state = state_machine[current_state][button_pressed];
+  86            if (next_state == NO_CHANGE)
+  87               next_state = current_state;
+  88           @endcode
+  89           */
+  90          static const state_t state_machine[][3] = 
+  91          // B1               B2               B3                 CURRENT STATE
+  92          { {DEVICE_PTX_IDLE, DEVICE_PRX_IDLE, NO_CHANGE},      /**< DEVICE_IDLE */
+  93            {DEVICE_PRX_SB,   DEVICE_PRX_ESB,  DEVICE_PRX_PL},  /**< DEVICE_PRX_IDLE */
+  94            {DEVICE_PTX_SB,   DEVICE_PTX_ESB,  DEVICE_PTX_PL},  /**< DEVICE_PTX_IDLE */
+  95            {NO_CHANGE,       NO_CHANGE,       NO_CHANGE},      /**< DEVICE_PRX_SB */
+  96            {NO_CHANGE,       NO_CHANGE,       NO_CHANGE},      /**< DEVICE_PRX_ESB */
+  97            {NO_CHANGE,       NO_CHANGE,       NO_CHANGE},      /**< DEVICE_PRX_PL */
+  98            {NO_CHANGE,       NO_CHANGE,       NO_CHANGE},      /**< DEVICE_PTX_SB */
+  99            {NO_CHANGE,       NO_CHANGE,       NO_CHANGE},      /**< DEVICE_PTX_ESB */
+ 100            {NO_CHANGE,       NO_CHANGE,       NO_CHANGE}       /**< DEVICE_PTX_PL */
+ 101          };
+ 102          
+ 103          /** LED should be on */
+ 104          #define ON  1
+ 105          /** LED should be off */
+ 106          #define OFF 0
+ 107          /** Function should loop for 0 seconds */
+ 108          #define SEK_0  0
+ 109          /** Function should loop for aprox 1 seconds */
+ 110          #define SEK_1 10
+ 111          /** Function should loop for aprox 2 seconds */
+C51 COMPILER V8.16   MAIN                                                                  04/03/2009 08:18:45 PAGE 3   
+
+ 112          #define SEK_2 20
+ 113          /** Function should loop for aprox 3 seconds */
+ 114          #define SEK_3 30
+ 115          
+ 116          /** Defines the leds that should be turned on by the show_status() function
+ 117           * and how long the light should be on. Column 1 is LED1 ON/OFF, column 2
+ 118           * is LED2 ON/OFF, column 3 is LED3 ON/OFF, 
+ 119           * column 4 indicates wheter all light should be turned off (OFF) or if the
+ 120           * pattern already lit up should stay on (ON), column 5 is the time the lights
+ 121           * should stay in a locking loop (rounds of 100ms). 
+ 122           */ 
+ 123          static const uint8_t show_state[][5] = 
+ 124          //LED1, LED2, LED3, ALL off after?, Time, 
+ 125          {{ON ,  ON ,  ON ,  ON,             SEK_0},  /**< DEVICE_IDLE */
+ 126           {OFF,  OFF,  ON ,  ON,             SEK_0},  /**< DEVICE_PRX_IDLE */
+ 127           {OFF,  OFF,  OFF,  ON,             SEK_0},  /**< DEVICE_PTX_IDLE */
+ 128           {ON ,  OFF,  ON ,  OFF,            SEK_3},  /**< DEVICE_PRX_SB */
+ 129           {OFF,  ON ,  ON ,  OFF,            SEK_3},  /**< DEVICE_PRX_ESB */
+ 130           {ON ,  ON ,  ON ,  OFF,            SEK_3},  /**< DEVICE_PRX_PL */
+ 131           {ON ,  OFF,  OFF,  OFF,            SEK_3},  /**< DEVICE_PTX_SB */
+ 132           {OFF,  ON ,  OFF,  OFF,            SEK_3},  /**< DEVICE_PTX_ESB */
+ 133           {ON ,  ON ,  OFF,  OFF,            SEK_3},  /**< DEVICE_PTX_PL */
+ 134          };
+ 135          
+ 136          /** The address of the radio. Parameter to the radio init */
+ 137          static code const uint8_t address[HAL_NRF_AW_5BYTES] = {0x22,0x33,0x44,0x55,0x01};
+ 138          
+ 139          /** Implementation of the state transition. Changes state based on the
+ 140           * current state and the value of a pressed button. Waits til button is released
+ 141           * before it returns.
+ 142           *
+ 143           * @param current_state The current state of the statemachine
+ 144           * @return The next state. Returns @b current_state if state_machine 
+ 145           * indicated @c NO_CHANGE
+ 146           */
+ 147          static state_t get_next_state(state_t current_state);
+ 148          
+ 149          /** Function that runs in a loop until all buttons are released.
+ 150           */
+ 151          static void wait_for_button_release(void);
+ 152          
+ 153          /** Shows the state the state_machine is in.
+ 154           */
+ 155          static void show_status(state_t operation);
+ 156          
+ 157          /** Function that initialises everything. Calls @b system_init () which is
+ 158           * hardware dependant, and @b device_boot_msg () from @b system.c.
+ 159           * It implementes a simple statemachine to handle the input from the user on 
+ 160           * the evaluation board. With two clicks, the user can choose between 
+ 161           * primary transmitter mode (PTX) and primary reciever mode (PRX), and between
+ 162           * the functionality levels ShockBurst (sb), Enchanced ShockBurst, 
+ 163           * and Enhanced ShockBurst with Bidirectional data (pl).
+ 164           */  
+ 165          void main(void) 
+ 166          {
+ 167   1        state_t current_state = DEVICE_IDLE;
+ 168   1      
+ 169   1        system_init();                  //Hardware dependant system initialisation
+ 170   1        device_boot_msg();              //Flashes LED's in a simple pattern
+ 171   1      
+ 172   1        GLOBAL_INT_ENABLE();            //Ensure that all interupts are turned on
+ 173   1      
+C51 COMPILER V8.16   MAIN                                                                  04/03/2009 08:18:45 PAGE 4   
+
+ 174   1        LED_ALL_OFF();                  //Turn off all lights
+ 175   1       
+ 176   1        wait_for_button_release ();     //Ensure that all buttons are released
+ 177   1      
+ 178   1        //Implemenation of a simple state machine. 
+ 179   1        while (true)
+ 180   1        {
+ 181   2          current_state = get_next_state (current_state);// Go to next state 
+ 182   2          wait_for_button_release ();                    // Ensure that all 
+ 183   2                                                         // buttons are released
+ 184   2          show_status (current_state);
+ 185   2          
+ 186   2          switch (current_state)
+ 187   2          {
+ 188   3            case DEVICE_IDLE:                       // No operation chosen yet
+ 189   3              break;
+ 190   3      
+ 191   3            case DEVICE_PRX_IDLE:                   // In PRX mode, but still lack 
+ 192   3              break;                                // functionality
+ 193   3      
+ 194   3            case DEVICE_PTX_IDLE:                   // In PTX mode, but still lack 
+ 195   3              break;                                // functionality
+ 196   3      
+ 197   3            case DEVICE_PRX_SB:                     // Start as PRX in ShockBurst 
+ 198   3              radio_sb_init (address, HAL_NRF_PRX);
+ 199   3              device_prx_mode_sb ();
+ 200   3              break;
+ 201   3      
+ 202   3            case DEVICE_PRX_ESB:                    // Start as PRX in Enhanced 
+ 203   3              radio_esb_init (address, HAL_NRF_PRX);// ShockBurst
+ 204   3              device_prx_mode_esb ();
+ 205   3              break;
+ 206   3      
+ 207   3            case DEVICE_PRX_PL:                     //Start as PRX in Enhanced 
+ 208   3              radio_pl_init (address, HAL_NRF_PRX); //ShockBurst with ACK payload
+ 209   3              device_prx_mode_pl ();
+ 210   3              break;
+ 211   3      
+ 212   3            case DEVICE_PTX_SB:                     //Start as PTX in ShockBurst
+ 213   3              radio_sb_init (address, HAL_NRF_PTX);
+ 214   3              device_ptx_mode_sb ();
+ 215   3              break;
+ 216   3      
+ 217   3            case DEVICE_PTX_ESB:                    //Start as PTX in Enhanced 
+ 218   3              radio_esb_init (address, HAL_NRF_PTX);//ShockBurst
+ 219   3              device_ptx_mode_esb ();
+ 220   3              break;
+ 221   3      
+ 222   3            case DEVICE_PTX_PL:                     // Start as PTX in Enhanced 
+ 223   3              radio_pl_init (address, HAL_NRF_PTX); // ShockBurst with ACK payload
+ 224   3              device_ptx_mode_pl ();
+ 225   3              break;
+ 226   3      
+ 227   3            default:                                // If in an illegal state, set to
+ 228   3              current_state = DEVICE_IDLE;       // default state (DEVICE_IDLE)
+ 229   3              break;
+ 230   3          }
+ 231   2        }
+ 232   1      }
+ 233          
+ 234          static state_t get_next_state (state_t current_state)
+ 235          {
+C51 COMPILER V8.16   MAIN                                                                  04/03/2009 08:18:45 PAGE 5   
+
+ 236   1        state_t next_state = NO_CHANGE;
+ 237   1      
+ 238   1        if (B1_PRESSED())                  // Swap state according to state_machine 
+ 239   1        {                                  // array with button input and 
+ 240   2                                           // current_state as input
+ 241   2           next_state = state_machine[current_state][0];
+ 242   2        }
+ 243   1        else if (B2_PRESSED())
+ 244   1        {
+ 245   2           next_state = state_machine[current_state][1];
+ 246   2        }
+ 247   1        else if (B3_PRESSED())
+ 248   1        {
+ 249   2           next_state = state_machine[current_state][2];
+ 250   2        }
+ 251   1      
+ 252   1        if (next_state == NO_CHANGE)      // If no statechange should occur, return 
+ 253   1        {                                 // previous state
+ 254   2          next_state = current_state;
+ 255   2        }
+ 256   1        else                              // As it takes some time for the button to
+ 257   1        {                                 // stabalise as pressed, give it a short 
+ 258   2          delay_10ms();                   // delay to stabalise
+ 259   2        }
+ 260   1      
+ 261   1        return next_state;
+ 262   1      }
+ 263          
+ 264          static void wait_for_button_release (void)
+ 265          {
+ 266   1        while (B1_PRESSED() || B2_PRESSED() || B3_PRESSED())  // Wait until all 
+ 267   1          ;                                                   // buttons are released
+ 268   1        delay_10ms();                                         // Delay to stabalise
+ 269   1      }
+ 270          
+ 271          static void show_status (state_t operation)
+ 272          {
+ 273   1        uint16_t time;
+ 274   1        LED_ALL_OFF();
+ 275   1      
+ 276   1        if (show_state[operation][0] == ON)
+ 277   1        {
+ 278   2          LED1_ON();
+ 279   2        }
+ 280   1        if (show_state[operation][1] == ON)
+ 281   1        {
+ 282   2          LED2_ON();
+ 283   2        } 
+ 284   1        if (show_state[operation][2] == ON)
+ 285   1        {
+ 286   2          LED3_ON();
+ 287   2        } 
+ 288   1      
+ 289   1        // If there is to be a delay where LED's are shown, but no input is
+ 290   1        // accepted, delay for the period indicated in show_state[operation][4]
+ 291   1        if (show_state[operation][4] > 0)
+ 292   1        {
+ 293   2          time = (uint16_t)(show_state[operation][4] * 100);
+ 294   2          start_timer(time);
+ 295   2          wait_for_timer();
+ 296   2        }
+ 297   1      
+C51 COMPILER V8.16   MAIN                                                                  04/03/2009 08:18:45 PAGE 6   
+
+ 298   1        // If the radio goes into an operational mode, all LED's should be turned off
+ 299   1        // before entering that mode
+ 300   1        if (show_state[operation][3] == OFF)
+ 301   1        {
+ 302   2          LED_ALL_OFF();
+ 303   2        } 
+ 304   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    331    ----
+   CONSTANT SIZE    =      5    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     72       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

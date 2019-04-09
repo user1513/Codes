@@ -1,0 +1,213 @@
+C51 COMPILER V8.16   SYSTEM                                                                04/03/2009 08:18:46 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE SYSTEM
+OBJECT MODULE PLACED IN .\obj\system.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE system.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch\hal\includ
+                    -e;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\system.lst) OBJEC
+                    -T(.\obj\system.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2310 $
+  12           */ 
+  13          
+  14           /** @file
+  15           * @ingroup Main
+  16           * @ingroup hwdep
+  17           * System level functions: Timers, port setup, interrupt handlers, and other 
+  18           * system functions.
+  19           * 
+  20           * @author Per Kristian Schanke
+  21           */
+  22          
+  23          #include "hal_nrf.h"
+  24          #include "radio.h"
+  25          #include "system.h"
+  26          #include "target_includes.h"
+  27          
+  28          /** Indicates which LED is set to blink. */
+  29          volatile uint8_t led_blink;
+  30          /** How many times timer 1 should be restarted to be able to run for the
+  31           * wanted amount of time.
+  32           */
+  33          static uint8_t timer_rounds;
+  34          
+  35          /** Starts timer 1.
+  36           * 
+  37           * @param time The runtime in timer cycles
+  38           */
+  39          static void run_timer (uint16_t time);
+  40          
+  41          void device_boot_msg(void)
+  42          {
+  43   1        uint8_t ctr;
+  44   1      
+  45   1        for(ctr=0;ctr<3;ctr++)
+  46   1        {
+  47   2          LED1_BLINK();
+  48   2          while(led_blink)               // wait until LED released...
+  49   2            ;
+  50   2          delay_10ms();
+  51   2      
+  52   2          LED2_BLINK();
+  53   2          while(led_blink)               // wait until LED released...
+C51 COMPILER V8.16   SYSTEM                                                                04/03/2009 08:18:46 PAGE 2   
+
+  54   2            ;
+  55   2          delay_10ms();
+  56   2      
+  57   2          LED3_BLINK();
+  58   2          while(led_blink)               // wait until LED released...
+  59   2            ;
+  60   2          delay_10ms();
+  61   2      
+  62   2          LED2_BLINK();
+  63   2          while(led_blink)               // wait until LED released...
+  64   2            ;
+  65   2          delay_10ms();
+  66   2      
+  67   2          LED1_BLINK();
+  68   2          while(led_blink)               // wait until LED released...
+  69   2            ;
+  70   2          delay_10ms();
+  71   2      
+  72   2        }
+  73   1      }
+  74          
+  75          void delay_10ms(void)
+  76          {
+  77   1        start_timer(10);
+  78   1        wait_for_timer();
+  79   1      }
+  80          
+  81          void delay_100ms(void)
+  82          {
+  83   1        start_timer(100);
+  84   1        wait_for_timer();
+  85   1      }
+  86          
+  87          /** Interrupt handler for timer0.
+  88           * Turns off all blinking LED's. Hardware dependant in setting up
+  89           * timers and interrupt vector.
+  90           */
+  91          void t0_ov_interrupt(void) interrupt INTERRUPT_T0
+  92          {
+  93   1        TR0 = 0;                          // stop timer0
+  94   1        TL0 = 0xE9;                       // reload timer..
+  95   1        TH0 = 0xCB;
+  96   1      
+  97   1        if (led_blink & (1<<LED1_INDEX))
+  98   1        {
+  99   2          LED1_OFF();
+ 100   2        }
+ 101   1        if (led_blink & (1<<LED2_INDEX))
+ 102   1        {
+ 103   2          LED2_OFF();
+ 104   2        }
+ 105   1        if (led_blink & (1<<LED3_INDEX))
+ 106   1        {
+ 107   2          LED3_OFF();
+ 108   2        }
+ 109   1      
+ 110   1        led_blink = 0;
+ 111   1      }
+ 112          
+ 113          void start_timer (uint16_t time)
+ 114          {
+ 115   1        uint16_t setuptime;
+C51 COMPILER V8.16   SYSTEM                                                                04/03/2009 08:18:46 PAGE 3   
+
+ 116   1        uint16_t firstruntime;
+ 117   1      
+ 118   1        firstruntime = (uint16_t)(time % MAX_RUNTIME);
+ 119   1      
+ 120   1        setuptime = 0 - (firstruntime * CYCLES_PR_MS);
+ 121   1        time -= firstruntime;
+ 122   1        timer_rounds = (uint8_t)(time / MAX_RUNTIME) + 1;
+ 123   1      
+ 124   1        if (setuptime == 0)
+ 125   1        {
+ 126   2          setuptime = MAX_TIME;
+ 127   2          timer_rounds--;
+ 128   2        }
+ 129   1      
+ 130   1        run_timer (setuptime);
+ 131   1      }
+ 132          
+ 133          static void run_timer (uint16_t time)
+ 134          {
+ 135   1        if (time != 0)
+ 136   1        {
+ 137   2          T1_MODE1(); // Setting up mode 1 on timer 1 (16-bit timer) 
+ 138   2          T1_SET_LB((uint8_t)time);
+ 139   2          T1_SET_HB((uint8_t)(time >> 8));
+ 140   2          T1_START();
+ 141   2        }
+ 142   1      }
+ 143          
+ 144          void wait_for_timer (void)
+ 145          {
+ 146   1        while (timer_rounds > 0)
+ 147   1        {
+ 148   2          while (!TIMER1_OVERFLOW())
+ 149   2            ;
+ 150   2      
+ 151   2          timer_rounds--;
+ 152   2      
+ 153   2          if (timer_rounds > 0)
+ 154   2          {
+ 155   3            run_timer (MAX_TIME);
+ 156   3          }
+ 157   2        }
+ 158   1      
+ 159   1        T1_STOP();
+ 160   1      }
+ 161          
+ 162          bool timer_done (void)
+ 163          {
+ 164   1        bool retval = false;
+ 165   1      
+ 166   1        if (TIMER1_OVERFLOW())
+ 167   1        {
+ 168   2          timer_rounds--;
+ 169   2      
+ 170   2          if (timer_rounds > 0)
+ 171   2          {
+ 172   3            run_timer (MAX_TIME);
+ 173   3          }
+ 174   2          else
+ 175   2          {
+ 176   3            retval = true;
+ 177   3            T1_STOP();
+C51 COMPILER V8.16   SYSTEM                                                                04/03/2009 08:18:46 PAGE 4   
+
+ 178   3          }
+ 179   2        }
+ 180   1      
+ 181   1        return retval;
+ 182   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    322    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

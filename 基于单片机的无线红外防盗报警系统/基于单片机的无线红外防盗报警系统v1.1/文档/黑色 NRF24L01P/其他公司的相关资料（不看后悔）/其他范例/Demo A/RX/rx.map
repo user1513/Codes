@@ -1,0 +1,543 @@
+Archive member included because of file (symbol)
+
+c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+                              c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o (exit)
+c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+                              obj/main.o (__do_copy_data)
+c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                              obj/main.o (__do_clear_bss)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+LOAD obj/main.o
+LOAD obj/rf_driver.o
+LOAD obj/nrf24l01.o
+LOAD obj/rf_user_app.o
+LOAD c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5\libm.a
+LOAD c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a
+LOAD c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5\libc.a
+LOAD c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000      0x4c4
+ *(.vectors)
+ .vectors       0x00000000       0x7c c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+                0x00000000                __vectors
+                0x00000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+                0x0000007c                . = ALIGN (0x2)
+                0x0000007c                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x0000007c        0x0 linker stubs
+ *(.trampolines*)
+                0x0000007c                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x0000007c                __ctors_start = .
+ *(.ctors)
+                0x0000007c                __ctors_end = .
+                0x0000007c                __dtors_start = .
+ *(.dtors)
+                0x0000007c                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x0000007c        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+                0x0000007c                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x0000007c        0xc c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000088       0x16 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+                0x00000088                __do_copy_data
+ .init4         0x0000009e       0x10 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                0x0000009e                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x000000ae        0x8 c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+ *(.init9)
+ *(.text)
+ .text          0x000000b6        0x4 c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+                0x000000b6                __vector_22
+                0x000000b6                __vector_28
+                0x000000b6                __vector_24
+                0x000000b6                __vector_12
+                0x000000b6                __bad_interrupt
+                0x000000b6                __vector_6
+                0x000000b6                __vector_3
+                0x000000b6                __vector_23
+                0x000000b6                __vector_30
+                0x000000b6                __vector_25
+                0x000000b6                __vector_11
+                0x000000b6                __vector_13
+                0x000000b6                __vector_17
+                0x000000b6                __vector_19
+                0x000000b6                __vector_7
+                0x000000b6                __vector_27
+                0x000000b6                __vector_5
+                0x000000b6                __vector_4
+                0x000000b6                __vector_9
+                0x000000b6                __vector_2
+                0x000000b6                __vector_21
+                0x000000b6                __vector_15
+                0x000000b6                __vector_29
+                0x000000b6                __vector_8
+                0x000000b6                __vector_26
+                0x000000b6                __vector_14
+                0x000000b6                __vector_10
+                0x000000b6                __vector_16
+                0x000000b6                __vector_18
+                0x000000b6                __vector_20
+ .text          0x000000ba      0x154 obj/main.o
+                0x00000134                __vector_1
+                0x000000fa                ExtInt_Init
+                0x000000ba                Port_Init
+                0x00000152                Rf_T_Data
+                0x00000126                Fill_Memory
+                0x000001a6                main
+                0x0000017c                SystemInit
+                0x000000dc                Timer0_Init
+ .text          0x0000020e       0xd6 obj/rf_driver.o
+                0x0000026e                Spi_MT_Buff
+                0x0000020e                Spi_Init
+                0x000002ba                Spi_MR_Buff
+                0x00000224                Spi_RW_Byte
+                0x0000029c                Spi_MR_Byte
+                0x00000242                Spi_MT_Str
+ .text          0x000002e4      0x12e obj/nrf24l01.o
+                0x00000384                L01_Rd_Reg
+                0x0000034c                L01_Flush_Tx
+                0x000003ac                L01_Rd_RX_Pload
+                0x0000031c                L01_Wr_Reg
+                0x000003a4                L01_Rd_Statu_Reg
+                0x00000394                L01_Rd_Rx_Pw_Pipe_X
+                0x00000356                L01_Flush_Rx
+                0x00000360                L01_Rd_Buff
+                0x0000030e                L01_Wr_Pl
+                0x000002e4                L01_Wr_Buff
+                0x000003dc                L01_Clear_Irq
+ .text          0x00000412       0xae obj/rf_user_app.o
+                0x00000412                Rf_Init
+ .text          0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .text          0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .text          0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                0x000004c0                . = ALIGN (0x2)
+ *(.text.*)
+ .text.libgcc   0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                0x000004c0                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x000004c0        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+                0x000004c0                exit
+                0x000004c0                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x000004c0        0x4 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ *(.fini0)
+                0x000004c4                _etext = .
+
+.data           0x00800100        0x6 load address 0x000004c4
+                0x00800100                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800100        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+ .data          0x00800100        0x0 obj/main.o
+ .data          0x00800100        0x0 obj/rf_driver.o
+ .data          0x00800100        0x0 obj/nrf24l01.o
+ .data          0x00800100        0x5 obj/rf_user_app.o
+ .data          0x00800105        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .data          0x00800105        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .data          0x00800105        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800106                . = ALIGN (0x2)
+ *fill*         0x00800105        0x1 00
+                0x00800106                _edata = .
+                0x00800106                PROVIDE (__data_end, .)
+
+.bss            0x00800106        0x1
+                0x00800106                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00800106        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+ .bss           0x00800106        0x1 obj/main.o
+                0x00800106                G_Ext_Int0_Flag
+ .bss           0x00800107        0x0 obj/rf_driver.o
+ .bss           0x00800107        0x0 obj/nrf24l01.o
+ .bss           0x00800107        0x0 obj/rf_user_app.o
+ .bss           0x00800107        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+ .bss           0x00800107        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+ .bss           0x00800107        0x0 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+ *(.bss*)
+ *(COMMON)
+                0x00800107                PROVIDE (__bss_end, .)
+                0x000004c4                __data_load_start = LOADADDR (.data)
+                0x000004ca                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x00800107        0x0
+                0x00800107                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x00800107                PROVIDE (__noinit_end, .)
+                0x00800107                _end = .
+                0x00800107                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x80
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 obj/main.o
+ .debug_aranges
+                0x00000020       0x20 obj/rf_driver.o
+ .debug_aranges
+                0x00000040       0x20 obj/nrf24l01.o
+ .debug_aranges
+                0x00000060       0x20 obj/rf_user_app.o
+
+.debug_pubnames
+                0x00000000      0x1f8
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x00000000       0x99 obj/main.o
+ .debug_pubnames
+                0x00000099       0x6e obj/rf_driver.o
+ .debug_pubnames
+                0x00000107       0xd3 obj/nrf24l01.o
+ .debug_pubnames
+                0x000001da       0x1e obj/rf_user_app.o
+
+.debug_info     0x00000000      0x8f2
+ *(.debug_info)
+ .debug_info    0x00000000      0x27f obj/main.o
+ .debug_info    0x0000027f      0x34a obj/rf_driver.o
+ .debug_info    0x000005c9      0x291 obj/nrf24l01.o
+ .debug_info    0x0000085a       0x98 obj/rf_user_app.o
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev   0x00000000      0x426
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x168 obj/main.o
+ .debug_abbrev  0x00000168      0x166 obj/rf_driver.o
+ .debug_abbrev  0x000002ce       0xed obj/nrf24l01.o
+ .debug_abbrev  0x000003bb       0x6b obj/rf_user_app.o
+
+.debug_line     0x00000000      0x89f
+ *(.debug_line)
+ .debug_line    0x00000000      0x2fe obj/main.o
+ .debug_line    0x000002fe      0x289 obj/rf_driver.o
+ .debug_line    0x00000587      0x22e obj/nrf24l01.o
+ .debug_line    0x000007b5       0xea obj/rf_user_app.o
+
+.debug_frame    0x00000000      0x1e0
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x90 obj/main.o
+ .debug_frame   0x00000090       0x70 obj/rf_driver.o
+ .debug_frame   0x00000100       0xc0 obj/nrf24l01.o
+ .debug_frame   0x000001c0       0x20 obj/rf_user_app.o
+
+.debug_str      0x00000000      0x2d3
+ *(.debug_str)
+ .debug_str     0x00000000      0x150 obj/main.o
+                                0x198 (size before relaxing)
+ .debug_str     0x00000150       0x9f obj/rf_driver.o
+                                0x16a (size before relaxing)
+ .debug_str     0x000001ef       0xce obj/nrf24l01.o
+                                0x1a5 (size before relaxing)
+ .debug_str     0x000002bd       0x16 obj/rf_user_app.o
+                                 0xd8 (size before relaxing)
+
+.debug_loc      0x00000000      0x3e9
+ *(.debug_loc)
+ .debug_loc     0x00000000       0xb5 obj/main.o
+ .debug_loc     0x000000b5      0x12c obj/rf_driver.o
+ .debug_loc     0x000001e1      0x208 obj/nrf24l01.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(rx.elf elf32-avr)
+LOAD linker stubs
+
+.debug_ranges   0x00000000      0x1d8
+ .debug_ranges  0x00000000      0x1d8 obj/rf_driver.o
+
+Cross Reference Table
+
+Symbol                                            File
+ExtInt_Init                                       obj/main.o
+Fill_Memory                                       obj/main.o
+G_Ext_Int0_Flag                                   obj/main.o
+L01_Clear_Irq                                     obj/nrf24l01.o
+                                                  obj/rf_user_app.o
+                                                  obj/main.o
+L01_Flush_Rx                                      obj/nrf24l01.o
+L01_Flush_Tx                                      obj/nrf24l01.o
+                                                  obj/main.o
+L01_Rd_Buff                                       obj/nrf24l01.o
+L01_Rd_RX_Pload                                   obj/nrf24l01.o
+                                                  obj/main.o
+L01_Rd_Reg                                        obj/nrf24l01.o
+L01_Rd_Rx_Pw_Pipe_X                               obj/nrf24l01.o
+L01_Rd_Statu_Reg                                  obj/nrf24l01.o
+                                                  obj/main.o
+L01_Wr_Buff                                       obj/nrf24l01.o
+                                                  obj/rf_user_app.o
+L01_Wr_Pl                                         obj/nrf24l01.o
+                                                  obj/main.o
+L01_Wr_Reg                                        obj/nrf24l01.o
+                                                  obj/rf_user_app.o
+Port_Init                                         obj/main.o
+Rf_Init                                           obj/rf_user_app.o
+                                                  obj/main.o
+Rf_T_Data                                         obj/main.o
+Spi_Init                                          obj/rf_driver.o
+                                                  obj/rf_user_app.o
+Spi_MR_Buff                                       obj/rf_driver.o
+                                                  obj/nrf24l01.o
+Spi_MR_Byte                                       obj/rf_driver.o
+                                                  obj/nrf24l01.o
+Spi_MT_Buff                                       obj/rf_driver.o
+Spi_MT_Str                                        obj/rf_driver.o
+Spi_RW_Byte                                       obj/rf_driver.o
+                                                  obj/nrf24l01.o
+SystemInit                                        obj/main.o
+Timer0_Init                                       obj/main.o
+__bad_interrupt                                   c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__bss_end                                         c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+__bss_start                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+__data_end                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+__data_load_start                                 c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+__data_start                                      c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+__do_clear_bss                                    c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_clear_bss.o)
+                                                  obj/rf_user_app.o
+                                                  obj/nrf24l01.o
+                                                  obj/rf_driver.o
+                                                  obj/main.o
+__do_copy_data                                    c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_copy_data.o)
+                                                  obj/rf_user_app.o
+                                                  obj/nrf24l01.o
+                                                  obj/rf_driver.o
+                                                  obj/main.o
+__heap_end                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__init                                            c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__stack                                           c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_1                                        obj/main.o
+                                                  c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_10                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_11                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_12                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_13                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_14                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_15                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_16                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_17                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_18                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_19                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_2                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_20                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_21                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_22                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_23                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_24                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_25                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_26                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_27                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_28                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_29                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_3                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_30                                       c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_4                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_5                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_6                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_7                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_8                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_9                                        c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vector_default                                  c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+__vectors                                         c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+_exit                                             c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+exit                                              c:/winavr/bin/../lib/gcc/avr/4.3.2/avr5\libgcc.a(_exit.o)
+                                                  c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o
+main                                              obj/main.o
+                                                  c:/winavr/bin/../lib/gcc/avr/4.3.2/../../../../avr/lib/avr5/crtm324p.o

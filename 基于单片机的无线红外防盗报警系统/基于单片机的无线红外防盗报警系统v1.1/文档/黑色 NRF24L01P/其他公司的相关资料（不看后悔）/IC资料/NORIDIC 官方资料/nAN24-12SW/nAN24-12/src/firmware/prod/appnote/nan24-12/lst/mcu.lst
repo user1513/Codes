@@ -1,0 +1,82 @@
+C51 COMPILER V8.16   MCU                                                                   04/03/2009 08:18:46 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE MCU
+OBJECT MODULE PLACED IN .\obj\mcu.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE lu1_bfb\mcu.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch\hal\i
+                    -nclude;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\mcu.lst) OBJ
+                    -ECT(.\obj\mcu.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2093 $
+  12           */ 
+  13          
+  14           /** @file
+  15           * @ingroup LU1
+  16           * Implementation of nRF24LU1 hardware functions. This file implements the
+  17           * system_init() function, that sets up hardware such as internal clocks,
+  18           * timers, and IO ports.
+  19           *
+  20           * @author Per Kristian Schanke
+  21           */
+  22          
+  23          #include "hal_nrf.h"
+  24          #include "radio.h"
+  25          #include "system.h"
+  26          
+  27          void port_init(uint8_t alt, uint8_t dir, uint8_t value);
+  28          
+  29          /** Function that initialises the spi bus to the radio. */
+  30          void nrf_spi_init(void);
+  31          
+  32          void system_init(void)
+  33          {
+  34   1        port_init(0x00, 0x38, 0x00);      // P0[2..0] outputs LED1,2,3
+  35   1      
+  36   1        USBSLP = 0x01;                    // shut down USB part...save pwr
+  37   1      
+  38   1        delay_10ms();
+  39   1        WUIRQ = 1;                        // wakeup int enabled
+  40   1        EA = 1;                           // global interrupt enable
+  41   1        nrf_spi_init();
+  42   1      }
+  43          
+  44          void port_init(uint8_t alt, uint8_t dir, uint8_t value)
+  45          {
+  46   1        P0ALT = alt;
+  47   1        P0DIR = dir;
+  48   1        P0    = value;  
+  49   1      }
+  50          
+  51          void nrf_spi_init(void)
+  52          {
+  53   1        RFCKEN = 1;        // enable L01 clock
+C51 COMPILER V8.16   MCU                                                                   04/03/2009 08:18:46 PAGE 2   
+
+  54   1        RFCTL = 0x10;      // L01 SPI speed = max (CK/2) & SPI enable
+  55   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

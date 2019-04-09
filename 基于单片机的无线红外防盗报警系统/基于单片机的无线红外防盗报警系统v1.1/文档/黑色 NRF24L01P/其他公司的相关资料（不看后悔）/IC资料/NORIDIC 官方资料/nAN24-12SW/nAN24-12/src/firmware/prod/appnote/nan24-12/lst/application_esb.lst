@@ -1,0 +1,146 @@
+C51 COMPILER V8.16   APPLICATION_ESB                                                       04/03/2009 08:18:48 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE APPLICATION_ESB
+OBJECT MODULE PLACED IN .\obj\application_esb.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE esb\application_esb.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\ar
+                    -ch\hal\include;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\appl
+                    -ication_esb.lst) OBJECT(.\obj\application_esb.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2311 $
+  12           */ 
+  13          
+  14          /** @ingroup ESB 
+  15           * @file
+  16           * Application to show the functionality of the Enhanced ShockBurst mode. 
+  17           *
+  18           * @b PTX @b mode: 
+  19           * - Sends a packet aprox every 100ms
+  20           * - Accepts user interaction at Button 1:
+  21           *   - Not pressed: Send @c 00
+  22           *   - Pressed: Send @c 10
+  23           * - If a ACK was recieved, blink LED2
+  24           * - If a ACK was not recieved, blink LED3
+  25           *
+  26           * @b PRX @b mode:
+  27           * - Constantly checks for data
+  28           * - If no packet recieved in aprox 100ms, turn off all leds
+  29           * - If a packet is recieved, turn on lights according to packet content:
+  30           *    - 0: LED1 off
+  31           *    - 1: LED1 on
+  32           *
+  33           * @author Per Kristian Schanke
+  34           *
+  35           */
+  36          
+  37          #include "hal_nrf.h"
+  38          #include "system.h"
+  39          #include "radio.h"
+  40          #include "application_esb.h"
+  41          #include "target_includes.h"
+  42          
+  43          /** The data to send in ShockBurst mode */
+  44          static xdata uint8_t pload_esb[RF_PAYLOAD_LENGTH];
+  45          
+  46          void device_ptx_mode_esb(void)
+  47          {
+  48   1        while(true)
+  49   1        {
+  50   2          // Wait til the packet is sent
+  51   2          do {
+  52   3            radio_irq ();
+  53   3          } while((radio_get_status ()) == RF_BUSY);
+C51 COMPILER V8.16   APPLICATION_ESB                                                       04/03/2009 08:18:48 PAGE 2   
+
+  54   2      
+  55   2          // Blink LED2 if ACK is recieved, LED3 if not
+  56   2          if (((radio_get_status ()) == RF_TX_DS))
+  57   2          {
+  58   3            LED2_BLINK();
+  59   3          }
+  60   2          else
+  61   2          {
+  62   3            LED3_BLINK();
+  63   3          }
+  64   2      
+  65   2          // Sleep 100ms
+  66   2          start_timer(100);
+  67   2          wait_for_timer();
+  68   2      
+  69   2          // Set up the payload according to the input button 1
+  70   2          pload_esb[0] = 0;
+  71   2      
+  72   2          if(B1_PRESSED())
+  73   2          {
+  74   3            pload_esb[0] = 1;
+  75   3          }
+  76   2      
+  77   2          //Send the packet
+  78   2          radio_send_packet(pload_esb, RF_PAYLOAD_LENGTH);           
+  79   2        }
+  80   1      }
+  81          
+  82          void device_prx_mode_esb(void)
+  83          {
+  84   1        CE_HIGH();        // Set Chip Enable (CE) pin high to enable reciever
+  85   1      
+  86   1        while(true)
+  87   1        { 
+  88   2          start_timer(110);
+  89   2      
+  90   2          // Run until either 110ms has lapsed 
+  91   2          // OR there is data on the radio
+  92   2          do
+  93   2          {
+  94   3            radio_irq ();
+  95   3          } while ((radio_get_status () == RF_IDLE) && !timer_done());
+  96   2          
+  97   2          if ((radio_get_status ()) == RF_RX_DR)
+  98   2          {
+  99   3            // Get the payload from the PTX and set LED1
+ 100   3            if (radio_get_pload_byte (0) == 1)
+ 101   3            {
+ 102   4              LED1_ON();
+ 103   4            }
+ 104   3            else
+ 105   3            {
+ 106   4              LED1_OFF();
+ 107   4            }
+ 108   3          }
+ 109   2          else
+ 110   2          {
+ 111   3            LED1_OFF();
+ 112   3          }
+ 113   2      
+ 114   2          // Set radio status to idle
+ 115   2          radio_set_status (RF_IDLE);
+C51 COMPILER V8.16   APPLICATION_ESB                                                       04/03/2009 08:18:48 PAGE 3   
+
+ 116   2        }
+ 117   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    129    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     10    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

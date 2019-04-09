@@ -1,0 +1,17 @@
+<html>
+<body>
+<pre>
+<h1>礦ision2 Build Log</h1>
+<h2>Project:</h2>
+F:\PROTELDXP\123\开发板备份\JASK1000软件开发包（综合）\JASK-24L01实例源代码\NRF24l01无线记分系统\接收\jifen_jieshou.uv2
+Project File Date:  06/14/2008
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling jifen_jieshou.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_NRF24L01_TXPACKET?JIFEN_JIESHOU
+Program Size: data=63.0 xdata=0 code=1046
+creating hex file from "jifen_jieshou"...
+"jifen_jieshou" - 0 Error(s), 1 Warning(s).

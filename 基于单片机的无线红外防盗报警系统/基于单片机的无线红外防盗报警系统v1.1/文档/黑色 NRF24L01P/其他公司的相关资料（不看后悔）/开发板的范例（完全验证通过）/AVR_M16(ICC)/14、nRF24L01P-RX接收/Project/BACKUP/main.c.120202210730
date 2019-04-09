@@ -1,0 +1,39 @@
+#include "iom16v.h"
+#include "main.h"
+
+#define M32_MOSI   PB5
+#define M32_MISO   PB6
+#define M32_SCK    PB7
+INT8U SPI_SendByte( INT8U value )
+{
+    SPDR = value;    
+    while( !( SPSR &  ( 1 << SPIF ) ) );
+	SPSR &= ~( 1<<SPIF );
+	return SPDR;
+}
+/*
+================================================================================
+Function   : SPI_Initialize( )
+Description: Initialize the SPI bus
+InPut      : None
+Output     : None
+================================================================================
+*/
+void SPI_Initialize( void )
+{   
+    SetBits( DDRB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) );	
+	ClrBits( DDRB, ( 1<<M32_MISO ) );
+	SetBits( PORTB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) | ( 1<<M32_MISO ) );
+	
+	SPCR = (1 << SPE) | (1 << MSTR);	
+	SPSR = (1 << SPI2X);
+}
+
+int main( void )
+{
+
+   SPI_Initialize( );
+   return 0;
+
+ 
+}

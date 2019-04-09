@@ -1,0 +1,161 @@
+#include "iom16v.h"
+#include "main.h"
+#include "nRF24L01.h"
+
+#define M32_MOSI   PB5
+#define M32_MISO   PB6
+#define M32_SCK    PB7
+#ifndef F_CPU
+#define F_CPU				        12000000
+#endif	
+/*
+================================================================================
+Function   : USART_SendChar( )
+Description: Send a single byte via the USART
+InPut      : -dt, The value you want to send
+Output     : None
+================================================================================
+*/
+void USART_SendChar( unsigned char dt )
+{
+		UCSRA |= ( 1<<TXC );
+		UDR = dt;
+		while( !( UCSRA & ( 1<<TXC ) ) ); 
+}
+/*
+================================================================================
+Function   : USART_SendArray( )
+Description: Send a array of data via the USART port
+InPut      : -pBuff, The buffer to store the data
+             -nBytes, How many bytes do you want to send ?
+Output     : None
+================================================================================
+*/
+void USART_SendArray( unsigned char* pBuff, unsigned char nBytes )
+{
+	unsigned char btmp;
+	for( btmp = 0; btmp < nBytes; btmp ++ )
+	{
+		USART_SendChar( *( pBuff + btmp ) );
+	}
+}
+/*
+================================================================================
+Function   : USART_SendArray( )
+Description: Send a array of data via the USART port
+InPut      : -pBuff, The buffer to store the data
+             -nBytes, How many bytes do you want to send ?
+Output     : None
+================================================================================
+*/
+void USART_SendStr( char* pBuff )
+{
+    USART_SendArray( (unsigned char*)pBuff, strlen(pBuff) );
+}
+/*
+================================================================================
+Function   : USART_Init( ),
+Description: Initialize the USART port
+InPut      : None
+Output     : None
+================================================================================
+*/
+#define Bandrate    9600
+void USART_Init( void )
+{
+
+	UCSRB = 0x00; //disable while setting baud rate
+	UCSRA = 0x00;
+	UCSRC = 0x86;
+	UBRRL = ( F_CPU / 16 / Bandrate - 1 ) % 256;
+	UBRRH = ( F_CPU / 16 / Bandrate - 1 ) >> 8;
+	UCSRB = 0x98;
+
+}
+#pragma interrupt_handler ISR_USART:iv_USART0_RX
+volatile unsigned char flag = 0;
+volatile unsigned char dt;
+void ISR_USART( void )
+{
+	dt = UDR;
+	flag = 1;
+}
+INT8U SPI_ExchangeByte( INT8U value )
+{
+    SPDR = value;    
+    while( !( SPSR &  ( 1 << SPIF ) ) );
+	SPSR &= ~( 1<<SPIF );
+	return SPDR;
+}
+/*
+================================================================================
+Function   : SPI_Initialize( )
+Description: Initialize the SPI bus
+InPut      : None
+Output     : None
+================================================================================
+*/
+void SPI_Initialize( void )
+{   
+    SetBits( DDRB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) );	
+	ClrBits( DDRB, ( 1<<M32_MISO ) );
+	SetBits( PORTB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) | ( 1<<M32_MISO ) );
+	
+	SPCR = (1 << SPE) | (1 << MSTR);	
+	SPSR = (1 << SPI2X);
+}
+
+int main( void )
+{
+    INT8U tmp;
+	unsigned char ReplayData[] = {"我很好！\r\n"};
+   SPI_Initialize( );
+   USART_Init( );
+   L01_Init( );	
+   L01_SetRXMode( );
+   L01_WriteHoppingPoint( 0 );
+   USART_SendStr( "nRF24L01P接收测试开始！\r\n" );
+    while( 1 )
+    {
+        for( tmp = 0; tmp < 32; tmp ++ )
+        {
+            testbuffer[tmp] = tmp+0x20;
+        }
+		L01_FlushRX( );
+		L01_FlushTX( );
+		L01_WriteRXPayload_InAck( ReplayData, sizeof( ReplayData ) );
+		while( 1 )
+		{
+			tmp = L01_ReadStatusReg( );
+//			USART_SendChar(tmp);  //for test
+			tmp &= ( 1<<TX_DS ) | ( 1<<MAX_RT ) | ( 1<<RX_DR );
+			_delay_ms( 1 );			
+			if( tmp != 0 )
+			{
+				break;
+			}
+		}
+	 
+        if( tmp & ( 1<<TX_DS ) )
+        {
+         //   USART_SendStr( "发送成功\r\n" );
+        }
+        else if( tmp & ( 1<<MAX_RT ) )
+        {
+         //   USART_SendStr( "发送失败\r\n" );
+        }
+        else if( tmp & ( 1<<RX_DR )  )
+        {
+			L01_WriteRXPayload_InAck( testbuffer, 32 );
+            USART_SendStr( "收到数据:" );
+			tmp = L01_ReadRXPayload( testbuffer );
+			USART_SendArray( testbuffer, tmp );
+			USART_SendStr( "回复数据:" );
+			USART_SendStr( ( char*) ReplayData );
+        }
+        L01_ClearIRQ( IRQ_ALL );
+    }
+   return 0;
+
+ 
+}

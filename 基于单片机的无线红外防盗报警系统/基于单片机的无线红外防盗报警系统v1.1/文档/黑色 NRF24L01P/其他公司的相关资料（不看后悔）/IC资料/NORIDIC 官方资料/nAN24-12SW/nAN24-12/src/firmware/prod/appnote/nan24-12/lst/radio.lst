@@ -1,0 +1,125 @@
+C51 COMPILER V8.16   RADIO                                                                 04/03/2009 08:18:46 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE RADIO
+OBJECT MODULE PLACED IN .\obj\radio.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE radio.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch\hal\include
+                    -;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\radio.lst) OBJECT(
+                    -.\obj\radio.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2310 $
+  12           */ 
+  13          
+  14           /** @file
+  15           * @ingroup Main
+  16           * Radio functions.
+  17           *
+  18           * This file handles all radio communication for the example application, i.e. 
+  19           * radio_init, radio_send_packet and radio_interrupt function.
+  20           *
+  21           * @author Per Kristian Schanke
+  22           */
+  23          
+  24          #include "hal_nrf.h"
+  25          #include "system.h"
+  26          #include "radio.h"
+  27          #include "target_includes.h"
+  28          
+  29          /** The payload sent over the radio. Also contains the recieved data. 
+  30           * Should be read with radio_get_pload_byte(). */
+  31          static xdata uint8_t pload[RF_PAYLOAD_LENGTH];
+  32          /** The current status of the radio. Should be set with radio_set_status(), 
+  33           * and read with radio_get_status().
+  34           */
+  35          static radio_status_t status;
+  36          
+  37          void radio_send_packet(uint8_t *packet, uint8_t length)
+  38          {
+  39   1        hal_nrf_write_tx_pload(packet, length);      // load message into radio
+  40   1        
+  41   1        CE_PULSE();                                 // send packet
+  42   1      
+  43   1        radio_set_status (RF_BUSY);                 // trans. in progress; RF_BUSY
+  44   1      }
+  45          
+  46          radio_status_t radio_get_status (void)
+  47          {
+  48   1        return status;
+  49   1      }
+  50          
+  51          uint8_t radio_get_pload_byte (uint8_t byte_index)
+  52          {
+  53   1        return pload[byte_index];
+C51 COMPILER V8.16   RADIO                                                                 04/03/2009 08:18:46 PAGE 2   
+
+  54   1      }
+  55          
+  56          void radio_set_status (radio_status_t new_status)
+  57          {
+  58   1        status = new_status;
+  59   1      }
+  60          
+  61          void radio_irq(void) 
+  62          {
+  63   1        if (RADIO_ACTIVITY())                         // Check if an interupt is
+  64   1        {                                             // triggered
+  65   2          switch(hal_nrf_get_clear_irq_flags ())
+  66   2          {
+  67   3            case (1<<HAL_NRF_MAX_RT):                 // Max retries reached
+  68   3              hal_nrf_flush_tx();                     // flush tx fifo, avoid fifo jam
+  69   3              radio_set_status (RF_MAX_RT);
+  70   3              break;
+  71   3            
+  72   3            case (1<<HAL_NRF_TX_DS):                  // Packet sent
+  73   3              radio_set_status (RF_TX_DS);
+  74   3              break;
+  75   3            
+  76   3            case (1<<HAL_NRF_RX_DR):                  // Packet received
+  77   3              while (!hal_nrf_rx_fifo_empty ())
+  78   3              {
+  79   4                hal_nrf_read_rx_pload(pload);
+  80   4              }
+  81   3              radio_set_status (RF_RX_DR);
+  82   3              break;
+  83   3        
+  84   3            case ((1<<HAL_NRF_RX_DR)|(1<<HAL_NRF_TX_DS)): // Ack payload recieved
+  85   3              while (!hal_nrf_rx_fifo_empty ())
+  86   3              {
+  87   4                hal_nrf_read_rx_pload(pload);
+  88   4              }
+  89   3              radio_set_status (RF_TX_AP);
+  90   3              break;
+  91   3        
+  92   3            default:
+  93   3              break;    
+  94   3          }
+  95   2      
+  96   2          RESET_RADIO_ACTIVITY();
+  97   2        }
+  98   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    119    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     10    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,159 @@
+C51 COMPILER V9.59.0.0   TEMP                                                              04/06/2019 17:40:37 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE TEMP
+OBJECT MODULE PLACED IN .\Objects\temp.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE temp.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\temp.ls
+                    -t) TABS(2) OBJECT(.\Objects\temp.obj)
+
+line level    source
+
+   1          #include "temp.h"
+   2          
+   3          
+   4          
+   5          float LcdDisplay(int temp)   //lcd显示
+   6          {
+   7   1      
+   8   1        float tp;  
+   9   1        if(temp< 0)       //当温度值为负数
+  10   1          {
+  11   2          //因为读取的温度是实际温度的补码，所以减1，再取反求出原码
+  12   2          temp=temp-1;
+  13   2          temp=~temp;
+  14   2          tp=temp;
+  15   2          temp=tp*0.0625*10+0.5;  
+  16   2          //留两个小数点就*100，+0.5是四舍五入，因为C语言浮点数转换为整型的时候把小数点
+  17   2          //后面的数自动去掉，不管是否大于0.5，而+0.5之后大于0.5的就是进1了，小于0.5的就
+  18   2          //算由?.5，还是在小数点后面。
+  19   2       
+  20   2          }
+  21   1        else
+  22   1          {     
+  23   2          tp=temp;//因为数据处理有小数点所以将温度赋给一个浮点型变量
+  24   2          //如果温度是正的那么，那么正数的原码就是补码它本身
+  25   2          temp=tp*0.0625*10+0.5;  
+  26   2          //留两个小数点就*100，+0.5是四舍五入，因为C语言浮点数转换为整型的时候把小数点
+  27   2          //后面的数自动去掉，不管是否大于0.5，而+0.5之后大于0.5的就是进1了，小于0.5的就
+  28   2          //算加上0.5，还是在小数点后面。
+  29   2        }
+  30   1        return temp;
+  31   1        
+  32   1      }
+  33          
+  34          int Ds18b20ReadTemp()
+  35          {
+  36   1        int temp = 0;
+  37   1        unsigned char tmh, tml;
+  38   1        DS18B20_Reset();                //设备复位
+  39   1          DS18B20_WriteByte(0xCC);        //跳过ROM命令
+  40   1          DS18B20_WriteByte(0x44);        //开始转换命令
+  41   1          while (!DQ);                    //等待转换完成
+  42   1      
+  43   1          DS18B20_Reset();                //设备复位
+  44   1          DS18B20_WriteByte(0xCC);        //跳过ROM命令
+  45   1          DS18B20_WriteByte(0xBE);        //读暂存存储器命令
+  46   1          tml = DS18B20_ReadByte();       //读温度低字节
+  47   1          tmh = DS18B20_ReadByte();       //读温度高字节
+  48   1        temp = tmh;
+  49   1        temp <<= 8;
+  50   1        temp |= tml;
+  51   1        return temp;
+  52   1      }
+  53          
+  54          
+C51 COMPILER V9.59.0.0   TEMP                                                              04/06/2019 17:40:37 PAGE 2   
+
+  55          /**************************************
+  56          延时X微秒(STC12C5A60S2@12M)
+  57          不同的工作环境,需要调整此函数
+  58          此延时函数是使用1T的指令周期进行计算,与传统的12T的MCU不同
+  59          **************************************/
+  60          void DelayXus(BYTE n)
+  61          {
+  62   1          while (n--)
+  63   1          {
+  64   2              _nop_();
+  65   2              _nop_();
+  66   2          }
+  67   1      }
+  68          
+  69          /**************************************
+  70          复位DS18B20,并检测设备是否存在
+  71          **************************************/
+  72          void DS18B20_Reset()
+  73          {
+  74   1          CY = 1;
+  75   1          while (CY)
+  76   1          {
+  77   2              DQ = 0;                     //送出低电平复位信号
+  78   2              DelayXus(240);              //延时至少480us
+  79   2              DelayXus(240);
+  80   2              DQ = 1;                     //释放数据线
+  81   2              DelayXus(60);               //等待60us
+  82   2              CY = DQ;                    //检测存在脉冲
+  83   2              DelayXus(240);              //等待设备释放数据线
+  84   2              DelayXus(180);
+  85   2          }
+  86   1      }
+  87          
+  88          /**************************************
+  89          从DS18B20读1字节数据
+  90          **************************************/
+  91          BYTE DS18B20_ReadByte()
+  92          {
+  93   1          BYTE i;
+  94   1          BYTE dat = 0;
+  95   1      
+  96   1          for (i=0; i<8; i++)             //8位计数器
+  97   1          {
+  98   2              dat >>= 1;
+  99   2              DQ = 0;                     //开始时间片
+ 100   2              DelayXus(1);                //延时等待
+ 101   2              DQ = 1;                     //准备接收
+ 102   2              DelayXus(1);                //接收延时
+ 103   2              if (DQ) dat |= 0x80;        //读取数据
+ 104   2              DelayXus(60);               //等待时间片结束
+ 105   2          }
+ 106   1      
+ 107   1          return dat;
+ 108   1      }
+ 109          
+ 110          /**************************************
+ 111          向DS18B20写1字节数据
+ 112          **************************************/
+ 113          void DS18B20_WriteByte(BYTE dat)
+ 114          {
+ 115   1          char i;
+ 116   1      
+C51 COMPILER V9.59.0.0   TEMP                                                              04/06/2019 17:40:37 PAGE 3   
+
+ 117   1          for (i=0; i<8; i++)             //8位计数器
+ 118   1          {
+ 119   2              DQ = 0;                     //开始时间片
+ 120   2              DelayXus(1);                //延时等待
+ 121   2              dat >>= 1;                  //送出数据
+ 122   2              DQ = CY;
+ 123   2              DelayXus(60);               //等待时间片结束
+ 124   2              DQ = 1;                     //恢复数据线
+ 125   2              DelayXus(1);                //恢复延时
+ 126   2          }
+ 127   1      }
+ 128          
+ 129          /********************************************************************
+ 130                                        结束
+ 131          *********************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    279    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

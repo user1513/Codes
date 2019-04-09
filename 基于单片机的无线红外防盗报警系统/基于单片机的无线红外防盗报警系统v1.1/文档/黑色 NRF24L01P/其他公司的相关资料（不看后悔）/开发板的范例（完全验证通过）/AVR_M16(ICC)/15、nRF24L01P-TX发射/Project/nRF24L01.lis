@@ -1,0 +1,1427 @@
+                        .module nRF24L01.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ..\..\..\..\..\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+ 0000                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+ 0000                   .dbfunc e L01_ReadSingleReg _L01_ReadSingleReg fc
+ 0000           ;           btmp -> R10
+ 0000           ;           Addr -> R10
+                        .even
+ 0000           _L01_ReadSingleReg::
+ 0000 AA92              st -y,R10
+ 0002 A02E              mov R10,R16
+ 0004                   .dbline -1
+ 0004                   .dbline 41
+ 0004           ; /*
+ 0004           ; ================================================================================
+ 0004           ; Copyright(c)  Yihe Embedded Studio, All rights reserved.
+ 0004           ;               www.yh-mcu.com
+ 0004           ;               http://yh-mcu.taobao.com
+ 0004           ; 
+ 0004           ; File Name   : nRF24L01.c
+ 0004           ; Description : nRF24L01 low level operations and configurations.
+ 0004           ; Author      : ShawZhang,LiYong
+ 0004           ; Date        : 2009-4-17 9:08:36
+ 0004           ; Version     : 1.0
+ 0004           ; Compiler    : Any
+ 0004           ; Note        : None
+ 0004           ; ================================================================================
+ 0004           ; */
+ 0004           ; #define _nRF24L01_C_
+ 0004           ; #include "nRF24L01.h"
+ 0004           ; 
+ 0004           ; 
+ 0004           ; 
+ 0004           ; #if DATA_SPEED == 0   //250Kbps
+ 0004           ; #define REG_SETUP_SPD
+ 0004           ; #elif DATA_SPEED == 1 //1Mbps
+ 0004           ; #define REG_SETUP_SPD
+ 0004           ; #elif DATA_SPEED == 2 //2Mbps
+ 0004           ; #else
+ 0004           ; #error "Error : Your macro 'DATA_SPEED' is not supported for nRF24L01+ !"
+ 0004           ; #endif
+ 0004           ; 
+ 0004           ; 
+ 0004           ; 
+ 0004           ; /*
+ 0004           ; ================================================================================
+ 0004           ; Function : L01_ReadSingleReg( )
+ 0004           ; Description : Read a single register of nRF24L01
+ 0004           ; Input : -Addr, The address of the register
+ 0004           ; Output: The value read from the register
+ 0004           ; ================================================================================
+ 0004           ; */
+ 0004           ; INT8U L01_ReadSingleReg( INT8U Addr )
+ 0004           ; {
+ 0004                   .dbline 43
+ 0004           ;     INT8U btmp;
+ 0004           ;     L01_CSN_LOW( );
+ 0004                   .dbline 43
+ 0004 C098              cbi 0x18,0
+ 0006                   .dbline 43
+ 0006 B89A              sbi 0x17,0
+ 0008                   .dbline 43
+ 0008                   .dbline 43
+ 0008                   .dbline 44
+ 0008           ;     SPI_ExchangeByte( R_REGISTER | Addr );
+ 0008 0A2D              mov R16,R10
+ 000A 0E940000          xcall _SPI_ExchangeByte
+ 000E                   .dbline 45
+ 000E           ;     btmp = SPI_ExchangeByte( 0xFF );
+ 000E 0FEF              ldi R16,255
+ 0010 0E940000          xcall _SPI_ExchangeByte
+ 0014 A02E              mov R10,R16
+ 0016                   .dbline 46
+ 0016           ;     L01_CSN_HIGH( );
+ 0016                   .dbline 46
+ 0016 C09A              sbi 0x18,0
+ 0018                   .dbline 46
+ 0018 B89A              sbi 0x17,0
+ 001A                   .dbline 46
+ 001A                   .dbline 46
+ 001A                   .dbline 47
+ 001A           ;     return btmp;
+ 001A                   .dbline -2
+ 001A           L2:
+ 001A                   .dbline 0 ; func end
+ 001A A990              ld R10,y+
+ 001C 0895              ret
+ 001E                   .dbsym r btmp 10 c
+ 001E                   .dbsym r Addr 10 c
+ 001E                   .dbend
+ 001E                   .dbfunc e L01_ReadMultiReg _L01_ReadMultiReg fV
+ 001E           ;           btmp -> R10
+ 001E           ;          pBuff -> R12,R13
+ 001E           ;         nBytes -> R14
+ 001E           ;      StartAddr -> R10
+                        .even
+ 001E           _L01_ReadMultiReg::
+ 001E 0E940000          xcall push_xgset00FC
+ 0022 E22E              mov R14,R18
+ 0024 A02E              mov R10,R16
+ 0026 CE80              ldd R12,y+6
+ 0028 DF80              ldd R13,y+7
+ 002A                   .dbline -1
+ 002A                   .dbline 60
+ 002A           ; }
+ 002A           ; /*
+ 002A           ; ================================================================================
+ 002A           ; Function : L01_ReadMultiReg( )
+ 002A           ; Description : Read several registers of nRF24L01
+ 002A           ; Input : -StartAddr, The start address of the registers
+ 002A           ;         -nBytes, How many registers do you want to read
+ 002A           ;         -pBuff, The buffer to save the values
+ 002A           ; Output: None
+ 002A           ; ================================================================================
+ 002A           ; */
+ 002A           ; void L01_ReadMultiReg( INT8U StartAddr, INT8U nBytes, INT8U *pBuff )
+ 002A           ; {
+ 002A                   .dbline 62
+ 002A           ;     INT8U btmp;
+ 002A           ;     L01_CSN_LOW( );
+ 002A                   .dbline 62
+ 002A C098              cbi 0x18,0
+ 002C                   .dbline 62
+ 002C B89A              sbi 0x17,0
+ 002E                   .dbline 62
+ 002E                   .dbline 62
+ 002E                   .dbline 63
+ 002E           ;     SPI_ExchangeByte( R_REGISTER | StartAddr );
+ 002E 0A2D              mov R16,R10
+ 0030 0E940000          xcall _SPI_ExchangeByte
+ 0034                   .dbline 64
+ 0034           ;     for( btmp = 0; btmp < nBytes; btmp ++ )
+ 0034 AA24              clr R10
+ 0036 09C0              xjmp L7
+ 0038           L4:
+ 0038                   .dbline 65
+ 0038           ;     {
+ 0038                   .dbline 66
+ 0038           ;         *( pBuff + btmp ) = SPI_ExchangeByte( 0xFF );
+ 0038 0FEF              ldi R16,255
+ 003A 0E940000          xcall _SPI_ExchangeByte
+ 003E EA2D              mov R30,R10
+ 0040 FF27              clr R31
+ 0042 EC0D              add R30,R12
+ 0044 FD1D              adc R31,R13
+ 0046 0083              std z+0,R16
+ 0048                   .dbline 67
+ 0048           ;     }
+ 0048           L5:
+ 0048                   .dbline 64
+ 0048 A394              inc R10
+ 004A           L7:
+ 004A                   .dbline 64
+ 004A AE14              cp R10,R14
+ 004C A8F3              brlo L4
+ 004E           X0:
+ 004E                   .dbline 68
+ 004E           ;     L01_CSN_HIGH( );
+ 004E                   .dbline 68
+ 004E C09A              sbi 0x18,0
+ 0050                   .dbline 68
+ 0050 B89A              sbi 0x17,0
+ 0052                   .dbline 68
+ 0052                   .dbline 68
+ 0052                   .dbline -2
+ 0052           L3:
+ 0052                   .dbline 0 ; func end
+ 0052 0C940000          xjmp pop_xgset00FC
+ 0056                   .dbsym r btmp 10 c
+ 0056                   .dbsym r pBuff 12 pc
+ 0056                   .dbsym r nBytes 14 c
+ 0056                   .dbsym r StartAddr 10 c
+ 0056                   .dbend
+ 0056                   .dbfunc e L01_WriteSingleReg _L01_WriteSingleReg fV
+ 0056           ;          Value -> R10
+ 0056           ;           Addr -> R20
+                        .even
+ 0056           _L01_WriteSingleReg::
+ 0056 AA92              st -y,R10
+ 0058 4A93              st -y,R20
+ 005A A22E              mov R10,R18
+ 005C 402F              mov R20,R16
+ 005E                   .dbline -1
+ 005E                   .dbline 80
+ 005E           ; }
+ 005E           ; /*
+ 005E           ; ================================================================================
+ 005E           ; Function : L01_WriteSingleReg( )
+ 005E           ; Description : Write a single byte to a register
+ 005E           ; Input : -Addr, The address of the register
+ 005E           ;         -Value, The value to be written
+ 005E           ; Output: None
+ 005E           ; ================================================================================
+ 005E           ; */
+ 005E           ; void L01_WriteSingleReg( INT8U Addr, INT8U Value )
+ 005E           ; {
+ 005E                   .dbline 81
+ 005E           ;     L01_CSN_LOW( );
+ 005E                   .dbline 81
+ 005E C098              cbi 0x18,0
+ 0060                   .dbline 81
+ 0060 B89A              sbi 0x17,0
+ 0062                   .dbline 81
+ 0062                   .dbline 81
+ 0062                   .dbline 82
+ 0062           ;     SPI_ExchangeByte( W_REGISTER | Addr );
+ 0062 042F              mov R16,R20
+ 0064 0062              ori R16,32
+ 0066 0E940000          xcall _SPI_ExchangeByte
+ 006A                   .dbline 83
+ 006A           ;     SPI_ExchangeByte( Value );
+ 006A 0A2D              mov R16,R10
+ 006C 0E940000          xcall _SPI_ExchangeByte
+ 0070                   .dbline 84
+ 0070           ;     L01_CSN_HIGH( );
+ 0070                   .dbline 84
+ 0070 C09A              sbi 0x18,0
+ 0072                   .dbline 84
+ 0072 B89A              sbi 0x17,0
+ 0074                   .dbline 84
+ 0074                   .dbline 84
+ 0074                   .dbline -2
+ 0074           L8:
+ 0074                   .dbline 0 ; func end
+ 0074 4991              ld R20,y+
+ 0076 A990              ld R10,y+
+ 0078 0895              ret
+ 007A                   .dbsym r Value 10 c
+ 007A                   .dbsym r Addr 20 c
+ 007A                   .dbend
+ 007A                   .dbfunc e L01_WriteMultiReg _L01_WriteMultiReg fV
+ 007A           ;              i -> R10
+ 007A           ;         Length -> R12
+ 007A           ;          pBuff -> R14,R15
+ 007A           ;      StartAddr -> R20
+                        .even
+ 007A           _L01_WriteMultiReg::
+ 007A 0E940000          xcall push_xgset30FC
+ 007E 7901              movw R14,R18
+ 0080 402F              mov R20,R16
+ 0082 C884              ldd R12,y+8
+ 0084                   .dbline -1
+ 0084                   .dbline 97
+ 0084           ; }
+ 0084           ; /*
+ 0084           ; ================================================================================
+ 0084           ; Function : L01_WriteMultiReg( )
+ 0084           ; Description : Read several registers of nRF24L01
+ 0084           ; Input : -StartAddr, The start address of the registers
+ 0084           ;         -pBuff, The buffer store the values
+ 0084           ;         -Length, How many registers do you want to write
+ 0084           ; Output: None
+ 0084           ; ================================================================================
+ 0084           ; */
+ 0084           ; void L01_WriteMultiReg( INT8U StartAddr, INT8U *pBuff, INT8U Length )
+ 0084           ; {
+ 0084                   .dbline 99
+ 0084           ;     INT8U i;
+ 0084           ;     L01_CSN_LOW( );
+ 0084                   .dbline 99
+ 0084 C098              cbi 0x18,0
+ 0086                   .dbline 99
+ 0086 B89A              sbi 0x17,0
+ 0088                   .dbline 99
+ 0088                   .dbline 99
+ 0088                   .dbline 100
+ 0088           ;     SPI_ExchangeByte( W_REGISTER | StartAddr );
+ 0088 042F              mov R16,R20
+ 008A 0062              ori R16,32
+ 008C 0E940000          xcall _SPI_ExchangeByte
+ 0090                   .dbline 101
+ 0090           ;     for( i = 0; i < Length; i ++ )
+ 0090 AA24              clr R10
+ 0092 08C0              xjmp L13
+ 0094           L10:
+ 0094                   .dbline 102
+ 0094           ;     {
+ 0094                   .dbline 103
+ 0094           ;         SPI_ExchangeByte( *( pBuff + i ) );
+ 0094 EA2D              mov R30,R10
+ 0096 FF27              clr R31
+ 0098 EE0D              add R30,R14
+ 009A FF1D              adc R31,R15
+ 009C 0081              ldd R16,z+0
+ 009E 0E940000          xcall _SPI_ExchangeByte
+ 00A2                   .dbline 104
+ 00A2           ;     }
+ 00A2           L11:
+ 00A2                   .dbline 101
+ 00A2 A394              inc R10
+ 00A4           L13:
+ 00A4                   .dbline 101
+ 00A4 AC14              cp R10,R12
+ 00A6 B0F3              brlo L10
+ 00A8           X1:
+ 00A8                   .dbline 105
+ 00A8           ;     L01_CSN_HIGH( );
+ 00A8                   .dbline 105
+ 00A8 C09A              sbi 0x18,0
+ 00AA                   .dbline 105
+ 00AA B89A              sbi 0x17,0
+ 00AC                   .dbline 105
+ 00AC                   .dbline 105
+ 00AC                   .dbline -2
+ 00AC           L9:
+ 00AC                   .dbline 0 ; func end
+ 00AC 0C940000          xjmp pop_xgset30FC
+ 00B0                   .dbsym r i 10 c
+ 00B0                   .dbsym r Length 12 c
+ 00B0                   .dbsym r pBuff 14 pc
+ 00B0                   .dbsym r StartAddr 20 c
+ 00B0                   .dbend
+ 00B0                   .dbfunc e L01_FlushTX _L01_FlushTX fV
+                        .even
+ 00B0           _L01_FlushTX::
+ 00B0                   .dbline -1
+ 00B0                   .dbline 116
+ 00B0           ; }
+ 00B0           ; /*
+ 00B0           ; ================================================================================
+ 00B0           ; Function : L01_FlushTX( )
+ 00B0           ; Description : Flush the TX buffer
+ 00B0           ; Input : None
+ 00B0           ; Output: None
+ 00B0           ; ================================================================================
+ 00B0           ; */
+ 00B0           ; void L01_FlushTX( void )
+ 00B0           ; {
+ 00B0                   .dbline 117
+ 00B0           ;     L01_CSN_LOW( );
+ 00B0                   .dbline 117
+ 00B0 C098              cbi 0x18,0
+ 00B2                   .dbline 117
+ 00B2 B89A              sbi 0x17,0
+ 00B4                   .dbline 117
+ 00B4                   .dbline 117
+ 00B4                   .dbline 118
+ 00B4           ;     SPI_ExchangeByte( FLUSH_TX );
+ 00B4 01EE              ldi R16,225
+ 00B6 0E940000          xcall _SPI_ExchangeByte
+ 00BA                   .dbline 119
+ 00BA           ;     L01_CSN_HIGH( );
+ 00BA                   .dbline 119
+ 00BA C09A              sbi 0x18,0
+ 00BC                   .dbline 119
+ 00BC B89A              sbi 0x17,0
+ 00BE                   .dbline 119
+ 00BE                   .dbline 119
+ 00BE                   .dbline -2
+ 00BE           L14:
+ 00BE                   .dbline 0 ; func end
+ 00BE 0895              ret
+ 00C0                   .dbend
+ 00C0                   .dbfunc e L01_FlushRX _L01_FlushRX fV
+                        .even
+ 00C0           _L01_FlushRX::
+ 00C0                   .dbline -1
+ 00C0                   .dbline 130
+ 00C0           ; }
+ 00C0           ; /*
+ 00C0           ; ================================================================================
+ 00C0           ; Function : L01_FlushRX( )
+ 00C0           ; Description : Flush the RX buffer
+ 00C0           ; Input : None
+ 00C0           ; Output: None
+ 00C0           ; ================================================================================
+ 00C0           ; */
+ 00C0           ; void L01_FlushRX( void )
+ 00C0           ; {
+ 00C0                   .dbline 131
+ 00C0           ;     L01_CSN_LOW( );
+ 00C0                   .dbline 131
+ 00C0 C098              cbi 0x18,0
+ 00C2                   .dbline 131
+ 00C2 B89A              sbi 0x17,0
+ 00C4                   .dbline 131
+ 00C4                   .dbline 131
+ 00C4                   .dbline 132
+ 00C4           ;     SPI_ExchangeByte( FLUSH_RX );
+ 00C4 02EE              ldi R16,226
+ 00C6 0E940000          xcall _SPI_ExchangeByte
+ 00CA                   .dbline 133
+ 00CA           ;     L01_CSN_HIGH( );
+ 00CA                   .dbline 133
+ 00CA C09A              sbi 0x18,0
+ 00CC                   .dbline 133
+ 00CC B89A              sbi 0x17,0
+ 00CE                   .dbline 133
+ 00CE                   .dbline 133
+ 00CE                   .dbline -2
+ 00CE           L15:
+ 00CE                   .dbline 0 ; func end
+ 00CE 0895              ret
+ 00D0                   .dbend
+ 00D0                   .dbfunc e L01_ReuseTXPayload _L01_ReuseTXPayload fV
+                        .even
+ 00D0           _L01_ReuseTXPayload::
+ 00D0                   .dbline -1
+ 00D0                   .dbline 144
+ 00D0           ; }
+ 00D0           ; /*
+ 00D0           ; ================================================================================
+ 00D0           ; Function : L01_ReuseTXPayload( )
+ 00D0           ; Description : Reuse the last transmitted payload
+ 00D0           ; Input : None
+ 00D0           ; Output: None
+ 00D0           ; ================================================================================
+ 00D0           ; */
+ 00D0           ; void L01_ReuseTXPayload( void )
+ 00D0           ; {
+ 00D0                   .dbline 145
+ 00D0           ;     L01_CSN_LOW( );
+ 00D0                   .dbline 145
+ 00D0 C098              cbi 0x18,0
+ 00D2                   .dbline 145
+ 00D2 B89A              sbi 0x17,0
+ 00D4                   .dbline 145
+ 00D4                   .dbline 145
+ 00D4                   .dbline 146
+ 00D4           ;     SPI_ExchangeByte( REUSE_TX_PL );
+ 00D4 03EE              ldi R16,227
+ 00D6 0E940000          xcall _SPI_ExchangeByte
+ 00DA                   .dbline 147
+ 00DA           ;     L01_CSN_HIGH( );
+ 00DA                   .dbline 147
+ 00DA C09A              sbi 0x18,0
+ 00DC                   .dbline 147
+ 00DC B89A              sbi 0x17,0
+ 00DE                   .dbline 147
+ 00DE                   .dbline 147
+ 00DE                   .dbline -2
+ 00DE           L16:
+ 00DE                   .dbline 0 ; func end
+ 00DE 0895              ret
+ 00E0                   .dbend
+ 00E0                   .dbfunc e L01_Nop _L01_Nop fV
+                        .even
+ 00E0           _L01_Nop::
+ 00E0                   .dbline -1
+ 00E0                   .dbline 158
+ 00E0           ; }
+ 00E0           ; /*
+ 00E0           ; ================================================================================
+ 00E0           ; Function : L01_Nop( )
+ 00E0           ; Description : nop operation of nRF24L01
+ 00E0           ; Input : None
+ 00E0           ; Output: None
+ 00E0           ; ================================================================================
+ 00E0           ; */
+ 00E0           ; void L01_Nop( void )
+ 00E0           ; {
+ 00E0                   .dbline 159
+ 00E0           ;     L01_CSN_LOW( );
+ 00E0                   .dbline 159
+ 00E0 C098              cbi 0x18,0
+ 00E2                   .dbline 159
+ 00E2 B89A              sbi 0x17,0
+ 00E4                   .dbline 159
+ 00E4                   .dbline 159
+ 00E4                   .dbline 160
+ 00E4           ;     SPI_ExchangeByte( L01_NOP );
+ 00E4 0FEF              ldi R16,255
+ 00E6 0E940000          xcall _SPI_ExchangeByte
+ 00EA                   .dbline 161
+ 00EA           ;     L01_CSN_HIGH( );
+ 00EA                   .dbline 161
+ 00EA C09A              sbi 0x18,0
+ 00EC                   .dbline 161
+ 00EC B89A              sbi 0x17,0
+ 00EE                   .dbline 161
+ 00EE                   .dbline 161
+ 00EE                   .dbline -2
+ 00EE           L17:
+ 00EE                   .dbline 0 ; func end
+ 00EE 0895              ret
+ 00F0                   .dbend
+ 00F0                   .dbfunc e L01_ReadStatusReg _L01_ReadStatusReg fc
+ 00F0           ;         Status -> R10
+                        .even
+ 00F0           _L01_ReadStatusReg::
+ 00F0 AA92              st -y,R10
+ 00F2                   .dbline -1
+ 00F2                   .dbline 172
+ 00F2           ; }
+ 00F2           ; /*
+ 00F2           ; ================================================================================
+ 00F2           ; Function : L01_ReadStatusReg( )
+ 00F2           ; Description : Read statu register of nRF24L01
+ 00F2           ; Input : None
+ 00F2           ; Output: Statu register of nRF24L01
+ 00F2           ; ================================================================================
+ 00F2           ; */
+ 00F2           ; INT8U L01_ReadStatusReg( void )
+ 00F2           ; {
+ 00F2                   .dbline 174
+ 00F2           ;     INT8U Status;
+ 00F2           ;     L01_CSN_LOW( );
+ 00F2                   .dbline 174
+ 00F2 C098              cbi 0x18,0
+ 00F4                   .dbline 174
+ 00F4 B89A              sbi 0x17,0
+ 00F6                   .dbline 174
+ 00F6                   .dbline 174
+ 00F6                   .dbline 175
+ 00F6           ;     Status = SPI_ExchangeByte( R_REGISTER + L01REG_STATUS );
+ 00F6 07E0              ldi R16,7
+ 00F8 0E940000          xcall _SPI_ExchangeByte
+ 00FC A02E              mov R10,R16
+ 00FE                   .dbline 176
+ 00FE           ;     L01_CSN_HIGH( );
+ 00FE                   .dbline 176
+ 00FE C09A              sbi 0x18,0
+ 0100                   .dbline 176
+ 0100 B89A              sbi 0x17,0
+ 0102                   .dbline 176
+ 0102                   .dbline 176
+ 0102                   .dbline 177
+ 0102           ;     return Status;
+ 0102                   .dbline -2
+ 0102           L18:
+ 0102                   .dbline 0 ; func end
+ 0102 A990              ld R10,y+
+ 0104 0895              ret
+ 0106                   .dbsym r Status 10 c
+ 0106                   .dbend
+ 0106                   .dbfunc e L01_ClearIRQ _L01_ClearIRQ fV
+ 0106           ;           btmp -> R10
+ 0106           ;     IRQ_Source -> R20
+                        .even
+ 0106           _L01_ClearIRQ::
+ 0106 AA92              st -y,R10
+ 0108 4A93              st -y,R20
+ 010A 402F              mov R20,R16
+ 010C                   .dbline -1
+ 010C                   .dbline 188
+ 010C           ; }
+ 010C           ; /*
+ 010C           ; ================================================================================
+ 010C           ; Function : L01_ClearIRQ( )
+ 010C           ; Description : Clear IRQ cuased by nRF24L01
+ 010C           ; Input : None
+ 010C           ; Output: None
+ 010C           ; ================================================================================
+ 010C           ; */
+ 010C           ; void L01_ClearIRQ( INT8U IRQ_Source )
+ 010C           ; {
+ 010C                   .dbline 189
+ 010C           ;     INT8U btmp = 0;
+ 010C                   .dbline 191
+ 010C           ; 
+ 010C           ;     IRQ_Source &= ( 1<<RX_DR ) | ( 1<<TX_DS ) | ( 1<<MAX_RT );
+ 010C 4077              andi R20,112
+ 010E                   .dbline 192
+ 010E           ;     btmp = L01_ReadStatusReg( );
+ 010E F0DF              xcall _L01_ReadStatusReg
+ 0110 A02E              mov R10,R16
+ 0112                   .dbline 193
+ 0112           ;     L01_CSN_LOW( );
+ 0112                   .dbline 193
+ 0112 C098              cbi 0x18,0
+ 0114                   .dbline 193
+ 0114 B89A              sbi 0x17,0
+ 0116                   .dbline 193
+ 0116                   .dbline 193
+ 0116                   .dbline 194
+ 0116           ;     SPI_ExchangeByte( W_REGISTER + L01REG_STATUS );
+ 0116 07E2              ldi R16,39
+ 0118 0E940000          xcall _SPI_ExchangeByte
+ 011C                   .dbline 195
+ 011C           ;     SPI_ExchangeByte( IRQ_Source | btmp );
+ 011C 042F              mov R16,R20
+ 011E 0A29              or R16,R10
+ 0120 0E940000          xcall _SPI_ExchangeByte
+ 0124                   .dbline 196
+ 0124           ;     L01_CSN_HIGH( );
+ 0124                   .dbline 196
+ 0124 C09A              sbi 0x18,0
+ 0126                   .dbline 196
+ 0126 B89A              sbi 0x17,0
+ 0128                   .dbline 196
+ 0128                   .dbline 196
+ 0128                   .dbline 197
+ 0128           ;     L01_ReadStatusReg( );
+ 0128 E3DF              xcall _L01_ReadStatusReg
+ 012A                   .dbline -2
+ 012A           L19:
+ 012A                   .dbline 0 ; func end
+ 012A 4991              ld R20,y+
+ 012C A990              ld R10,y+
+ 012E 0895              ret
+ 0130                   .dbsym r btmp 10 c
+ 0130                   .dbsym r IRQ_Source 20 c
+ 0130                   .dbend
+ 0130                   .dbfunc e L01_ReadIRQSource _L01_ReadIRQSource fc
+                        .even
+ 0130           _L01_ReadIRQSource::
+ 0130                   .dbline -1
+ 0130                   .dbline 208
+ 0130           ; }
+ 0130           ; /*
+ 0130           ; ================================================================================
+ 0130           ; Function : L01_ReadIRQSource( )
+ 0130           ; Description : Read the IRQ source of nRF24L01+
+ 0130           ; Input : None
+ 0130           ; Output: IRQ source mask code
+ 0130           ; ================================================================================
+ 0130           ; */
+ 0130           ; INT8U L01_ReadIRQSource( void )
+ 0130           ; {
+ 0130                   .dbline 209
+ 0130           ;     return ( L01_ReadStatusReg( ) & ( ( 1<<RX_DR ) | ( 1<<TX_DS ) | ( 1<<MAX_RT ) ) );
+ 0130 DFDF              xcall _L01_ReadStatusReg
+ 0132 0077              andi R16,112
+ 0134                   .dbline -2
+ 0134           L20:
+ 0134                   .dbline 0 ; func end
+ 0134 0895              ret
+ 0136                   .dbend
+ 0136                   .dbfunc e L01_ReadTopFIFOWidth _L01_ReadTopFIFOWidth fc
+ 0136           ;           btmp -> R10
+                        .even
+ 0136           _L01_ReadTopFIFOWidth::
+ 0136 AA92              st -y,R10
+ 0138                   .dbline -1
+ 0138                   .dbline 220
+ 0138           ; }
+ 0138           ; /*
+ 0138           ; ================================================================================
+ 0138           ; Function : L01_ReadTopFIFOWidth( )
+ 0138           ; Description : Read the payload width of the top buffer of FIFO
+ 0138           ; Input : None
+ 0138           ; Output: The width of the pipe buffer
+ 0138           ; ================================================================================
+ 0138           ; */
+ 0138           ; INT8U L01_ReadTopFIFOWidth( void )
+ 0138           ; {
+ 0138                   .dbline 222
+ 0138           ;     INT8U btmp;
+ 0138           ;     L01_CSN_LOW( );
+ 0138                   .dbline 222
+ 0138 C098              cbi 0x18,0
+ 013A                   .dbline 222
+ 013A B89A              sbi 0x17,0
+ 013C                   .dbline 222
+ 013C                   .dbline 222
+ 013C                   .dbline 223
+ 013C           ;     SPI_ExchangeByte( R_RX_PL_WID );
+ 013C 00E6              ldi R16,96
+ 013E 0E940000          xcall _SPI_ExchangeByte
+ 0142                   .dbline 224
+ 0142           ;     btmp = SPI_ExchangeByte( 0xFF );
+ 0142 0FEF              ldi R16,255
+ 0144 0E940000          xcall _SPI_ExchangeByte
+ 0148 A02E              mov R10,R16
+ 014A                   .dbline 225
+ 014A           ;     L01_CSN_HIGH( );
+ 014A                   .dbline 225
+ 014A C09A              sbi 0x18,0
+ 014C                   .dbline 225
+ 014C B89A              sbi 0x17,0
+ 014E                   .dbline 225
+ 014E                   .dbline 225
+ 014E                   .dbline 226
+ 014E           ;     return btmp;
+ 014E                   .dbline -2
+ 014E           L21:
+ 014E                   .dbline 0 ; func end
+ 014E A990              ld R10,y+
+ 0150 0895              ret
+ 0152                   .dbsym r btmp 10 c
+ 0152                   .dbend
+ 0152                   .dbfunc e L01_ReadRXPayload _L01_ReadRXPayload fc
+ 0152           ;          width -> R10
+ 0152           ;        PipeNum -> R20
+ 0152           ;          pBuff -> R12,R13
+                        .even
+ 0152           _L01_ReadRXPayload::
+ 0152 0E940000          xcall push_xgset30FC
+ 0156 6801              movw R12,R16
+ 0158                   .dbline -1
+ 0158                   .dbline 237
+ 0158           ; }
+ 0158           ; /*
+ 0158           ; ================================================================================
+ 0158           ; Function : L01_ReadRXPayload( )
+ 0158           ; Description : Read the RX payload from internal buffer
+ 0158           ; Input : -pBuff, buffer to store the data
+ 0158           ; Output: The length of data read
+ 0158           ; ================================================================================
+ 0158           ; */
+ 0158           ; INT8U L01_ReadRXPayload( INT8U *pBuff )
+ 0158           ; {
+ 0158                   .dbline 239
+ 0158           ;     INT8U width, PipeNum;
+ 0158           ;     PipeNum = ( L01_ReadSingleReg( L01REG_STATUS ) >> 1 ) & 0x07;
+ 0158 07E0              ldi R16,7
+ 015A 52DF              xcall _L01_ReadSingleReg
+ 015C 402F              mov R20,R16
+ 015E 4695              lsr R20
+ 0160 4770              andi R20,7
+ 0162                   .dbline 240
+ 0162           ;     width = L01_ReadTopFIFOWidth( );
+ 0162 E9DF              xcall _L01_ReadTopFIFOWidth
+ 0164 A02E              mov R10,R16
+ 0166                   .dbline 242
+ 0166           ; 
+ 0166           ;     L01_CSN_LOW( );
+ 0166                   .dbline 242
+ 0166 C098              cbi 0x18,0
+ 0168                   .dbline 242
+ 0168 B89A              sbi 0x17,0
+ 016A                   .dbline 242
+ 016A                   .dbline 242
+ 016A                   .dbline 243
+ 016A           ;     SPI_ExchangeByte( R_RX_PAYLOAD );
+ 016A 01E6              ldi R16,97
+ 016C 0E940000          xcall _SPI_ExchangeByte
+ 0170                   .dbline 244
+ 0170           ;     for( PipeNum = 0; PipeNum < width; PipeNum ++ )
+ 0170 4427              clr R20
+ 0172 0AC0              xjmp L26
+ 0174           L23:
+ 0174                   .dbline 245
+ 0174           ;     {
+ 0174                   .dbline 246
+ 0174           ;         *( pBuff + PipeNum ) = SPI_ExchangeByte( 0xFF );
+ 0174 0FEF              ldi R16,255
+ 0176 0E940000          xcall _SPI_ExchangeByte
+ 017A E02E              mov R14,R16
+ 017C E42F              mov R30,R20
+ 017E FF27              clr R31
+ 0180 EC0D              add R30,R12
+ 0182 FD1D              adc R31,R13
+ 0184 E082              std z+0,R14
+ 0186                   .dbline 247
+ 0186           ;     }
+ 0186           L24:
+ 0186                   .dbline 244
+ 0186 4395              inc R20
+ 0188           L26:
+ 0188                   .dbline 244
+ 0188 4A15              cp R20,R10
+ 018A A0F3              brlo L23
+ 018C           X2:
+ 018C                   .dbline 248
+ 018C           ;     L01_CSN_HIGH( );
+ 018C                   .dbline 248
+ 018C C09A              sbi 0x18,0
+ 018E                   .dbline 248
+ 018E B89A              sbi 0x17,0
+ 0190                   .dbline 248
+ 0190                   .dbline 248
+ 0190                   .dbline 249
+ 0190           ;     L01_FlushRX( );
+ 0190 97DF              xcall _L01_FlushRX
+ 0192                   .dbline 250
+ 0192           ;     return width;
+ 0192 0A2D              mov R16,R10
+ 0194                   .dbline -2
+ 0194           L22:
+ 0194                   .dbline 0 ; func end
+ 0194 0C940000          xjmp pop_xgset30FC
+ 0198                   .dbsym r width 10 c
+ 0198                   .dbsym r PipeNum 20 c
+ 0198                   .dbsym r pBuff 12 pc
+ 0198                   .dbend
+ 0198                   .dbfunc e L01_WriteTXPayload_Ack _L01_WriteTXPayload_Ack fV
+ 0198           ;         length -> R12
+ 0198           ;           btmp -> R10
+ 0198           ;         nBytes -> R10
+ 0198           ;          pBuff -> R14,R15
+                        .even
+ 0198           _L01_WriteTXPayload_Ack::
+ 0198 0E940000          xcall push_xgset30FC
+ 019C A22E              mov R10,R18
+ 019E 7801              movw R14,R16
+ 01A0                   .dbline -1
+ 01A0                   .dbline 263
+ 01A0           ; }
+ 01A0           ; /*
+ 01A0           ; ================================================================================
+ 01A0           ; Function : L01_WriteTXPayload( )
+ 01A0           ; Description : Write TX payload to a pipe and prx will return ack back
+ 01A0           ; Input : -PipeNum, number of the pipe
+ 01A0           ;         -pBuff, A buffer stores the data
+ 01A0           ;         -nBytes, How many bytes to be wrote to
+ 01A0           ; Output: None
+ 01A0           ; ================================================================================
+ 01A0           ; */
+ 01A0           ; void L01_WriteTXPayload_Ack( INT8U *pBuff, INT8U nBytes )
+ 01A0           ; {
+ 01A0                   .dbline 265
+ 01A0           ;     INT8U btmp;
+ 01A0           ;     INT8U length = ( nBytes > 32 ) ? 32 : nBytes;
+ 01A0 80E2              ldi R24,32
+ 01A2 8A15              cp R24,R10
+ 01A4 18F4              brsh L28
+ 01A6           X3:
+ 01A6 40E2              ldi R20,32
+ 01A8 50E0              ldi R21,0
+ 01AA 02C0              xjmp L29
+ 01AC           L28:
+ 01AC 4A2D              mov R20,R10
+ 01AE 5527              clr R21
+ 01B0           L29:
+ 01B0 C42E              mov R12,R20
+ 01B2                   .dbline 267
+ 01B2           ; 
+ 01B2           ;     L01_FlushTX( );
+ 01B2 7EDF              xcall _L01_FlushTX
+ 01B4                   .dbline 268
+ 01B4           ;     L01_CSN_LOW( );
+ 01B4                   .dbline 268
+ 01B4 C098              cbi 0x18,0
+ 01B6                   .dbline 268
+ 01B6 B89A              sbi 0x17,0
+ 01B8                   .dbline 268
+ 01B8                   .dbline 268
+ 01B8                   .dbline 269
+ 01B8           ;     SPI_ExchangeByte( W_TX_PAYLOAD );
+ 01B8 00EA              ldi R16,160
+ 01BA 0E940000          xcall _SPI_ExchangeByte
+ 01BE                   .dbline 270
+ 01BE           ;     for( btmp = 0; btmp < length; btmp ++ )
+ 01BE AA24              clr R10
+ 01C0 08C0              xjmp L33
+ 01C2           L30:
+ 01C2                   .dbline 271
+ 01C2           ;     {
+ 01C2                   .dbline 272
+ 01C2           ;         SPI_ExchangeByte( *( pBuff + btmp ) );
+ 01C2 EA2D              mov R30,R10
+ 01C4 FF27              clr R31
+ 01C6 EE0D              add R30,R14
+ 01C8 FF1D              adc R31,R15
+ 01CA 0081              ldd R16,z+0
+ 01CC 0E940000          xcall _SPI_ExchangeByte
+ 01D0                   .dbline 273
+ 01D0           ;     }
+ 01D0           L31:
+ 01D0                   .dbline 270
+ 01D0 A394              inc R10
+ 01D2           L33:
+ 01D2                   .dbline 270
+ 01D2 AC14              cp R10,R12
+ 01D4 B0F3              brlo L30
+ 01D6           X4:
+ 01D6                   .dbline 274
+ 01D6           ;     L01_CSN_HIGH( );
+ 01D6                   .dbline 274
+ 01D6 C09A              sbi 0x18,0
+ 01D8                   .dbline 274
+ 01D8 B89A              sbi 0x17,0
+ 01DA                   .dbline 274
+ 01DA                   .dbline 274
+ 01DA                   .dbline -2
+ 01DA           L27:
+ 01DA                   .dbline 0 ; func end
+ 01DA 0C940000          xjmp pop_xgset30FC
+ 01DE                   .dbsym r length 12 c
+ 01DE                   .dbsym r btmp 10 c
+ 01DE                   .dbsym r nBytes 10 c
+ 01DE                   .dbsym r pBuff 14 pc
+ 01DE                   .dbend
+ 01DE                   .dbfunc e L01_WriteTXPayload_NoAck _L01_WriteTXPayload_NoAck fV
+ 01DE           ;    Data_Length -> R20
+ 01DE           ;           Data -> R10,R11
+                        .even
+ 01DE           _L01_WriteTXPayload_NoAck::
+ 01DE 0E940000          xcall push_xgset300C
+ 01E2 422F              mov R20,R18
+ 01E4 5801              movw R10,R16
+ 01E6                   .dbline -1
+ 01E6                   .dbline 286
+ 01E6           ; }
+ 01E6           ; /*
+ 01E6           ; ================================================================================
+ 01E6           ; Function : L01_WritePayload_NoAck( )
+ 01E6           ; Description : write data in tx mode, and prx won't return ack back
+ 01E6           ; Input : -Data, A buffer stores the address data
+ 01E6           ;         -Data_Length, How many bytes of the data buff
+ 01E6           ; Output: None
+ 01E6           ; ================================================================================
+ 01E6           ; */
+ 01E6           ; void L01_WriteTXPayload_NoAck( INT8U *Data, INT8U Data_Length )
+ 01E6           ; {
+ 01E6                   .dbline 287
+ 01E6           ;     if( Data_Length > 32 || Data_Length == 0 )
+ 01E6 80E2              ldi R24,32
+ 01E8 8417              cp R24,R20
+ 01EA 10F0              brlo L37
+ 01EC           X5:
+ 01EC 4423              tst R20
+ 01EE 09F4              brne L35
+ 01F0           X6:
+ 01F0           L37:
+ 01F0                   .dbline 288
+ 01F0           ;     {
+ 01F0                   .dbline 289
+ 01F0           ;         return ;
+ 01F0 12C0              xjmp L34
+ 01F2           L35:
+ 01F2                   .dbline 291
+ 01F2           ;     }
+ 01F2           ;     L01_CSN_LOW( );
+ 01F2                   .dbline 291
+ 01F2 C098              cbi 0x18,0
+ 01F4                   .dbline 291
+ 01F4 B89A              sbi 0x17,0
+ 01F6                   .dbline 291
+ 01F6                   .dbline 291
+ 01F6                   .dbline 292
+ 01F6           ;     SPI_ExchangeByte( W_TX_PAYLOAD_NOACK );
+ 01F6 00EB              ldi R16,176
+ 01F8 0E940000          xcall _SPI_ExchangeByte
+ 01FC 05C0              xjmp L39
+ 01FE           L38:
+ 01FE                   .dbline 294
+ 01FE           ;     while( Data_Length-- )
+ 01FE           ;     {
+ 01FE                   .dbline 295
+ 01FE           ;         SPI_ExchangeByte( *Data++ );
+ 01FE F501              movw R30,R10
+ 0200 0191              ld R16,Z+
+ 0202 5F01              movw R10,R30
+ 0204 0E940000          xcall _SPI_ExchangeByte
+ 0208                   .dbline 296
+ 0208           ;     }
+ 0208           L39:
+ 0208                   .dbline 293
+ 0208 242E              mov R2,R20
+ 020A 3324              clr R3
+ 020C 4150              subi R20,1
+ 020E 2220              tst R2
+ 0210 B1F7              brne L38
+ 0212           X7:
+ 0212                   .dbline 297
+ 0212           ;     L01_CSN_HIGH( );
+ 0212                   .dbline 297
+ 0212 C09A              sbi 0x18,0
+ 0214                   .dbline 297
+ 0214 B89A              sbi 0x17,0
+ 0216                   .dbline 297
+ 0216                   .dbline 297
+ 0216                   .dbline -2
+ 0216           L34:
+ 0216                   .dbline 0 ; func end
+ 0216 0C940000          xjmp pop_xgset300C
+ 021A                   .dbsym r Data_Length 20 c
+ 021A                   .dbsym r Data 10 pc
+ 021A                   .dbend
+ 021A                   .dbfunc e L01_WriteRXPayload_InAck _L01_WriteRXPayload_InAck fV
+ 021A           ;         length -> R12
+ 021A           ;           btmp -> R10
+ 021A           ;    Data_Length -> R10
+ 021A           ;          pData -> R14,R15
+                        .even
+ 021A           _L01_WriteRXPayload_InAck::
+ 021A 0E940000          xcall push_xgset30FC
+ 021E A22E              mov R10,R18
+ 0220 7801              movw R14,R16
+ 0222                   .dbline -1
+ 0222                   .dbline 309
+ 0222           ; }
+ 0222           ; /*
+ 0222           ; ================================================================================
+ 0222           ; Function : L01_WritePayload_InAck( )
+ 0222           ; Description : write data in tx fifo when rx mode
+ 0222           ; Input : -Data, A buffer stores the address data
+ 0222           ;         -Data_Length, How many bytes of the data buff
+ 0222           ; Output: None
+ 0222           ; ================================================================================
+ 0222           ; */
+ 0222           ; void L01_WriteRXPayload_InAck( INT8U *pData, INT8U Data_Length )
+ 0222           ; {
+ 0222                   .dbline 310
+ 0222           ;     INT8U length = ( Data_Length > 32 ) ? 32 : Data_Length;
+ 0222 80E2              ldi R24,32
+ 0224 8A15              cp R24,R10
+ 0226 18F4              brsh L42
+ 0228           X8:
+ 0228 40E2              ldi R20,32
+ 022A 50E0              ldi R21,0
+ 022C 02C0              xjmp L43
+ 022E           L42:
+ 022E 4A2D              mov R20,R10
+ 0230 5527              clr R21
+ 0232           L43:
+ 0232 C42E              mov R12,R20
+ 0234                   .dbline 313
+ 0234           ;     INT8U btmp;
+ 0234           ; 
+ 0234           ;     L01_CSN_LOW( );
+ 0234                   .dbline 313
+ 0234 C098              cbi 0x18,0
+ 0236                   .dbline 313
+ 0236 B89A              sbi 0x17,0
+ 0238                   .dbline 313
+ 0238                   .dbline 313
+ 0238                   .dbline 314
+ 0238           ;     SPI_ExchangeByte( W_ACK_PAYLOAD );
+ 0238 08EA              ldi R16,168
+ 023A 0E940000          xcall _SPI_ExchangeByte
+ 023E                   .dbline 315
+ 023E           ;     for( btmp = 0; btmp < length; btmp ++ )
+ 023E AA24              clr R10
+ 0240 08C0              xjmp L47
+ 0242           L44:
+ 0242                   .dbline 316
+ 0242           ;     {
+ 0242                   .dbline 317
+ 0242           ;         SPI_ExchangeByte( *( pData + btmp ) );
+ 0242 EA2D              mov R30,R10
+ 0244 FF27              clr R31
+ 0246 EE0D              add R30,R14
+ 0248 FF1D              adc R31,R15
+ 024A 0081              ldd R16,z+0
+ 024C 0E940000          xcall _SPI_ExchangeByte
+ 0250                   .dbline 318
+ 0250           ;     }
+ 0250           L45:
+ 0250                   .dbline 315
+ 0250 A394              inc R10
+ 0252           L47:
+ 0252                   .dbline 315
+ 0252 AC14              cp R10,R12
+ 0254 B0F3              brlo L44
+ 0256           X9:
+ 0256                   .dbline 319
+ 0256           ;     L01_CSN_HIGH( );
+ 0256                   .dbline 319
+ 0256 C09A              sbi 0x18,0
+ 0258                   .dbline 319
+ 0258 B89A              sbi 0x17,0
+ 025A                   .dbline 319
+ 025A                   .dbline 319
+ 025A                   .dbline -2
+ 025A           L41:
+ 025A                   .dbline 0 ; func end
+ 025A 0C940000          xjmp pop_xgset30FC
+ 025E                   .dbsym r length 12 c
+ 025E                   .dbsym r btmp 10 c
+ 025E                   .dbsym r Data_Length 10 c
+ 025E                   .dbsym r pData 14 pc
+ 025E                   .dbend
+ 025E                   .dbfunc e L01_SetTXAddr _L01_SetTXAddr fV
+ 025E           ;         Length -> R12
+ 025E           ;    Addr_Length -> R12
+ 025E           ;          pAddr -> R10,R11
+                        .even
+ 025E           _L01_SetTXAddr::
+ 025E 0E940000          xcall push_xgset303C
+ 0262 C22E              mov R12,R18
+ 0264 5801              movw R10,R16
+ 0266 2197              sbiw R28,1
+ 0268                   .dbline -1
+ 0268                   .dbline 331
+ 0268           ; }
+ 0268           ; /*
+ 0268           ; ================================================================================
+ 0268           ; Function : L01_SetTXAddr( )
+ 0268           ; Description : Write address for the own device
+ 0268           ; Input : -pAddr, A buffer stores the address data
+ 0268           ;         -Addr_Length, How many bytes of the address
+ 0268           ; Output: None
+ 0268           ; ================================================================================
+ 0268           ; */
+ 0268           ; void L01_SetTXAddr( INT8U *pAddr, INT8U Addr_Length )
+ 0268           ; {
+ 0268                   .dbline 332
+ 0268           ;     INT8U Length = ( Addr_Length > 5 ) ? 5 : Addr_Length;
+ 0268 85E0              ldi R24,5
+ 026A 8C15              cp R24,R12
+ 026C 18F4              brsh L49
+ 026E           X10:
+ 026E 45E0              ldi R20,5
+ 0270 50E0              ldi R21,0
+ 0272 02C0              xjmp L50
+ 0274           L49:
+ 0274 4C2D              mov R20,R12
+ 0276 5527              clr R21
+ 0278           L50:
+ 0278 C42E              mov R12,R20
+ 027A                   .dbline 333
+ 027A           ;     L01_WriteMultiReg( L01REG_TX_ADDR, pAddr, Length );
+ 027A C882              std y+0,R12
+ 027C 9501              movw R18,R10
+ 027E 00E1              ldi R16,16
+ 0280 FCDE              xcall _L01_WriteMultiReg
+ 0282                   .dbline -2
+ 0282           L48:
+ 0282                   .dbline 0 ; func end
+ 0282 2196              adiw R28,1
+ 0284 0C940000          xjmp pop_xgset303C
+ 0288                   .dbsym r Length 12 c
+ 0288                   .dbsym r Addr_Length 12 c
+ 0288                   .dbsym r pAddr 10 pc
+ 0288                   .dbend
+ 0288                   .dbfunc e L01_SetRXAddr _L01_SetRXAddr fV
+ 0288           ;           pipe -> R20
+ 0288           ;         Length -> R12
+ 0288           ;    Addr_Length -> R12
+ 0288           ;          pAddr -> R10,R11
+ 0288           ;        PipeNum -> R14
+                        .even
+ 0288           _L01_SetRXAddr::
+ 0288 0E940000          xcall push_xgset30FC
+ 028C 5901              movw R10,R18
+ 028E E02E              mov R14,R16
+ 0290 2197              sbiw R28,1
+ 0292 C984              ldd R12,y+9
+ 0294                   .dbline -1
+ 0294                   .dbline 346
+ 0294           ; }
+ 0294           ; /*
+ 0294           ; ================================================================================
+ 0294           ; Function : L01_SetRXAddr( )
+ 0294           ; Description : Write address for a RX pipe
+ 0294           ; Input : -PipeNum, number of the pipe
+ 0294           ;         -pAddr, A buffer stores the address data
+ 0294           ;         -Addr_Length, How many bytes of the address
+ 0294           ; Output: None
+ 0294           ; ================================================================================
+ 0294           ; */
+ 0294           ; void L01_SetRXAddr( INT8U PipeNum, INT8U *pAddr, INT8U Addr_Length )
+ 0294           ; {
+ 0294                   .dbline 347
+ 0294           ;     INT8U Length = ( Addr_Length > 5 ) ? 5 : Addr_Length;
+ 0294 85E0              ldi R24,5
+ 0296 8C15              cp R24,R12
+ 0298 18F4              brsh L52
+ 029A           X11:
+ 029A 45E0              ldi R20,5
+ 029C 50E0              ldi R21,0
+ 029E 02C0              xjmp L53
+ 02A0           L52:
+ 02A0 4C2D              mov R20,R12
+ 02A2 5527              clr R21
+ 02A4           L53:
+ 02A4 C42E              mov R12,R20
+ 02A6                   .dbline 348
+ 02A6           ;     INT8U pipe = ( PipeNum > 5 ) ? 5 : PipeNum;
+ 02A6 85E0              ldi R24,5
+ 02A8 8E15              cp R24,R14
+ 02AA 18F4              brsh L54
+ 02AC           X12:
+ 02AC 45E0              ldi R20,5
+ 02AE 50E0              ldi R21,0
+ 02B0 02C0              xjmp L55
+ 02B2           L54:
+ 02B2 4E2D              mov R20,R14
+ 02B4 5527              clr R21
+ 02B6           L55:
+ 02B6                   .dbline 350
+ 02B6           ; 
+ 02B6           ;     L01_WriteMultiReg( L01REG_RX_ADDR_P0 + pipe, pAddr, Length );
+ 02B6 C882              std y+0,R12
+ 02B8 9501              movw R18,R10
+ 02BA 042F              mov R16,R20
+ 02BC 065F              subi R16,246    ; addi 10
+ 02BE DDDE              xcall _L01_WriteMultiReg
+ 02C0                   .dbline -2
+ 02C0           L51:
+ 02C0                   .dbline 0 ; func end
+ 02C0 2196              adiw R28,1
+ 02C2 0C940000          xjmp pop_xgset30FC
+ 02C6                   .dbsym r pipe 20 c
+ 02C6                   .dbsym r Length 12 c
+ 02C6                   .dbsym r Addr_Length 12 c
+ 02C6                   .dbsym r pAddr 10 pc
+ 02C6                   .dbsym r PipeNum 14 c
+ 02C6                   .dbend
+ 02C6                   .dbfunc e L01_WriteHoppingPoint _L01_WriteHoppingPoint fV
+ 02C6           ;      FreqPoint -> R20
+                        .even
+ 02C6           _L01_WriteHoppingPoint::
+ 02C6 4A93              st -y,R20
+ 02C8 402F              mov R20,R16
+ 02CA                   .dbline -1
+ 02CA                   .dbline 361
+ 02CA           ; }
+ 02CA           ; /*
+ 02CA           ; ================================================================================
+ 02CA           ; Function : L01_WriteHoppingPoint( )
+ 02CA           ; Description : Set frequency for the device,must be 0-125
+ 02CA           ; Input : -FreqPoint, The hopping point
+ 02CA           ; Output: None
+ 02CA           ; ================================================================================
+ 02CA           ; */
+ 02CA           ; void L01_WriteHoppingPoint( INT8U FreqPoint )
+ 02CA           ; {
+ 02CA                   .dbline 362
+ 02CA           ;     L01_WriteSingleReg( L01REG_RF_CH, FreqPoint & 0x7F );
+ 02CA 242F              mov R18,R20
+ 02CC 2F77              andi R18,127
+ 02CE 05E0              ldi R16,5
+ 02D0 C2DE              xcall _L01_WriteSingleReg
+ 02D2                   .dbline -2
+ 02D2           L56:
+ 02D2                   .dbline 0 ; func end
+ 02D2 4991              ld R20,y+
+ 02D4 0895              ret
+ 02D6                   .dbsym r FreqPoint 20 c
+ 02D6                   .dbend
+ 02D6                   .dbfunc e L01_SetTXMode _L01_SetTXMode fV
+ 02D6           ;     controlreg -> R20
+                        .even
+ 02D6           _L01_SetTXMode::
+ 02D6 4A93              st -y,R20
+ 02D8                   .dbline -1
+ 02D8                   .dbline 373
+ 02D8           ; }
+ 02D8           ; /*
+ 02D8           ; ================================================================================
+ 02D8           ; Function : L01_SetTXMode( )
+ 02D8           ; Description : Set the device as PTX
+ 02D8           ; Input : None
+ 02D8           ; Output: None
+ 02D8           ; ================================================================================
+ 02D8           ; */
+ 02D8           ; void L01_SetTXMode( void )
+ 02D8           ; {
+ 02D8                   .dbline 374
+ 02D8           ;     INT8U controlreg = L01_ReadSingleReg( L01REG_CONFIG );
+ 02D8 0027              clr R16
+ 02DA 92DE              xcall _L01_ReadSingleReg
+ 02DC 402F              mov R20,R16
+ 02DE                   .dbline 375
+ 02DE           ;     L01_WriteSingleReg( L01REG_CONFIG, controlreg & ~( 1<<PRIM_RX ) );
+ 02DE 242F              mov R18,R20
+ 02E0 2E7F              andi R18,254
+ 02E2 0027              clr R16
+ 02E4 B8DE              xcall _L01_WriteSingleReg
+ 02E6                   .dbline -2
+ 02E6           L57:
+ 02E6                   .dbline 0 ; func end
+ 02E6 4991              ld R20,y+
+ 02E8 0895              ret
+ 02EA                   .dbsym r controlreg 20 c
+ 02EA                   .dbend
+ 02EA                   .dbfunc e L01_SetRXMode _L01_SetRXMode fV
+ 02EA           ;     controlreg -> R20
+                        .even
+ 02EA           _L01_SetRXMode::
+ 02EA 4A93              st -y,R20
+ 02EC                   .dbline -1
+ 02EC                   .dbline 386
+ 02EC           ; }
+ 02EC           ; /*
+ 02EC           ; ================================================================================
+ 02EC           ; Function : L01_SetRXMode )
+ 02EC           ; Description : Set the device as PRX
+ 02EC           ; Input : None
+ 02EC           ; Output: None
+ 02EC           ; ================================================================================
+ 02EC           ; */
+ 02EC           ; void L01_SetRXMode( void )
+ 02EC           ; {
+ 02EC                   .dbline 387
+ 02EC           ;     INT8U controlreg = L01_ReadSingleReg( L01REG_CONFIG );
+ 02EC 0027              clr R16
+ 02EE 88DE              xcall _L01_ReadSingleReg
+ 02F0 402F              mov R20,R16
+ 02F2                   .dbline 388
+ 02F2           ;     L01_WriteSingleReg( L01REG_CONFIG, controlreg | ( 1<<PRIM_RX ) );
+ 02F2 242F              mov R18,R20
+ 02F4 2160              ori R18,1
+ 02F6 0027              clr R16
+ 02F8 AEDE              xcall _L01_WriteSingleReg
+ 02FA                   .dbline -2
+ 02FA           L58:
+ 02FA                   .dbline 0 ; func end
+ 02FA 4991              ld R20,y+
+ 02FC 0895              ret
+ 02FE                   .dbsym r controlreg 20 c
+ 02FE                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+ 0000           L60:
+ 0000                   .blkb 2
+                        .area idata
+ 0000 0102              .byte 1,2
+                        .area data(ram, con, rel)
+ 0002                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+ 0002                   .blkb 2
+                        .area idata
+ 0002 0304              .byte 3,4
+                        .area data(ram, con, rel)
+ 0004                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+ 0004                   .blkb 1
+                        .area idata
+ 0004 05                .byte 5
+                        .area data(ram, con, rel)
+ 0005                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+                        .area text(rom, con, rel)
+ 02FE                   .dbfile E:\YHTPRO~1\YHT02-M32EVB\Demo_V2\15、nRF24L01P-TX发射\Source\nRF24L01.c
+ 02FE                   .dbfunc e L01_Init _L01_Init fV
+ 02FE           ;           addr -> y+1
+                        .even
+ 02FE           _L01_Init::
+ 02FE 2697              sbiw R28,6
+ 0300                   .dbline -1
+ 0300                   .dbline 399
+ 0300           ; }
+ 0300           ; /*
+ 0300           ; ================================================================================
+ 0300           ; Function : L01_Init( )
+ 0300           ; Description : Initialize the nRF24L01
+ 0300           ; Input : None
+ 0300           ; Output: None
+ 0300           ; ================================================================================
+ 0300           ; */
+ 0300           ; void L01_Init( void )
+ 0300           ; {
+ 0300                   .dbline 400
+ 0300           ;     INT8U addr[5] = {INIT_ADDR};
+ 0300 80E0              ldi R24,<L60
+ 0302 90E0              ldi R25,>L60
+ 0304 FE01              movw R30,R28
+ 0306 3196              adiw R30,1
+ 0308 05E0              ldi R16,5
+ 030A 10E0              ldi R17,0
+ 030C FA93              st -y,R31
+ 030E EA93              st -y,R30
+ 0310 9A93              st -y,R25
+ 0312 8A93              st -y,R24
+ 0314 0E940000          xcall asgnblk
+ 0318                   .dbline 402
+ 0318           ; 
+ 0318           ;     L01_CE_HIGH( );
+ 0318                   .dbline 402
+ 0318                   .dbline 403
+ 0318           ;     L01_ClearIRQ( IRQ_ALL );
+ 0318 00E7              ldi R16,112
+ 031A F5DE              xcall _L01_ClearIRQ
+ 031C                   .dbline 406
+ 031C           ; #if DYNAMIC_PACKET == 1
+ 031C           ;     //dynamic payload length
+ 031C           ;     L01_WriteSingleReg( L01REG_DYNPD, ( 1<<0 ) );//Enable pipe 0 dynamic payload length
+ 031C 21E0              ldi R18,1
+ 031E 0CE1              ldi R16,28
+ 0320 9ADE              xcall _L01_WriteSingleReg
+ 0322                   .dbline 407
+ 0322           ;     L01_WriteSingleReg( L01REG_FEATRUE, 0x07 );
+ 0322 27E0              ldi R18,7
+ 0324 0DE1              ldi R16,29
+ 0326 97DE              xcall _L01_WriteSingleReg
+ 0328                   .dbline 408
+ 0328           ;     L01_ReadSingleReg( L01REG_DYNPD );
+ 0328 0CE1              ldi R16,28
+ 032A 6ADE              xcall _L01_ReadSingleReg
+ 032C                   .dbline 409
+ 032C           ;     L01_ReadSingleReg( L01REG_FEATRUE );
+ 032C 0DE1              ldi R16,29
+ 032E 68DE              xcall _L01_ReadSingleReg
+ 0330                   .dbline 415
+ 0330           ; #elif DYNAMIC_PACKET == 0
+ 0330           ;     //Fixed packet length
+ 0330           ;     L01_WriteSingleReg( L01REG_RX_PW_P0, FIXED_PACKET_LEN );
+ 0330           ; #endif//DYNAMIC_PACKET
+ 0330           ; 
+ 0330           ;     L01_WriteSingleReg( L01REG_CONFIG, /*( 1<<MASK_RX_DR ) |*///receive interrupt
+ 0330 2AE0              ldi R18,10
+ 0332 0027              clr R16
+ 0334 90DE              xcall _L01_WriteSingleReg
+ 0336                   .dbline 418
+ 0336           ;                                       ( 1<<EN_CRC ) |     //Enable CRC, 1 byte
+ 0336           ;                                       ( 1<<PWR_UP ) );    //Power up the device
+ 0336           ;     L01_WriteSingleReg( L01REG_EN_AA, ( 1<<ENAA_P0 ) );   //Auto ack in pipe 0
+ 0336 21E0              ldi R18,1
+ 0338 01E0              ldi R16,1
+ 033A 8DDE              xcall _L01_WriteSingleReg
+ 033C                   .dbline 419
+ 033C           ;     L01_WriteSingleReg( L01REG_EN_RXADDR, ( 1<<ERX_P0 ) );//Enable pipe 0 receive
+ 033C 21E0              ldi R18,1
+ 033E 02E0              ldi R16,2
+ 0340 8ADE              xcall _L01_WriteSingleReg
+ 0342                   .dbline 420
+ 0342           ;     L01_WriteSingleReg( L01REG_SETUP_AW, AW_5BYTES );     //Address width : 5Byte
+ 0342 23E0              ldi R18,3
+ 0344 03E0              ldi R16,3
+ 0346 87DE              xcall _L01_WriteSingleReg
+ 0348                   .dbline 421
+ 0348           ;     L01_WriteSingleReg( L01REG_RETR, ARD_4000US |
+ 0348 2FEF              ldi R18,255
+ 034A 04E0              ldi R16,4
+ 034C 84DE              xcall _L01_WriteSingleReg
+ 034E                   .dbline 423
+ 034E           ;                         ( REPEAT_CNT & 0x0F ) );         //repeat wait : 250us
+ 034E           ;     L01_WriteSingleReg( L01REG_RF_CH, 0x00 );             //Initial channel
+ 034E 2227              clr R18
+ 0350 05E0              ldi R16,5
+ 0352 81DE              xcall _L01_WriteSingleReg
+ 0354                   .dbline 424
+ 0354           ;     L01_WriteSingleReg( L01REG_RF_SETUP, 0x26 );
+ 0354 26E2              ldi R18,38
+ 0356 06E0              ldi R16,6
+ 0358 7EDE              xcall _L01_WriteSingleReg
+ 035A                   .dbline 425
+ 035A           ;     L01_SetTXAddr( &addr[0], 5 );                          //Set TX address
+ 035A 25E0              ldi R18,5
+ 035C 8E01              movw R16,R28
+ 035E 0F5F              subi R16,255  ; offset = 1
+ 0360 1F4F              sbci R17,255
+ 0362 7DDF              xcall _L01_SetTXAddr
+ 0364                   .dbline 426
+ 0364           ;     L01_SetRXAddr( 0, &addr[0], 5 );                       //Set RX address
+ 0364 85E0              ldi R24,5
+ 0366 8883              std y+0,R24
+ 0368 9E01              movw R18,R28
+ 036A 2F5F              subi R18,255  ; offset = 1
+ 036C 3F4F              sbci R19,255
+ 036E 0027              clr R16
+ 0370 8BDF              xcall _L01_SetRXAddr
+ 0372                   .dbline -2
+ 0372           L59:
+ 0372                   .dbline 0 ; func end
+ 0372 2696              adiw R28,6
+ 0374 0895              ret
+ 0376                   .dbsym l addr 1 A[5:5]c
+ 0376                   .dbend
+ 0376           ; }
+ 0376           ; /*
+ 0376           ; ================================================================================
+ 0376           ; ====================================End of file=================================
+ 0376           ; ================================================================================
+ 0376           ; */

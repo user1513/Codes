@@ -1,0 +1,133 @@
+C51 COMPILER V8.16   APPLICATION_SB                                                        04/03/2009 08:18:47 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE APPLICATION_SB
+OBJECT MODULE PLACED IN .\obj\application_sb.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE sb\application_sb.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch
+                    -\hal\include;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\applic
+                    -ation_sb.lst) OBJECT(.\obj\application_sb.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2311 $
+  12           */ 
+  13          
+  14          /** @ingroup SB 
+  15           * @file
+  16           * Application to show the functionality of the ShockBurst mode. 
+  17           *
+  18           * @b PTX @b mode: 
+  19           * - Sends a packet aprox every 100ms
+  20           * - Accepts user interaction at Button 1:
+  21           *   - Not pressed: Send @c 00
+  22           *   - Pressed: Send @c 10
+  23           *
+  24           * @b PRX @b mode:
+  25           * - Constantly checks for data
+  26           * - If no packet recieved in aprox 100ms, turn off all leds
+  27           * - If a packet is recieved, turn on lights according to packet content:
+  28           *    - 0: LED1 off
+  29           *    - 1: LED1 on
+  30           *
+  31           * @author Per Kristian Schanke
+  32           */
+  33          
+  34          #include "hal_nrf.h"
+  35          #include "system.h"
+  36          #include "radio.h"
+  37          #include "application_sb.h"
+  38          #include "target_includes.h"
+  39          
+  40          /** The data to send in ShockBurst mode */
+  41          static xdata uint8_t pload_sb[RF_PAYLOAD_LENGTH];
+  42          
+  43          void device_ptx_mode_sb(void)
+  44          {
+  45   1        while(true)
+  46   1        {
+  47   2          // Wait til the packet is sent
+  48   2          do {
+  49   3            radio_irq ();
+  50   3          } while((radio_get_status ()) == RF_BUSY);
+  51   2      
+  52   2          // Sleep 100ms
+  53   2          start_timer(100);
+C51 COMPILER V8.16   APPLICATION_SB                                                        04/03/2009 08:18:47 PAGE 2   
+
+  54   2          wait_for_timer();
+  55   2      
+  56   2          // Set up the payload according to the input button 1
+  57   2          pload_sb[0] = 0;
+  58   2      
+  59   2          if(B1_PRESSED())
+  60   2          {
+  61   3            pload_sb[0] = 1;
+  62   3          }
+  63   2      
+  64   2          //Send the packet
+  65   2          radio_send_packet(pload_sb, RF_PAYLOAD_LENGTH);           
+  66   2        }
+  67   1      }
+  68          
+  69          void device_prx_mode_sb(void)
+  70          {
+  71   1        CE_HIGH();        // Set Chip Enable (CE) pin high to enable reciever
+  72   1      
+  73   1        while(true)
+  74   1        { 
+  75   2          start_timer(110);
+  76   2      
+  77   2          // Run until either 110ms has lapsed 
+  78   2          // OR there is data on the radio
+  79   2          do
+  80   2          {
+  81   3            radio_irq ();
+  82   3          } while ((radio_get_status() == RF_IDLE) && !timer_done());
+  83   2      
+  84   2          if ((radio_get_status ()) == RF_RX_DR)
+  85   2          {
+  86   3            // Get the payload from the PTX and set LED1 accordingly
+  87   3            if (radio_get_pload_byte(0) == 1)
+  88   3            {
+  89   4              LED1_ON();
+  90   4            }
+  91   3            else
+  92   3            {
+  93   4              LED1_OFF();
+  94   4            }
+  95   3          }
+  96   2          else
+  97   2          {
+  98   3            LED1_OFF();
+  99   3          }
+ 100   2      
+ 101   2          // Set radio status to idle
+ 102   2          radio_set_status(RF_IDLE);
+ 103   2        }
+ 104   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     99    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     10    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V8.16   APPLICATION_SB                                                        04/03/2009 08:18:47 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

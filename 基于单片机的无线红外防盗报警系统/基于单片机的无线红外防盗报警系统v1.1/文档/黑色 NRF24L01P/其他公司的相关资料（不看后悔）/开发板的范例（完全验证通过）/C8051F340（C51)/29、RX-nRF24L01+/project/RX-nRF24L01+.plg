@@ -1,0 +1,178 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\YHT Project\YHT20-SF340M\Software\27¡¢RX-nRF24L01+\project\RX-nRF24L01+.uvproj
+Project File Date:  05/16/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.H(19): warning C318: can't open file 'MyTypedef.h'
+..\SOURCE\NRF24L01.H(46): warning C318: can't open file 'avr\io.h'
+..\SOURCE\NRF24L01.H(47): warning C318: can't open file 'main.h'
+..\SOURCE\NRF24L01.H(62): error C129: missing ';' before 'L01_ReadSingleReg'
+compiling main.c...
+..\SOURCE\MAIN.C(8): warning C290: missing return value
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.H(46): warning C318: can't open file 'avr\io.h'
+..\SOURCE\NRF24L01.H(47): warning C318: can't open file 'main.h'
+..\SOURCE\NRF24L01.C(43): error C202: 'PORTB': undefined identifier
+..\SOURCE\NRF24L01.C(43): error C202: 'DDRB': undefined identifier
+compiling main.c...
+..\SOURCE\MAIN.C(7): error C202: 'XBR0': undefined identifier
+..\SOURCE\MAIN.C(8): error C202: 'XBR1': undefined identifier
+assembling STARTUP.A51...
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(43): error C202: 'PORTB': undefined identifier
+..\SOURCE\NRF24L01.C(43): error C202: 'DDRB': undefined identifier
+compiling main.c...
+..\SOURCE\MAIN.C(7): error C202: 'XBR0': undefined identifier
+..\SOURCE\MAIN.C(8): error C202: 'XBR1': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(43): error C202: 'PORTB': undefined identifier
+..\SOURCE\NRF24L01.C(43): error C202: 'DDRB': undefined identifier
+compiling main.c...
+..\SOURCE\MAIN.C(12): warning C290: missing return value
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(44): warning C206: 'SPI_ExchangeByte': missing function-prototype
+..\SOURCE\NRF24L01.C(44): error C267: 'SPI_ExchangeByte': requires ANSI-style prototype
+..\SOURCE\NRF24L01.C(420): error C251: illegal octal digit
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(420): error C251: illegal octal digit
+compiling main.c...
+..\SOURCE\MAIN.C(104): warning C206: 'Timer1_Init': missing function-prototype
+..\SOURCE\MAIN.C(125): error C202: 'RevCount': undefined identifier
+..\SOURCE\MAIN.C(126): error C202: 'TimerRev': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(420): error C251: illegal octal digit
+compiling main.c...
+..\SOURCE\MAIN.C(104): warning C206: 'Timer1_Init': missing function-prototype
+..\SOURCE\MAIN.C(142): warning C290: missing return value
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(420): error C251: illegal octal digit
+compiling main.c...
+..\SOURCE\MAIN.C(161): warning C290: missing return value
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(420): error C251: illegal octal digit
+compiling main.c...
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+..\SOURCE\NRF24L01.C(420): error C251: illegal octal digit
+compiling main.c...
+Target not created
+Build target 'Target 1'
+compiling nRF24L01.c...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_READMULTIREG?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_REUSETXPAYLOAD?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_NOP?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_READIRQSOURCE?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_READRXPAYLOAD?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITETXPAYLOAD_ACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITETXPAYLOAD_NOACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITERXPAYLOAD_INACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITEHOPPINGPOINT?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_SETTXMODE?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_SETRXMODE?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_INIT?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART0_SEND?MAIN
+Program Size: data=59.0 xdata=0 code=1595
+creating hex file from ".\output\RX-nRF24L01+"...
+".\output\RX-nRF24L01+" - 0 Error(s), 13 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_READMULTIREG?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_REUSETXPAYLOAD?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_NOP?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_READIRQSOURCE?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_READRXPAYLOAD?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITETXPAYLOAD_ACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITETXPAYLOAD_NOACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITERXPAYLOAD_INACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_SETTXMODE?NRF24L01
+Program Size: data=56.0 xdata=0 code=1650
+creating hex file from ".\output\RX-nRF24L01+"...
+".\output\RX-nRF24L01+" - 0 Error(s), 9 Warning(s).
+Build target 'Target 1'
+compiling nRF24L01.c...
+compiling main.c...
+..\SOURCE\MAIN.C(186): error C202: 'AskData': undefined identifier
+..\SOURCE\MAIN.C(187): error C202: 'AskData': undefined identifier
+..\SOURCE\MAIN.C(207): error C202: 'testbuffer': undefined identifier
+..\SOURCE\MAIN.C(209): error C202: 'x': undefined identifier
+..\SOURCE\MAIN.C(211): error C202: 'testbuffer': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+..\SOURCE\MAIN.C(209): error C202: 'testbuffer': undefined identifier
+..\SOURCE\MAIN.C(211): error C202: 'x': undefined identifier
+..\SOURCE\MAIN.C(213): error C202: 'testbuffer': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+..\SOURCE\MAIN.C(212): error C202: 'x': undefined identifier
+..\SOURCE\MAIN.C(214): error C202: 'x': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_READMULTIREG?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_REUSETXPAYLOAD?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_NOP?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_READIRQSOURCE?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITETXPAYLOAD_NOACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_L01_WRITERXPAYLOAD_INACK?NRF24L01
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?L01_SETTXMODE?NRF24L01
+Program Size: data=90.0 xdata=0 code=1904
+creating hex file from ".\output\RX-nRF24L01+"...
+".\output\RX-nRF24L01+" - 0 Error(s), 7 Warning(s).

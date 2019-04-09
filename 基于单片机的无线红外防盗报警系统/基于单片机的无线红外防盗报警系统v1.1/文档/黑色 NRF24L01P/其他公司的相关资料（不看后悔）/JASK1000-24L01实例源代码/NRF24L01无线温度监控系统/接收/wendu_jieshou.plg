@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>礦ision3 Build Log</h1>
+<h2>Project:</h2>
+C:\Documents and Settings\Administrator\桌面\NRF24l01无线温度传感\接收\wendu_jieshou.uv2
+Project File Date:  06/26/2009
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling wendu_jieshou.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_NRF24L01_TXPACKET?WENDU_JIESHOU
+Program Size: data=78.0 xdata=0 code=839
+creating hex file from "wendu_jieshou"...
+"wendu_jieshou" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling wendu_jieshou.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_NRF24L01_TXPACKET?WENDU_JIESHOU
+Program Size: data=78.0 xdata=0 code=839
+creating hex file from "wendu_jieshou"...
+"wendu_jieshou" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling wendu_jieshou.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_NRF24L01_TXPACKET?WENDU_JIESHOU
+Program Size: data=78.0 xdata=0 code=845
+creating hex file from "wendu_jieshou"...
+"wendu_jieshou" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling wendu_jieshou.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_NRF24L01_TXPACKET?WENDU_JIESHOU
+Program Size: data=78.0 xdata=0 code=848
+creating hex file from "wendu_jieshou"...
+"wendu_jieshou" - 0 Error(s), 1 Warning(s).

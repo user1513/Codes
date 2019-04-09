@@ -1,0 +1,95 @@
+C51 COMPILER V8.16   RADIO_SB                                                              04/03/2009 08:18:47 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE RADIO_SB
+OBJECT MODULE PLACED IN .\obj\radio_sb.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE sb\radio_sb.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch\hal\i
+                    -nclude;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\radio_sb.lst
+                    -) OBJECT(.\obj\radio_sb.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2310 $
+  12           */ 
+  13          
+  14          /** @ingroup SB 
+  15           * @file
+  16           * Initialise the radio in ShockBurst mode. This is done by opening @b pipe0 
+  17           * without auto ACK and disabeling auto retransmits.
+  18           *
+  19           * @author Per Kristian Schanke
+  20           */
+  21          
+  22          #include "hal_nrf.h"
+  23          #include "radio_sb.h"
+  24          #include "system.h"
+  25          #include "radio.h"
+  26          
+  27          void radio_sb_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode)
+  28          {
+  29   1        hal_nrf_close_pipe(HAL_NRF_ALL);               // First close all radio pipes
+  30   1                                                       // Pipe 0 and 1 open by default
+  31   1        hal_nrf_open_pipe(HAL_NRF_PIPE0, false);       // Open pipe0, without/autoack
+  32   1      
+  33   1        hal_nrf_set_crc_mode(HAL_NRF_CRC_16BIT);       // Operates in 16bits CRC mode
+  34   1        hal_nrf_set_auto_retr(0, RF_RETRANS_DELAY);    // Disables auto retransmit
+  35   1      
+  36   1        hal_nrf_set_address_width(HAL_NRF_AW_5BYTES);  // 5 bytes address width
+  37   1        hal_nrf_set_address(HAL_NRF_TX, address);      // Set device's addresses
+  38   1        hal_nrf_set_address(HAL_NRF_PIPE0, address);   // Sets recieving address on 
+  39   1                                                       // pipe0  
+  40   1        
+  41   1        if(operational_mode == HAL_NRF_PTX)            // Mode depentant settings
+  42   1        {
+  43   2          hal_nrf_set_operation_mode(HAL_NRF_PTX);     // Enter TX mode
+  44   2        }
+  45   1        else
+  46   1        {
+  47   2          hal_nrf_set_operation_mode(HAL_NRF_PRX);     // Enter RX mode
+  48   2          hal_nrf_set_rx_pload_width((uint8_t)HAL_NRF_PIPE0, RF_PAYLOAD_LENGTH);
+  49   2                                                       // Pipe0 expect 
+  50   2                                                       // PAYLOAD_LENGTH byte payload
+  51   2                                                       // PAYLOAD_LENGTH in radio.h
+  52   2        }
+  53   1      
+C51 COMPILER V8.16   RADIO_SB                                                              04/03/2009 08:18:47 PAGE 2   
+
+  54   1        hal_nrf_set_rf_channel(RF_CHANNEL);            // Operating on static channel 
+  55   1                                                       // Defined in radio.h. 
+  56   1                                                       // Frequenzy = 
+  57   1                                                       //        2400 + RF_CHANNEL
+  58   1        hal_nrf_set_power_mode(HAL_NRF_PWR_UP);        // Power up device
+  59   1      
+  60   1      //hal_nrf_set_datarate(HAL_NRF_1MBPS);           // Uncomment this line for 
+  61   1                                                       // compatibility with nRF2401 
+  62   1                                                       // and nRF24E1
+  63   1      
+  64   1        start_timer(RF_POWER_UP_DELAY);                // Wait for the radio to 
+  65   1        wait_for_timer();                              // power up
+  66   1      
+  67   1        radio_set_status (RF_IDLE);                    // Radio now ready
+  68   1      }                                                
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    107    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,124 @@
+#include "iom16v.h"
+#include "main.h"
+#include "nRF24L01.h"
+
+#define M32_MOSI   PB5
+#define M32_MISO   PB6
+#define M32_SCK    PB7
+#ifndef F_CPU
+#define F_CPU				        12000000
+#endif	
+/*
+================================================================================
+Function   : USART_SendChar( )
+Description: Send a single byte via the USART
+InPut      : -dt, The value you want to send
+Output     : None
+================================================================================
+*/
+void USART_SendChar( unsigned char dt )
+{
+		UCSRA |= ( 1<<TXC );
+		UDR = dt;
+		while( !( UCSRA & ( 1<<TXC ) ) ); 
+}
+/*
+================================================================================
+Function   : USART_SendArray( )
+Description: Send a array of data via the USART port
+InPut      : -pBuff, The buffer to store the data
+             -nBytes, How many bytes do you want to send ?
+Output     : None
+================================================================================
+*/
+void USART_SendArray( unsigned char* pBuff, unsigned char nBytes )
+{
+	unsigned char btmp;
+	for( btmp = 0; btmp < nBytes; btmp ++ )
+	{
+		USART_SendChar( *( pBuff + btmp ) );
+	}
+}
+/*
+================================================================================
+Function   : USART_SendArray( )
+Description: Send a array of data via the USART port
+InPut      : -pBuff, The buffer to store the data
+             -nBytes, How many bytes do you want to send ?
+Output     : None
+================================================================================
+*/
+void USART_SendStr( unsigned char* pBuff, unsigned char nBytes )
+{
+	unsigned char btmp;
+	for( btmp = 0; btmp < nBytes; btmp ++ )
+	{
+		USART_SendChar( *( pBuff + btmp ) );
+	}
+}
+/*
+================================================================================
+Function   : USART_Init( ),
+Description: Initialize the USART port
+InPut      : None
+Output     : None
+================================================================================
+*/
+#define Bandrate    9600
+void USART_Init( void )
+{
+
+	UCSRB = 0x00; //disable while setting baud rate
+	UCSRA = 0x00;
+	UCSRC = 0x86;
+	UBRRL = ( F_CPU / 16 / Bandrate - 1 ) % 256;
+	UBRRH = ( F_CPU / 16 / Bandrate - 1 ) >> 8;
+	UCSRB = 0x98;
+
+}
+#pragma interrupt_handler ISR_USART:iv_USART0_RX
+volatile unsigned char flag = 0;
+volatile unsigned char dt;
+void ISR_USART( void )
+{
+	dt = UDR;
+	flag = 1;
+}
+INT8U SPI_ExchangeByte( INT8U value )
+{
+    SPDR = value;    
+    while( !( SPSR &  ( 1 << SPIF ) ) );
+	SPSR &= ~( 1<<SPIF );
+	return SPDR;
+}
+/*
+================================================================================
+Function   : SPI_Initialize( )
+Description: Initialize the SPI bus
+InPut      : None
+Output     : None
+================================================================================
+*/
+void SPI_Initialize( void )
+{   
+    SetBits( DDRB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) );	
+	ClrBits( DDRB, ( 1<<M32_MISO ) );
+	SetBits( PORTB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) | ( 1<<M32_MISO ) );
+	
+	SPCR = (1 << SPE) | (1 << MSTR);	
+	SPSR = (1 << SPI2X);
+}
+
+int main( void )
+{
+
+   SPI_Initialize( );
+   USART_Init( );
+   L01_Init( );	
+   L01_SetRXMode( );
+   L01_WriteHoppingPoint( 0 );
+   USART_SendStr( "nRF24L01P接收测试开始！\r\n" );
+   return 0;
+
+ 
+}

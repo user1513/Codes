@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\YHT Project\YHT20-SF340M\Software\27¡¢RX-nRF24L01+\project\RX-nRF24L01+.uvproj
+Project File Date:  05/21/2011
+
+<h2>Output:</h2>
+Load "E:\\YHT Project\\YHT20-SF340M\\Software\\27¡¢RX-nRF24L01+\\project\\output\\RX-nRF24L01+" 
+Flash Erase Done.
+Flash Image Update Complete. 
+Beginning programming...
+Flash Program Done: 1919 bytes programmed.
+Checksum:0x2cef
+Flash Verify Done: 1919 bytes verified.

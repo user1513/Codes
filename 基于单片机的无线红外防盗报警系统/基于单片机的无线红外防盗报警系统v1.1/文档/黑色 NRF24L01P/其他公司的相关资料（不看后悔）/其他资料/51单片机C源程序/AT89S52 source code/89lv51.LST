@@ -1,0 +1,455 @@
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE 89LV51
+OBJECT MODULE PLACED IN 89lv51.OBJ
+COMPILER INVOKED BY: d:\Keil\C51\BIN\C51.EXE 89lv51.c BROWSE INCDIR(D:\BAO\copy\24L01\ÐÂ°æ24L01\source code new\24L01 so
+                    -urce code\) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #include "api.h"
+   4          /*
+   5          *This file is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTYT; 
+   6          *
+   7          *uart:9600BPS
+   8          
+   9          */
+  10          /***************************************************/
+  11          #define uchar unsigned char
+  12          #define TX_ADR_WIDTH    5   // 5 bytes TX(RX) address width
+  13          #define TX_PLOAD_WIDTH  20  // 20 bytes TX payload
+  14          
+  15          uchar const TX_ADDRESS[TX_ADR_WIDTH]  = {0x34,0x43,0x10,0x10,0x01}; // Define a static TX address
+  16          
+  17          uchar rx_buf[TX_PLOAD_WIDTH];
+  18          uchar tx_buf[TX_PLOAD_WIDTH];
+  19          uchar flag;
+  20          /**************************************************/
+  21          sbit CE =  P1^0;
+  22          sbit CSN=  P1^1;
+  23          sbit SCK=  P1^2;
+  24          sbit MOSI= P1^3;
+  25          sbit MISO= P1^4;
+  26          sbit IRQ = P1^5;
+  27          /**************************************************/
+  28          uchar   bdata sta;
+  29          sbit    RX_DR   =sta^6;
+  30          sbit    TX_DS   =sta^5;
+  31          sbit    MAX_RT  =sta^4;
+  32          /**************************************************/
+  33          
+  34          /**************************************************
+  35          Function: init_io();
+  36          Description:
+  37            flash led one time,chip enable(ready to TX or RX Mode),
+  38            Spi disable,Spi clock line init high
+  39          /**************************************************/
+  40          #define KEY 0xaa
+  41          void init_io(void)
+  42          {
+  43   1              P0=KEY;         // led light
+  44   1              CE=0;                   // chip enable
+  45   1              CSN=1;                  // Spi disable  
+  46   1              SCK=0;                  // Spi clock line init high
+  47   1              P0=0xff;                // led close
+  48   1      }
+  49          /**************************************************/
+  50          
+  51          /**************************************************
+  52          Function: Inituart();
+  53          
+  54          Description:
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 2   
+
+  55            set uart working mode 
+  56          /**************************************************/
+  57          void Inituart(void)
+  58          {
+  59   1              TMOD = 0x20;                            //timer1 working mode 1
+  60   1              TL1 = 0xfd;                                     //f7=9600 for 16mhz Fosc,and ... 
+  61   1              TH1 = 0xfd;                                     //...fd=19200 for 11.0592mhz Fosc
+  62   1              SCON = 0xd8;                            //uart mode 3,ren==1
+  63   1              PCON = 0x80;                            //smod=0
+  64   1              TR1 = 1;                                        //start timer1
+  65   1      }
+  66          /**************************************************/
+  67          
+  68          /**************************************************
+  69          Function: init_int0();
+  70          
+  71          Description:
+  72            enable int0 interrupt;
+  73          /**************************************************/
+  74          void init_int0(void)
+  75          {
+  76   1              EA=1;
+  77   1              EX0=1;                                          // Enable int0 interrupt.
+  78   1      }
+  79          /**************************************************/
+  80          
+  81          /**************************************************
+  82          Function: delay100();
+  83          
+  84          Description:
+  85            delay 100ms
+  86          /**************************************************
+  87          void delay(uchar )
+  88          {
+  89                  uchar  x;
+  90                  uchar  y;
+  91                  for(x=0;x<100;x++)
+  92                  {
+  93                          for(y=0;y<100;y++)
+  94                          _nop_();
+  95                  }
+  96          }
+  97          
+  98          /**************************************************/
+  99          void delay_ms(unsigned int x)
+ 100          {
+ 101   1          unsigned int i,j;
+ 102   1          i=0;
+ 103   1          for(i=0;i<x;i++)
+ 104   1          {
+ 105   2             j=108;
+ 106   2                 ;
+ 107   2             while(j--);
+ 108   2          }
+ 109   1      }
+ 110          /**************************************************/
+ 111          
+ 112          /**************************************************
+ 113          Function: SPI_RW();
+ 114          
+ 115          Description:
+ 116            Writes one byte to nRF24L01, and return the byte read
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 3   
+
+ 117            from nRF24L01 during write, according to SPI protocol
+ 118          /**************************************************/
+ 119          uchar SPI_RW(uchar byte)
+ 120          {
+ 121   1              uchar bit_ctr;
+ 122   1              for(bit_ctr=0;bit_ctr<8;bit_ctr++)   // output 8-bit
+ 123   1              {
+ 124   2                      MOSI = (byte & 0x80);         // output 'byte', MSB to MOSI
+ 125   2                      byte = (byte << 1);           // shift next bit into MSB..
+ 126   2                      SCK = 1;                      // Set SCK high..
+ 127   2                      byte |= MISO;                     // capture current MISO bit
+ 128   2                      SCK = 0;                          // ..then set SCK low again
+ 129   2              }
+ 130   1          return(byte);                         // return read byte
+ 131   1      }
+ 132          /**************************************************/
+ 133          
+ 134          /**************************************************
+ 135          Function: SPI_RW_Reg();
+ 136          
+ 137          Description:
+ 138            Writes value 'value' to register 'reg'
+ 139          /**************************************************/
+ 140          uchar SPI_RW_Reg(BYTE reg, BYTE value)
+ 141          {
+ 142   1              uchar status;
+ 143   1      
+ 144   1              CSN = 0;                   // CSN low, init SPI transaction
+ 145   1              status = SPI_RW(reg);      // select register
+ 146   1              SPI_RW(value);             // ..and write value to it..
+ 147   1              CSN = 1;                   // CSN high again
+ 148   1      
+ 149   1              return(status);            // return nRF24L01 status byte
+ 150   1      }
+ 151          /**************************************************/
+ 152          
+ 153          /**************************************************
+ 154          Function: SPI_Read();
+ 155          
+ 156          Description:
+ 157            Read one byte from nRF24L01 register, 'reg'
+ 158          /**************************************************/
+ 159          BYTE SPI_Read(BYTE reg)
+ 160          {
+ 161   1              BYTE reg_val;
+ 162   1      
+ 163   1              CSN = 0;                // CSN low, initialize SPI communication...
+ 164   1              SPI_RW(reg);            // Select register to read from..
+ 165   1              reg_val = SPI_RW(0);    // ..then read registervalue
+ 166   1              CSN = 1;                // CSN high, terminate SPI communication
+ 167   1      
+ 168   1              return(reg_val);        // return register value
+ 169   1      }
+ 170          /**************************************************/
+ 171          
+ 172          /**************************************************
+ 173          Function: SPI_Read_Buf();
+ 174          
+ 175          Description:
+ 176            Reads 'bytes' #of bytes from register 'reg'
+ 177            Typically used to read RX payload, Rx/Tx address
+ 178          /**************************************************/
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 4   
+
+ 179          uchar SPI_Read_Buf(BYTE reg, BYTE *pBuf, BYTE bytes)
+ 180          {
+ 181   1              uchar status,byte_ctr;
+ 182   1      
+ 183   1              CSN = 0;                                // Set CSN low, init SPI tranaction
+ 184   1              status = SPI_RW(reg);                   // Select register to write to and read status byte
+ 185   1      
+ 186   1              for(byte_ctr=0;byte_ctr<bytes;byte_ctr++)
+ 187   1              pBuf[byte_ctr] = SPI_RW(0);    // Perform SPI_RW to read byte from nRF24L01
+ 188   1      
+ 189   1              CSN = 1;                           // Set CSN high again
+ 190   1      
+ 191   1              return(status);                    // return nRF24L01 status byte
+ 192   1      }
+ 193          /**************************************************/
+ 194          
+ 195          /**************************************************
+ 196          Function: SPI_Write_Buf();
+ 197          
+ 198          Description:
+ 199            Writes contents of buffer '*pBuf' to nRF24L01
+ 200            Typically used to write TX payload, Rx/Tx address
+ 201          /**************************************************/
+ 202          uchar SPI_Write_Buf(BYTE reg, BYTE *pBuf, BYTE bytes)
+ 203          {
+ 204   1              uchar status,byte_ctr;
+ 205   1      
+ 206   1              CSN = 0;                   // Set CSN low, init SPI tranaction
+ 207   1              status = SPI_RW(reg);    // Select register to write to and read status byte
+ 208   1              for(byte_ctr=0; byte_ctr<bytes; byte_ctr++) // then write all byte in buffer(*pBuf)
+ 209   1              SPI_RW(*pBuf++);
+ 210   1              CSN = 1;                 // Set CSN high again
+ 211   1              return(status);          // return nRF24L01 status byte
+ 212   1      }
+ 213          /**************************************************/
+ 214          
+ 215          /**************************************************
+ 216          Function: RX_Mode();
+ 217          
+ 218          Description:
+ 219            This function initializes one nRF24L01 device to
+ 220            RX Mode, set RX address, writes RX payload width,
+ 221            select RF channel, datarate & LNA HCURR.
+ 222            After init, CE is toggled high, which means that
+ 223            this device is now ready to receive a datapacket.
+ 224          /**************************************************/
+ 225          void RX_Mode(void)
+ 226          {
+ 227   1              CE=0;
+ 228   1              SPI_Write_Buf(WRITE_REG + RX_ADDR_P0, TX_ADDRESS, TX_ADR_WIDTH); // Use the same address on the RX devi
+             -ce as the TX device
+ 229   1      
+ 230   1              SPI_RW_Reg(WRITE_REG + EN_AA, 0x01);      // Enable Auto.Ack:Pipe0
+ 231   1              SPI_RW_Reg(WRITE_REG + EN_RXADDR, 0x01);  // Enable Pipe0
+ 232   1              SPI_RW_Reg(WRITE_REG + RF_CH, 40);        // Select RF channel 40
+ 233   1              SPI_RW_Reg(WRITE_REG + RX_PW_P0, TX_PLOAD_WIDTH); // Select same RX payload width as TX Payload width
+ 234   1              SPI_RW_Reg(WRITE_REG + RF_SETUP, 0x07);   // TX_PWR:0dBm, Datarate:2Mbps, LNA:HCURR
+ 235   1              SPI_RW_Reg(WRITE_REG + CONFIG, 0x0f);     // Set PWR_UP bit, enable CRC(2 bytes) & Prim:RX. RX_DR enabl
+             -ed..
+ 236   1      
+ 237   1              CE = 1; // Set CE pin high to enable RX device
+ 238   1      
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 5   
+
+ 239   1        //  This device is now ready to receive one packet of 16 bytes payload from a TX device sending to addre
+             -ss
+ 240   1        //  '3443101001', with auto acknowledgment, retransmit count of 10, RF channel 40 and datarate = 2Mbps.
+ 241   1      
+ 242   1      }
+ 243          /**************************************************/
+ 244          
+ 245          /**************************************************
+ 246          Function: TX_Mode();
+ 247          
+ 248          Description:
+ 249            This function initializes one nRF24L01 device to
+ 250            TX mode, set TX address, set RX address for auto.ack,
+ 251            fill TX payload, select RF channel, datarate & TX pwr.
+ 252            PWR_UP is set, CRC(2 bytes) is enabled, & PRIM:TX.
+ 253          
+ 254            ToDo: One high pulse(>10us) on CE will now send this
+ 255            packet and expext an acknowledgment from the RX device.
+ 256          /**************************************************/
+ 257          void TX_Mode(void)
+ 258          {
+ 259   1              CE=0;
+ 260   1              
+ 261   1              SPI_Write_Buf(WRITE_REG + TX_ADDR, TX_ADDRESS, TX_ADR_WIDTH);    // Writes TX_Address to nRF24L01
+ 262   1              SPI_Write_Buf(WRITE_REG + RX_ADDR_P0, TX_ADDRESS, TX_ADR_WIDTH); // RX_Addr0 same as TX_Adr for Auto.Ac
+             -k
+ 263   1              SPI_Write_Buf(WR_TX_PLOAD, tx_buf, TX_PLOAD_WIDTH); // Writes data to TX payload
+ 264   1      
+ 265   1              SPI_RW_Reg(WRITE_REG + EN_AA, 0x01);      // Enable Auto.Ack:Pipe0
+ 266   1              SPI_RW_Reg(WRITE_REG + EN_RXADDR, 0x01);  // Enable Pipe0
+ 267   1              SPI_RW_Reg(WRITE_REG + SETUP_RETR, 0x1a); // 500us + 86us, 10 retrans...
+ 268   1              SPI_RW_Reg(WRITE_REG + RF_CH, 40);        // Select RF channel 40
+ 269   1              SPI_RW_Reg(WRITE_REG + RF_SETUP, 0x07);   // TX_PWR:0dBm, Datarate:2Mbps, LNA:HCURR
+ 270   1              SPI_RW_Reg(WRITE_REG + CONFIG, 0x0e);     // Set PWR_UP bit, enable CRC(2 bytes) & Prim:TX. MAX_RT & TX
+             -_DS enabled..
+ 271   1              CE=1;
+ 272   1      
+ 273   1      }
+ 274          /**************************************************/
+ 275          
+ 276          /**************************************************
+ 277          Function: check_ACK();
+ 278          
+ 279          Description:
+ 280            check if have "Data sent TX FIFO interrupt",if TX_DS=1,
+ 281            all led light and after delay 100ms all led close
+ 282          /**************************************************
+ 283          void check_ACK()
+ 284          {
+ 285                  uchar test;
+ 286                  test=SPI_Read(READ_REG+STATUS); // read register STATUS's
+ 287                  test=test&0x20;                                 // check if have Data sent TX FIFO interrupt (TX_DS=1)
+ 288                  if(test==0x20)                                  // TX_DS =1
+ 289                  {
+ 290                          P0=0x00;                                        // turn on all led
+ 291                      delay100();                                 // delay 100ms
+ 292                          P0=0xff;
+ 293                  }
+ 294          }
+ 295          /**************************************************/
+ 296          
+ 297          /**************************************************
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 6   
+
+ 298          Function: TxData();
+ 299          
+ 300          Description:
+ 301            write data x to SBUF
+ 302          /**************************************************/
+ 303          void TxData (uchar x)
+ 304          {
+ 305   1              SBUF=x;                 // write data x to SBUF
+ 306   1              while(TI==0);
+ 307   1                      TI=0;
+ 308   1      }
+ 309          /**************************************************/
+ 310          
+ 311          /**************************************************
+ 312          Function: CheckButtons();
+ 313          
+ 314          Description:
+ 315            check buttons ,if have press,read the key values,
+ 316            turn on led and transmit it;  after transmition,
+ 317            if received ACK, clear TX_DS interrupt and enter RX Mode;
+ 318            turn off the led
+ 319          /**************************************************/
+ 320          void CheckButtons()
+ 321          {
+ 322   1              uchar Temp,xx,Tempi;
+ 323   1      
+ 324   1              P0=0xff;
+ 325   1              Temp=P0&KEY;                             //read key value from port P0
+ 326   1              if (Temp!=KEY)
+ 327   1              {       
+ 328   2                      delay_ms(10);
+ 329   2                      Temp=P0&KEY;                            // read key value from port P0
+ 330   2                      if (Temp!=KEY)
+ 331   2                      {
+ 332   3                                      xx=Temp;
+ 333   3                                      Tempi=Temp>>1;          // Left shift 4 bits
+ 334   3                                      P0=Tempi;                   // Turn On the led
+ 335   3                                      tx_buf[0]=Tempi;        // Save to tx_buf[0]
+ 336   3                                      TX_Mode();                      // set TX Mode and transmitting
+ 337   3                                      TxData(xx);                     // send data to uart
+ 338   3                                      //check_ACK();          // if have acknowledgment from RX device,turn on all led
+ 339   3                                      SPI_RW_Reg(WRITE_REG+STATUS,SPI_Read(READ_REG+STATUS)); // clear interrupt flag(TX_DS)
+ 340   3                                      delay_ms(500);
+ 341   3                                      P0=0xff;                        // Turn off the led                             
+ 342   3                                      RX_Mode();                      // set receive mode
+ 343   3      
+ 344   3                                      while((P0&KEY)!=KEY);
+ 345   3                      }
+ 346   2              }
+ 347   1      }
+ 348          /**************************************************/
+ 349          
+ 350          /**************************************************
+ 351          Function: main();
+ 352          
+ 353          Description:
+ 354            control all subprogrammes;
+ 355          /**************************************************/
+ 356          void main(void)
+ 357          {
+ 358   1              uchar xx;
+ 359   1              init_io();              // Initialize IO port
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 7   
+
+ 360   1              Inituart();             // initialize 232 uart
+ 361   1              //init_int0();  // enable int0 interrupt
+ 362   1              RX_Mode();              // set RX mode
+ 363   1              while(1)
+ 364   1              {
+ 365   2                      CheckButtons(); // scan key value and transmit 
+ 366   2                      sta=SPI_Read(STATUS);   // read register STATUS's value
+ 367   2                  if(RX_DR)                           // if receive data ready (RX_DR) interrupt
+ 368   2                    {
+ 369   3                         SPI_Read_Buf(RD_RX_PLOAD,rx_buf,TX_PLOAD_WIDTH);// read receive payload from RX_FIFO buffer
+ 370   3                         flag=1;
+ 371   3                }
+ 372   2                  if(MAX_RT)
+ 373   2                    {
+ 374   3                         SPI_RW_Reg(FLUSH_TX,0);
+ 375   3                }
+ 376   2                      SPI_RW_Reg(WRITE_REG+STATUS,sta);// clear RX_DR or TX_DS or MAX_RT interrupt flag
+ 377   2                      if(flag)                // finish received
+ 378   2                      {
+ 379   3                              flag=0;         //      set flag=0
+ 380   3                              P0=rx_buf[0];   // turn on led
+ 381   3                              delay_ms(500);
+ 382   3                              P0=0xff;                // turn off led
+ 383   3                              xx=rx_buf[0]>>1;// right shift 4 bits
+ 384   3                              TxData(xx);             // send data to uart
+ 385   3                      }
+ 386   2              }
+ 387   1      }
+ 388          /**************************************************/
+ 389          
+ 390          /**************************************************
+ 391          Function: ISR_int0() interrupt 0;
+ 392          
+ 393          Description:
+ 394            if RX_DR=1 or TX_DS or MAX_RT=1,enter this subprogram;
+ 395            if RX_DR=1,read the payload from RX_FIFO and set flag;
+ 396          /**************************************************/
+ 397          void ISR_int0(void) interrupt 0
+ 398          {
+ 399   1              sta=SPI_Read(STATUS);   // read register STATUS's value
+ 400   1              if(RX_DR)                               // if receive data ready (RX_DR) interrupt
+ 401   1              {
+ 402   2                      SPI_Read_Buf(RD_RX_PLOAD,rx_buf,TX_PLOAD_WIDTH);// read receive payload from RX_FIFO buffer
+ 403   2                      flag=1;
+ 404   2              }
+ 405   1              if(MAX_RT)
+ 406   1              {
+ 407   2                      SPI_RW_Reg(FLUSH_TX,0);
+ 408   2              }
+ 409   1                      SPI_RW_Reg(WRITE_REG+STATUS,sta);// clear RX_DR or TX_DS or MAX_RT interrupt flag
+ 410   1      }
+ 411          /**************************************************/
+ 412          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    606    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     47      11
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V7.50   89LV51                                                                03/03/2011 20:35:53 PAGE 8   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

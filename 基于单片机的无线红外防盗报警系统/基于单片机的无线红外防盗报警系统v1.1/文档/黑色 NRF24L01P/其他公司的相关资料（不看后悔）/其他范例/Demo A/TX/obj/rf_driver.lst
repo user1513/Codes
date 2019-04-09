@@ -1,0 +1,413 @@
+   1               		.file	"rf_driver.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	Spi_Init
+  20               	Spi_Init:
+  21               	.LFB6:
+  22               	.LM1:
+  23               	.LVL0:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26               	.LM2:
+  27 0000 8130      		cpi r24,lo8(1)
+  28 0002 01F4      		brne .L2
+  29               	.LM3:
+  30 0004 80E5      		ldi r24,lo8(80)
+  31               	.LVL1:
+  32 0006 8CBD      		out 76-32,r24
+  33 0008 0895      		ret
+  34               	.LVL2:
+  35               	.L2:
+  36               	.LM4:
+  37 000a 8823      		tst r24
+  38 000c 01F4      		brne .L4
+  39               	.LM5:
+  40 000e 8CB5      		in r24,76-32
+  41               	.LVL3:
+  42 0010 8F7B      		andi r24,lo8(-65)
+  43 0012 8CBD      		out 76-32,r24
+  44               	.LVL4:
+  45               	.L4:
+  46 0014 0895      		ret
+  47               	.LFE6:
+  49               	.global	Spi_RW_Byte
+  51               	Spi_RW_Byte:
+  52               	.LFB7:
+  53               	.LM6:
+  54               	.LVL5:
+  55               	/* prologue: function */
+  56               	/* frame size = 0 */
+  57               	.LM7:
+  58 0016 8EBD      		out 78-32,r24
+  59 0018 80E0      		ldi r24,lo8(0)
+  60 001a 90E0      		ldi r25,hi8(0)
+  61               	.LVL6:
+  62               	.LBB32:
+  63               	.LBB33:
+  64               	.LBB34:
+  65               	.LBB35:
+  66               	.LM8:
+  67 001c 38E2      		ldi r19,lo8(40)
+  68 001e 00C0      		rjmp .L6
+  69               	.LVL7:
+  70               	.L8:
+  71               	.LBE35:
+  72               	.LBE34:
+  73               	.LBE33:
+  74               	.LBE32:
+  75               	.LM9:
+  76 0020 0197      		sbiw r24,1
+  77               	.LM10:
+  78 0022 01F0      		breq .L7
+  79               	.LBB39:
+  80               	.LBB38:
+  81               	.LBB37:
+  82               	.LBB36:
+  83               	.LM11:
+  84 0024 232F      		mov r18,r19
+  85               	/* #APP */
+  86               	 ;  104 "delay.h" 1
+  87 0026 2A95      		1: dec r18
+  88 0028 01F4      		brne 1b
+  89               	 ;  0 "" 2
+  90               	/* #NOAPP */
+  91               	.L6:
+  92               	.LBE36:
+  93               	.LBE37:
+  94               	.LBE38:
+  95               	.LBE39:
+  96               	.LM12:
+  97 002a 0DB4      		in __tmp_reg__,77-32
+  98 002c 07FE      		sbrs __tmp_reg__,7
+  99 002e 00C0      		rjmp .L8
+ 100               	.L7:
+ 101               	.LM13:
+ 102 0030 8EB5      		in r24,78-32
+ 103               	.LVL8:
+ 104               	.LVL9:
+ 105               	/* epilogue start */
+ 106               	.LM14:
+ 107 0032 0895      		ret
+ 108               	.LFE7:
+ 110               	.global	Spi_MT_Str
+ 112               	Spi_MT_Str:
+ 113               	.LFB8:
+ 114               	.LM15:
+ 115               	.LVL10:
+ 116               	/* prologue: function */
+ 117               	/* frame size = 0 */
+ 118 0034 FC01      		movw r30,r24
+ 119               	.LM16:
+ 120 0036 8FEF      		ldi r24,lo8(-1)
+ 121               	.LVL11:
+ 122               	.LBB40:
+ 123               	.LBB41:
+ 124               	.LBB43:
+ 125               	.LBB44:
+ 126               	.LBB45:
+ 127               	.LBB46:
+ 128               	.LM17:
+ 129 0038 38E2      		ldi r19,lo8(40)
+ 130 003a 00C0      		rjmp .L11
+ 131               	.LVL12:
+ 132               	.L15:
+ 133               	.LBE46:
+ 134               	.LBE45:
+ 135               	.LBE44:
+ 136               	.LBE43:
+ 137               	.LM18:
+ 138 003c 9EBD      		out 78-32,r25
+ 139 003e 80E0      		ldi r24,lo8(0)
+ 140 0040 90E0      		ldi r25,hi8(0)
+ 141               	.LVL13:
+ 142 0042 00C0      		rjmp .L12
+ 143               	.L14:
+ 144 0044 0197      		sbiw r24,1
+ 145               	.LM19:
+ 146 0046 01F0      		breq .L13
+ 147               	.LBB42:
+ 148               	.LBB49:
+ 149               	.LBB48:
+ 150               	.LBB47:
+ 151               	.LM20:
+ 152 0048 232F      		mov r18,r19
+ 153               	/* #APP */
+ 154               	 ;  104 "delay.h" 1
+ 155 004a 2A95      		1: dec r18
+ 156 004c 01F4      		brne 1b
+ 157               	 ;  0 "" 2
+ 158               	/* #NOAPP */
+ 159               	.L12:
+ 160               	.LBE47:
+ 161               	.LBE48:
+ 162               	.LBE49:
+ 163               	.LBE42:
+ 164               	.LM21:
+ 165 004e 0DB4      		in __tmp_reg__,77-32
+ 166 0050 07FE      		sbrs __tmp_reg__,7
+ 167 0052 00C0      		rjmp .L14
+ 168               	.L13:
+ 169               	.LBE41:
+ 170               	.LBE40:
+ 171               	.LM22:
+ 172 0054 3196      		adiw r30,1
+ 173               	.LBB51:
+ 174               	.LBB50:
+ 175               	.LM23:
+ 176 0056 8EB5      		in r24,78-32
+ 177               	.LVL14:
+ 178               	.L11:
+ 179               	.LBE50:
+ 180               	.LBE51:
+ 181               	.LM24:
+ 182 0058 9081      		ld r25,Z
+ 183 005a 9923      		tst r25
+ 184 005c 01F4      		brne .L15
+ 185               	/* epilogue start */
+ 186               	.LM25:
+ 187 005e 0895      		ret
+ 188               	.LFE8:
+ 190               	.global	Spi_MT_Buff
+ 192               	Spi_MT_Buff:
+ 193               	.LFB9:
+ 194               	.LM26:
+ 195               	.LVL15:
+ 196               	/* prologue: function */
+ 197               	/* frame size = 0 */
+ 198 0060 FC01      		movw r30,r24
+ 199               	.LM27:
+ 200 0062 8FEF      		ldi r24,lo8(-1)
+ 201               	.LVL16:
+ 202               	.LBB52:
+ 203               	.LBB54:
+ 204               	.LBB56:
+ 205               	.LBB57:
+ 206               	.LBB58:
+ 207               	.LBB59:
+ 208               	.LM28:
+ 209 0064 38E2      		ldi r19,lo8(40)
+ 210 0066 00C0      		rjmp .L18
+ 211               	.LVL17:
+ 212               	.L22:
+ 213               	.LBE59:
+ 214               	.LBE58:
+ 215               	.LBE57:
+ 216               	.LBE56:
+ 217               	.LBE54:
+ 218               	.LBE52:
+ 219               	.LM29:
+ 220 0068 8081      		ld r24,Z
+ 221               	.LVL18:
+ 222               	.LBB64:
+ 223               	.LBB53:
+ 224               	.LM30:
+ 225 006a 8EBD      		out 78-32,r24
+ 226 006c 80E0      		ldi r24,lo8(0)
+ 227 006e 90E0      		ldi r25,hi8(0)
+ 228 0070 00C0      		rjmp .L19
+ 229               	.L21:
+ 230 0072 0197      		sbiw r24,1
+ 231               	.LM31:
+ 232 0074 01F0      		breq .L20
+ 233               	.LBB55:
+ 234               	.LBB62:
+ 235               	.LBB61:
+ 236               	.LBB60:
+ 237               	.LM32:
+ 238 0076 232F      		mov r18,r19
+ 239               	/* #APP */
+ 240               	 ;  104 "delay.h" 1
+ 241 0078 2A95      		1: dec r18
+ 242 007a 01F4      		brne 1b
+ 243               	 ;  0 "" 2
+ 244               	/* #NOAPP */
+ 245               	.L19:
+ 246               	.LBE60:
+ 247               	.LBE61:
+ 248               	.LBE62:
+ 249               	.LBE55:
+ 250               	.LM33:
+ 251 007c 0DB4      		in __tmp_reg__,77-32
+ 252 007e 07FE      		sbrs __tmp_reg__,7
+ 253 0080 00C0      		rjmp .L21
+ 254               	.L20:
+ 255               	.LBE53:
+ 256               	.LBE64:
+ 257               	.LM34:
+ 258 0082 3196      		adiw r30,1
+ 259               	.LBB65:
+ 260               	.LBB63:
+ 261               	.LM35:
+ 262 0084 8EB5      		in r24,78-32
+ 263               	.LVL19:
+ 264 0086 6150      		subi r22,lo8(-(-1))
+ 265               	.LVL20:
+ 266               	.L18:
+ 267               	.LBE63:
+ 268               	.LBE65:
+ 269               	.LM36:
+ 270 0088 6623      		tst r22
+ 271 008a 01F4      		brne .L22
+ 272               	/* epilogue start */
+ 273               	.LM37:
+ 274 008c 0895      		ret
+ 275               	.LFE9:
+ 277               	.global	Spi_MR_Byte
+ 279               	Spi_MR_Byte:
+ 280               	.LFB10:
+ 281               	.LM38:
+ 282               	/* prologue: function */
+ 283               	/* frame size = 0 */
+ 284               	.LBB66:
+ 285               	.LBB67:
+ 286               	.LM39:
+ 287 008e 1EBC      		out 78-32,__zero_reg__
+ 288 0090 80E0      		ldi r24,lo8(0)
+ 289 0092 90E0      		ldi r25,hi8(0)
+ 290               	.LBB68:
+ 291               	.LBB69:
+ 292               	.LBB70:
+ 293               	.LBB71:
+ 294               	.LM40:
+ 295 0094 38E2      		ldi r19,lo8(40)
+ 296 0096 00C0      		rjmp .L25
+ 297               	.LVL21:
+ 298               	.L27:
+ 299               	.LBE71:
+ 300               	.LBE70:
+ 301               	.LBE69:
+ 302               	.LBE68:
+ 303               	.LM41:
+ 304 0098 0197      		sbiw r24,1
+ 305               	.LM42:
+ 306 009a 01F0      		breq .L26
+ 307               	.LBB75:
+ 308               	.LBB74:
+ 309               	.LBB73:
+ 310               	.LBB72:
+ 311               	.LM43:
+ 312 009c 232F      		mov r18,r19
+ 313               	/* #APP */
+ 314               	 ;  104 "delay.h" 1
+ 315 009e 2A95      		1: dec r18
+ 316 00a0 01F4      		brne 1b
+ 317               	 ;  0 "" 2
+ 318               	/* #NOAPP */
+ 319               	.L25:
+ 320               	.LBE72:
+ 321               	.LBE73:
+ 322               	.LBE74:
+ 323               	.LBE75:
+ 324               	.LM44:
+ 325 00a2 0DB4      		in __tmp_reg__,77-32
+ 326 00a4 07FE      		sbrs __tmp_reg__,7
+ 327 00a6 00C0      		rjmp .L27
+ 328               	.L26:
+ 329               	.LM45:
+ 330 00a8 8EB5      		in r24,78-32
+ 331               	.LVL22:
+ 332               	.LVL23:
+ 333               	/* epilogue start */
+ 334               	.LBE67:
+ 335               	.LBE66:
+ 336               	.LM46:
+ 337 00aa 0895      		ret
+ 338               	.LFE10:
+ 340               	.global	Spi_MR_Buff
+ 342               	Spi_MR_Buff:
+ 343               	.LFB11:
+ 344               	.LM47:
+ 345               	.LVL24:
+ 346               	/* prologue: function */
+ 347               	/* frame size = 0 */
+ 348 00ac FC01      		movw r30,r24
+ 349               	.LBB76:
+ 350               	.LBB77:
+ 351               	.LBB78:
+ 352               	.LBB79:
+ 353               	.LBB80:
+ 354               	.LBB81:
+ 355               	.LM48:
+ 356 00ae 38E2      		ldi r19,lo8(40)
+ 357 00b0 00C0      		rjmp .L30
+ 358               	.LVL25:
+ 359               	.L34:
+ 360               	.LBE81:
+ 361               	.LBE80:
+ 362               	.LBE79:
+ 363               	.LBE78:
+ 364               	.LM49:
+ 365 00b2 1EBC      		out 78-32,__zero_reg__
+ 366 00b4 80E0      		ldi r24,lo8(0)
+ 367 00b6 90E0      		ldi r25,hi8(0)
+ 368               	.LVL26:
+ 369 00b8 00C0      		rjmp .L31
+ 370               	.L33:
+ 371 00ba 0197      		sbiw r24,1
+ 372               	.LM50:
+ 373 00bc 01F0      		breq .L32
+ 374               	.LBB85:
+ 375               	.LBB84:
+ 376               	.LBB83:
+ 377               	.LBB82:
+ 378               	.LM51:
+ 379 00be 232F      		mov r18,r19
+ 380               	/* #APP */
+ 381               	 ;  104 "delay.h" 1
+ 382 00c0 2A95      		1: dec r18
+ 383 00c2 01F4      		brne 1b
+ 384               	 ;  0 "" 2
+ 385               	/* #NOAPP */
+ 386               	.L31:
+ 387               	.LBE82:
+ 388               	.LBE83:
+ 389               	.LBE84:
+ 390               	.LBE85:
+ 391               	.LM52:
+ 392 00c4 0DB4      		in __tmp_reg__,77-32
+ 393 00c6 07FE      		sbrs __tmp_reg__,7
+ 394 00c8 00C0      		rjmp .L33
+ 395               	.L32:
+ 396               	.LM53:
+ 397 00ca 8EB5      		in r24,78-32
+ 398               	.LVL27:
+ 399               	.LBE77:
+ 400               	.LBE76:
+ 401               	.LM54:
+ 402 00cc 8193      		st Z+,r24
+ 403 00ce 6150      		subi r22,lo8(-(-1))
+ 404               	.LVL28:
+ 405               	.L30:
+ 406               	.LM55:
+ 407 00d0 6623      		tst r22
+ 408 00d2 01F4      		brne .L34
+ 409               	/* epilogue start */
+ 410               	.LM56:
+ 411 00d4 0895      		ret
+ 412               	.LFE11:
+ 478               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 rf_driver.c
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:20     .text:00000000 Spi_Init
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:51     .text:00000016 Spi_RW_Byte
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:112    .text:00000034 Spi_MT_Str
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:192    .text:00000060 Spi_MT_Buff
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:279    .text:0000008e Spi_MR_Byte
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccVdkd2q.s:342    .text:000000ac Spi_MR_Buff
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

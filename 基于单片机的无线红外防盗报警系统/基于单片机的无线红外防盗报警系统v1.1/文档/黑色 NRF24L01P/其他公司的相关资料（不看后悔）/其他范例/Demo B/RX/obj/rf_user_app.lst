@@ -1,0 +1,162 @@
+   1               		.file	"rf_user_app.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	Debug_HexData
+  20               	Debug_HexData:
+  21               	.LFB6:
+  22               	.LM1:
+  23               	.LVL0:
+  24               	/* prologue: function */
+  25               	/* frame size = 0 */
+  26               	/* epilogue start */
+  27               	.LM2:
+  28 0000 0895      		ret
+  29               	.LFE6:
+  31               	.global	Rf_Reg_Debug
+  33               	Rf_Reg_Debug:
+  34               	.LFB7:
+  35               	.LM3:
+  36               	.LVL1:
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39               	/* epilogue start */
+  40               	.LM4:
+  41 0002 0895      		ret
+  42               	.LFE7:
+  44               	.global	Rf_Init
+  46               	Rf_Init:
+  47               	.LFB8:
+  48               	.LM5:
+  49 0004 0F93      		push r16
+  50 0006 1F93      		push r17
+  51 0008 DF93      		push r29
+  52 000a CF93      		push r28
+  53 000c 00D0      		rcall .
+  54 000e 00D0      		rcall .
+  55 0010 0F92      		push __tmp_reg__
+  56 0012 CDB7      		in r28,__SP_L__
+  57 0014 DEB7      		in r29,__SP_H__
+  58               	/* prologue: function */
+  59               	/* frame size = 5 */
+  60               	.LM6:
+  61 0016 DE01      		movw r26,r28
+  62 0018 1196      		adiw r26,1
+  63 001a E0E0      		ldi r30,lo8(C.0.1331)
+  64 001c F0E0      		ldi r31,hi8(C.0.1331)
+  65 001e 85E0      		ldi r24,lo8(5)
+  66               	.L6:
+  67 0020 0190      		ld r0,Z+
+  68 0022 0D92      		st X+,r0
+  69 0024 8150      		subi r24,lo8(-(-1))
+  70 0026 01F4      		brne .L6
+  71               	.LM7:
+  72 0028 8AB1      		in r24,42-32
+  73 002a 8066      		ori r24,lo8(96)
+  74 002c 8AB9      		out 42-32,r24
+  75               	.LM8:
+  76 002e 8BB1      		in r24,43-32
+  77 0030 8066      		ori r24,lo8(96)
+  78 0032 8BB9      		out 43-32,r24
+  79               	.LM9:
+  80 0034 81E0      		ldi r24,lo8(1)
+  81 0036 0E94 0000 		call Spi_Init
+  82               	.LM10:
+  83 003a 2B98      		cbi 37-32,3
+  84               	.LM11:
+  85 003c 80E2      		ldi r24,lo8(32)
+  86 003e 6FE0      		ldi r22,lo8(15)
+  87 0040 0E94 0000 		call L01_Wr_Reg
+  88               	.LM12:
+  89 0044 81E2      		ldi r24,lo8(33)
+  90 0046 61E0      		ldi r22,lo8(1)
+  91 0048 0E94 0000 		call L01_Wr_Reg
+  92               	.LM13:
+  93 004c 82E2      		ldi r24,lo8(34)
+  94 004e 61E0      		ldi r22,lo8(1)
+  95 0050 0E94 0000 		call L01_Wr_Reg
+  96               	.LM14:
+  97 0054 83E2      		ldi r24,lo8(35)
+  98 0056 63E0      		ldi r22,lo8(3)
+  99 0058 0E94 0000 		call L01_Wr_Reg
+ 100               	.LM15:
+ 101 005c 84E2      		ldi r24,lo8(36)
+ 102 005e 6AE3      		ldi r22,lo8(58)
+ 103 0060 0E94 0000 		call L01_Wr_Reg
+ 104               	.LM16:
+ 105 0064 85E2      		ldi r24,lo8(37)
+ 106 0066 68E2      		ldi r22,lo8(40)
+ 107 0068 0E94 0000 		call L01_Wr_Reg
+ 108               	.LM17:
+ 109 006c 86E2      		ldi r24,lo8(38)
+ 110 006e 66E2      		ldi r22,lo8(38)
+ 111 0070 0E94 0000 		call L01_Wr_Reg
+ 112               	.LM18:
+ 113 0074 87E0      		ldi r24,lo8(7)
+ 114 0076 0E94 0000 		call L01_Clear_Irq
+ 115               	.LM19:
+ 116 007a 8AE2      		ldi r24,lo8(42)
+ 117 007c 8E01      		movw r16,r28
+ 118 007e 0F5F      		subi r16,lo8(-(1))
+ 119 0080 1F4F      		sbci r17,hi8(-(1))
+ 120 0082 B801      		movw r22,r16
+ 121 0084 45E0      		ldi r20,lo8(5)
+ 122 0086 0E94 0000 		call L01_Wr_Buff
+ 123               	.LM20:
+ 124 008a 80E3      		ldi r24,lo8(48)
+ 125 008c B801      		movw r22,r16
+ 126 008e 45E0      		ldi r20,lo8(5)
+ 127 0090 0E94 0000 		call L01_Wr_Buff
+ 128               	.LM21:
+ 129 0094 81E3      		ldi r24,lo8(49)
+ 130 0096 65E0      		ldi r22,lo8(5)
+ 131 0098 0E94 0000 		call L01_Wr_Reg
+ 132               	.LM22:
+ 133 009c 2B9A      		sbi 37-32,3
+ 134               	/* epilogue start */
+ 135               	.LM23:
+ 136 009e 0F90      		pop __tmp_reg__
+ 137 00a0 0F90      		pop __tmp_reg__
+ 138 00a2 0F90      		pop __tmp_reg__
+ 139 00a4 0F90      		pop __tmp_reg__
+ 140 00a6 0F90      		pop __tmp_reg__
+ 141 00a8 CF91      		pop r28
+ 142 00aa DF91      		pop r29
+ 143 00ac 1F91      		pop r17
+ 144 00ae 0F91      		pop r16
+ 145 00b0 0895      		ret
+ 146               	.LFE8:
+ 148               		.data
+ 151               	C.0.1331:
+ 152 0000 B2        		.byte	-78
+ 153 0001 B3        		.byte	-77
+ 154 0002 B4        		.byte	-76
+ 155 0003 B5        		.byte	-75
+ 156 0004 03        		.byte	3
+ 197               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 rf_user_app.c
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:20     .text:00000000 Debug_HexData
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:33     .text:00000002 Rf_Reg_Debug
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:46     .text:00000004 Rf_Init
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccW59XI8.s:151    .data:00000000 C.0.1331
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+Spi_Init
+L01_Wr_Reg
+L01_Clear_Irq
+L01_Wr_Buff

@@ -1,0 +1,4 @@
+".\output\main.obj",
+".\output\nRF24L01.obj" 
+TO ".\output\RX" 
+PRINT(".\list\RX.m51") RAMSIZE(256) 

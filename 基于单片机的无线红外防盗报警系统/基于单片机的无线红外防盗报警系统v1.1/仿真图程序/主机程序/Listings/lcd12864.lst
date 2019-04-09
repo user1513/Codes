@@ -1,0 +1,125 @@
+C51 COMPILER V9.59.0.0   LCD12864                                                          02/21/2019 14:58:00 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LCD12864
+OBJECT MODULE PLACED IN .\Objects\lcd12864.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE lcd12864.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\lcd
+                    -12864.lst) TABS(2) OBJECT(.\Objects\lcd12864.obj)
+
+line level    source
+
+   1          #include "lcd12864.h"
+   2          
+   3          
+   4          
+   5          void delay(unsigned int m)            //延时程序
+   6          {
+   7   1        unsigned int i,j;
+   8   1        for(i=0;i<m;i++)
+   9   1           for(j=0;j<10;j++);
+  10   1      }
+  11          
+  12                             
+  13          /******************************************************************/
+  14          /*                   液晶初始化-字库                              */
+  15          /******************************************************************/
+  16          void   initinal(void)           //LCD字库初始化程序
+  17          {
+  18   1         delay(40);             //大于40MS的延时程序
+  19   1         RES=0;                 //复位
+  20   1         delay(1);              //延时
+  21   1         RES=1;                 //复位置高
+  22   1         delay(10);
+  23   1         TransferData(0x30,0);  //Extended Function Set :8BIT设置,RE=0: basic instruction set, G=0 :graphic displ
+             -ay OFF
+  24   1         delay(100);            //大于100uS的延时程序
+  25   1         TransferData(0x30,0);  //Function Set
+  26   1         delay(37);             ////大于37uS的延时程序
+  27   1         TransferData(0x08,0);  //Display on Control
+  28   1         delay(100);            //大于100uS的延时程序
+  29   1         TransferData(0x10,0);  //Cursor Display Control光标设置
+  30   1         delay(100);            //大于100uS的延时程序
+  31   1         TransferData(0x0C,0);  //Display Control,D=1,显示开
+  32   1         delay(100);            //大于100uS的延时程序
+  33   1         TransferData(0x01,0);  //Display Clear
+  34   1         delay(10);             //大于10mS的延时程序
+  35   1         TransferData(0x06,0);  //Enry Mode Set,光标从右向左加1位移动
+  36   1         delay(100);            //大于100uS的延时程序
+  37   1      }
+  38          
+  39          void lcd_write(uint8_t adder, uint8_t Data)
+  40          {
+  41   1        TransferData(adder, 0);
+  42   1        delay(100);
+  43   1        TransferData(Data, 1);
+  44   1        delay(100);
+  45   1      }
+  46          
+  47          void lcd_mesg(unsigned char code *adder1)
+  48          {
+  49   1        unsigned char i;
+  50   1          TransferData(0x80,0);  //Set Graphic Display RAM Address
+  51   1          delay(100);
+  52   1        for(i=0;i<16;i++)
+  53   1        {
+C51 COMPILER V9.59.0.0   LCD12864                                                          02/21/2019 14:58:00 PAGE 2   
+
+  54   2            TransferData(*adder1,1);
+  55   2            adder1++;
+  56   2        }
+  57   1      
+  58   1           TransferData(0x90,0);  //Set Graphic Display RAM Address
+  59   1            delay(100);
+  60   1        for(i=0;i<16;i++)
+  61   1          {
+  62   2              TransferData(*adder1,1);
+  63   2              adder1++;
+  64   2          }
+  65   1          TransferData(0x88,0);  //Set Graphic Display RAM Address
+  66   1          delay(100);
+  67   1        for(i=0;i<16;i++)
+  68   1        {
+  69   2            TransferData(*adder1,1);
+  70   2            adder1++;
+  71   2        }
+  72   1      
+  73   1           TransferData(0x98,0);  //Set Graphic Display RAM Address
+  74   1            delay(100);
+  75   1        for(i=0;i<16;i++)
+  76   1          {
+  77   2              TransferData(*adder1,1);
+  78   2              adder1++;
+  79   2          }
+  80   1         
+  81   1      
+  82   1      }
+  83          
+  84          
+  85          
+  86          /******************************************************************/
+  87          /*                    函数声明                                    */
+  88          /******************************************************************/
+  89          void   TransferData(char data1,bit DI)  //传送数据或者命令,当DI=0是,传送命令,当DI=1,传送数据.
+  90          {
+  91   1          RW=0;
+  92   1          RS=DI;
+  93   1          delay(1);
+  94   1          P0=data1;
+  95   1          E=1;
+  96   1          delay(1);
+  97   1          E=0;
+  98   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    360    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

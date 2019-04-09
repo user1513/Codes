@@ -1,0 +1,16 @@
+".\obj\main.obj",
+".\obj\radio.obj",
+".\obj\system.obj",
+".\obj\mcu.obj",
+".\obj\hal_nrf_l01.obj",
+".\obj\hal_nrf_hw.obj",
+".\obj\radio_sb.obj",
+".\obj\application_sb.obj",
+".\obj\radio_esb.obj",
+".\obj\application_esb.obj",
+".\obj\radio_pl.obj",
+".\obj\application_pl.obj" 
+TO ".\obj\nRF24LU1" 
+PRINT(".\lst\nRF24LU1.m51") RAMSIZE(256) 
+DISABLEWARNING (15,16) 
+XDATA( 0X8000-0X87FF )

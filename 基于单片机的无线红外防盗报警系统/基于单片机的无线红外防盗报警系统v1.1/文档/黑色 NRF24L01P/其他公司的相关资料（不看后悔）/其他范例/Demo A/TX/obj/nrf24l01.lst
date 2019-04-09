@@ -1,0 +1,288 @@
+   1               		.file	"nrf24l01.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	L01_Wr_Buff
+  20               	L01_Wr_Buff:
+  21               	.LFB4:
+  22               	.LM1:
+  23               	.LVL0:
+  24 0000 1F93      		push r17
+  25 0002 CF93      		push r28
+  26 0004 DF93      		push r29
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29 0006 EB01      		movw r28,r22
+  30 0008 142F      		mov r17,r20
+  31               	.LM2:
+  32 000a 2C9A      		sbi 37-32,4
+  33               	.LM3:
+  34 000c 2C98      		cbi 37-32,4
+  35               	.LM4:
+  36 000e 0E94 0000 		call Spi_RW_Byte
+  37               	.LVL1:
+  38 0012 00C0      		rjmp .L2
+  39               	.L3:
+  40               	.LM5:
+  41 0014 8991      		ld r24,Y+
+  42 0016 0E94 0000 		call Spi_RW_Byte
+  43 001a 1150      		subi r17,lo8(-(-1))
+  44               	.L2:
+  45               	.LM6:
+  46 001c 1123      		tst r17
+  47 001e 01F4      		brne .L3
+  48               	.LM7:
+  49 0020 2C9A      		sbi 37-32,4
+  50               	/* epilogue start */
+  51               	.LM8:
+  52 0022 DF91      		pop r29
+  53 0024 CF91      		pop r28
+  54               	.LVL2:
+  55 0026 1F91      		pop r17
+  56               	.LVL3:
+  57 0028 0895      		ret
+  58               	.LFE4:
+  60               	.global	L01_Wr_Pl
+  62               	L01_Wr_Pl:
+  63               	.LFB8:
+  64               	.LM9:
+  65               	.LVL4:
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68 002a 9C01      		movw r18,r24
+  69 002c 462F      		mov r20,r22
+  70               	.LM10:
+  71 002e 80EA      		ldi r24,lo8(-96)
+  72               	.LVL5:
+  73 0030 B901      		movw r22,r18
+  74               	.LVL6:
+  75 0032 0E94 0000 		call L01_Wr_Buff
+  76               	.LVL7:
+  77               	/* epilogue start */
+  78               	.LM11:
+  79 0036 0895      		ret
+  80               	.LFE8:
+  82               	.global	L01_Wr_Reg
+  84               	L01_Wr_Reg:
+  85               	.LFB2:
+  86               	.LM12:
+  87               	.LVL8:
+  88 0038 1F93      		push r17
+  89               	/* prologue: function */
+  90               	/* frame size = 0 */
+  91 003a 982F      		mov r25,r24
+  92 003c 162F      		mov r17,r22
+  93               	.LM13:
+  94 003e 2C9A      		sbi 37-32,4
+  95               	.LM14:
+  96 0040 2C98      		cbi 37-32,4
+  97               	.LM15:
+  98 0042 815E      		subi r24,lo8(-(31))
+  99               	.LVL9:
+ 100 0044 8330      		cpi r24,lo8(3)
+ 101 0046 00F0      		brlo .L8
+ 102               	.LVL10:
+ 103 0048 9F3F      		cpi r25,lo8(-1)
+ 104 004a 01F4      		brne .L9
+ 105               	.L8:
+ 106               	.LM16:
+ 107 004c 892F      		mov r24,r25
+ 108 004e 0E94 0000 		call Spi_RW_Byte
+ 109               	.LVL11:
+ 110 0052 8FEF      		ldi r24,lo8(-1)
+ 111               	.LVL12:
+ 112 0054 00C0      		rjmp .L10
+ 113               	.LVL13:
+ 114               	.L9:
+ 115               	.LM17:
+ 116 0056 892F      		mov r24,r25
+ 117 0058 0E94 0000 		call Spi_RW_Byte
+ 118               	.LVL14:
+ 119               	.LM18:
+ 120 005c 812F      		mov r24,r17
+ 121 005e 0E94 0000 		call Spi_RW_Byte
+ 122               	.LVL15:
+ 123               	.L10:
+ 124               	.LM19:
+ 125 0062 2C9A      		sbi 37-32,4
+ 126               	.LVL16:
+ 127               	/* epilogue start */
+ 128               	.LM20:
+ 129 0064 1F91      		pop r17
+ 130               	.LVL17:
+ 131 0066 0895      		ret
+ 132               	.LFE2:
+ 134               	.global	L01_Flush_Tx
+ 136               	L01_Flush_Tx:
+ 137               	.LFB10:
+ 138               	.LM21:
+ 139               	/* prologue: function */
+ 140               	/* frame size = 0 */
+ 141               	.LM22:
+ 142 0068 81EE      		ldi r24,lo8(-31)
+ 143 006a 60E0      		ldi r22,lo8(0)
+ 144 006c 0E94 0000 		call L01_Wr_Reg
+ 145               	/* epilogue start */
+ 146               	.LM23:
+ 147 0070 0895      		ret
+ 148               	.LFE10:
+ 150               	.global	L01_Flush_Rx
+ 152               	L01_Flush_Rx:
+ 153               	.LFB9:
+ 154               	.LM24:
+ 155               	/* prologue: function */
+ 156               	/* frame size = 0 */
+ 157               	.LM25:
+ 158 0072 82EE      		ldi r24,lo8(-30)
+ 159 0074 60E0      		ldi r22,lo8(0)
+ 160 0076 0E94 0000 		call L01_Wr_Reg
+ 161               	/* epilogue start */
+ 162               	.LM26:
+ 163 007a 0895      		ret
+ 164               	.LFE9:
+ 166               	.global	L01_Rd_Buff
+ 168               	L01_Rd_Buff:
+ 169               	.LFB5:
+ 170               	.LM27:
+ 171               	.LVL18:
+ 172 007c FF92      		push r15
+ 173 007e 0F93      		push r16
+ 174 0080 1F93      		push r17
+ 175               	/* prologue: function */
+ 176               	/* frame size = 0 */
+ 177 0082 8B01      		movw r16,r22
+ 178 0084 F42E      		mov r15,r20
+ 179               	.LM28:
+ 180 0086 2C9A      		sbi 37-32,4
+ 181               	.LM29:
+ 182 0088 2C98      		cbi 37-32,4
+ 183               	.LM30:
+ 184 008a 0E94 0000 		call Spi_RW_Byte
+ 185               	.LVL19:
+ 186               	.LM31:
+ 187 008e C801      		movw r24,r16
+ 188 0090 6F2D      		mov r22,r15
+ 189 0092 0E94 0000 		call Spi_MR_Buff
+ 190               	.LM32:
+ 191 0096 2C9A      		sbi 37-32,4
+ 192               	/* epilogue start */
+ 193               	.LM33:
+ 194 0098 1F91      		pop r17
+ 195 009a 0F91      		pop r16
+ 196               	.LVL20:
+ 197 009c FF90      		pop r15
+ 198               	.LVL21:
+ 199 009e 0895      		ret
+ 200               	.LFE5:
+ 202               	.global	L01_Rd_Reg
+ 204               	L01_Rd_Reg:
+ 205               	.LFB3:
+ 206               	.LM34:
+ 207               	.LVL22:
+ 208               	/* prologue: function */
+ 209               	/* frame size = 0 */
+ 210               	.LM35:
+ 211 00a0 2C9A      		sbi 37-32,4
+ 212               	.LM36:
+ 213 00a2 2C98      		cbi 37-32,4
+ 214               	.LM37:
+ 215 00a4 0E94 0000 		call Spi_RW_Byte
+ 216               	.LVL23:
+ 217               	.LM38:
+ 218 00a8 0E94 0000 		call Spi_MR_Byte
+ 219               	.LM39:
+ 220 00ac 2C9A      		sbi 37-32,4
+ 221               	/* epilogue start */
+ 222               	.LM40:
+ 223 00ae 0895      		ret
+ 224               	.LFE3:
+ 226               	.global	L01_Rd_Statu_Reg
+ 228               	L01_Rd_Statu_Reg:
+ 229               	.LFB6:
+ 230               	.LM41:
+ 231               	/* prologue: function */
+ 232               	/* frame size = 0 */
+ 233               	.LM42:
+ 234 00b0 87E0      		ldi r24,lo8(7)
+ 235 00b2 0E94 0000 		call L01_Rd_Reg
+ 236               	/* epilogue start */
+ 237               	.LM43:
+ 238 00b6 0895      		ret
+ 239               	.LFE6:
+ 241               	.global	L01_Clear_Irq
+ 243               	L01_Clear_Irq:
+ 244               	.LFB7:
+ 245               	.LM44:
+ 246               	.LVL24:
+ 247 00b8 1F93      		push r17
+ 248               	/* prologue: function */
+ 249               	/* frame size = 0 */
+ 250 00ba 182F      		mov r17,r24
+ 251               	.LM45:
+ 252 00bc 8730      		cpi r24,lo8(7)
+ 253 00be 00F0      		brlo .L23
+ 254               	.LM46:
+ 255 00c0 0E94 0000 		call L01_Rd_Statu_Reg
+ 256               	.LVL25:
+ 257 00c4 682F      		mov r22,r24
+ 258 00c6 6067      		ori r22,lo8(112)
+ 259 00c8 00C0      		rjmp .L26
+ 260               	.LVL26:
+ 261               	.L23:
+ 262               	.LM47:
+ 263 00ca 8430      		cpi r24,lo8(4)
+ 264 00cc 00F0      		brlo .L25
+ 265               	.LM48:
+ 266 00ce 0E94 0000 		call L01_Rd_Statu_Reg
+ 267               	.LVL27:
+ 268 00d2 21E0      		ldi r18,lo8(1)
+ 269 00d4 30E0      		ldi r19,hi8(1)
+ 270 00d6 00C0      		rjmp 2f
+ 271 00d8 220F      	1:	lsl r18
+ 272 00da 331F      		rol r19
+ 273 00dc 1A95      	2:	dec r17
+ 274 00de 02F4      		brpl 1b
+ 275 00e0 682F      		mov r22,r24
+ 276 00e2 622B      		or r22,r18
+ 277               	.L26:
+ 278 00e4 87E2      		ldi r24,lo8(39)
+ 279 00e6 0E94 0000 		call L01_Wr_Reg
+ 280               	.LVL28:
+ 281               	.L25:
+ 282               	/* epilogue start */
+ 283               	.LM49:
+ 284 00ea 1F91      		pop r17
+ 285               	.LVL29:
+ 286 00ec 0895      		ret
+ 287               	.LFE7:
+ 377               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 nrf24l01.c
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:20     .text:00000000 L01_Wr_Buff
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:62     .text:0000002a L01_Wr_Pl
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:84     .text:00000038 L01_Wr_Reg
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:136    .text:00000068 L01_Flush_Tx
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:152    .text:00000072 L01_Flush_Rx
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:168    .text:0000007c L01_Rd_Buff
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:204    .text:000000a0 L01_Rd_Reg
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:228    .text:000000b0 L01_Rd_Statu_Reg
+C:\DOCUME~1\kf21\LOCALS~1\Temp/ccmVwUkk.s:243    .text:000000b8 L01_Clear_Irq
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+Spi_RW_Byte
+Spi_MR_Buff
+Spi_MR_Byte

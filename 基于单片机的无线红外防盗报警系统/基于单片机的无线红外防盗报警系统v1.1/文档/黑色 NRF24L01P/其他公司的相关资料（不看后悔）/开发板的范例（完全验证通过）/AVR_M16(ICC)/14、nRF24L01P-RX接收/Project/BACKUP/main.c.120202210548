@@ -1,0 +1,28 @@
+
+
+/*
+================================================================================
+Function   : SPI_Initialize( )
+Description: Initialize the SPI bus
+InPut      : None
+Output     : None
+================================================================================
+*/
+void SPI_Initialize( void )
+{   
+    SetBits( DDRB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) );	
+	ClrBits( DDRB, ( 1<<M32_MISO ) );
+	SetBits( PORTB, ( 1<<M32_MOSI ) | ( 1<<M32_SCK ) | ( 1<<M32_MISO ) );
+	
+	SPCR = (1 << SPE) | (1 << MSTR);	
+	SPSR = (1 << SPI2X);
+}
+
+int main( void )
+{
+
+   SPI_Initialize( );
+   return 0;
+
+ 
+}

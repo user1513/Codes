@@ -1,0 +1,52 @@
+Change Component Footprint: Designator=C3 Old Footprint=RB7.6-15 New Footprint=RB.2/.5mm
+Change Component Footprint: Designator=C4 Old Footprint=RB7.6-15 New Footprint=RB.2/.5mm
+Change Component Footprint: Designator=C5 Old Footprint=RB7.6-15 New Footprint=RB.2/.5mm
+Change Component Footprint: Designator=C6 Old Footprint=RB7.6-15 New Footprint=RB.2/.5mm
+Change component parameters: Designator = "D1"; Footprint = "LC-0805_LED_S1"; UniqueID = "\UICNCCKP"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "ComponentLink1Description"; Value = "供应商链接"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.szlcsc.com/product/details_2668.html"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier"; Value = "LC"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SuppliersPartNumber"; Value = "C2295"; VariantName = "[No Variations]"
+Added Component: Designator=U1(DIP40)
+Add component. Clean all parameters for all variants
+Added Component: Designator=U2(LC-SOT-223)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=NRF24L01_IRQ Pin=U1-1
+Added Pin To Net: NetName=NRF24L01_MISO Pin=U1-2
+Added Pin To Net: NetName=NRF24L01_MISI Pin=U1-3
+Added Pin To Net: NetName=NRF24L01_SCK Pin=U1-4
+Added Pin To Net: NetName=NRF24L01_CSN Pin=U1-5
+Added Pin To Net: NetName=NRF24L01_CE Pin=U1-6
+Added Pin To Net: NetName=DS18B20_DQ Pin=U1-7
+Added Pin To Net: NetName=RST Pin=U1-9
+Added Pin To Net: NetName=RXD1 Pin=U1-10
+Added Pin To Net: NetName=TXD1 Pin=U1-11
+Added Pin To Net: NetName=VVS183B_OUT Pin=U1-12
+Added Pin To Net: NetName=X2 Pin=U1-18
+Added Pin To Net: NetName=X1 Pin=U1-19
+Added Pin To Net: NetName=GND Pin=U1-20
+Added Pin To Net: NetName=DS1302_RST Pin=U1-21
+Added Pin To Net: NetName=DS1302_DAT Pin=U1-22
+Added Pin To Net: NetName=DS1302_CLK Pin=U1-23
+Added Pin To Net: NetName=LCD12864_RST Pin=U1-25
+Added Pin To Net: NetName=LCD12864_E Pin=U1-26
+Added Pin To Net: NetName=LCD12864_R/W Pin=U1-27
+Added Pin To Net: NetName=LCD12864_RS Pin=U1-28
+Added Pin To Net: NetName=VCC Pin=U1-31
+Added Pin To Net: NetName=DB7 Pin=U1-32
+Added Pin To Net: NetName=DB6 Pin=U1-33
+Added Pin To Net: NetName=DB5 Pin=U1-34
+Added Pin To Net: NetName=DB4 Pin=U1-35
+Added Pin To Net: NetName=DB3 Pin=U1-36
+Added Pin To Net: NetName=DB2 Pin=U1-37
+Added Pin To Net: NetName=DB1 Pin=U1-38
+Added Pin To Net: NetName=DB0 Pin=U1-39
+Added Pin To Net: NetName=VCC Pin=U1-40
+Added Pin To Net: NetName=GND Pin=U2-1
+Added Pin To Net: NetName=NRF24L01_VCC3.3 Pin=U2-2
+Added Pin To Net: NetName=NRF24L01_VCC3.3 Pin=U2-2
+Added Pin To Net: NetName=VCC Pin=U2-3
+Added Member To Class: ClassName=基于单片机的无线红外防盗报警系统 Member=Component U1 STC12C5A60S2
+Added Member To Class: ClassName=基于单片机的无线红外防盗报警系统 Member=Component U2 AMS1117

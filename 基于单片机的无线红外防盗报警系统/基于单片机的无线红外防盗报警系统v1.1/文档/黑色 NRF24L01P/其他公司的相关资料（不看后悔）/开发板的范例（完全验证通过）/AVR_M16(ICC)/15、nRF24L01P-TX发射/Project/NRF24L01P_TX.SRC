@@ -1,0 +1,9 @@
+[Files]
+..\Source\nRF24L01.c
+..\Source\main.c
+[Headers]
+..\Source\main.h
+..\Source\MyTypeDef.h
+..\Source\nRF24L01.h
+..\Source\nRF24L01_Reg.h
+[Documents]

@@ -1,0 +1,5 @@
+Change Component Footprint: Designator=C3 Old Footprint=RB.2/.5mm New Footprint=RB.2.5/.6.3mm
+Change Component Footprint: Designator=C4 Old Footprint=RB.2/.5mm New Footprint=RB.2.5/.6.3mm
+Change Component Footprint: Designator=C5 Old Footprint=RB.2/.5mm New Footprint=RB.2.5/.6.3mm
+Change Component Footprint: Designator=C6 Old Footprint=RB.2/.5mm New Footprint=RB.2.5/.6.3mm
+Added Room: Name=基于单片机的无线红外防盗报警系统

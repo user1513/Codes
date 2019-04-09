@@ -1,0 +1,192 @@
+C51 COMPILER V8.16   APPLICATION_PL                                                        04/03/2009 08:18:48 PAGE 1   
+
+
+C51 COMPILER V8.16, COMPILATION OF MODULE APPLICATION_PL
+OBJECT MODULE PLACED IN .\obj\application_pl.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE pl\application_pl.c OPTIMIZE(9,SPEED) BROWSE INCDIR(.\lu1_bfb;..\..\..\arch
+                    -\hal\include;..\..\..\arch\nrf24lu1;..\..\..\arch\hal\nrf24lu1) DEFINE(nRF24LU1__) DEBUG OBJECTEXTEND PRINT(.\lst\applic
+                    -ation_pl.lst) OBJECT(.\obj\application_pl.obj)
+
+line level    source
+
+   1          /* Copyright (c) 2007 Nordic Semiconductor. All Rights Reserved.
+   2           *
+   3           * The information contained herein is property of Nordic Semiconductor ASA.
+   4           * Terms and conditions of usage are described in detail in NORDIC
+   5           * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT. 
+   6           *
+   7           * Licensees are granted free, non-transferable use of the information. NO
+   8           * WARRENTY of ANY KIND is provided. This heading must NOT be removed from
+   9           * the file.
+  10           *
+  11           * $LastChangedRevision: 2311 $
+  12           */ 
+  13          
+  14          /** @ingroup PL 
+  15           * @file
+  16           * Application to show the functionality of the Enhanced ShockBurst mode with 
+  17           * Bidirectional data. 
+  18           *
+  19           * @b PTX @b mode: 
+  20           * - Sends a packet aprox every 100ms
+  21           * - Accepts user interaction at Button 1
+  22           *   - Not pressed: Send @c 00
+  23           *   - Pressed: Send @c 10
+  24           * - If a ACK was recieved, blink LED2
+  25           * - If a ACK was not recieved, blink LED3
+  26           * - If a ACK payload is recieved, turn on lights according to packet content:
+  27           *    - 0: LED1 off
+  28           *    - 1: LED1 on
+  29           *
+  30           * @b PRX @b mode:
+  31           * - Constantly checks for data
+  32           * - If no packet recieved in aprox 100ms, turn off all leds
+  33           * - If a packet is recieved, turn on lights according to packet content:
+  34           *    - 0: LED1 off
+  35           *    - 1: LED1 on
+  36           * - Accepts user interaction at Button 1
+  37           *   - Not pressed: Put @c 00 in ACK payload
+  38           *   - Pressed: Put @c 10 in ACK payload
+  39           * - If a ACK payload was sent, blink LED2
+  40           * - If a ACK payload was not sent, blink LED3
+  41           *
+  42           * @author Per Kristian Schanke
+  43           */
+  44          
+  45          #include "hal_nrf.h"
+  46          #include "system.h"
+  47          #include "radio.h"
+  48          #include "application_pl.h"
+  49          #include "target_includes.h"
+  50          
+  51          /** The data to send in ShockBurst with Bidirectional data mode */
+  52          static xdata uint8_t pload_pl[RF_PAYLOAD_LENGTH];
+  53          
+C51 COMPILER V8.16   APPLICATION_PL                                                        04/03/2009 08:18:48 PAGE 2   
+
+  54          void device_ptx_mode_pl(void)
+  55          {
+  56   1        while(true)
+  57   1        {
+  58   2          // Wait til the packet is sent
+  59   2          do {
+  60   3            radio_irq ();
+  61   3          } while((radio_get_status ()) == RF_BUSY);
+  62   2      
+  63   2          // Blink LED2 if ACK is recieved, LED3 if not
+  64   2          if (((radio_get_status ()) == RF_TX_DS) 
+  65   2              || ((radio_get_status ()) == RF_TX_AP))
+  66   2          {
+  67   3            LED2_BLINK();
+  68   3          }
+  69   2          else
+  70   2          {
+  71   3            LED3_BLINK();
+  72   3          }
+  73   2      
+  74   2          // If ACK payload was recieved, get the payload
+  75   2          if (radio_get_status () == RF_TX_AP)
+  76   2          {
+  77   3            // Get the payload from the PRX and set LED1 accordingly
+  78   3            if (radio_get_pload_byte (0) == 1)
+  79   3            {
+  80   4              LED1_ON();
+  81   4            }
+  82   3            else
+  83   3            {
+  84   4              LED1_OFF();
+  85   4            }
+  86   3          }
+  87   2      
+  88   2          // Sleep 100ms
+  89   2          delay_100ms();
+  90   2      
+  91   2          // Set up the payload according to the input button 1
+  92   2          pload_pl[0] = 0;
+  93   2      
+  94   2          if(B1_PRESSED())
+  95   2          {
+  96   3            pload_pl[0] = 1;
+  97   3          }
+  98   2      
+  99   2          //Send the packet
+ 100   2          radio_send_packet(pload_pl, RF_PAYLOAD_LENGTH);           
+ 101   2        }
+ 102   1      }
+ 103          
+ 104          void device_prx_mode_pl(void)
+ 105          {
+ 106   1        CE_HIGH();        // Set Chip Enable (CE) pin high to enable reciever
+ 107   1      
+ 108   1        while(true)
+ 109   1        { 
+ 110   2          // Setup and put the ACK payload on the FIFO
+ 111   2          pload_pl[0] = 0;
+ 112   2      
+ 113   2          if(B1_PRESSED())
+ 114   2          {
+ 115   3            pload_pl[0] = 1;
+C51 COMPILER V8.16   APPLICATION_PL                                                        04/03/2009 08:18:48 PAGE 3   
+
+ 116   3          }
+ 117   2      
+ 118   2          hal_nrf_write_ack_pload (0, pload_pl, RF_PAYLOAD_LENGTH);
+ 119   2      
+ 120   2          start_timer(110);
+ 121   2          
+ 122   2          // Run until either 110ms has lapsed 
+ 123   2          // OR there is data on the radio
+ 124   2          do
+ 125   2          {
+ 126   3            radio_irq ();
+ 127   3          } while ((radio_get_status () == RF_IDLE) && !timer_done());
+ 128   2      
+ 129   2          // Blink LED2 if ACK payload was sent, LED3 if not
+ 130   2          if ((radio_get_status ()) == RF_TX_DS
+ 131   2             || (radio_get_status ()) == RF_TX_AP)
+ 132   2          {
+ 133   3            LED2_BLINK();
+ 134   3          }
+ 135   2          else
+ 136   2          {
+ 137   3            LED3_BLINK();
+ 138   3          }
+ 139   2      
+ 140   2          if ((radio_get_status ()) == RF_RX_DR
+ 141   2             || (radio_get_status ()) == RF_TX_AP)
+ 142   2          {
+ 143   3            // Get the payload from the PTX and set LED1 accordingly
+ 144   3            if (radio_get_pload_byte (0) == 1)
+ 145   3            {
+ 146   4              LED1_ON();
+ 147   4            }
+ 148   3            else
+ 149   3            {
+ 150   4              LED1_OFF();
+ 151   4            }
+ 152   3          }
+ 153   2          else
+ 154   2          {
+ 155   3            LED1_OFF();
+ 156   3          }
+ 157   2      
+ 158   2          // Set radio status to idle
+ 159   2          radio_set_status (RF_IDLE);
+ 160   2        }
+ 161   1      
+ 162   1        EX0 = 1;
+ 163   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    213    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     10    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,11 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\ds1302.obj",
+".\Objects\usart.obj",
+".\Objects\timer.obj",
+".\Objects\NRF24L01.obj",
+".\Objects\lcd12864.obj",
+".\Objects\temp.obj",
+".\Objects\VS1838B.obj" 
+TO ".\Objects\main" 
+PRINT(".\Listings\main.m51") RAMSIZE(256) 

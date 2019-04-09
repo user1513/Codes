@@ -1,0 +1,641 @@
+   1               		.file	"nrf24l01.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	L01_Wr_Buff
+  20               	L01_Wr_Buff:
+  21               	.LFB4:
+  22               	.LM1:
+  23               	.LVL0:
+  24 0000 1F93      		push r17
+  25 0002 CF93      		push r28
+  26 0004 DF93      		push r29
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29 0006 EB01      		movw r28,r22
+  30 0008 142F      		mov r17,r20
+  31               	.LM2:
+  32 000a 2C9A      		sbi 37-32,4
+  33               	.LM3:
+  34 000c 2C98      		cbi 37-32,4
+  35               	.LM4:
+  36 000e 0E94 0000 		call Spi_RW_Byte
+  37               	.LVL1:
+  38 0012 00C0      		rjmp .L2
+  39               	.L3:
+  40               	.LM5:
+  41 0014 8991      		ld r24,Y+
+  42 0016 0E94 0000 		call Spi_RW_Byte
+  43 001a 1150      		subi r17,lo8(-(-1))
+  44               	.L2:
+  45               	.LM6:
+  46 001c 1123      		tst r17
+  47 001e 01F4      		brne .L3
+  48               	.LM7:
+  49 0020 2C9A      		sbi 37-32,4
+  50               	/* epilogue start */
+  51               	.LM8:
+  52 0022 DF91      		pop r29
+  53 0024 CF91      		pop r28
+  54               	.LVL2:
+  55 0026 1F91      		pop r17
+  56               	.LVL3:
+  57 0028 0895      		ret
+  58               	.LFE4:
+  60               	.global	L01_Wr_Pl_NoAck
+  62               	L01_Wr_Pl_NoAck:
+  63               	.LFB22:
+  64               	.LM9:
+  65               	.LVL4:
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68 002a 9C01      		movw r18,r24
+  69 002c 462F      		mov r20,r22
+  70               	.LM10:
+  71 002e 80EB      		ldi r24,lo8(-80)
+  72               	.LVL5:
+  73 0030 B901      		movw r22,r18
+  74               	.LVL6:
+  75 0032 0E94 0000 		call L01_Wr_Buff
+  76               	.LVL7:
+  77               	/* epilogue start */
+  78               	.LM11:
+  79 0036 0895      		ret
+  80               	.LFE22:
+  82               	.global	L01_Wr_Pl_In_Ack
+  84               	L01_Wr_Pl_In_Ack:
+  85               	.LFB21:
+  86               	.LM12:
+  87               	.LVL8:
+  88               	/* prologue: function */
+  89               	/* frame size = 0 */
+  90 0038 9C01      		movw r18,r24
+  91 003a 462F      		mov r20,r22
+  92               	.LM13:
+  93 003c 88EA      		ldi r24,lo8(-88)
+  94               	.LVL9:
+  95 003e B901      		movw r22,r18
+  96               	.LVL10:
+  97 0040 0E94 0000 		call L01_Wr_Buff
+  98               	.LVL11:
+  99               	/* epilogue start */
+ 100               	.LM14:
+ 101 0044 0895      		ret
+ 102               	.LFE21:
+ 104               	.global	L01_Wr_Pl
+ 106               	L01_Wr_Pl:
+ 107               	.LFB20:
+ 108               	.LM15:
+ 109               	.LVL12:
+ 110               	/* prologue: function */
+ 111               	/* frame size = 0 */
+ 112 0046 9C01      		movw r18,r24
+ 113 0048 462F      		mov r20,r22
+ 114               	.LM16:
+ 115 004a 80EA      		ldi r24,lo8(-96)
+ 116               	.LVL13:
+ 117 004c B901      		movw r22,r18
+ 118               	.LVL14:
+ 119 004e 0E94 0000 		call L01_Wr_Buff
+ 120               	.LVL15:
+ 121               	/* epilogue start */
+ 122               	.LM17:
+ 123 0052 0895      		ret
+ 124               	.LFE20:
+ 126               	.global	L01_Wr_Tx_Addr
+ 128               	L01_Wr_Tx_Addr:
+ 129               	.LFB15:
+ 130               	.LM18:
+ 131               	.LVL16:
+ 132               	/* prologue: function */
+ 133               	/* frame size = 0 */
+ 134 0054 9C01      		movw r18,r24
+ 135 0056 462F      		mov r20,r22
+ 136               	.LM19:
+ 137 0058 80E3      		ldi r24,lo8(48)
+ 138               	.LVL17:
+ 139 005a B901      		movw r22,r18
+ 140               	.LVL18:
+ 141 005c 0E94 0000 		call L01_Wr_Buff
+ 142               	.LVL19:
+ 143               	/* epilogue start */
+ 144               	.LM20:
+ 145 0060 0895      		ret
+ 146               	.LFE15:
+ 148               	.global	L01_Wr_Rx_Addr
+ 150               	L01_Wr_Rx_Addr:
+ 151               	.LFB14:
+ 152               	.LM21:
+ 153               	.LVL20:
+ 154               	/* prologue: function */
+ 155               	/* frame size = 0 */
+ 156               	.LM22:
+ 157 0062 8630      		cpi r24,lo8(6)
+ 158 0064 00F4      		brsh .L15
+ 159               	.LM23:
+ 160 0066 865D      		subi r24,lo8(-(42))
+ 161               	.LVL21:
+ 162 0068 0E94 0000 		call L01_Wr_Buff
+ 163               	.LVL22:
+ 164               	.L15:
+ 165 006c 0895      		ret
+ 166               	.LFE14:
+ 168               	.global	L01_Wr_Reg
+ 170               	L01_Wr_Reg:
+ 171               	.LFB2:
+ 172               	.LM24:
+ 173               	.LVL23:
+ 174 006e 1F93      		push r17
+ 175               	/* prologue: function */
+ 176               	/* frame size = 0 */
+ 177 0070 982F      		mov r25,r24
+ 178 0072 162F      		mov r17,r22
+ 179               	.LM25:
+ 180 0074 2C9A      		sbi 37-32,4
+ 181               	.LM26:
+ 182 0076 2C98      		cbi 37-32,4
+ 183               	.LM27:
+ 184 0078 815E      		subi r24,lo8(-(31))
+ 185               	.LVL24:
+ 186 007a 8330      		cpi r24,lo8(3)
+ 187 007c 00F0      		brlo .L17
+ 188               	.LVL25:
+ 189 007e 9F3F      		cpi r25,lo8(-1)
+ 190 0080 01F4      		brne .L18
+ 191               	.L17:
+ 192               	.LM28:
+ 193 0082 892F      		mov r24,r25
+ 194 0084 0E94 0000 		call Spi_RW_Byte
+ 195               	.LVL26:
+ 196 0088 8FEF      		ldi r24,lo8(-1)
+ 197               	.LVL27:
+ 198 008a 00C0      		rjmp .L19
+ 199               	.LVL28:
+ 200               	.L18:
+ 201               	.LM29:
+ 202 008c 892F      		mov r24,r25
+ 203 008e 0E94 0000 		call Spi_RW_Byte
+ 204               	.LVL29:
+ 205               	.LM30:
+ 206 0092 812F      		mov r24,r17
+ 207 0094 0E94 0000 		call Spi_RW_Byte
+ 208               	.LVL30:
+ 209               	.L19:
+ 210               	.LM31:
+ 211 0098 2C9A      		sbi 37-32,4
+ 212               	.LVL31:
+ 213               	/* epilogue start */
+ 214               	.LM32:
+ 215 009a 1F91      		pop r17
+ 216               	.LVL32:
+ 217 009c 0895      		ret
+ 218               	.LFE2:
+ 220               	.global	L01_Flush_Tx
+ 222               	L01_Flush_Tx:
+ 223               	.LFB25:
+ 224               	.LM33:
+ 225               	/* prologue: function */
+ 226               	/* frame size = 0 */
+ 227               	.LM34:
+ 228 009e 81EE      		ldi r24,lo8(-31)
+ 229 00a0 60E0      		ldi r22,lo8(0)
+ 230 00a2 0E94 0000 		call L01_Wr_Reg
+ 231               	/* epilogue start */
+ 232               	.LM35:
+ 233 00a6 0895      		ret
+ 234               	.LFE25:
+ 236               	.global	L01_Flush_Rx
+ 238               	L01_Flush_Rx:
+ 239               	.LFB24:
+ 240               	.LM36:
+ 241               	/* prologue: function */
+ 242               	/* frame size = 0 */
+ 243               	.LM37:
+ 244 00a8 82EE      		ldi r24,lo8(-30)
+ 245 00aa 60E0      		ldi r22,lo8(0)
+ 246 00ac 0E94 0000 		call L01_Wr_Reg
+ 247               	/* epilogue start */
+ 248               	.LM38:
+ 249 00b0 0895      		ret
+ 250               	.LFE24:
+ 252               	.global	L01_Wr_Rx_Pw_Pipe_X
+ 254               	L01_Wr_Rx_Pw_Pipe_X:
+ 255               	.LFB17:
+ 256               	.LM39:
+ 257               	.LVL33:
+ 258               	/* prologue: function */
+ 259               	/* frame size = 0 */
+ 260               	.LM40:
+ 261 00b2 8630      		cpi r24,lo8(6)
+ 262 00b4 00F4      		brsh .L27
+ 263               	.LM41:
+ 264 00b6 8F5C      		subi r24,lo8(-(49))
+ 265               	.LVL34:
+ 266 00b8 0E94 0000 		call L01_Wr_Reg
+ 267               	.LVL35:
+ 268               	.L27:
+ 269 00bc 0895      		ret
+ 270               	.LFE17:
+ 272               	.global	L01_Setup_Rf_Parameter
+ 274               	L01_Setup_Rf_Parameter:
+ 275               	.LFB11:
+ 276               	.LM42:
+ 277               	.LVL36:
+ 278               	/* prologue: function */
+ 279               	/* frame size = 0 */
+ 280               	.LM43:
+ 281 00be 880F      		lsl r24
+ 282 00c0 880F      		lsl r24
+ 283 00c2 880F      		lsl r24
+ 284               	.LVL37:
+ 285 00c4 842B      		or r24,r20
+ 286 00c6 660F      		lsl r22
+ 287               	.LVL38:
+ 288 00c8 682B      		or r22,r24
+ 289 00ca 86E2      		ldi r24,lo8(38)
+ 290 00cc 0E94 0000 		call L01_Wr_Reg
+ 291               	.LVL39:
+ 292               	/* epilogue start */
+ 293               	.LM44:
+ 294 00d0 0895      		ret
+ 295               	.LFE11:
+ 297               	.global	L01_Setup_Rf_Channel
+ 299               	L01_Setup_Rf_Channel:
+ 300               	.LFB10:
+ 301               	.LM45:
+ 302               	.LVL40:
+ 303               	/* prologue: function */
+ 304               	/* frame size = 0 */
+ 305 00d2 682F      		mov r22,r24
+ 306               	.LM46:
+ 307 00d4 85E2      		ldi r24,lo8(37)
+ 308               	.LVL41:
+ 309 00d6 0E94 0000 		call L01_Wr_Reg
+ 310               	.LVL42:
+ 311               	/* epilogue start */
+ 312               	.LM47:
+ 313 00da 0895      		ret
+ 314               	.LFE10:
+ 316               	.global	L01_Setup_ReTransmit
+ 318               	L01_Setup_ReTransmit:
+ 319               	.LFB9:
+ 320               	.LM48:
+ 321               	.LVL43:
+ 322               	/* prologue: function */
+ 323               	/* frame size = 0 */
+ 324               	.LM49:
+ 325 00dc 6295      		swap r22
+ 326               	.LVL44:
+ 327 00de 607F      		andi r22,lo8(-16)
+ 328 00e0 682B      		or r22,r24
+ 329 00e2 84E2      		ldi r24,lo8(36)
+ 330               	.LVL45:
+ 331 00e4 0E94 0000 		call L01_Wr_Reg
+ 332               	.LVL46:
+ 333               	/* epilogue start */
+ 334               	.LM50:
+ 335 00e8 0895      		ret
+ 336               	.LFE9:
+ 338               	.global	L01_Setup_Addr_Width
+ 340               	L01_Setup_Addr_Width:
+ 341               	.LFB8:
+ 342               	.LM51:
+ 343               	.LVL47:
+ 344               	/* prologue: function */
+ 345               	/* frame size = 0 */
+ 346               	.LM52:
+ 347 00ea 682F      		mov r22,r24
+ 348 00ec 6250      		subi r22,lo8(-(-2))
+ 349 00ee 83E2      		ldi r24,lo8(35)
+ 350               	.LVL48:
+ 351 00f0 0E94 0000 		call L01_Wr_Reg
+ 352               	/* epilogue start */
+ 353               	.LM53:
+ 354 00f4 0895      		ret
+ 355               	.LFE8:
+ 357               	.global	L01_Rd_Buff
+ 359               	L01_Rd_Buff:
+ 360               	.LFB5:
+ 361               	.LM54:
+ 362               	.LVL49:
+ 363 00f6 FF92      		push r15
+ 364 00f8 0F93      		push r16
+ 365 00fa 1F93      		push r17
+ 366               	/* prologue: function */
+ 367               	/* frame size = 0 */
+ 368 00fc 8B01      		movw r16,r22
+ 369 00fe F42E      		mov r15,r20
+ 370               	.LM55:
+ 371 0100 2C9A      		sbi 37-32,4
+ 372               	.LM56:
+ 373 0102 2C98      		cbi 37-32,4
+ 374               	.LM57:
+ 375 0104 0E94 0000 		call Spi_RW_Byte
+ 376               	.LVL50:
+ 377               	.LM58:
+ 378 0108 C801      		movw r24,r16
+ 379 010a 6F2D      		mov r22,r15
+ 380 010c 0E94 0000 		call Spi_MR_Buff
+ 381               	.LM59:
+ 382 0110 2C9A      		sbi 37-32,4
+ 383               	/* epilogue start */
+ 384               	.LM60:
+ 385 0112 1F91      		pop r17
+ 386 0114 0F91      		pop r16
+ 387               	.LVL51:
+ 388 0116 FF90      		pop r15
+ 389               	.LVL52:
+ 390 0118 0895      		ret
+ 391               	.LFE5:
+ 393               	.global	L01_Rd_Reg
+ 395               	L01_Rd_Reg:
+ 396               	.LFB3:
+ 397               	.LM61:
+ 398               	.LVL53:
+ 399               	/* prologue: function */
+ 400               	/* frame size = 0 */
+ 401               	.LM62:
+ 402 011a 2C9A      		sbi 37-32,4
+ 403               	.LM63:
+ 404 011c 2C98      		cbi 37-32,4
+ 405               	.LM64:
+ 406 011e 0E94 0000 		call Spi_RW_Byte
+ 407               	.LVL54:
+ 408               	.LM65:
+ 409 0122 0E94 0000 		call Spi_MR_Byte
+ 410               	.LM66:
+ 411 0126 2C9A      		sbi 37-32,4
+ 412               	/* epilogue start */
+ 413               	.LM67:
+ 414 0128 0895      		ret
+ 415               	.LFE3:
+ 417               	.global	L01_Activate
+ 419               	L01_Activate:
+ 420               	.LFB19:
+ 421               	.LM68:
+ 422               	/* prologue: function */
+ 423               	/* frame size = 0 */
+ 424               	.LM69:
+ 425 012a 8CE1      		ldi r24,lo8(28)
+ 426 012c 0E94 0000 		call L01_Rd_Reg
+ 427 0130 8823      		tst r24
+ 428 0132 01F4      		brne .L42
+ 429 0134 8DE1      		ldi r24,lo8(29)
+ 430 0136 0E94 0000 		call L01_Rd_Reg
+ 431 013a 8823      		tst r24
+ 432 013c 01F4      		brne .L42
+ 433               	.LM70:
+ 434 013e 80E5      		ldi r24,lo8(80)
+ 435 0140 63E7      		ldi r22,lo8(115)
+ 436 0142 0E94 0000 		call L01_Wr_Reg
+ 437               	.L42:
+ 438 0146 0895      		ret
+ 439               	.LFE19:
+ 441               	.global	L01_Rd_Fifo_Statu
+ 443               	L01_Rd_Fifo_Statu:
+ 444               	.LFB18:
+ 445               	.LM71:
+ 446               	/* prologue: function */
+ 447               	/* frame size = 0 */
+ 448               	.LM72:
+ 449 0148 87E1      		ldi r24,lo8(23)
+ 450 014a 0E94 0000 		call L01_Rd_Reg
+ 451               	/* epilogue start */
+ 452               	.LM73:
+ 453 014e 0895      		ret
+ 454               	.LFE18:
+ 456               	.global	L01_Rd_Rx_Pw_Pipe_X
+ 458               	L01_Rd_Rx_Pw_Pipe_X:
+ 459               	.LFB16:
+ 460               	.LM74:
+ 461               	.LVL55:
+ 462               	/* prologue: function */
+ 463               	/* frame size = 0 */
+ 464               	.LM75:
+ 465 0150 8630      		cpi r24,lo8(6)
+ 466 0152 00F0      		brlo .L46
+ 467 0154 8FEF      		ldi r24,lo8(-1)
+ 468               	.LVL56:
+ 469 0156 0895      		ret
+ 470               	.LVL57:
+ 471               	.L46:
+ 472               	.LM76:
+ 473 0158 8F5E      		subi r24,lo8(-(17))
+ 474               	.LVL58:
+ 475 015a 0E94 0000 		call L01_Rd_Reg
+ 476               	.LM77:
+ 477 015e 0895      		ret
+ 478               	.LFE16:
+ 480               	.global	L01_Rd_Statu_Reg
+ 482               	L01_Rd_Statu_Reg:
+ 483               	.LFB12:
+ 484               	.LM78:
+ 485               	/* prologue: function */
+ 486               	/* frame size = 0 */
+ 487               	.LM79:
+ 488 0160 87E0      		ldi r24,lo8(7)
+ 489 0162 0E94 0000 		call L01_Rd_Reg
+ 490               	/* epilogue start */
+ 491               	.LM80:
+ 492 0166 0895      		ret
+ 493               	.LFE12:
+ 495               	.global	L01_Rd_RX_Pload
+ 497               	L01_Rd_RX_Pload:
+ 498               	.LFB23:
+ 499               	.LM81:
+ 500               	.LVL59:
+ 501 0168 FF92      		push r15
+ 502 016a 0F93      		push r16
+ 503 016c 1F93      		push r17
+ 504               	/* prologue: function */
+ 505               	/* frame size = 0 */
+ 506 016e 8C01      		movw r16,r24
+ 507               	.LM82:
+ 508 0170 0E94 0000 		call L01_Rd_Statu_Reg
+ 509               	.LVL60:
+ 510               	.LM83:
+ 511 0174 90E0      		ldi r25,lo8(0)
+ 512 0176 8E70      		andi r24,lo8(14)
+ 513 0178 9070      		andi r25,hi8(14)
+ 514 017a 9595      		asr r25
+ 515 017c 8795      		ror r24
+ 516 017e 0E94 0000 		call L01_Rd_Rx_Pw_Pipe_X
+ 517 0182 F82E      		mov r15,r24
+ 518               	.LVL61:
+ 519               	.LM84:
+ 520 0184 81E6      		ldi r24,lo8(97)
+ 521 0186 B801      		movw r22,r16
+ 522 0188 4F2D      		mov r20,r15
+ 523 018a 0E94 0000 		call L01_Rd_Buff
+ 524               	.LM85:
+ 525 018e 8F2D      		mov r24,r15
+ 526               	/* epilogue start */
+ 527 0190 1F91      		pop r17
+ 528 0192 0F91      		pop r16
+ 529               	.LVL62:
+ 530 0194 FF90      		pop r15
+ 531               	.LVL63:
+ 532 0196 0895      		ret
+ 533               	.LFE23:
+ 535               	.global	L01_Clear_Irq
+ 537               	L01_Clear_Irq:
+ 538               	.LFB13:
+ 539               	.LM86:
+ 540               	.LVL64:
+ 541 0198 1F93      		push r17
+ 542               	/* prologue: function */
+ 543               	/* frame size = 0 */
+ 544 019a 182F      		mov r17,r24
+ 545               	.LM87:
+ 546 019c 8730      		cpi r24,lo8(7)
+ 547 019e 00F0      		brlo .L54
+ 548               	.LM88:
+ 549 01a0 0E94 0000 		call L01_Rd_Statu_Reg
+ 550               	.LVL65:
+ 551 01a4 682F      		mov r22,r24
+ 552 01a6 6067      		ori r22,lo8(112)
+ 553 01a8 00C0      		rjmp .L57
+ 554               	.LVL66:
+ 555               	.L54:
+ 556               	.LM89:
+ 557 01aa 8430      		cpi r24,lo8(4)
+ 558 01ac 00F0      		brlo .L56
+ 559               	.LM90:
+ 560 01ae 0E94 0000 		call L01_Rd_Statu_Reg
+ 561               	.LVL67:
+ 562 01b2 21E0      		ldi r18,lo8(1)
+ 563 01b4 30E0      		ldi r19,hi8(1)
+ 564 01b6 00C0      		rjmp 2f
+ 565 01b8 220F      	1:	lsl r18
+ 566 01ba 331F      		rol r19
+ 567 01bc 1A95      	2:	dec r17
+ 568 01be 02F4      		brpl 1b
+ 569 01c0 682F      		mov r22,r24
+ 570 01c2 622B      		or r22,r18
+ 571               	.L57:
+ 572 01c4 87E2      		ldi r24,lo8(39)
+ 573 01c6 0E94 0000 		call L01_Wr_Reg
+ 574               	.LVL68:
+ 575               	.L56:
+ 576               	/* epilogue start */
+ 577               	.LM91:
+ 578 01ca 1F91      		pop r17
+ 579               	.LVL69:
+ 580 01cc 0895      		ret
+ 581               	.LFE13:
+ 583               	.global	L01_Mode
+ 585               	L01_Mode:
+ 586               	.LFB7:
+ 587               	.LM92:
+ 588               	.LVL70:
+ 589               	/* prologue: function */
+ 590               	/* frame size = 0 */
+ 591               	.LM93:
+ 592 01ce 8823      		tst r24
+ 593 01d0 01F4      		brne .L59
+ 594               	.LM94:
+ 595 01d2 0E94 0000 		call L01_Rd_Reg
+ 596               	.LVL71:
+ 597 01d6 682F      		mov r22,r24
+ 598 01d8 6E7F      		andi r22,lo8(-2)
+ 599 01da 80E2      		ldi r24,lo8(32)
+ 600 01dc 0E94 0000 		call L01_Wr_Reg
+ 601 01e0 0895      		ret
+ 602               	.LVL72:
+ 603               	.L59:
+ 604               	.LM95:
+ 605 01e2 8130      		cpi r24,lo8(1)
+ 606 01e4 01F4      		brne .L61
+ 607               	.LM96:
+ 608 01e6 80E0      		ldi r24,lo8(0)
+ 609               	.LVL73:
+ 610 01e8 0E94 0000 		call L01_Rd_Reg
+ 611 01ec 682F      		mov r22,r24
+ 612 01ee 6160      		ori r22,lo8(1)
+ 613 01f0 80E2      		ldi r24,lo8(32)
+ 614 01f2 0E94 0000 		call L01_Wr_Reg
+ 615               	.LVL74:
+ 616               	.L61:
+ 617 01f6 0895      		ret
+ 618               	.LFE7:
+ 620               	.global	L01_Power
+ 622               	L01_Power:
+ 623               	.LFB6:
+ 624               	.LM97:
+ 625               	.LVL75:
+ 626               	/* prologue: function */
+ 627               	/* frame size = 0 */
+ 628               	.LM98:
+ 629 01f8 8130      		cpi r24,lo8(1)
+ 630 01fa 01F4      		brne .L63
+ 631               	.LM99:
+ 632 01fc 80E0      		ldi r24,lo8(0)
+ 633               	.LVL76:
+ 634 01fe 0E94 0000 		call L01_Rd_Reg
+ 635 0202 682F      		mov r22,r24
+ 636 0204 6260      		ori r22,lo8(2)
+ 637 0206 80E2      		ldi r24,lo8(32)
+ 638 0208 0E94 0000 		call L01_Wr_Reg
+ 639 020c 0895      		ret
+ 640               	.LVL77:
+ 641               	.L63:
+ 642               	.LM100:
+ 643 020e 8823      		tst r24
+ 644 0210 01F4      		brne .L65
+ 645               	.LM101:
+ 646 0212 0E94 0000 		call L01_Rd_Reg
+ 647               	.LVL78:
+ 648 0216 682F      		mov r22,r24
+ 649 0218 6D7F      		andi r22,lo8(-3)
+ 650 021a 80E2      		ldi r24,lo8(32)
+ 651 021c 0E94 0000 		call L01_Wr_Reg
+ 652               	.LVL79:
+ 653               	.L65:
+ 654 0220 0895      		ret
+ 655               	.LFE6:
+ 865               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 nrf24l01.c
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:20     .text:00000000 L01_Wr_Buff
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:62     .text:0000002a L01_Wr_Pl_NoAck
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:84     .text:00000038 L01_Wr_Pl_In_Ack
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:106    .text:00000046 L01_Wr_Pl
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:128    .text:00000054 L01_Wr_Tx_Addr
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:150    .text:00000062 L01_Wr_Rx_Addr
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:170    .text:0000006e L01_Wr_Reg
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:222    .text:0000009e L01_Flush_Tx
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:238    .text:000000a8 L01_Flush_Rx
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:254    .text:000000b2 L01_Wr_Rx_Pw_Pipe_X
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:274    .text:000000be L01_Setup_Rf_Parameter
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:299    .text:000000d2 L01_Setup_Rf_Channel
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:318    .text:000000dc L01_Setup_ReTransmit
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:340    .text:000000ea L01_Setup_Addr_Width
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:359    .text:000000f6 L01_Rd_Buff
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:395    .text:0000011a L01_Rd_Reg
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:419    .text:0000012a L01_Activate
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:443    .text:00000148 L01_Rd_Fifo_Statu
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:458    .text:00000150 L01_Rd_Rx_Pw_Pipe_X
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:482    .text:00000160 L01_Rd_Statu_Reg
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:497    .text:00000168 L01_Rd_RX_Pload
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:537    .text:00000198 L01_Clear_Irq
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:585    .text:000001ce L01_Mode
+C:\DOCUME~1\kf21\LOCALS~1\Temp/cc39mshm.s:622    .text:000001f8 L01_Power
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+Spi_RW_Byte
+Spi_MR_Buff
+Spi_MR_Byte

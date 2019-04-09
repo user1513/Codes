@@ -1,0 +1,1225 @@
+
+tx.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000006  00800100  000004ee  00000582  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000004ee  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000009  00800106  00800106  00000588  2**0
+                  ALLOC
+  3 .debug_aranges 000000a0  00000000  00000000  00000588  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 00000229  00000000  00000000  00000628  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000a6a  00000000  00000000  00000851  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000054b  00000000  00000000  000012bb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000009cc  00000000  00000000  00001806  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000001e0  00000000  00000000  000021d4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002f3  00000000  00000000  000023b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000003c0  00000000  00000000  000026a7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000001d8  00000000  00000000  00002a67  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__ctors_end>
+   4:	0c 94 8b 00 	jmp	0x116	; 0x116 <__vector_1>
+   8:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+   c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  10:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  14:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  18:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  1c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  20:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  24:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  28:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  2c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  30:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  34:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  38:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  3c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  40:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  44:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  48:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  4c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  50:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  54:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  58:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  5c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  60:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  64:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  68:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  6c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  70:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  74:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+  78:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__bad_interrupt>
+
+0000007c <__ctors_end>:
+  7c:	11 24       	eor	r1, r1
+  7e:	1f be       	out	0x3f, r1	; 63
+  80:	cf ef       	ldi	r28, 0xFF	; 255
+  82:	d8 e0       	ldi	r29, 0x08	; 8
+  84:	de bf       	out	0x3e, r29	; 62
+  86:	cd bf       	out	0x3d, r28	; 61
+
+00000088 <__do_copy_data>:
+  88:	11 e0       	ldi	r17, 0x01	; 1
+  8a:	a0 e0       	ldi	r26, 0x00	; 0
+  8c:	b1 e0       	ldi	r27, 0x01	; 1
+  8e:	ee ee       	ldi	r30, 0xEE	; 238
+  90:	f4 e0       	ldi	r31, 0x04	; 4
+  92:	02 c0       	rjmp	.+4      	; 0x98 <.do_copy_data_start>
+
+00000094 <.do_copy_data_loop>:
+  94:	05 90       	lpm	r0, Z+
+  96:	0d 92       	st	X+, r0
+
+00000098 <.do_copy_data_start>:
+  98:	a6 30       	cpi	r26, 0x06	; 6
+  9a:	b1 07       	cpc	r27, r17
+  9c:	d9 f7       	brne	.-10     	; 0x94 <.do_copy_data_loop>
+
+0000009e <__do_clear_bss>:
+  9e:	11 e0       	ldi	r17, 0x01	; 1
+  a0:	a6 e0       	ldi	r26, 0x06	; 6
+  a2:	b1 e0       	ldi	r27, 0x01	; 1
+  a4:	01 c0       	rjmp	.+2      	; 0xa8 <.do_clear_bss_start>
+
+000000a6 <.do_clear_bss_loop>:
+  a6:	1d 92       	st	X+, r1
+
+000000a8 <.do_clear_bss_start>:
+  a8:	af 30       	cpi	r26, 0x0F	; 15
+  aa:	b1 07       	cpc	r27, r17
+  ac:	e1 f7       	brne	.-8      	; 0xa6 <.do_clear_bss_loop>
+  ae:	0e 94 c6 00 	call	0x18c	; 0x18c <main>
+  b2:	0c 94 75 02 	jmp	0x4ea	; 0x4ea <_exit>
+
+000000b6 <__bad_interrupt>:
+  b6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ba <Port_Init>:
+	Description:
+		None
+*/
+void Port_Init ( void )
+{
+	DDRA = 0XF0;  //PA0, PA1: ADC IN; PA2: KEY in; PA4-PA7: D0-D3
+  ba:	80 ef       	ldi	r24, 0xF0	; 240
+  bc:	81 b9       	out	0x01, r24	; 1
+	PORTA = 0XFF; 
+  be:	9f ef       	ldi	r25, 0xFF	; 255
+  c0:	92 b9       	out	0x02, r25	; 2
+	DDRB = 0XBF; //PB7: SCK; PB6: MISO; PB5: MOSI; PB4: CSN; PB3: CE; PB2: LED_Y; PB1: LED_G; PB0: RST_LCD
+  c2:	8f eb       	ldi	r24, 0xBF	; 191
+  c4:	84 b9       	out	0x04, r24	; 4
+	PORTB = 0XFF;
+  c6:	95 b9       	out	0x05, r25	; 5
+	DDRC = 0XFF;//PC4-PC7: D7-D4;  PC3: RD;  PC2: W/R;  PC1: A0;  PC0: CS
+  c8:	97 b9       	out	0x07, r25	; 7
+	PORTC = 0XFF;
+  ca:	98 b9       	out	0x08, r25	; 8
+	DDRD = 0X02;//PD0: RXD;  PD1: TXD;  PD2: INT0;  PD3-PD7: SW1-SW5
+  cc:	82 e0       	ldi	r24, 0x02	; 2
+  ce:	8a b9       	out	0x0a, r24	; 10
+	PORTD = 0XFF;
+  d0:	9b b9       	out	0x0b, r25	; 11
+	LED_YELLOW_OFF;
+  d2:	22 9a       	sbi	0x04, 2	; 4
+  d4:	2a 98       	cbi	0x05, 2	; 5
+	LED_GREEN_OFF;
+  d6:	21 9a       	sbi	0x04, 1	; 4
+  d8:	29 98       	cbi	0x05, 1	; 5
+}
+  da:	08 95       	ret
+
+000000dc <ExtInt_Init>:
+		none
+	Desciption:
+		Initialize extern interrupt
+*/
+void ExtInt_Init( INT8U Flag )
+{
+  dc:	98 2f       	mov	r25, r24
+	if ( Flag == ON )
+  de:	81 30       	cpi	r24, 0x01	; 1
+  e0:	79 f4       	brne	.+30     	; 0x100 <ExtInt_Init+0x24>
+	{				
+		EIFR = 0; 
+  e2:	1c ba       	out	0x1c, r1	; 28
+		PCICR = 0;
+  e4:	10 92 68 00 	sts	0x0068, r1
+		PCIFR = 0;
+  e8:	1b ba       	out	0x1b, r1	; 27
+		PCMSK3 = 0;
+  ea:	10 92 73 00 	sts	0x0073, r1
+		PCMSK2 = 0;
+  ee:	10 92 6d 00 	sts	0x006D, r1
+		PCMSK1 = 0;
+  f2:	10 92 6c 00 	sts	0x006C, r1
+		EICRA = 0x02; //INT0 falling edger active
+  f6:	82 e0       	ldi	r24, 0x02	; 2
+  f8:	80 93 69 00 	sts	0x0069, r24
+		EIMSK = 0X01; //INT0 enable
+  fc:	9d bb       	out	0x1d, r25	; 29
+  fe:	08 95       	ret
+	}
+	else if ( Flag == OFF )
+ 100:	88 23       	and	r24, r24
+ 102:	09 f4       	brne	.+2      	; 0x106 <ExtInt_Init+0x2a>
+	{
+		EIMSK = 0; //disable all interrupts
+ 104:	1d ba       	out	0x1d, r1	; 29
+ 106:	08 95       	ret
+
+00000108 <Fill_Memory>:
+		None
+	Desciption:
+		clear memory
+*/
+void Fill_Memory( INT8U *Addr, INT8U Length,INT8U Fill_Value )
+{
+ 108:	fc 01       	movw	r30, r24
+ 10a:	02 c0       	rjmp	.+4      	; 0x110 <Fill_Memory+0x8>
+	while ( Length-- )
+	{
+		*Addr++ = Fill_Value;
+ 10c:	41 93       	st	Z+, r20
+ 10e:	61 50       	subi	r22, 0x01	; 1
+	Desciption:
+		clear memory
+*/
+void Fill_Memory( INT8U *Addr, INT8U Length,INT8U Fill_Value )
+{
+	while ( Length-- )
+ 110:	66 23       	and	r22, r22
+ 112:	e1 f7       	brne	.-8      	; 0x10c <Fill_Memory+0x4>
+	{
+		*Addr++ = Fill_Value;
+	}
+}
+ 114:	08 95       	ret
+
+00000116 <__vector_1>:
+		None
+	Desciption:
+		ISR external interrupt 0
+*/
+SIGNAL ( SIG_INTERRUPT0 )
+{
+ 116:	1f 92       	push	r1
+ 118:	0f 92       	push	r0
+ 11a:	0f b6       	in	r0, 0x3f	; 63
+ 11c:	0f 92       	push	r0
+ 11e:	11 24       	eor	r1, r1
+ 120:	8f 93       	push	r24
+	CLI;		
+ 122:	f8 94       	cli
+	G_Ext_Int0_Flag = TRUE;	
+ 124:	81 e0       	ldi	r24, 0x01	; 1
+ 126:	80 93 08 01 	sts	0x0108, r24
+	SEI;
+ 12a:	78 94       	sei
+}
+ 12c:	8f 91       	pop	r24
+ 12e:	0f 90       	pop	r0
+ 130:	0f be       	out	0x3f, r0	; 63
+ 132:	0f 90       	pop	r0
+ 134:	1f 90       	pop	r1
+ 136:	18 95       	reti
+
+00000138 <Rf_T_Data>:
+		none
+	Description:
+		transmit data to rf
+*/
+void Rf_T_Data( INT8U *Data, INT8U Length )
+{	
+ 138:	ff 92       	push	r15
+ 13a:	0f 93       	push	r16
+ 13c:	1f 93       	push	r17
+ 13e:	8c 01       	movw	r16, r24
+ 140:	f6 2e       	mov	r15, r22
+	L01_Flush_Tx();	
+ 142:	0e 94 9e 01 	call	0x33c	; 0x33c <L01_Flush_Tx>
+	CE_LOW;
+ 146:	2b 98       	cbi	0x05, 3	; 5
+	L01_Wr_Pl( Data, Length );
+ 148:	c8 01       	movw	r24, r16
+ 14a:	6f 2d       	mov	r22, r15
+ 14c:	0e 94 7f 01 	call	0x2fe	; 0x2fe <L01_Wr_Pl>
+	CE_HIGH;
+ 150:	2b 9a       	sbi	0x05, 3	; 5
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 152:	80 e5       	ldi	r24, 0x50	; 80
+ 154:	8a 95       	dec	r24
+ 156:	f1 f7       	brne	.-4      	; 0x154 <Rf_T_Data+0x1c>
+	_delay_us(20); //at least 10us	
+	CE_LOW;
+ 158:	2b 98       	cbi	0x05, 3	; 5
+}
+ 15a:	1f 91       	pop	r17
+ 15c:	0f 91       	pop	r16
+ 15e:	ff 90       	pop	r15
+ 160:	08 95       	ret
+
+00000162 <SystemInit>:
+	Desciption:
+		None
+*/
+void SystemInit ( void )
+{	
+	Port_Init( );	
+ 162:	0e 94 5d 00 	call	0xba	; 0xba <Port_Init>
+*/
+void ExtInt_Init( INT8U Flag )
+{
+	if ( Flag == ON )
+	{				
+		EIFR = 0; 
+ 166:	1c ba       	out	0x1c, r1	; 28
+		PCICR = 0;
+ 168:	10 92 68 00 	sts	0x0068, r1
+		PCIFR = 0;
+ 16c:	1b ba       	out	0x1b, r1	; 27
+		PCMSK3 = 0;
+ 16e:	10 92 73 00 	sts	0x0073, r1
+		PCMSK2 = 0;
+ 172:	10 92 6d 00 	sts	0x006D, r1
+		PCMSK1 = 0;
+ 176:	10 92 6c 00 	sts	0x006C, r1
+		EICRA = 0x02; //INT0 falling edger active
+ 17a:	82 e0       	ldi	r24, 0x02	; 2
+ 17c:	80 93 69 00 	sts	0x0069, r24
+		EIMSK = 0X01; //INT0 enable
+ 180:	81 e0       	ldi	r24, 0x01	; 1
+ 182:	8d bb       	out	0x1d, r24	; 29
+*/
+void SystemInit ( void )
+{	
+	Port_Init( );	
+	ExtInt_Init( ON );
+	Rf_Init();
+ 184:	0e 94 e1 01 	call	0x3c2	; 0x3c2 <Rf_Init>
+	SEI;
+ 188:	78 94       	sei
+}
+ 18a:	08 95       	ret
+
+0000018c <main>:
+		None
+	Descrp:
+		main program starts here
+*/
+int main( void )
+{
+ 18c:	0f 93       	push	r16
+ 18e:	1f 93       	push	r17
+ 190:	df 93       	push	r29
+ 192:	cf 93       	push	r28
+ 194:	00 d0       	rcall	.+0      	; 0x196 <main+0xa>
+ 196:	00 d0       	rcall	.+0      	; 0x198 <main+0xc>
+ 198:	0f 92       	push	r0
+ 19a:	cd b7       	in	r28, 0x3d	; 61
+ 19c:	de b7       	in	r29, 0x3e	; 62
+ 19e:	fe 01       	movw	r30, r28
+ 1a0:	31 96       	adiw	r30, 0x01	; 1
+	Desciption:
+		clear memory
+*/
+void Fill_Memory( INT8U *Addr, INT8U Length,INT8U Fill_Value )
+{
+	while ( Length-- )
+ 1a2:	ce 01       	movw	r24, r28
+ 1a4:	06 96       	adiw	r24, 0x06	; 6
+ 1a6:	01 c0       	rjmp	.+2      	; 0x1aa <main+0x1e>
+	{
+		*Addr++ = Fill_Value;
+ 1a8:	11 92       	st	Z+, r1
+	Desciption:
+		clear memory
+*/
+void Fill_Memory( INT8U *Addr, INT8U Length,INT8U Fill_Value )
+{
+	while ( Length-- )
+ 1aa:	e8 17       	cp	r30, r24
+ 1ac:	f9 07       	cpc	r31, r25
+ 1ae:	e1 f7       	brne	.-8      	; 0x1a8 <main+0x1c>
+	INT8U Rf_Statu = 0xff;
+	Fill_Memory( &(Link_Data[0]), 5, 0);
+	
+	
+	
+	SystemInit( );
+ 1b0:	0e 94 b1 00 	call	0x162	; 0x162 <SystemInit>
+
+	Rf_T_Data( &(Rf_Buff[0]), 5 );
+ 1b4:	8a e0       	ldi	r24, 0x0A	; 10
+ 1b6:	91 e0       	ldi	r25, 0x01	; 1
+ 1b8:	65 e0       	ldi	r22, 0x05	; 5
+ 1ba:	0e 94 9c 00 	call	0x138	; 0x138 <Rf_T_Data>
+	
+	while(1)
+	{
+		if ( G_Ext_Int0_Flag == TRUE )
+ 1be:	80 91 08 01 	lds	r24, 0x0108
+ 1c2:	81 30       	cpi	r24, 0x01	; 1
+ 1c4:	b9 f4       	brne	.+46     	; 0x1f4 <main+0x68>
+		{
+			G_Ext_Int0_Flag = FALSE;
+ 1c6:	10 92 08 01 	sts	0x0108, r1
+			Rf_Statu = L01_Rd_Statu_Reg( );
+ 1ca:	0e 94 c2 01 	call	0x384	; 0x384 <L01_Rd_Statu_Reg>
+			if ( Rf_Statu & (1<<5) )	//TX_DS
+ 1ce:	08 2f       	mov	r16, r24
+ 1d0:	85 ff       	sbrs	r24, 5
+ 1d2:	07 c0       	rjmp	.+14     	; 0x1e2 <main+0x56>
+			{
+				LED_GREEN_ON;	//indicate transmit success
+ 1d4:	21 9a       	sbi	0x04, 1	; 4
+ 1d6:	29 9a       	sbi	0x05, 1	; 5
+				LED_YELLOW_ON;
+ 1d8:	22 9a       	sbi	0x04, 2	; 4
+ 1da:	2a 9a       	sbi	0x05, 2	; 5
+				L01_Clear_Irq(5);						
+ 1dc:	85 e0       	ldi	r24, 0x05	; 5
+ 1de:	0e 94 c6 01 	call	0x38c	; 0x38c <L01_Clear_Irq>
+			}
+			if ( Rf_Statu & (1<<4) )	//MAX_RT
+ 1e2:	04 ff       	sbrs	r16, 4
+ 1e4:	07 c0       	rjmp	.+14     	; 0x1f4 <main+0x68>
+			{
+				LED_GREEN_OFF;   //indicate retransmit failure
+ 1e6:	21 9a       	sbi	0x04, 1	; 4
+ 1e8:	29 98       	cbi	0x05, 1	; 5
+				LED_YELLOW_OFF;
+ 1ea:	22 9a       	sbi	0x04, 2	; 4
+ 1ec:	2a 98       	cbi	0x05, 2	; 5
+				L01_Clear_Irq(4);						
+ 1ee:	84 e0       	ldi	r24, 0x04	; 4
+ 1f0:	0e 94 c6 01 	call	0x38c	; 0x38c <L01_Clear_Irq>
+			}																		
+		}
+		if ( Peripheral_Task() )
+ 1f4:	0e 94 60 02 	call	0x4c0	; 0x4c0 <Peripheral_Task>
+ 1f8:	88 23       	and	r24, r24
+ 1fa:	09 f3       	breq	.-62     	; 0x1be <main+0x32>
+ 1fc:	db cf       	rjmp	.-74     	; 0x1b4 <main+0x28>
+
+000001fe <Spi_Init>:
+		None
+	Desc:
+*/
+void Spi_Init ( unsigned char Flag )	
+{
+	if ( Flag == ON )
+ 1fe:	81 30       	cpi	r24, 0x01	; 1
+ 200:	19 f4       	brne	.+6      	; 0x208 <Spi_Init+0xa>
+		// enable spi as master, MSB first, SCK keep low when idle,
+		//	set sclk as Fck/16
+		SPCR = (1<<SPE) | (1<<MSTR) | (1<<SPR0);
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P || MCUTYPE == ATMEGA644P
+		//Fspi = Fosc/4 = 3MHZ, MSB first, SCK keep low when idle
+		SPCR = (1<<SPE) | (1<<MSTR);
+ 202:	80 e5       	ldi	r24, 0x50	; 80
+ 204:	8c bd       	out	0x2c, r24	; 44
+ 206:	08 95       	ret
+	#endif
+	}
+	else if ( Flag == OFF )
+ 208:	88 23       	and	r24, r24
+ 20a:	19 f4       	brne	.+6      	; 0x212 <Spi_Init+0x14>
+	{
+	#if MCUTYPE == ATMEGA48 || MCUTYPE == ATMEGA88 || MCUTYPE == ATMEGA168
+		SPCR &= ~(1<<SPE);
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P || MCUTYPE == ATMEGA644P
+		SPCR &= ~(1<<SPE);
+ 20c:	8c b5       	in	r24, 0x2c	; 44
+ 20e:	8f 7b       	andi	r24, 0xBF	; 191
+ 210:	8c bd       	out	0x2c, r24	; 44
+ 212:	08 95       	ret
+
+00000214 <Spi_RW_Byte>:
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+ 214:	8e bd       	out	0x2e, r24	; 46
+ 216:	80 e0       	ldi	r24, 0x00	; 0
+ 218:	90 e0       	ldi	r25, 0x00	; 0
+ 21a:	38 e2       	ldi	r19, 0x28	; 40
+ 21c:	05 c0       	rjmp	.+10     	; 0x228 <Spi_RW_Byte+0x14>
+		while ( !(SPSR & (1<<SPIF)) )
+ 21e:	01 97       	sbiw	r24, 0x01	; 1
+		{
+			if ( ++Timeout == 0 )
+ 220:	31 f0       	breq	.+12     	; 0x22e <Spi_RW_Byte+0x1a>
+ 222:	23 2f       	mov	r18, r19
+ 224:	2a 95       	dec	r18
+ 226:	f1 f7       	brne	.-4      	; 0x224 <Spi_RW_Byte+0x10>
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+		while ( !(SPSR & (1<<SPIF)) )
+ 228:	0d b4       	in	r0, 0x2d	; 45
+ 22a:	07 fe       	sbrs	r0, 7
+ 22c:	f8 cf       	rjmp	.-16     	; 0x21e <Spi_RW_Byte+0xa>
+			{
+				break;
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;
+ 22e:	8e b5       	in	r24, 0x2e	; 46
+	#endif
+	
+	return Data; //prevent warning occurs when compile
+}
+ 230:	08 95       	ret
+
+00000232 <Spi_MT_Str>:
+		return statu of SPI BUS
+	Desc:
+		None
+*/
+unsigned char Spi_MT_Str ( unsigned char *Str )
+{
+ 232:	fc 01       	movw	r30, r24
+ 234:	8f ef       	ldi	r24, 0xFF	; 255
+ 236:	38 e2       	ldi	r19, 0x28	; 40
+ 238:	0e c0       	rjmp	.+28     	; 0x256 <Spi_MT_Str+0x24>
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+ 23a:	9e bd       	out	0x2e, r25	; 46
+ 23c:	80 e0       	ldi	r24, 0x00	; 0
+ 23e:	90 e0       	ldi	r25, 0x00	; 0
+ 240:	05 c0       	rjmp	.+10     	; 0x24c <Spi_MT_Str+0x1a>
+ 242:	01 97       	sbiw	r24, 0x01	; 1
+		while ( !(SPSR & (1<<SPIF)) )
+		{
+			if ( ++Timeout == 0 )
+ 244:	31 f0       	breq	.+12     	; 0x252 <Spi_MT_Str+0x20>
+ 246:	23 2f       	mov	r18, r19
+ 248:	2a 95       	dec	r18
+ 24a:	f1 f7       	brne	.-4      	; 0x248 <Spi_MT_Str+0x16>
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+		while ( !(SPSR & (1<<SPIF)) )
+ 24c:	0d b4       	in	r0, 0x2d	; 45
+ 24e:	07 fe       	sbrs	r0, 7
+ 250:	f8 cf       	rjmp	.-16     	; 0x242 <Spi_MT_Str+0x10>
+unsigned char Spi_MT_Str ( unsigned char *Str )
+{
+	INT8U Data = 0xff;
+	while ( *Str != 0 ) 
+	{
+		Data = Spi_RW_Byte ( *Str++ );			
+ 252:	31 96       	adiw	r30, 0x01	; 1
+			{
+				break;
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;
+ 254:	8e b5       	in	r24, 0x2e	; 46
+		None
+*/
+unsigned char Spi_MT_Str ( unsigned char *Str )
+{
+	INT8U Data = 0xff;
+	while ( *Str != 0 ) 
+ 256:	90 81       	ld	r25, Z
+ 258:	99 23       	and	r25, r25
+ 25a:	79 f7       	brne	.-34     	; 0x23a <Spi_MT_Str+0x8>
+	{
+		Data = Spi_RW_Byte ( *Str++ );			
+	}
+	return Data;
+}
+ 25c:	08 95       	ret
+
+0000025e <Spi_MT_Buff>:
+		return statu of SPI BUS
+	Desc:
+		None
+*/
+unsigned char Spi_MT_Buff ( unsigned char *Buff, unsigned char Length )
+{
+ 25e:	fc 01       	movw	r30, r24
+ 260:	8f ef       	ldi	r24, 0xFF	; 255
+ 262:	38 e2       	ldi	r19, 0x28	; 40
+ 264:	10 c0       	rjmp	.+32     	; 0x286 <Spi_MT_Buff+0x28>
+	INT8U Data = 0xff;
+	while ( Length-- ) 
+	{
+		Data = Spi_RW_Byte ( *Buff++ );
+ 266:	80 81       	ld	r24, Z
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+ 268:	8e bd       	out	0x2e, r24	; 46
+ 26a:	80 e0       	ldi	r24, 0x00	; 0
+ 26c:	90 e0       	ldi	r25, 0x00	; 0
+ 26e:	05 c0       	rjmp	.+10     	; 0x27a <Spi_MT_Buff+0x1c>
+ 270:	01 97       	sbiw	r24, 0x01	; 1
+		while ( !(SPSR & (1<<SPIF)) )
+		{
+			if ( ++Timeout == 0 )
+ 272:	31 f0       	breq	.+12     	; 0x280 <Spi_MT_Buff+0x22>
+ 274:	23 2f       	mov	r18, r19
+ 276:	2a 95       	dec	r18
+ 278:	f1 f7       	brne	.-4      	; 0x276 <Spi_MT_Buff+0x18>
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+		while ( !(SPSR & (1<<SPIF)) )
+ 27a:	0d b4       	in	r0, 0x2d	; 45
+ 27c:	07 fe       	sbrs	r0, 7
+ 27e:	f8 cf       	rjmp	.-16     	; 0x270 <Spi_MT_Buff+0x12>
+unsigned char Spi_MT_Buff ( unsigned char *Buff, unsigned char Length )
+{
+	INT8U Data = 0xff;
+	while ( Length-- ) 
+	{
+		Data = Spi_RW_Byte ( *Buff++ );
+ 280:	31 96       	adiw	r30, 0x01	; 1
+			{
+				break;
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;
+ 282:	8e b5       	in	r24, 0x2e	; 46
+ 284:	61 50       	subi	r22, 0x01	; 1
+		None
+*/
+unsigned char Spi_MT_Buff ( unsigned char *Buff, unsigned char Length )
+{
+	INT8U Data = 0xff;
+	while ( Length-- ) 
+ 286:	66 23       	and	r22, r22
+ 288:	71 f7       	brne	.-36     	; 0x266 <Spi_MT_Buff+0x8>
+	{
+		Data = Spi_RW_Byte ( *Buff++ );
+	}
+	return Data;
+}
+ 28a:	08 95       	ret
+
+0000028c <Spi_MR_Byte>:
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+ 28c:	1e bc       	out	0x2e, r1	; 46
+ 28e:	80 e0       	ldi	r24, 0x00	; 0
+ 290:	90 e0       	ldi	r25, 0x00	; 0
+ 292:	38 e2       	ldi	r19, 0x28	; 40
+ 294:	05 c0       	rjmp	.+10     	; 0x2a0 <Spi_MR_Byte+0x14>
+ 296:	01 97       	sbiw	r24, 0x01	; 1
+		while ( !(SPSR & (1<<SPIF)) )
+		{
+			if ( ++Timeout == 0 )
+ 298:	31 f0       	breq	.+12     	; 0x2a6 <Spi_MR_Byte+0x1a>
+ 29a:	23 2f       	mov	r18, r19
+ 29c:	2a 95       	dec	r18
+ 29e:	f1 f7       	brne	.-4      	; 0x29c <Spi_MR_Byte+0x10>
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+		while ( !(SPSR & (1<<SPIF)) )
+ 2a0:	0d b4       	in	r0, 0x2d	; 45
+ 2a2:	07 fe       	sbrs	r0, 7
+ 2a4:	f8 cf       	rjmp	.-16     	; 0x296 <Spi_MR_Byte+0xa>
+			{
+				break;
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;
+ 2a6:	8e b5       	in	r24, 0x2e	; 46
+		read one byte from SPI BUS
+*/
+unsigned char Spi_MR_Byte ( void )
+{	
+	return ( Spi_RW_Byte(0) );		//dummy write once
+}
+ 2a8:	08 95       	ret
+
+000002aa <Spi_MR_Buff>:
+		None
+	Desc:
+		None
+*/
+void Spi_MR_Buff ( unsigned char *DataBuff, unsigned char Length )
+{
+ 2aa:	fc 01       	movw	r30, r24
+ 2ac:	38 e2       	ldi	r19, 0x28	; 40
+ 2ae:	0f c0       	rjmp	.+30     	; 0x2ce <Spi_MR_Buff+0x24>
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+ 2b0:	1e bc       	out	0x2e, r1	; 46
+ 2b2:	80 e0       	ldi	r24, 0x00	; 0
+ 2b4:	90 e0       	ldi	r25, 0x00	; 0
+ 2b6:	05 c0       	rjmp	.+10     	; 0x2c2 <Spi_MR_Buff+0x18>
+ 2b8:	01 97       	sbiw	r24, 0x01	; 1
+		while ( !(SPSR & (1<<SPIF)) )
+		{
+			if ( ++Timeout == 0 )
+ 2ba:	31 f0       	breq	.+12     	; 0x2c8 <Spi_MR_Buff+0x1e>
+ 2bc:	23 2f       	mov	r18, r19
+ 2be:	2a 95       	dec	r18
+ 2c0:	f1 f7       	brne	.-4      	; 0x2be <Spi_MR_Buff+0x14>
+			_delay_us(10);
+		}
+		Data = SPDR;	
+	#elif MCUTYPE == ATMEGA164P || MCUTYPE == ATMEGA324P  || MCUTYPE == ATMEGA644P
+		SPDR = Data;
+		while ( !(SPSR & (1<<SPIF)) )
+ 2c2:	0d b4       	in	r0, 0x2d	; 45
+ 2c4:	07 fe       	sbrs	r0, 7
+ 2c6:	f8 cf       	rjmp	.-16     	; 0x2b8 <Spi_MR_Buff+0xe>
+			{
+				break;
+			}
+			_delay_us(10);
+		}
+		Data = SPDR;
+ 2c8:	8e b5       	in	r24, 0x2e	; 46
+*/
+void Spi_MR_Buff ( unsigned char *DataBuff, unsigned char Length )
+{
+	while ( Length--)
+	{
+		*(DataBuff++) = Spi_RW_Byte(0);		//read by dummy write once
+ 2ca:	81 93       	st	Z+, r24
+ 2cc:	61 50       	subi	r22, 0x01	; 1
+	Desc:
+		None
+*/
+void Spi_MR_Buff ( unsigned char *DataBuff, unsigned char Length )
+{
+	while ( Length--)
+ 2ce:	66 23       	and	r22, r22
+ 2d0:	79 f7       	brne	.-34     	; 0x2b0 <Spi_MR_Buff+0x6>
+	{
+		*(DataBuff++) = Spi_RW_Byte(0);		//read by dummy write once
+	}
+}
+ 2d2:	08 95       	ret
+
+000002d4 <L01_Wr_Buff>:
+		Rec_Data:	Data received from MISO
+	Desc:
+		None
+*/
+INT8U L01_Wr_Buff( INT8U RegAddr, INT8U *Data, INT8U Length )
+{	
+ 2d4:	1f 93       	push	r17
+ 2d6:	cf 93       	push	r28
+ 2d8:	df 93       	push	r29
+ 2da:	eb 01       	movw	r28, r22
+ 2dc:	14 2f       	mov	r17, r20
+	INT8U Rec_Data = 0;
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 2de:	2c 9a       	sbi	0x05, 4	; 5
+	CSN_LOW;//CLR ( CSN_PORT, CSN_BIT );		
+ 2e0:	2c 98       	cbi	0x05, 4	; 5
+	Rec_Data = Spi_RW_Byte ( RegAddr );
+ 2e2:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+ 2e6:	04 c0       	rjmp	.+8      	; 0x2f0 <L01_Wr_Buff+0x1c>
+	while ( Length-- )	
+	{
+		Rec_Data = Spi_RW_Byte( *(Data++) );
+ 2e8:	89 91       	ld	r24, Y+
+ 2ea:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+ 2ee:	11 50       	subi	r17, 0x01	; 1
+{	
+	INT8U Rec_Data = 0;
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+	CSN_LOW;//CLR ( CSN_PORT, CSN_BIT );		
+	Rec_Data = Spi_RW_Byte ( RegAddr );
+	while ( Length-- )	
+ 2f0:	11 23       	and	r17, r17
+ 2f2:	d1 f7       	brne	.-12     	; 0x2e8 <L01_Wr_Buff+0x14>
+	{
+		Rec_Data = Spi_RW_Byte( *(Data++) );
+	}
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );	
+ 2f4:	2c 9a       	sbi	0x05, 4	; 5
+	return Rec_Data;
+}
+ 2f6:	df 91       	pop	r29
+ 2f8:	cf 91       	pop	r28
+ 2fa:	1f 91       	pop	r17
+ 2fc:	08 95       	ret
+
+000002fe <L01_Wr_Pl>:
+	Description:
+		PTX Write payload in tx mode, and PRX will send
+		ack packet back
+*/
+void L01_Wr_Pl(INT8U *Buff, INT8U Payload_Width)
+{
+ 2fe:	9c 01       	movw	r18, r24
+ 300:	46 2f       	mov	r20, r22
+	L01_Wr_Buff( 0xa0 , Buff, Payload_Width );	
+ 302:	80 ea       	ldi	r24, 0xA0	; 160
+ 304:	b9 01       	movw	r22, r18
+ 306:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <L01_Wr_Buff>
+}
+ 30a:	08 95       	ret
+
+0000030c <L01_Wr_Reg>:
+	Desc:
+		command word: MSBit to LSBit(one byte)
+		Data bytes: LSByte to MSByte, MSBIT to LSBit first
+*/
+INT8U L01_Wr_Reg( INT8U Cmd, INT8U Data )
+{	
+ 30c:	1f 93       	push	r17
+ 30e:	98 2f       	mov	r25, r24
+ 310:	16 2f       	mov	r17, r22
+	INT8U Rec_Data = 0xff;
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 312:	2c 9a       	sbi	0x05, 4	; 5
+	CSN_LOW;//CLR ( CSN_PORT, CSN_BIT );
+ 314:	2c 98       	cbi	0x05, 4	; 5
+	if ( (Cmd == CMD_NRF24L01_FLUSH_TX) || (Cmd == CMD_NRF24L01_FLUSH_RX) || 
+ 316:	81 5e       	subi	r24, 0xE1	; 225
+ 318:	83 30       	cpi	r24, 0x03	; 3
+ 31a:	10 f0       	brcs	.+4      	; 0x320 <L01_Wr_Reg+0x14>
+ 31c:	9f 3f       	cpi	r25, 0xFF	; 255
+ 31e:	29 f4       	brne	.+10     	; 0x32a <L01_Wr_Reg+0x1e>
+			(Cmd == CMD_NRF24L01_REUSE_TX_PL) || (Cmd == CMD_NRF24L01_NOP) )
+	{
+		Spi_RW_Byte( Cmd );
+ 320:	89 2f       	mov	r24, r25
+ 322:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+ 326:	8f ef       	ldi	r24, 0xFF	; 255
+ 328:	06 c0       	rjmp	.+12     	; 0x336 <L01_Wr_Reg+0x2a>
+	}
+	else
+	{
+		Spi_RW_Byte( Cmd );
+ 32a:	89 2f       	mov	r24, r25
+ 32c:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+		Rec_Data = Spi_RW_Byte( Data );
+ 330:	81 2f       	mov	r24, r17
+ 332:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+	}
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 336:	2c 9a       	sbi	0x05, 4	; 5
+	return ( Rec_Data );	
+}
+ 338:	1f 91       	pop	r17
+ 33a:	08 95       	ret
+
+0000033c <L01_Flush_Tx>:
+	Description:
+		Flux Tx FIFO in Tx mode
+*/
+void L01_Flush_Tx( void )
+{
+	L01_Wr_Reg( CMD_NRF24L01_FLUSH_TX, 0x00 );
+ 33c:	81 ee       	ldi	r24, 0xE1	; 225
+ 33e:	60 e0       	ldi	r22, 0x00	; 0
+ 340:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+}
+ 344:	08 95       	ret
+
+00000346 <L01_Flush_Rx>:
+		Flux rx FIFO in rx mode, must be executed after 
+		ack has been transmited
+*/
+void L01_Flush_Rx( void )
+{
+	L01_Wr_Reg( CMD_NRF24L01_FLUSH_RX, 0x00 );
+ 346:	82 ee       	ldi	r24, 0xE2	; 226
+ 348:	60 e0       	ldi	r22, 0x00	; 0
+ 34a:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+}
+ 34e:	08 95       	ret
+
+00000350 <L01_Rd_Buff>:
+	Output:
+		None
+	Description:
+*/
+void L01_Rd_Buff ( INT8U Reg, INT8U *DataBuff, INT8U Length )
+{	
+ 350:	ff 92       	push	r15
+ 352:	0f 93       	push	r16
+ 354:	1f 93       	push	r17
+ 356:	8b 01       	movw	r16, r22
+ 358:	f4 2e       	mov	r15, r20
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 35a:	2c 9a       	sbi	0x05, 4	; 5
+	CSN_LOW;//CLR ( CSN_PORT, CSN_BIT );	
+ 35c:	2c 98       	cbi	0x05, 4	; 5
+	Spi_RW_Byte( Reg );
+ 35e:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+	Spi_MR_Buff( DataBuff, Length );
+ 362:	c8 01       	movw	r24, r16
+ 364:	6f 2d       	mov	r22, r15
+ 366:	0e 94 55 01 	call	0x2aa	; 0x2aa <Spi_MR_Buff>
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 36a:	2c 9a       	sbi	0x05, 4	; 5
+}
+ 36c:	1f 91       	pop	r17
+ 36e:	0f 91       	pop	r16
+ 370:	ff 90       	pop	r15
+ 372:	08 95       	ret
+
+00000374 <L01_Rd_Reg>:
+	Description:
+*/
+INT8U L01_Rd_Reg ( INT8U Cmd )
+{
+	INT8U Rec_Data = 0;
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 374:	2c 9a       	sbi	0x05, 4	; 5
+	CSN_LOW;//CLR ( CSN_PORT, CSN_BIT );	
+ 376:	2c 98       	cbi	0x05, 4	; 5
+	Spi_RW_Byte( Cmd );
+ 378:	0e 94 0a 01 	call	0x214	; 0x214 <Spi_RW_Byte>
+	Rec_Data = Spi_MR_Byte ( );
+ 37c:	0e 94 46 01 	call	0x28c	; 0x28c <Spi_MR_Byte>
+	CSN_HIGH;//SET ( CSN_PORT, CSN_BIT );
+ 380:	2c 9a       	sbi	0x05, 4	; 5
+	return Rec_Data;
+}
+ 382:	08 95       	ret
+
+00000384 <L01_Rd_Statu_Reg>:
+	Desc:
+		Frequency = 2.4G hz + Channel Mhz
+*/
+INT8U L01_Rd_Statu_Reg( void )
+{
+	return ( L01_Rd_Reg(CMD_NRF24L01_RD_REG + 0x07) );
+ 384:	87 e0       	ldi	r24, 0x07	; 7
+ 386:	0e 94 ba 01 	call	0x374	; 0x374 <L01_Rd_Reg>
+}
+ 38a:	08 95       	ret
+
+0000038c <L01_Clear_Irq>:
+		None
+	Desc:
+		clear IRQ
+*/
+void L01_Clear_Irq( INT8U Irq_No )
+{
+ 38c:	1f 93       	push	r17
+ 38e:	18 2f       	mov	r17, r24
+	if ( Irq_No > 6 )
+ 390:	87 30       	cpi	r24, 0x07	; 7
+ 392:	28 f0       	brcs	.+10     	; 0x39e <L01_Clear_Irq+0x12>
+	{
+		L01_Wr_Reg ( (CMD_NRF24L01_WR_REG + 0x07), (L01_Rd_Statu_Reg() | 0x70) );
+ 394:	0e 94 c2 01 	call	0x384	; 0x384 <L01_Rd_Statu_Reg>
+ 398:	68 2f       	mov	r22, r24
+ 39a:	60 67       	ori	r22, 0x70	; 112
+ 39c:	0d c0       	rjmp	.+26     	; 0x3b8 <L01_Clear_Irq+0x2c>
+	}
+	else if ( Irq_No > 3 ) 
+ 39e:	84 30       	cpi	r24, 0x04	; 4
+ 3a0:	70 f0       	brcs	.+28     	; 0x3be <L01_Clear_Irq+0x32>
+	{
+		L01_Wr_Reg ( (CMD_NRF24L01_WR_REG + 0x07), (L01_Rd_Statu_Reg() | (1<<Irq_No)) );
+ 3a2:	0e 94 c2 01 	call	0x384	; 0x384 <L01_Rd_Statu_Reg>
+ 3a6:	21 e0       	ldi	r18, 0x01	; 1
+ 3a8:	30 e0       	ldi	r19, 0x00	; 0
+ 3aa:	02 c0       	rjmp	.+4      	; 0x3b0 <L01_Clear_Irq+0x24>
+ 3ac:	22 0f       	add	r18, r18
+ 3ae:	33 1f       	adc	r19, r19
+ 3b0:	1a 95       	dec	r17
+ 3b2:	e2 f7       	brpl	.-8      	; 0x3ac <L01_Clear_Irq+0x20>
+ 3b4:	68 2f       	mov	r22, r24
+ 3b6:	62 2b       	or	r22, r18
+ 3b8:	87 e2       	ldi	r24, 0x27	; 39
+ 3ba:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	}
+}
+ 3be:	1f 91       	pop	r17
+ 3c0:	08 95       	ret
+
+000003c2 <Rf_Init>:
+		width = 4, address width = 5, frequency = 2.44Gh, 2byte CRC,
+		air rate = 1bmps, power=0dBm, enable low noise amplifier,
+		retransmit 10 times, delay 500us
+*/
+void Rf_Init ( void )
+{
+ 3c2:	0f 93       	push	r16
+ 3c4:	1f 93       	push	r17
+ 3c6:	df 93       	push	r29
+ 3c8:	cf 93       	push	r28
+ 3ca:	00 d0       	rcall	.+0      	; 0x3cc <Rf_Init+0xa>
+ 3cc:	00 d0       	rcall	.+0      	; 0x3ce <Rf_Init+0xc>
+ 3ce:	0f 92       	push	r0
+ 3d0:	cd b7       	in	r28, 0x3d	; 61
+ 3d2:	de b7       	in	r29, 0x3e	; 62
+	INT8U Addr[5] = { 0xb2, 0xb3, 0xb4, 0xb5, 0x03 };  //address
+ 3d4:	de 01       	movw	r26, r28
+ 3d6:	11 96       	adiw	r26, 0x01	; 1
+ 3d8:	e1 e0       	ldi	r30, 0x01	; 1
+ 3da:	f1 e0       	ldi	r31, 0x01	; 1
+ 3dc:	85 e0       	ldi	r24, 0x05	; 5
+ 3de:	01 90       	ld	r0, Z+
+ 3e0:	0d 92       	st	X+, r0
+ 3e2:	81 50       	subi	r24, 0x01	; 1
+ 3e4:	e1 f7       	brne	.-8      	; 0x3de <Rf_Init+0x1c>
+	
+	
+	
+	DDRD |= (1<<5) | (1<<6);
+ 3e6:	8a b1       	in	r24, 0x0a	; 10
+ 3e8:	80 66       	ori	r24, 0x60	; 96
+ 3ea:	8a b9       	out	0x0a, r24	; 10
+	PORTD |= (1<<5) | (1<<6);
+ 3ec:	8b b1       	in	r24, 0x0b	; 11
+ 3ee:	80 66       	ori	r24, 0x60	; 96
+ 3f0:	8b b9       	out	0x0b, r24	; 11
+	Spi_Init( ON );
+ 3f2:	81 e0       	ldi	r24, 0x01	; 1
+ 3f4:	0e 94 ff 00 	call	0x1fe	; 0x1fe <Spi_Init>
+	
+	CE_LOW;//CLR( CE_PORT, CE_BIT ) ;
+ 3f8:	2b 98       	cbi	0x05, 3	; 5
+	L01_Wr_Reg( 0X20+0, 0X0E );//PTX
+ 3fa:	80 e2       	ldi	r24, 0x20	; 32
+ 3fc:	6e e0       	ldi	r22, 0x0E	; 14
+ 3fe:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	L01_Wr_Reg( 0X20+1, 0X01 );
+ 402:	81 e2       	ldi	r24, 0x21	; 33
+ 404:	61 e0       	ldi	r22, 0x01	; 1
+ 406:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	L01_Wr_Reg( 0X20+2, 0X01 );
+ 40a:	82 e2       	ldi	r24, 0x22	; 34
+ 40c:	61 e0       	ldi	r22, 0x01	; 1
+ 40e:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	L01_Wr_Reg( 0X20+3, 0X03 );
+ 412:	83 e2       	ldi	r24, 0x23	; 35
+ 414:	63 e0       	ldi	r22, 0x03	; 3
+ 416:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	L01_Wr_Reg( 0X20+4, 0X3A );
+ 41a:	84 e2       	ldi	r24, 0x24	; 36
+ 41c:	6a e3       	ldi	r22, 0x3A	; 58
+ 41e:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	
+	
+	L01_Wr_Reg( 0X20+5, 40 );  //channel
+ 422:	85 e2       	ldi	r24, 0x25	; 37
+ 424:	68 e2       	ldi	r22, 0x28	; 40
+ 426:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	
+	
+	
+	L01_Wr_Reg( 0X20+6, 0X26 ); //250kbps
+ 42a:	86 e2       	ldi	r24, 0x26	; 38
+ 42c:	66 e2       	ldi	r22, 0x26	; 38
+ 42e:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	L01_Clear_Irq( 7 );	//clear all IRQ
+ 432:	87 e0       	ldi	r24, 0x07	; 7
+ 434:	0e 94 c6 01 	call	0x38c	; 0x38c <L01_Clear_Irq>
+	L01_Wr_Buff( 0x20+0x0a, &(Addr[0]), 5 );  //rx address
+ 438:	8a e2       	ldi	r24, 0x2A	; 42
+ 43a:	8e 01       	movw	r16, r28
+ 43c:	0f 5f       	subi	r16, 0xFF	; 255
+ 43e:	1f 4f       	sbci	r17, 0xFF	; 255
+ 440:	b8 01       	movw	r22, r16
+ 442:	45 e0       	ldi	r20, 0x05	; 5
+ 444:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <L01_Wr_Buff>
+	L01_Wr_Buff( 0x20+0x10, &(Addr[0]), 5 ); //TX adress
+ 448:	80 e3       	ldi	r24, 0x30	; 48
+ 44a:	b8 01       	movw	r22, r16
+ 44c:	45 e0       	ldi	r20, 0x05	; 5
+ 44e:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <L01_Wr_Buff>
+	L01_Wr_Reg( 0X20+0x11, 5);
+ 452:	81 e3       	ldi	r24, 0x31	; 49
+ 454:	65 e0       	ldi	r22, 0x05	; 5
+ 456:	0e 94 86 01 	call	0x30c	; 0x30c <L01_Wr_Reg>
+	
+	
+}
+ 45a:	0f 90       	pop	r0
+ 45c:	0f 90       	pop	r0
+ 45e:	0f 90       	pop	r0
+ 460:	0f 90       	pop	r0
+ 462:	0f 90       	pop	r0
+ 464:	cf 91       	pop	r28
+ 466:	df 91       	pop	r29
+ 468:	1f 91       	pop	r17
+ 46a:	0f 91       	pop	r16
+ 46c:	08 95       	ret
+
+0000046e <Key_Scan>:
+		Key_value: bit0-bit4: SW1 - SW5; bit5: remote button
+*/
+INT8U Key_Scan( void )
+{
+	INT8U Key_Value = 0;
+	RELEASE_SW1;
+ 46e:	5b 9a       	sbi	0x0b, 3	; 11
+	RELEASE_SW2;
+ 470:	5c 9a       	sbi	0x0b, 4	; 11
+	RELEASE_SW3;
+ 472:	5d 9a       	sbi	0x0b, 5	; 11
+	RELEASE_SW4;
+ 474:	5e 9a       	sbi	0x0b, 6	; 11
+	RELEASE_SW5;
+ 476:	5f 9a       	sbi	0x0b, 7	; 11
+	RELEASE_REMOTE;
+ 478:	02 9a       	sbi	0x00, 2	; 0
+	if ( SW1_PRESS_STATU || SW2_PRESS_STATU || SW3_PRESS_STATU || SW4_PRESS_STATU 
+ 47a:	4b 9b       	sbis	0x09, 3	; 9
+ 47c:	0c c0       	rjmp	.+24     	; 0x496 <Key_Scan+0x28>
+ 47e:	4c 9b       	sbis	0x09, 4	; 9
+ 480:	0a c0       	rjmp	.+20     	; 0x496 <Key_Scan+0x28>
+ 482:	4d 9b       	sbis	0x09, 5	; 9
+ 484:	08 c0       	rjmp	.+16     	; 0x496 <Key_Scan+0x28>
+ 486:	4e 9b       	sbis	0x09, 6	; 9
+ 488:	06 c0       	rjmp	.+12     	; 0x496 <Key_Scan+0x28>
+ 48a:	4f 9b       	sbis	0x09, 7	; 9
+ 48c:	04 c0       	rjmp	.+8      	; 0x496 <Key_Scan+0x28>
+ 48e:	02 9b       	sbis	0x00, 2	; 0
+ 490:	02 c0       	rjmp	.+4      	; 0x496 <Key_Scan+0x28>
+ 492:	80 e0       	ldi	r24, 0x00	; 0
+ 494:	08 95       	ret
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 496:	88 e9       	ldi	r24, 0x98	; 152
+ 498:	9a e3       	ldi	r25, 0x3A	; 58
+ 49a:	01 97       	sbiw	r24, 0x01	; 1
+ 49c:	f1 f7       	brne	.-4      	; 0x49a <Key_Scan+0x2c>
+			|| SW5_PRESS_STATU || REMOTE_PRESS_STATU )
+	{
+		_delay_ms(5);
+		if ( SW1_PRESS_STATU ) 
+ 49e:	89 b1       	in	r24, 0x09	; 9
+ 4a0:	86 95       	lsr	r24
+ 4a2:	86 95       	lsr	r24
+ 4a4:	86 95       	lsr	r24
+ 4a6:	80 95       	com	r24
+ 4a8:	81 70       	andi	r24, 0x01	; 1
+		{
+			Key_Value |= (1<<0);
+		}
+		if ( SW2_PRESS_STATU ) 
+ 4aa:	4c 9b       	sbis	0x09, 4	; 9
+		{
+			Key_Value |= (1<<1);
+ 4ac:	82 60       	ori	r24, 0x02	; 2
+		}
+		if ( SW3_PRESS_STATU ) 
+ 4ae:	4d 9b       	sbis	0x09, 5	; 9
+		{
+			Key_Value |= (1<<2);
+ 4b0:	84 60       	ori	r24, 0x04	; 4
+		}
+		if ( SW4_PRESS_STATU ) 
+ 4b2:	4e 9b       	sbis	0x09, 6	; 9
+		{
+			Key_Value |= (1<<3);			
+ 4b4:	88 60       	ori	r24, 0x08	; 8
+		}
+		if ( SW5_PRESS_STATU ) 
+ 4b6:	4f 9b       	sbis	0x09, 7	; 9
+		{
+			Key_Value |= (1<<4);			
+ 4b8:	80 61       	ori	r24, 0x10	; 16
+		}
+		if ( REMOTE_PRESS_STATU ) 
+ 4ba:	02 9b       	sbis	0x00, 2	; 0
+		{
+			Key_Value |= (1<<5);			
+ 4bc:	80 62       	ori	r24, 0x20	; 32
+		}
+	}	
+	return Key_Value;
+}
+ 4be:	08 95       	ret
+
+000004c0 <Peripheral_Task>:
+*/
+INT8U Peripheral_Task( void )
+{
+	INT8U Key_Value = 0;
+
+	Fill_Memory( &(Rf_Buff[0]), PACKET_LENGTH, 0 );
+ 4c0:	8a e0       	ldi	r24, 0x0A	; 10
+ 4c2:	91 e0       	ldi	r25, 0x01	; 1
+ 4c4:	65 e0       	ldi	r22, 0x05	; 5
+ 4c6:	40 e0       	ldi	r20, 0x00	; 0
+ 4c8:	0e 94 84 00 	call	0x108	; 0x108 <Fill_Memory>
+	
+	if ( (Key_Value = Key_Scan()) != My_Key.Last_KeyValue )
+ 4cc:	0e 94 37 02 	call	0x46e	; 0x46e <Key_Scan>
+ 4d0:	98 2f       	mov	r25, r24
+ 4d2:	80 91 09 01 	lds	r24, 0x0109
+ 4d6:	98 17       	cp	r25, r24
+ 4d8:	11 f4       	brne	.+4      	; 0x4de <Peripheral_Task+0x1e>
+ 4da:	80 e0       	ldi	r24, 0x00	; 0
+ 4dc:	08 95       	ret
+	{
+		My_Key.Last_KeyValue = Key_Value;
+ 4de:	90 93 09 01 	sts	0x0109, r25
+		Rf_Buff[ADDR_PACKET_KEY] = Key_Value;
+ 4e2:	90 93 0b 01 	sts	0x010B, r25
+ 4e6:	81 e0       	ldi	r24, 0x01	; 1
+	else 
+	{
+		return 0;
+	}
+	
+}
+ 4e8:	08 95       	ret
+
+000004ea <_exit>:
+ 4ea:	f8 94       	cli
+
+000004ec <__stop_program>:
+ 4ec:	ff cf       	rjmp	.-2      	; 0x4ec <__stop_program>
