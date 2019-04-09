@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=VCC Pin=常按开关-3
+Added Pin To Net: NetName=VCC Pin=常按开关-2
+Added Room: Name=基于单片机的空调温度控制系统

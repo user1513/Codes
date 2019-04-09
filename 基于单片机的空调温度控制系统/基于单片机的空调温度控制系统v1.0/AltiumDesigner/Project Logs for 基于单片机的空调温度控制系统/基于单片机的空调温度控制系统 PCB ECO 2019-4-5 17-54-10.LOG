@@ -1,0 +1,5 @@
+Change Component Footprint: Designator=S1 Old Footprint=DPST-4 New Footprint=Switch6*6
+Change Component Footprint: Designator=S2 Old Footprint=DPST-4 New Footprint=Switch6*6
+Change Component Footprint: Designator=S3 Old Footprint=DPST-4 New Footprint=Switch6*6
+Change Component Footprint: Designator=S4 Old Footprint=DPST-4 New Footprint=Switch6*6
+Added Room: Name=基于单片机的空调温度控制系统

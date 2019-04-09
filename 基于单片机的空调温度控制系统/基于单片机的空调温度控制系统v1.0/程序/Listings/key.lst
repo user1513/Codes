@@ -1,0 +1,233 @@
+C51 COMPILER V9.59.0.0   KEY                                                               04/06/2019 16:53:24 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.lst)
+                    - TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include "key.h"
+   2          #include "lcd12864.h"
+   3          #include "stdio.h"
+   4          
+   5          uint8_t motor_speed_pwm = 0;
+   6          uint8_t Refrigeration_mode_flag = 0;
+   7          uint8_t Heating_mode_flag = 0;
+   8          extern sSystem_Param    *pSystem_Param;     //ÉùÃ÷½á¹¹ÌåÖ¸Õë±äÁ¿
+   9          extern void Show_demo(uint8_t addr, uint8_t _param);  
+  10          
+  11          xdata uint8_t able1[16] = {0};                      //ÉùÃ÷Êý×é
+  12          uint8_t keyval_Get(uint8_t _current_key)            //°´¼üÖµ»ñÈ¡º¯Êý
+  13          {
+  14   1        static uint8_t _previous_key = 0xff , _key_flag = 1;//±äÁ¿ÉùÃ÷
+  15   1        static uint8_t timeout_500ms = 0;                   //±äÁ¿ÉùÃ÷      
+  16   1        uint8_t keyval = 0;                                 //±äÁ¿ÉùÃ÷
+  17   1      
+  18   1        if(_current_key != 0x0f && _previous_key == _current_key && _key_flag)    //if(µ±Ç°°´¼üÖµ £¡= 0x0f ²¢ÇÒ µ±Ç
+             -°°´¼üÖµ == Ö®Ç°°´¼üÖµ ²¢ÇÒ×ÔËø¿ª¹ØÃ»ÓÐ¹Ø±Õ)
+  19   1        {
+  20   2           _key_flag = 0;                                                         //×ÔËø¿ª¹Ø´ò¿ª
+  21   2            timeout_500ms = 0;                                                    //500ms³¬Ê±±äÁ¿ÇåÁã
+  22   2          if((_current_key & 1) == 0)                                             //ÅÐ¶Ï¾ßÌå°´¼ü
+  23   2            keyval |= 1;
+  24   2          
+  25   2          if((_current_key & (1 << 1)) == 0)                                      //ÅÐ¶Ï¾ßÌå°´¼ü
+  26   2            keyval |= 1 << 1;
+  27   2          
+  28   2          if((_current_key & (1 << 2))  == 0)                                     //ÅÐ¶Ï¾ßÌå°´¼ü
+  29   2            keyval |= 1 << 2;
+  30   2          
+  31   2          if((_current_key & (1 << 3))  == 0)                                     //ÅÐ¶Ï¾ßÌå°´¼ü
+  32   2            keyval |= 1 << 3;
+  33   2      
+  34   2        }
+  35   1        else if(_current_key == 0x0f)                                             //µ±Ã»ÓÐ°´¼ü°´ÏÂÊÇ×ÔËø¿ª¹Ø£¬¹Ø±Õ
+  36   1        {
+  37   2          _key_flag = 1;
+  38   2        }
+  39   1        
+  40   1        if((_current_key & (1 << 1)) == 0 || (_current_key & (1 << 2))  == 0)     //ÅÐ¶ÏÊÇ×ÔÔö»òÕß×Ô¼õ°´¼ü°´ÏÂÔõÃ´´
+             -¥·¢³¬Ê±ÈÎÎñ
+  41   1        {
+  42   2          timeout_500ms ++;
+  43   2          if(timeout_500ms > 50)
+  44   2            _key_flag = 1;
+  45   2            
+  46   2        }
+  47   1        _previous_key = _current_key;                                             //½«µ±Ç°µÄ°´¼üÖµ¸³Öµ¸øÖ®Ç°°´¼üÖµµÄ±äÁ¿
+  48   1        
+  49   1        return keyval;
+  50   1      }
+  51          
+  52          
+C51 COMPILER V9.59.0.0   KEY                                                               04/06/2019 16:53:24 PAGE 2   
+
+  53          void Event_Handler(uint8_t _key_val)                                        //ÊÂ¼þ´¦Àíº¯Êý
+  54          {
+  55   1        switch(_key_val)                                                          //ÅÐ¶Ï°´¼üÖµ
+  56   1        {
+  57   2          case 1:if(++(pSystem_Param->Current_Mode) == Wind_speed_1)              //ÔËÐÐÄ£Ê½ÇÐ»»
+  58   2              {
+  59   3                pSystem_Param->Current_Mode = Air_supply_mode;
+  60   3              }
+  61   2              Refrigeration_mode_flag = 0;
+  62   2              Heating_mode_flag = 0;
+  63   2              Show_demo(0x80, pSystem_Param->Current_Mode);                       //ÏÔÊ¾
+  64   2              switch(pSystem_Param->Current_Mode)
+  65   2              {
+  66   3                case Air_supply_mode:
+  67   3                  
+  68   3                  pSystem_Param->Wind_speed = pSystem_Param->History_Param->Air_supply_mode_Wind_speed;                         //
+             -ÏÔÊ¾
+  69   3                  break;
+  70   3                case Refrigeration_mode: 
+  71   3                  pSystem_Param->Wind_speed = pSystem_Param->History_Param->Refrigeration_mode_Wind_speed;                        
+             -  //ÏÔÊ¾
+  72   3                  break;
+  73   3                case Heating_mode:
+  74   3                  pSystem_Param->Wind_speed = pSystem_Param->History_Param->Heating_mode_Wind_speed;                          //ÏÔÊ
+             -¾
+  75   3                  break;
+  76   3                default:break;
+  77   3              }
+  78   2              Show_demo(0x98, pSystem_Param->Wind_speed);                         //ÏÔÊ¾
+  79   2            break;
+  80   2          case 2:pSystem_Param->Set_tempVal += 5;break;                           //Éè¶¨ÎÂ¶È×ÔÔö£¨Ã»ÓÐ×ö±£»¤£©    
+  81   2          case 4:pSystem_Param->Set_tempVal -= 5;break;                           //Éè¶¨ÎÂ¶È×Ô¼õ£¨Ã»ÓÐ×ö±£»¤£©
+  82   2          case 8:
+  83   2            switch(pSystem_Param->Current_Mode)
+  84   2            {
+  85   3                  case Air_supply_mode:
+  86   3                    if(--(pSystem_Param->History_Param->Air_supply_mode_Wind_speed) == Heating_mode)                //·çËÙÇÐ»»
+  87   3                    {
+  88   4                      pSystem_Param->History_Param->Air_supply_mode_Wind_speed = Wind_speed_3;
+  89   4                    }
+  90   3                    pSystem_Param->Wind_speed = pSystem_Param->History_Param->Air_supply_mode_Wind_speed;
+  91   3                    break;
+  92   3                  case Refrigeration_mode:
+  93   3                    if(--(pSystem_Param->History_Param->Refrigeration_mode_Wind_speed) == Heating_mode)               //·çËÙÇÐ
+             -»»
+  94   3                    {
+  95   4                      pSystem_Param->History_Param->Refrigeration_mode_Wind_speed = Wind_speed_3;
+  96   4                    } 
+  97   3                    pSystem_Param->Wind_speed = pSystem_Param->History_Param->Refrigeration_mode_Wind_speed;            
+  98   3                    break;
+  99   3                  case Heating_mode:
+ 100   3                    if(--(pSystem_Param->History_Param->Heating_mode_Wind_speed) == Heating_mode)               //·çËÙÇÐ»»
+ 101   3                    {
+ 102   4                      pSystem_Param->History_Param->Heating_mode_Wind_speed = Wind_speed_3;
+ 103   4                    }   
+ 104   3                    pSystem_Param->Wind_speed = pSystem_Param->History_Param->Heating_mode_Wind_speed;
+ 105   3                    break;
+ 106   3                  default:break;
+ 107   3            }
+ 108   2            
+ 109   2              Show_demo(0x98, pSystem_Param->Wind_speed);                         //ÏÔÊ¾
+ 110   2              break;
+C51 COMPILER V9.59.0.0   KEY                                                               04/06/2019 16:53:24 PAGE 3   
+
+ 111   2          default: break;
+ 112   2        }
+ 113   1      }
+ 114          
+ 115          
+ 116          void motor_run(void)
+ 117          {
+ 118   1        switch(pSystem_Param->Current_Mode)
+ 119   1        {
+ 120   2          case Air_supply_mode:
+ 121   2            motor_speed(pSystem_Param->Wind_speed);
+ 122   2            Show_demo(0x98,pSystem_Param->Wind_speed);
+ 123   2            break;
+ 124   2          case Refrigeration_mode: 
+ 125   2            if((pSystem_Param->Set_tempVal) - 30 >= pSystem_Param->Current_temp && Refrigeration_mode_flag == 0)
+ 126   2            {
+ 127   3              Refrigeration_mode_flag = 1;
+ 128   3              motor_speed(Wind_stop);
+ 129   3              Show_demo(0x98,Wind_stop);
+ 130   3            }
+ 131   2            else if(Refrigeration_mode_flag == 1 && ((pSystem_Param->Set_tempVal) + 30 < pSystem_Param->Current_tem
+             -p))
+ 132   2            {
+ 133   3              Refrigeration_mode_flag = 0;
+ 134   3            }
+ 135   2            if(Refrigeration_mode_flag == 0 )
+ 136   2            {
+ 137   3              motor_speed(pSystem_Param->Wind_speed);
+ 138   3              Show_demo(0x98,pSystem_Param->Wind_speed);
+ 139   3            }
+ 140   2          
+ 141   2            break;
+ 142   2          case Heating_mode:
+ 143   2            if((pSystem_Param->Set_tempVal) + 30 <= pSystem_Param->Current_temp && Heating_mode_flag == 0)
+ 144   2            {
+ 145   3              Heating_mode_flag = 1;
+ 146   3              motor_speed(Wind_stop);
+ 147   3              Show_demo(0x98,Wind_stop);
+ 148   3            }
+ 149   2            else if(Heating_mode_flag == 1 && ((pSystem_Param->Set_tempVal) - 30 > pSystem_Param->Current_temp))
+ 150   2            {
+ 151   3              Heating_mode_flag = 0;
+ 152   3            }
+ 153   2            if(Heating_mode_flag == 0 )
+ 154   2            {
+ 155   3              motor_speed(pSystem_Param->Wind_speed);
+ 156   3              Show_demo(0x98,pSystem_Param->Wind_speed);
+ 157   3            }
+ 158   2            break;
+ 159   2          default:break;
+ 160   2        }
+ 161   1      }
+ 162          
+ 163          void motor_speed(uint8_t _speed_val)
+ 164          {
+ 165   1        switch(_speed_val)
+ 166   1        {
+ 167   2          case Wind_speed_1:motor_speed_pwm = 10; break;                    //·çËÙ1
+ 168   2          case Wind_speed_2:motor_speed_pwm = 5;break;                      //·çËÙ2
+ 169   2          case Wind_speed_3:motor_speed_pwm = 2;break;                      //·çËÙ3
+ 170   2          case Wind_stop:motor_speed_pwm = 0;break;
+ 171   2          default:motor_speed_pwm = 0;break;
+C51 COMPILER V9.59.0.0   KEY                                                               04/06/2019 16:53:24 PAGE 4   
+
+ 172   2        }
+ 173   1      }
+ 174          
+ 175          void Show_demo(uint8_t addr, uint8_t _param)
+ 176          {
+ 177   1        switch(_param)
+ 178   1        {
+ 179   2          case Air_supply_mode:   Wr_Data_String(addr, "ÔËÐÐÄ£Ê½£ºËÍ·ç");break;
+ 180   2          
+ 181   2          case Refrigeration_mode:Wr_Data_String(addr, "ÔËÐÐÄ£Ê½£ºÖÆÀä");break;
+ 182   2          
+ 183   2          case Heating_mode:      Wr_Data_String(addr, "ÔËÐÐÄ£Ê½£ºÖÆÈÈ");break;
+ 184   2          
+ 185   2          case Wind_speed_1:      Wr_Data_String(addr, "µ±Ç°·çËÙ£º¢Ù  µµ");break;
+ 186   2          
+ 187   2          case Wind_speed_2:      Wr_Data_String(addr, "µ±Ç°·çËÙ£º¢Ú  µµ");break;
+ 188   2          
+ 189   2          case Wind_speed_3:      Wr_Data_String(addr, "µ±Ç°·çËÙ£º¢Û  µµ");break;
+ 190   2          
+ 191   2          case Wind_stop:         Wr_Data_String(addr, "µ±Ç°·çËÙ£ºSTOP  ");break;
+ 192   2          
+ 193   2          default :break;
+ 194   2        }
+ 195   1      }
+ 196          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    881    ----
+   CONSTANT SIZE    =    113    ----
+   XDATA SIZE       =     16    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

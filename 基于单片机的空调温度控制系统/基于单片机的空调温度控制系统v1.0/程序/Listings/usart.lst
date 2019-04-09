@@ -1,0 +1,76 @@
+C51 COMPILER V9.59.0.0   USART                                                             04/06/2019 12:51:39 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE USART
+OBJECT MODULE PLACED IN .\Objects\usart.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE usart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\usart.
+                    -lst) TABS(2) OBJECT(.\Objects\usart.obj)
+
+line level    source
+
+   1          #include "usart.h"
+   2          
+   3          xdata unsigned char Data[5];
+   4          unsigned char Counter = 0;
+   5          bit receive_flag=0;
+   6          unsigned char receiveData = 0;
+   7          
+   8          void UartInit(void)   //9600bps@11.0592MHz
+   9          {
+  10   1        SCON |= 0x50;            //8-bit variable UART
+  11   1          TMOD |= 0x20;            //Set Timer1 as 8-bit auto reload mode
+  12   1          TH1 = TL1 = -(11059200L/12/32/9600); //Set auto-reload vaule
+  13   1          TR1 = 1;                //Timer1 start run
+  14   1          //ES = 1;                 //Enable UART interrupt
+  15   1          EA = 1;                 //Open master interrupt switch
+  16   1      }
+  17          
+  18          
+  19          void SendByte(unsigned char byte)
+  20          {
+  21   1        SBUF = byte;   //将要发送的数据放入到发送寄存器
+  22   1        while(!TI);     //等待发送数据完成
+  23   1        TI=0;       //清除发送完成标志位
+  24   1      }
+  25          /*****************************************************************************
+  26          字符串发送函数
+  27          /****************************************************************************/
+  28          void Send_String(unsigned char *str)    
+  29          {
+  30   1        while(*str != '\0')   
+  31   1        {
+  32   2          SendByte(*str);     
+  33   2          str++;    
+  34   2        }       
+  35   1      }
+  36          
+  37          /*****************************************************************************
+  38          字符串发送函数
+  39          /****************************************************************************/
+  40          void Send_String_Len(unsigned char *str, unsigned char Len)   
+  41          {
+  42   1        int i = 0;
+  43   1        for(i = 0; i < Len; i++)
+  44   1          SendByte(*(str++));               
+  45   1      }
+  46          
+  47          
+  48          
+  49          
+  50          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     95    ----
+C51 COMPILER V9.59.0.0   USART                                                             04/06/2019 12:51:39 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      5    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

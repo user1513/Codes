@@ -1,0 +1,116 @@
+C51 COMPILER V9.59.0.0   LCD12864                                                          04/06/2019 15:32:25 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LCD12864
+OBJECT MODULE PLACED IN .\Objects\lcd12864.obj
+COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE lcd12864.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\lcd
+                    -12864.lst) TABS(2) OBJECT(.\Objects\lcd12864.obj)
+
+line level    source
+
+   1          #include "lcd12864.h"
+   2          
+   3          void Delay5ms()   //@11.0592MHz
+   4          {
+   5   1        unsigned char i, j;
+   6   1      
+   7   1        _nop_();
+   8   1        _nop_();
+   9   1        i = 54;
+  10   1        j = 198;
+  11   1        do
+  12   1        {
+  13   2          while (--j);
+  14   2        } while (--i);
+  15   1      }
+  16          void Delay10us()    //@11.0592MHz
+  17          {
+  18   1        unsigned char i;
+  19   1      
+  20   1        _nop_();
+  21   1        _nop_();
+  22   1        _nop_();
+  23   1        i = 24;
+  24   1        while (--i);
+  25   1      }
+  26          
+  27          
+  28          void Wr_Data(unsigned char wrdata) //写数据 
+  29          {  
+  30   1          RDbf();  
+  31   1          RS=1;  
+  32   1          RW=0;  
+  33   1          E=1;  
+  34   1          P0=wrdata;  
+  35   1          E=0;  
+  36   1      }  
+  37          
+  38          void Wr_Data_String(unsigned char wrcommand,unsigned char *str)
+  39          {
+  40   1        Wr_Command(wrcommand,1);
+  41   1        while(*str != '\0')   
+  42   1        {
+  43   2          Wr_Data(*str);      
+  44   2          str++;    
+  45   2        }   
+  46   1      }
+  47          
+  48          void Wr_Command(unsigned char wrcommand,busyc) //写指令 
+  49          {  
+  50   1          if(busyc)RDbf();  
+  51   1          RS=0;   
+  52   1          RW=0;  
+  53   1          E=1;  
+  54   1          P0=wrcommand;  
+C51 COMPILER V9.59.0.0   LCD12864                                                          04/06/2019 15:32:25 PAGE 2   
+
+  55   1          E=0; 
+  56   1      }  
+  57          
+  58          void Lcd12864Clean(void)
+  59          {
+  60   1        Wr_Command(0x01,1);
+  61   1      }
+  62          
+  63          void RDbf(void) //读忙状态 
+  64          { 
+  65   1          while(1)
+  66   1          {   
+  67   2              RS=0;     
+  68   2              RW=1; 
+  69   2              E=0;   
+  70   2              LCMdata=0xFF;       
+  71   2              E=1;   
+  72   2              if((P0&Busy)==0)   break;  
+  73   2          } 
+  74   1      } 
+  75          
+  76          void Lcm_Init(void)//12864初始化
+  77          {     
+  78   1        
+  79   1          Wr_Command(0x30,0);  
+  80   1          Delay5ms();  
+  81   1          Wr_Command(0x30,0); //2 次显示模式设置，不用判忙  
+  82   1          Delay5ms();  
+  83   1          Wr_Command(0x0C,1); //开显示及光标设置  
+  84   1          Delay5ms();  
+  85   1          Wr_Command(0x01,1); //显示清屏  
+  86   1          Delay5ms();  
+  87   1          Delay5ms();  
+  88   1          Wr_Command(0x06,1); //显示光标移动设置  
+  89   1          Delay5ms(); 
+  90   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    179    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

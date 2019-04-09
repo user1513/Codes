@@ -1,0 +1,8 @@
+".\Objects\app.obj",
+".\Objects\temp.obj",
+".\Objects\timer.obj",
+".\Objects\key.obj",
+".\Objects\AMPIRE12864.obj",
+".\Objects\STARTUP.obj" 
+TO ".\Objects\Anti_theftAlarmSystem" 
+PRINT(".\Listings\Anti_theftAlarmSystem.m51") RAMSIZE(256) 
