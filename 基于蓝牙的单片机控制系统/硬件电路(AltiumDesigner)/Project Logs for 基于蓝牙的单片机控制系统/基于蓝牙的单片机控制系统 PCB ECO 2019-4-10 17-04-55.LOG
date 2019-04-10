@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=VCC Pin=P8-1
+Removed Pin From Net: NetName=RXD2 Pin=P8-2
+Removed Pin From Net: NetName=TXD2 Pin=P8-3
+Added Pin To Net: NetName=TXD2 Pin=P8-2
+Added Pin To Net: NetName=RXD2 Pin=P8-3
+Added Pin To Net: NetName=VCC Pin=P8-5
+Added Room: Name=基于蓝牙的单片机控制系统
