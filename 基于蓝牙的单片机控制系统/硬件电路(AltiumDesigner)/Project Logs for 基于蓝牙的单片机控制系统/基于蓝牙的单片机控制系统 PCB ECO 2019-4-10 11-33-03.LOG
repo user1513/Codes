@@ -1,0 +1,5 @@
+Change Component Footprint: Designator=P4 Old Footprint=HDR1X3 New Footprint=KF128-5_3
+Change Component Footprint: Designator=P5 Old Footprint=HDR1X3 New Footprint=KF128-5_3
+Change Component Footprint: Designator=P6 Old Footprint=HDR1X3 New Footprint=KF128-5_3
+Change Component Footprint: Designator=P7 Old Footprint=HDR1X3 New Footprint=KF128-5_3
+Added Room: Name=基于蓝牙的单片机控制系统

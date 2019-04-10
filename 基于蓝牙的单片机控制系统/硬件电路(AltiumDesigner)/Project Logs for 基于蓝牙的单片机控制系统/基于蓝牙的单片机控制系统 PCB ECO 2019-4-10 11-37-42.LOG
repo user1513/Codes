@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=JDQ1 Pin=U1-21
+Removed Pin From Net: NetName=JDQ2 Pin=U1-22
+Removed Pin From Net: NetName=JDQ3 Pin=U1-23
+Removed Pin From Net: NetName=JDQ4 Pin=U1-24
+Removed Pin From Net: NetName=BEEP Pin=U1-25
+Added Pin To Net: NetName=BEEP Pin=U1-21
+Added Pin To Net: NetName=JDQ1 Pin=U1-22
+Added Pin To Net: NetName=JDQ2 Pin=U1-23
+Added Pin To Net: NetName=JDQ3 Pin=U1-24
+Added Pin To Net: NetName=JDQ4 Pin=U1-25
+Added Room: Name=基于蓝牙的单片机控制系统
