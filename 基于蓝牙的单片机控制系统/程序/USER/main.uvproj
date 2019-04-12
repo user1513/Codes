@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo;..\HARDWARE\Bluetooth</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -412,9 +412,9 @@
               <FilePath>..\HARDWARE\USART\usart.c</FilePath>
             </File>
             <File>
-              <FileName>demo.c</FileName>
+              <FileName>Bluetooth.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\demo\demo.c</FilePath>
+              <FilePath>..\HARDWARE\Bluetooth\Bluetooth.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,76 +1,157 @@
-C51 COMPILER V9.59.0.0   USART                                                             04/09/2019 22:44:58 PAGE 1   
+C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 13:58:36 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE USART
 OBJECT MODULE PLACED IN ..\Objects\usart.obj
 COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE ..\HARDWARE\USART\usart.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\CORE;..\USER;.
-                    -.\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo) DEBUG OBJECTEXTEND PRINT(..\Listings\usart.lst) TAB
-                    -S(2) OBJECT(..\Objects\usart.obj)
+                    -.\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo;..\HARDWARE\Bluetooth) DEBUG OBJECTEXTEND PRINT(..\L
+                    -istings\usart.lst) OBJECT(..\Objects\usart.obj)
 
 line level    source
 
    1          #include "usart.h"
-   2          
-   3          xdata unsigned char Data[5];
-   4          unsigned char Counter = 0;
-   5          bit receive_flag=0;
-   6          unsigned char receiveData = 0;
-   7          
-   8          void UartInit(void)   //9600bps@11.0592MHz
-   9          {
-  10   1        SCON |= 0x50;            //8-bit variable UART
-  11   1          TMOD |= 0x20;            //Set Timer1 as 8-bit auto reload mode
-  12   1          TH1 = TL1 = -(11059200L/12/32/9600); //Set auto-reload vaule
-  13   1          TR1 = 1;                //Timer1 start run
-  14   1          //ES = 1;                 //Enable UART interrupt
-  15   1          EA = 1;                 //Open master interrupt switch
-  16   1      }
-  17          
-  18          
-  19          void SendByte(unsigned char byte)
-  20          {
-  21   1        SBUF = byte;   //将要发送的数据放入到发送寄存器
-  22   1        while(!TI);     //等待发送数据完成
-  23   1        TI=0;       //清除发送完成标志位
-  24   1      }
-  25          /*****************************************************************************
-  26          字符串发送函数
-  27          /****************************************************************************/
-  28          void Send_String(unsigned char *str)    
-  29          {
-  30   1        while(*str != '\0')   
-  31   1        {
-  32   2          SendByte(*str);     
-  33   2          str++;    
-  34   2        }       
-  35   1      }
-  36          
-  37          /*****************************************************************************
-  38          字符串发送函数
-  39          /****************************************************************************/
-  40          void Send_String_Len(unsigned char *str, unsigned char Len)   
-  41          {
-  42   1        int i = 0;
-  43   1        for(i = 0; i < Len; i++)
-  44   1          SendByte(*(str++));               
-  45   1      }
-  46          
-  47          
-  48          
-  49          
-  50          
+   2          #include "string.h"
+   3          
+   4          #define S2RI 0x01        //串口2接收中断请求标志位
+   5          #define S2TI 0x02        //串口2发送中断请求标志位
+   6          
+   7          uint8_t xdata uart2str_able[UART2DATALENGTHMAX] = {0};//定义存放串口2接收数据数组
+   8          
+   9          uint8_t TimeOut_status = 0;                                             //定义超时变量 
+  10          
+  11          void Uart1Init(void)            //9600bps@11.0592MHz
+  12          {
+  13   1              SCON |= 0x50;            //8-bit variable UART
+  14   1          TMOD |= 0x20;            //Set Timer1 as 8-bit auto reload mode
+  15   1          TH1 = TL1 = -(11059200L/12/32/9600); //Set auto-reload vaule
+  16   1          TR1 = 1;                //Timer1 start run
+  17   1          //ES = 1;                 //Enable UART interrupt
+  18   1          EA = 1;                 //Open master interrupt switch
+  19   1      }
+  20          
+  21          void Uart2Init(void)            //9600bps@11.0592MHz
+  22          {
+  23   1              AUXR &= 0xF7;                   //波特率不倍速
+  24   1              S2CON = 0x50;                   //8位数据,可变波特率
+  25   1              AUXR &= 0xFB;                   //独立波特率发生器时钟为Fosc/12,即12T
+  26   1              BRT = 0xFD;                             //设定独立波特率发生器重装值
+  27   1              AUXR |= 0x10;                   //启动独立波特率发生器
+  28   1          IE2 |= 0x01;             //Enable UART2 interrupt
+  29   1              EA = 1;                 //Open master interrupt switch
+  30   1      }
+  31          
+  32          
+  33          
+  34          void SendByte(unsigned char byte)
+  35          {
+  36   1              SBUF = byte;   //将要发送的数据放入到发送寄存器
+  37   1              while(!TI);               //等待发送数据完成
+  38   1              TI=0;                     //清除发送完成标志位
+  39   1      }
+  40          /*****************************************************************************
+  41          字符串发送函数
+  42          /****************************************************************************/
+  43          void Send_String(unsigned char *str)            
+  44          {
+  45   1              while(*str != '\0')             
+  46   1              {
+  47   2                      SendByte(*str);                 
+  48   2                      str++;          
+  49   2              }                         
+  50   1      }
+  51          
+  52          /*****************************************************************************
+  53          字符串发送函数
+C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 13:58:36 PAGE 2   
+
+  54          /****************************************************************************/
+  55          void Send_String_Len(unsigned char *str, unsigned char Len)             
+  56          {
+  57   1              int i = 0;
+  58   1              for(i = 0; i < Len; i++)
+  59   1                      SendByte(*(str++));                                                       
+  60   1      }
+  61          
+  62          void UART_2SendOneByte(unsigned char _Data)
+  63          {
+  64   1          S2BUF = _Data;
+  65   1          while( ! (S2CON & S2TI) );  //若S2TI=0，在此等待
+  66   1          S2CON &= ~S2TI;          //S2TI=0
+  67   1      }
+  68          
+  69          /*----------------------------
+  70          Send a string to UART
+  71          Input: s (address of string)
+  72          Output:None
+  73          ----------------------------*/
+  74          void UART_2SendString(char *s)
+  75          {
+  76   1          while (*s)              //Check the end of the string
+  77   1          {
+  78   2              UART_2SendOneByte(*s++);     //Send current char and increment string ptr
+  79   2          }
+  80   1      }
+  81          /*----------------------------
+  82          UART2 interrupt service routine
+  83          ----------------------------*/
+  84          
+  85          uint8_t GetUart2Data_Length = 0;
+  86          
+  87          void Uart2() interrupt 8
+  88          {
+  89   1              uint8_t _UartData = 0;
+  90   1          if (S2CON & S2RI)
+  91   1          {
+  92   2                      _UartData = S2BUF;
+  93   2              S2CON &= ~S2RI;     //Clear receive interrupt flag
+  94   2                      
+  95   2                      if(GetUart2Data_Length < UART2DATALENGTHMAX)
+  96   2                      {
+  97   3                              uart2str_able[GetUart2Data_Length ++] = _UartData;
+  98   3                      }       
+  99   2          }
+ 100   1      }
+ 101          
+ 102          void GetUart2DataTimeout(uint8_t * men_able)
+ 103          {
+ 104   1              static uint8_t previousUartLength = 0;     
+ 105   1              if(GetUart2Data_Length != 0)
+ 106   1              {
+ 107   2                      if((previousUartLength ==  GetUart2Data_Length) && ((TimeOut_status & 0x01) == 0))
+ 108   2                      {
+ 109   3                              TimeOut_status |= 0x01;
+ 110   3                      }
+ 111   2                      else if(TimeOut_status & 0x02)
+ 112   2                      {
+ 113   3                              TimeOut_status &= ~0x02;
+ 114   3                              TimeOut_status &= ~0x01;
+ 115   3                              TimeOut_status |= 0x04;
+C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 13:58:36 PAGE 3   
+
+ 116   3                              strncpy ((char *) men_able, (const char *) uart2str_able, GetUart2Data_Length); 
+ 117   3                              GetUart2Data_Length = 0;
+ 118   3                              previousUartLength = 0;
+ 119   3                      }
+ 120   2                      else if((previousUartLength !=  GetUart2Data_Length))
+ 121   2                      {
+ 122   3                              TimeOut_status &= ~0x01;
+ 123   3                      }
+ 124   2              }
+ 125   1              previousUartLength = GetUart2Data_Length;
+ 126   1      }
+ 127          
+ 128          
+ 129          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V9.59.0.0   USART                                                             04/09/2019 22:44:58 PAGE 2   
-
-   CODE SIZE        =     95    ----
+   CODE SIZE        =    299    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      5    ----
+   XDATA SIZE       =     40    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      2       4
+   DATA SIZE        =      3       7
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =      1    ----
+   BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 

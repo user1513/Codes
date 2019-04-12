@@ -3,6 +3,6 @@
 "..\Objects\led.obj",
 "..\Objects\timer.obj",
 "..\Objects\usart.obj",
-"..\Objects\demo.obj" 
+"..\Objects\Bluetooth.obj" 
 TO "..\Objects\main" 
 PRINT("..\Listings\main.m51") RAMSIZE(256) 

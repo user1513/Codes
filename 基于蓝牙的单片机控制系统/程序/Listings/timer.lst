@@ -1,44 +1,59 @@
-C51 COMPILER V9.59.0.0   TIMER                                                             04/09/2019 22:44:58 PAGE 1   
+C51 COMPILER V9.59.0.0   TIMER                                                             04/12/2019 13:58:36 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE TIMER
 OBJECT MODULE PLACED IN ..\Objects\timer.obj
 COMPILER INVOKED BY: F:\KEIL\C51\BIN\C51.EXE ..\HARDWARE\TIMER\timer.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\CORE;..\USER;.
-                    -.\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo) DEBUG OBJECTEXTEND PRINT(..\Listings\timer.lst) TAB
-                    -S(2) OBJECT(..\Objects\timer.obj)
+                    -.\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo;..\HARDWARE\Bluetooth) DEBUG OBJECTEXTEND PRINT(..\L
+                    -istings\timer.lst) OBJECT(..\Objects\timer.obj)
 
 line level    source
 
    1          #include "timer.h"
-   2          
-   3          void Timer0Init(void)   //10毫秒@12.000MHz
-   4          {
-   5   1          AUXR &= 0x7F;   //定时器时钟12T模式
-   6   1          TMOD &= 0xF0;   //设置定时器模式
-   7   1          TMOD |= 0x01;   //设置定时器模式
-   8   1          TL0 = 0xF0;   //设置定时初值
-   9   1          TH0 = 0xD8;   //设置定时初值
-  10   1          TF0 = 0;    //清除TF0标志
-  11   1          TR0 = 1;    //定时器0开始计时
-  12   1          IE |=0X82;
-  13   1      }
-  14          
-  15          void tim0() interrupt 1
-  16          {
-  17   1      
-  18   1          TL0 = 0xF0;   //设置定时初值
-  19   1          TH0 = 0xD8;   //设置定时初值
-  20   1      
-  21   1      }
-  22          
+   2          #include "usart.h"
+   3          extern uint8_t TimeOut_status;
+   4          
+   5          #define UART2TIMEOUTMAX   100 //串口2接收超时检测默认10ms
+   6          void Timer0Init(void)           //1毫秒@11.0592MHz
+   7          {
+   8   1              AUXR |= 0x80;           //定时器时钟1T模式
+   9   1              TMOD &= 0xF0;           //设置定时器模式
+  10   1              TL0 = 0xCD;             //设置定时初值
+  11   1              TH0 = 0xD4;             //设置定时初值
+  12   1              TF0 = 0;                //清除TF0标志
+  13   1              TR0 = 1;                //定时器0开始计时
+  14   1              IE |=0X82;
+  15   1      }
+  16          
+  17          void tim0() interrupt 1
+  18          {
+  19   1              static uint8_t UartTimeOutVal = 0; 
+  20   1              TL0 = 0xCD;             //设置定时初值
+  21   1              TH0 = 0xD4;             //设置定时初值
+  22   1              
+  23   1              if(TimeOut_status & 0x01)
+  24   1              {
+  25   2                      UartTimeOutVal++;
+  26   2                      if(UartTimeOutVal > UART2TIMEOUTMAX)
+  27   2                      {
+  28   3                              TimeOut_status |= 0x02;
+  29   3                              UartTimeOutVal= 0;
+  30   3                      }
+  31   2              }
+  32   1              else
+  33   1              {
+  34   2                      UartTimeOutVal= 0;
+  35   2              }
+  36   1      }
+  37          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     30    ----
+   CODE SIZE        =     61    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =      1    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

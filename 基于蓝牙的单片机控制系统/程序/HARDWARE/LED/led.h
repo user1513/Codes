@@ -3,4 +3,7 @@
 
 #include "app.h"
 
+
+void Peripheral_Handler(void);
+
 #endif

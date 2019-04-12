@@ -1,0 +1,1 @@
+"..\HARDWARE\Bluetooth\Bluetooth.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\CORE;..\USER;..\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\USART;..\HARDWARE\demo;..\HARDWARE\Bluetooth) DEBUG OBJECTEXTEND PRINT(..\Listings\Bluetooth.lst) OBJECT(..\Objects\Bluetooth.obj)
