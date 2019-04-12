@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 13:58:36 PAGE 1   
+C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 22:37:08 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE USART
@@ -62,7 +62,7 @@ line level    source
   51          
   52          /*****************************************************************************
   53          ×Ö·û´®·¢ËÍº¯Êý
-C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 13:58:36 PAGE 2   
+C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 22:37:08 PAGE 2   
 
   54          /****************************************************************************/
   55          void Send_String_Len(unsigned char *str, unsigned char Len)             
@@ -126,7 +126,7 @@ line level    source
  113   3                              TimeOut_status &= ~0x02;
  114   3                              TimeOut_status &= ~0x01;
  115   3                              TimeOut_status |= 0x04;
-C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 13:58:36 PAGE 3   
+C51 COMPILER V9.59.0.0   USART                                                             04/12/2019 22:37:08 PAGE 3   
 
  116   3                              strncpy ((char *) men_able, (const char *) uart2str_able, GetUart2Data_Length); 
  117   3                              GetUart2Data_Length = 0;

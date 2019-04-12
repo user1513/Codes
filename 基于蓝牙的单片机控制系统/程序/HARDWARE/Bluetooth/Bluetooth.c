@@ -97,6 +97,14 @@ uint8_t Data_Parsing_Func(uint8_t * str)
 		*(StrPack[i] + (_pStrAdder - str)) = '\0';
 		HandlerFunc();
 	}
+	else if(_StateVal == 0)
+	{
+		UART_2SendString("ERROR:001\n");
+	}
+	else
+	{
+		UART_2SendString("OK\n");
+	}
 	return _StateVal;
 }
 
@@ -126,6 +134,7 @@ static uint8_t HandlerFunc(void)
 {
 	uint8_t err = 1;
 	cmd_able[3] = 1;
+
 	if(strcmp(StrPack[0],"LED") == 0)
 	{
 		cmd_able[0] = 1;
@@ -140,15 +149,16 @@ static uint8_t HandlerFunc(void)
 	}
 	else
 	{
-		UART_2SendString("ERROR:001");
+		UART_2SendString("ERROR:002\n");
 		cmd_able[3] = 0;
 		err = 0; 
 	}
 	if(err != 0)
-	{	
+	{		
+		cmd_able[1] = 0;
 		if(cmd_able[0] == 1)
 		{
-			cmd_able[1] = 0;
+			
 			if(strcmp(StrPack[1],"LED1") == 0)
 			{
 				cmd_able[1] = 1;
@@ -180,10 +190,6 @@ static uint8_t HandlerFunc(void)
 			else if(strcmp(StrPack[1],"LED8") == 0)
 			{
 				cmd_able[1] = 8;
-			}
-			else
-			{
-				
 			}
 		}
 		else if(cmd_able[0] == 3)
@@ -218,7 +224,7 @@ static uint8_t HandlerFunc(void)
 		}
 		if(cmd_able[1] == 0)
 		{
-			UART_2SendString("ERROR:002\n");
+			UART_2SendString("ERROR:003\n");
 			err = 0; 
 			cmd_able[3] = 0;
 		}
@@ -235,7 +241,7 @@ static uint8_t HandlerFunc(void)
 		}
 		else
 		{
-			UART_2SendString("ERROR:003\n");
+			UART_2SendString("ERROR:004\n");
 			err = 0; 
 			cmd_able[3] = 0;
 		}

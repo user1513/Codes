@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 14:01:02 PAGE 1   
+C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 22:37:08 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE BLUETOOTH
@@ -62,7 +62,7 @@ line level    source
   50   2                      _pStrCurrentAdder = (uint8_t *)strchr((const char *)_pStrCurrentAdder, ',');                            //获取第一个','所�
              -��_pStrCurrentAdder中的地址,没有找到显示NULL
   51   2                      if(_pStrCurrentAdder != _pStrPreviousAdder && _pStrCurrentAdder != NULL)                                        //判断当前与之前不�
-C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 14:01:02 PAGE 2   
+C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 22:37:08 PAGE 2   
 
              -��
   52   2                      {
@@ -117,167 +117,167 @@ line level    source
   97   2                      *(StrPack[i] + (_pStrAdder - str)) = '\0';
   98   2                      HandlerFunc();
   99   2              }
- 100   1              return _StateVal;
- 101   1      }
- 102          
- 103          uint8_t strupr(uint8_t *s)
- 104          {
- 105   1              uint8_t err = 1;
- 106   1              if(s == NULL)
- 107   1              {
- 108   2                      err = 0;
-C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 14:01:02 PAGE 3   
+ 100   1              else if(_StateVal == 0)
+ 101   1              {
+ 102   2                      UART_2SendString("ERROR:001\n");
+ 103   2              }
+ 104   1              else
+ 105   1              {
+ 106   2                      UART_2SendString("OK\n");
+ 107   2              }
+ 108   1              return _StateVal;
+C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 22:37:08 PAGE 3   
 
- 109   2                      return err;
- 110   2              }
- 111   1              while(*s != '\0')
- 112   1              {
- 113   2                      if( 'a' <= *s && 'z' >= *s)
- 114   2                      {
- 115   3                              *s -= 'a' - 'A';
- 116   3                      }
- 117   2                      s ++;
+ 109   1      }
+ 110          
+ 111          uint8_t strupr(uint8_t *s)
+ 112          {
+ 113   1              uint8_t err = 1;
+ 114   1              if(s == NULL)
+ 115   1              {
+ 116   2                      err = 0;
+ 117   2                      return err;
  118   2              }
- 119   1              return err;
- 120   1      }
- 121          
- 122          
- 123          extern uint8_t cmd_able[];
- 124          
- 125          static uint8_t HandlerFunc(void) 
- 126          {
- 127   1              uint8_t err = 1;
- 128   1              cmd_able[3] = 1;
- 129   1              if(strcmp(StrPack[0],"LED") == 0)
- 130   1              {
- 131   2                      cmd_able[0] = 1;
- 132   2              }
- 133   1              else if(strcmp(StrPack[0],"BUZZER") == 0)
- 134   1              {
- 135   2                      cmd_able[0] = 2;
- 136   2              }
- 137   1              else if(strcmp(StrPack[0],"RELAY") == 0)
- 138   1              {
- 139   2                      cmd_able[0] = 3;
- 140   2              }
- 141   1              else
- 142   1              {
- 143   2                      UART_2SendString("ERROR:001");
- 144   2                      cmd_able[3] = 0;
- 145   2                      err = 0; 
- 146   2              }
- 147   1              if(err != 0)
- 148   1              {       
- 149   2                      if(cmd_able[0] == 1)
- 150   2                      {
- 151   3                              cmd_able[1] = 0;
- 152   3                              if(strcmp(StrPack[1],"LED1") == 0)
- 153   3                              {
- 154   4                                      cmd_able[1] = 1;
- 155   4                              }
- 156   3                              else if(strcmp(StrPack[1],"LED2") == 0)
- 157   3                              {
- 158   4                                      cmd_able[1] = 2;
- 159   4                              }
- 160   3                              else if(strcmp(StrPack[1],"LED3") == 0)
- 161   3                              {
- 162   4                                      cmd_able[1] = 3;
- 163   4                              }
- 164   3                              else if(strcmp(StrPack[1],"LED4") == 0)
- 165   3                              {
- 166   4                                      cmd_able[1] = 4;
- 167   4                              }
- 168   3                              else if(strcmp(StrPack[1],"LED5") == 0)
- 169   3                              {
- 170   4                                      cmd_able[1] = 5;
-C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 14:01:02 PAGE 4   
+ 119   1              while(*s != '\0')
+ 120   1              {
+ 121   2                      if( 'a' <= *s && 'z' >= *s)
+ 122   2                      {
+ 123   3                              *s -= 'a' - 'A';
+ 124   3                      }
+ 125   2                      s ++;
+ 126   2              }
+ 127   1              return err;
+ 128   1      }
+ 129          
+ 130          
+ 131          extern uint8_t cmd_able[];
+ 132          
+ 133          static uint8_t HandlerFunc(void) 
+ 134          {
+ 135   1              uint8_t err = 1;
+ 136   1              cmd_able[3] = 1;
+ 137   1      
+ 138   1              if(strcmp(StrPack[0],"LED") == 0)
+ 139   1              {
+ 140   2                      cmd_able[0] = 1;
+ 141   2              }
+ 142   1              else if(strcmp(StrPack[0],"BUZZER") == 0)
+ 143   1              {
+ 144   2                      cmd_able[0] = 2;
+ 145   2              }
+ 146   1              else if(strcmp(StrPack[0],"RELAY") == 0)
+ 147   1              {
+ 148   2                      cmd_able[0] = 3;
+ 149   2              }
+ 150   1              else
+ 151   1              {
+ 152   2                      UART_2SendString("ERROR:002\n");
+ 153   2                      cmd_able[3] = 0;
+ 154   2                      err = 0; 
+ 155   2              }
+ 156   1              if(err != 0)
+ 157   1              {               
+ 158   2                      cmd_able[1] = 0;
+ 159   2                      if(cmd_able[0] == 1)
+ 160   2                      {
+ 161   3                              
+ 162   3                              if(strcmp(StrPack[1],"LED1") == 0)
+ 163   3                              {
+ 164   4                                      cmd_able[1] = 1;
+ 165   4                              }
+ 166   3                              else if(strcmp(StrPack[1],"LED2") == 0)
+ 167   3                              {
+ 168   4                                      cmd_able[1] = 2;
+ 169   4                              }
+ 170   3                              else if(strcmp(StrPack[1],"LED3") == 0)
+C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 22:37:08 PAGE 4   
 
- 171   4                              }
- 172   3                              else if(strcmp(StrPack[1],"LED6") == 0)
- 173   3                              {
- 174   4                                      cmd_able[1] = 6;
- 175   4                              }
- 176   3                              else if(strcmp(StrPack[1],"LED7") == 0)
- 177   3                              {
- 178   4                                      cmd_able[1] = 7;
- 179   4                              }
- 180   3                              else if(strcmp(StrPack[1],"LED8") == 0)
- 181   3                              {
- 182   4                                      cmd_able[1] = 8;
- 183   4                              }
- 184   3                              else
- 185   3                              {
- 186   4                                      
- 187   4                              }
- 188   3                      }
- 189   2                      else if(cmd_able[0] == 3)
- 190   2                      {
- 191   3                              if(strcmp(StrPack[1],"RELAY1") == 0)
- 192   3                              {
- 193   4                                      cmd_able[1] = 1;
- 194   4                              }
- 195   3                              else if(strcmp(StrPack[1],"RELAY2") == 0)
- 196   3                              {
- 197   4                                      cmd_able[1] = 2;
- 198   4                              }
- 199   3                              else if(strcmp(StrPack[1],"RELAY3") == 0)
- 200   3                              {
- 201   4                                      cmd_able[1] = 3;
- 202   4                              }
- 203   3                              else if(strcmp(StrPack[1],"RELAY4") == 0)
- 204   3                              {
- 205   4                                      cmd_able[1] = 4;
- 206   4                              }
- 207   3                      }
- 208   2                      else
- 209   2                      {
- 210   3                              if(strcmp(StrPack[1],"BUZZER1") == 0)
- 211   3                              {
- 212   4                                      cmd_able[1] = 1;
- 213   4                              }
- 214   3                      }
- 215   2                      if(strcmp(StrPack[1],"ALL") == 0)
- 216   2                      {
- 217   3                              cmd_able[1] = 0xff;
- 218   3                      }
- 219   2                      if(cmd_able[1] == 0)
- 220   2                      {
- 221   3                              UART_2SendString("ERROR:002\n");
- 222   3                              err = 0; 
- 223   3                              cmd_able[3] = 0;
+ 171   3                              {
+ 172   4                                      cmd_able[1] = 3;
+ 173   4                              }
+ 174   3                              else if(strcmp(StrPack[1],"LED4") == 0)
+ 175   3                              {
+ 176   4                                      cmd_able[1] = 4;
+ 177   4                              }
+ 178   3                              else if(strcmp(StrPack[1],"LED5") == 0)
+ 179   3                              {
+ 180   4                                      cmd_able[1] = 5;
+ 181   4                              }
+ 182   3                              else if(strcmp(StrPack[1],"LED6") == 0)
+ 183   3                              {
+ 184   4                                      cmd_able[1] = 6;
+ 185   4                              }
+ 186   3                              else if(strcmp(StrPack[1],"LED7") == 0)
+ 187   3                              {
+ 188   4                                      cmd_able[1] = 7;
+ 189   4                              }
+ 190   3                              else if(strcmp(StrPack[1],"LED8") == 0)
+ 191   3                              {
+ 192   4                                      cmd_able[1] = 8;
+ 193   4                              }
+ 194   3                      }
+ 195   2                      else if(cmd_able[0] == 3)
+ 196   2                      {
+ 197   3                              if(strcmp(StrPack[1],"RELAY1") == 0)
+ 198   3                              {
+ 199   4                                      cmd_able[1] = 1;
+ 200   4                              }
+ 201   3                              else if(strcmp(StrPack[1],"RELAY2") == 0)
+ 202   3                              {
+ 203   4                                      cmd_able[1] = 2;
+ 204   4                              }
+ 205   3                              else if(strcmp(StrPack[1],"RELAY3") == 0)
+ 206   3                              {
+ 207   4                                      cmd_able[1] = 3;
+ 208   4                              }
+ 209   3                              else if(strcmp(StrPack[1],"RELAY4") == 0)
+ 210   3                              {
+ 211   4                                      cmd_able[1] = 4;
+ 212   4                              }
+ 213   3                      }
+ 214   2                      else
+ 215   2                      {
+ 216   3                              if(strcmp(StrPack[1],"BUZZER1") == 0)
+ 217   3                              {
+ 218   4                                      cmd_able[1] = 1;
+ 219   4                              }
+ 220   3                      }
+ 221   2                      if(strcmp(StrPack[1],"ALL") == 0)
+ 222   2                      {
+ 223   3                              cmd_able[1] = 0xff;
  224   3                      }
- 225   2              }
- 226   1              if(err != 0)
- 227   1              {
- 228   2                      if(strcmp(StrPack[2],"ON") == 0)
- 229   2                      {
- 230   3                              cmd_able[2] = 1;
- 231   3                      }
- 232   2                      else if(strcmp(StrPack[2],"OFF") == 0)
-C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 14:01:02 PAGE 5   
+ 225   2                      if(cmd_able[1] == 0)
+ 226   2                      {
+ 227   3                              UART_2SendString("ERROR:003\n");
+ 228   3                              err = 0; 
+ 229   3                              cmd_able[3] = 0;
+ 230   3                      }
+ 231   2              }
+ 232   1              if(err != 0)
+C51 COMPILER V9.59.0.0   BLUETOOTH                                                         04/12/2019 22:37:08 PAGE 5   
 
- 233   2                      {
- 234   3                              cmd_able[2] = 2;
- 235   3                      }
- 236   2                      else
- 237   2                      {
- 238   3                              UART_2SendString("ERROR:003\n");
- 239   3                              err = 0; 
- 240   3                              cmd_able[3] = 0;
+ 233   1              {
+ 234   2                      if(strcmp(StrPack[2],"ON") == 0)
+ 235   2                      {
+ 236   3                              cmd_able[2] = 1;
+ 237   3                      }
+ 238   2                      else if(strcmp(StrPack[2],"OFF") == 0)
+ 239   2                      {
+ 240   3                              cmd_able[2] = 2;
  241   3                      }
- 242   2              }
- 243   1              return err;
- 244   1      }
- 245          
- 246          
- 247          
- 248          
- 249           
- 250           
- 251           
- 252           
- 253           
- 254           
+ 242   2                      else
+ 243   2                      {
+ 244   3                              UART_2SendString("ERROR:004\n");
+ 245   3                              err = 0; 
+ 246   3                              cmd_able[3] = 0;
+ 247   3                      }
+ 248   2              }
+ 249   1              return err;
+ 250   1      }
+ 251          
+ 252          
+ 253          
+ 254          
  255           
  256           
  257           
@@ -296,11 +296,17 @@ line level    source
  270           
  271           
  272           
+ 273           
+ 274           
+ 275           
+ 276           
+ 277           
+ 278           
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1126    ----
-   CONSTANT SIZE    =    139    ----
+   CODE SIZE        =   1148    ----
+   CONSTANT SIZE    =    155    ----
    XDATA SIZE       =     90    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----      23

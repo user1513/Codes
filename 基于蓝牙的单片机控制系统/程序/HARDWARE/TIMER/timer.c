@@ -2,7 +2,7 @@
 #include "usart.h"
 extern uint8_t TimeOut_status;
 
-#define UART2TIMEOUTMAX   100 //串口2接收超时检测默认10ms
+#define UART2TIMEOUTMAX   200 //串口2接收超时检测默认10ms
 void Timer0Init(void)		//1毫秒@11.0592MHz
 {
 	AUXR |= 0x80;		//定时器时钟1T模式
@@ -16,7 +16,7 @@ void Timer0Init(void)		//1毫秒@11.0592MHz
 
 void tim0() interrupt 1
 {
-	static uint8_t UartTimeOutVal = 0; 
+	static uint16_t UartTimeOutVal = 0; 
 	TL0 = 0xCD;		//设置定时初值
 	TH0 = 0xD4;		//设置定时初值
 	

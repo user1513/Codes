@@ -23,6 +23,7 @@ void Peripheral_Handler(void)
 {
 	if(cmd_able[3])
 	{
+		cmd_able[3] = 0;
 		if(cmd_able[2] == 1)
 		{
 			switch(cmd_able[0])

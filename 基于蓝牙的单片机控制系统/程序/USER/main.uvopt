@@ -127,9 +127,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>43</LineNumber>
+          <LineNumber>49</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>-16775707</Address>
+          <Address>-16774269</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -138,7 +138,55 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>MAIN.C</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\MAIN\43</Expression>
+          <Expression>\MAIN\49</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>48</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16774272</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>MAIN.C</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\MAIN\48</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>45</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16774288</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>MAIN.C</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\MAIN\45</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>86</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16775661</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>HARDWARE\Bluetooth\BLUETOOTH.C</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -162,6 +210,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>StrPack</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Uart2_men_able</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>TimeOut_status</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
@@ -171,8 +229,8 @@
         <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
-        <aSer1>0</aSer1>
-        <aSer2>0</aSer2>
+        <aSer1>1</aSer1>
+        <aSer2>1</aSer2>
         <aPa>0</aPa>
         <viewmode>1</viewmode>
         <vrSel>0</vrSel>

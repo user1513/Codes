@@ -5,7 +5,7 @@
 #include "led.h"
 #include "Bluetooth.h"
 #include "string.h"
-uint8_t xdata Uart2_men_able[UART2DATALENGTHMAX] = {"LED,LED1,ON;"};
+uint8_t xdata Uart2_men_able[UART2DATALENGTHMAX] = {0};
 
 extern uint8_t GetUart2Data_Length;
 extern uint8_t TimeOut_status;
@@ -29,6 +29,7 @@ void Delay1000ms()		//@11.0592MHz
 
 void main(void)
 {
+	uint8_t temp = 0;
 	Timer0Init();
 	Uart1Init();
 	Uart2Init();
@@ -40,11 +41,9 @@ void main(void)
 		{
 			TimeOut_status &= ~0x04;
 			strupr(Uart2_men_able) ;									//兼容大写输入（检测到小写统一转换成大写进行后续操作）
-			UART_2SendString(Uart2_men_able);
-			if(Data_Parsing_Func(Uart2_men_able) == 2)
-				UART_2SendString("OK\n");
+			Data_Parsing_Func(Uart2_men_able);
 			Peripheral_Handler();
-				
+			memset(Uart2_men_able, 0, UART2DATALENGTHMAX);
 		}
 	}
 }
