@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=DS18B20_DATA Pin=P6-1
+Removed Pin From Net: NetName=DHT11_DATA Pin=P6-2
+Removed Pin From Net: NetName=DS18B20_DATA Pin=U1-1
+Removed Pin From Net: NetName=DHT11_DATA Pin=U1-2
+Added Pin To Net: NetName=DHT11_DATA Pin=P6-1
+Added Pin To Net: NetName=DS18B20_DATA Pin=P6-2
+Added Pin To Net: NetName=DHT11_DATA Pin=U1-1
+Added Pin To Net: NetName=DS18B20_DATA Pin=U1-2
+Change Net Name : Old Net Name=DS18B20_DATA New Net Name=NetP6_2
+Added Room: Name=‘≠¿ÌÕº

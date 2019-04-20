@@ -1,0 +1,127 @@
+Removed Pin From Net: NetName=PH_ADC Pin=U1-25
+Removed Pin From Net: NetName=BEEP Pin=U1-26
+Removed Pin From Net: NetName=SCL Pin=U1-27
+Removed Pin From Net: NetName=SDA Pin=U1-28
+Removed Pin From Net: NetName=DS18B20_DATA Pin=U1-33
+Removed Pin From Net: NetName=DHT11_DATA Pin=U1-34
+Removed Pin From Net: NetName=URXD Pin=U1-35
+Removed Pin From Net: NetName=UTXD Pin=U1-36
+Added Component: Designator=P6(HDR1X20)
+Added Component: Designator=P7(HDR1X20)
+Added Pin To Net: NetName=VCC_5V Pin=P6-18
+Added Pin To Net: NetName=VCC Pin=P6-20
+Added Pin To Net: NetName=GND Pin=P7-1
+Added Pin To Net: NetName=NetP6_1 Pin=P6-1
+Added Pin To Net: NetName=NetP6_1 Pin=U1-1
+Added Net: Name=NetP6_1
+Added Pin To Net: NetName=NetP6_2 Pin=P6-2
+Added Pin To Net: NetName=NetP6_2 Pin=U1-2
+Added Net: Name=NetP6_2
+Added Pin To Net: NetName=NetP6_3 Pin=P6-3
+Added Pin To Net: NetName=NetP6_3 Pin=U1-3
+Added Net: Name=NetP6_3
+Added Pin To Net: NetName=NetP6_4 Pin=P6-4
+Added Pin To Net: NetName=NetP6_4 Pin=U1-4
+Added Net: Name=NetP6_4
+Added Pin To Net: NetName=NetP6_5 Pin=P6-5
+Added Pin To Net: NetName=NetP6_5 Pin=U1-5
+Added Net: Name=NetP6_5
+Added Pin To Net: NetName=NetP6_6 Pin=P6-6
+Added Pin To Net: NetName=NetP6_6 Pin=U1-6
+Added Net: Name=NetP6_6
+Added Pin To Net: NetName=NetP6_7 Pin=P6-7
+Added Pin To Net: NetName=NetP6_7 Pin=U1-7
+Added Net: Name=NetP6_7
+Added Pin To Net: NetName=NetP6_8 Pin=P6-8
+Added Pin To Net: NetName=NetP6_8 Pin=U1-8
+Added Net: Name=NetP6_8
+Added Pin To Net: NetName=NetP6_9 Pin=P6-9
+Added Pin To Net: NetName=NetP6_9 Pin=U1-9
+Added Net: Name=NetP6_9
+Added Pin To Net: NetName=NetP6_10 Pin=P6-10
+Added Pin To Net: NetName=NetP6_10 Pin=U1-10
+Added Net: Name=NetP6_10
+Added Pin To Net: NetName=NetP6_11 Pin=P6-11
+Added Pin To Net: NetName=NetP6_11 Pin=U1-11
+Added Net: Name=NetP6_11
+Added Pin To Net: NetName=NetP6_12 Pin=P6-12
+Added Pin To Net: NetName=NetP6_12 Pin=U1-12
+Added Net: Name=NetP6_12
+Added Pin To Net: NetName=NetP6_13 Pin=P6-13
+Added Pin To Net: NetName=NetP6_13 Pin=U1-13
+Added Net: Name=NetP6_13
+Added Pin To Net: NetName=NetP6_14 Pin=P6-14
+Added Pin To Net: NetName=NetP6_14 Pin=U1-14
+Added Net: Name=NetP6_14
+Added Pin To Net: NetName=NetP6_15 Pin=P6-15
+Added Pin To Net: NetName=NetP6_15 Pin=U1-15
+Added Net: Name=NetP6_15
+Added Pin To Net: NetName=NetP6_16 Pin=P6-16
+Added Pin To Net: NetName=NetP6_16 Pin=U1-16
+Added Net: Name=NetP6_16
+Added Pin To Net: NetName=NetP6_17 Pin=P6-17
+Added Pin To Net: NetName=NetP6_17 Pin=U1-17
+Added Net: Name=NetP6_17
+Added Pin To Net: NetName=NetP6_19 Pin=P6-19
+Added Pin To Net: NetName=NetP6_19 Pin=U1-19
+Added Net: Name=NetP6_19
+Added Pin To Net: NetName=NetP7_2 Pin=P7-2
+Added Pin To Net: NetName=NetP7_2 Pin=U1-39
+Added Net: Name=NetP7_2
+Added Pin To Net: NetName=NetP7_3 Pin=P7-3
+Added Pin To Net: NetName=NetP7_3 Pin=U1-38
+Added Net: Name=NetP7_3
+Added Pin To Net: NetName=NetP7_4 Pin=P7-4
+Added Pin To Net: NetName=NetP7_4 Pin=U1-37
+Added Net: Name=NetP7_4
+Added Pin To Net: NetName=NetP7_5 Pin=P7-5
+Added Pin To Net: NetName=NetP7_5 Pin=U1-36
+Added Net: Name=NetP7_5
+Added Pin To Net: NetName=NetP7_6 Pin=P7-6
+Added Pin To Net: NetName=NetP7_6 Pin=U1-35
+Added Net: Name=NetP7_6
+Added Pin To Net: NetName=NetP7_7 Pin=P7-7
+Added Pin To Net: NetName=NetP7_7 Pin=U1-34
+Added Net: Name=NetP7_7
+Added Pin To Net: NetName=NetP7_8 Pin=P7-8
+Added Pin To Net: NetName=NetP7_8 Pin=U1-33
+Added Net: Name=NetP7_8
+Added Pin To Net: NetName=NetP7_9 Pin=P7-9
+Added Pin To Net: NetName=NetP7_9 Pin=U1-32
+Added Net: Name=NetP7_9
+Added Pin To Net: NetName=NetP7_10 Pin=P7-10
+Added Pin To Net: NetName=NetP7_10 Pin=U1-31
+Added Net: Name=NetP7_10
+Added Pin To Net: NetName=NetP7_11 Pin=P7-11
+Added Pin To Net: NetName=NetP7_11 Pin=U1-30
+Added Net: Name=NetP7_11
+Added Pin To Net: NetName=NetP7_12 Pin=P7-12
+Added Pin To Net: NetName=NetP7_12 Pin=U1-29
+Added Net: Name=NetP7_12
+Added Pin To Net: NetName=NetP7_13 Pin=P7-13
+Added Pin To Net: NetName=NetP7_13 Pin=U1-28
+Added Net: Name=NetP7_13
+Added Pin To Net: NetName=NetP7_14 Pin=P7-14
+Added Pin To Net: NetName=NetP7_14 Pin=U1-27
+Added Net: Name=NetP7_14
+Added Pin To Net: NetName=NetP7_15 Pin=P7-15
+Added Pin To Net: NetName=NetP7_15 Pin=U1-26
+Added Net: Name=NetP7_15
+Added Pin To Net: NetName=NetP7_16 Pin=P7-16
+Added Pin To Net: NetName=NetP7_16 Pin=U1-25
+Added Net: Name=NetP7_16
+Added Pin To Net: NetName=NetP7_17 Pin=P7-17
+Added Pin To Net: NetName=NetP7_17 Pin=U1-24
+Added Net: Name=NetP7_17
+Added Pin To Net: NetName=NetP7_18 Pin=P7-18
+Added Pin To Net: NetName=NetP7_18 Pin=U1-23
+Added Net: Name=NetP7_18
+Added Pin To Net: NetName=NetP7_19 Pin=P7-19
+Added Pin To Net: NetName=NetP7_19 Pin=U1-22
+Added Net: Name=NetP7_19
+Added Pin To Net: NetName=NetP7_20 Pin=P7-20
+Added Pin To Net: NetName=NetP7_20 Pin=U1-21
+Added Net: Name=NetP7_20
+Added Member To Class: ClassName=原理图 Member=Component P6 Header 20
+Added Member To Class: ClassName=原理图 Member=Component P7 Header 20
+Added Room: Name=原理图

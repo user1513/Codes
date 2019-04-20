@@ -1,0 +1,17 @@
+Removed Pin From Net: NetName=NetLS1_2 Pin=LS1-4
+Removed Pin From Net: NetName=DHT11_DATA Pin=P7-7
+Removed Pin From Net: NetName=DS18B20_DATA Pin=P7-8
+Removed Pin From Net: NetName=DS18B20_DATA Pin=U1-33
+Removed Pin From Net: NetName=DHT11_DATA Pin=U1-34
+Added Pin To Net: NetName=NetLS1_2 Pin=LS1-2
+Added Pin To Net: NetName=DS18B20_DATA Pin=P6-1
+Added Pin To Net: NetName=DHT11_DATA Pin=P6-2
+Added Pin To Net: NetName=DS18B20_DATA Pin=U1-1
+Added Pin To Net: NetName=DHT11_DATA Pin=U1-2
+Added Pin To Net: NetName=NetP7_7 Pin=P7-7
+Added Pin To Net: NetName=NetP7_7 Pin=U1-34
+Added Net: Name=NetP7_7
+Added Pin To Net: NetName=NetP7_8 Pin=P7-8
+Added Pin To Net: NetName=NetP7_8 Pin=U1-33
+Added Net: Name=NetP7_8
+Added Room: Name=‘≠¿ÌÕº

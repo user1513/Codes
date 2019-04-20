@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: 原理图.pcb   2019-4-19  13:30:39
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : 原理图.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        0.3302mm (13mil)         Round          48               247.64 mm (9.75 Inch)
+T2        0.762mm (30mil)          Round          15               254.81 mm (10.03 Inch)
+T3        1.1mm (43.307mil)        Round          40               114.56 mm (4.51 Inch)
+T4        1.3mm (51.181mil)        Round          92               406.37 mm (16.00 Inch)
+T5        3.1mm (122.047mil)       Round          4                210.29 mm (8.28 Inch)
+---------------------------------------------------------------------------
+Totals                                            199              1233.67 mm (48.57 Inch)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

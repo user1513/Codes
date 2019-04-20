@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=NetLS1_2 Pin=LS1-4
+Removed Pin From Net: NetName=PH_ADC Pin=P3-2
+Added Component: Designator=R4(0805)
+Added Component: Designator=R5(0805)
+Added Pin To Net: NetName=NetLS1_2 Pin=LS1-2
+Added Pin To Net: NetName=PH_ADC Pin=R4-2
+Added Pin To Net: NetName=GND Pin=R5-1
+Added Pin To Net: NetName=PH_ADC Pin=R5-2
+Added Pin To Net: NetName=NetP3_2 Pin=P3-2
+Added Pin To Net: NetName=NetP3_2 Pin=R4-1
+Added Net: Name=NetP3_2
+Added Member To Class: ClassName=原理图 Member=Component R4 Res2
+Added Member To Class: ClassName=原理图 Member=Component R5 Res2
+Added Room: Name=原理图

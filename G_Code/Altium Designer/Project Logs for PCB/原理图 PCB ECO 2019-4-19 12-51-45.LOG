@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=NetLS1_2 Pin=LS1-4
+Added Pin To Net: NetName=NetLS1_2 Pin=LS1-2
+Change Net Name : Old Net Name=PH_ADC New Net Name=QT_AO
+Change Net Name : Old Net Name=QT_AO New Net Name=NetR4_2
+Added Room: Name=‘≠¿ÌÕº

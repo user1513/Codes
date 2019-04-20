@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [Free Documents]
+   Generated File[原理图.TXT]
+   Generated File[原理图.LDP]
+   Generated File[原理图.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 13:30:39 On 2019-4-19
