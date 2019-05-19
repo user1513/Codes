@@ -1,0 +1,69 @@
+C51 COMPILER V9.56.0.0   UART2                                                             08/29/2018 11:44:19 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE UART2
+OBJECT MODULE PLACED IN .\Objects\uart2.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE uart2.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\uart2.lst) OBJECT(.\Objects\uart2.obj)
+
+line level    source
+
+   1          #include "uart2.h"
+   2          
+   3          
+   4          void Uart2Isr() interrupt 8 using 1
+   5          {
+   6   1          if (S2CON & 0x01)
+   7   1          {
+   8   2              S2CON &= ~0x01;
+   9   2          }
+  10   1      }
+  11          
+  12          void Uart2Init()
+  13          {
+  14   1          S2CON |= 0x50;
+  15   1          T2L = BRT;
+  16   1          T2H = BRT >> 8;
+  17   1          AUXR |= 0x14;
+  18   1              IE2 |= 0x01;
+  19   1          EA = 1;
+  20   1      }
+  21          
+  22          void Uart2Send(u8 dat)
+  23          {
+  24   1              S2BUF = dat;
+  25   1          while ((S2CON & 0x02)!=0x02);
+  26   1          S2CON &= ~0x02; 
+  27   1      }
+  28          
+  29          void Uart2SendStr(u8 *p)
+  30          {
+  31   1          while (*p!='\0')
+  32   1          {
+  33   2              Uart2Send(*p++);
+  34   2          }
+  35   1      }
+  36          
+  37          void Uart2SendStrLen(u8 *p,u8 length)
+  38          {
+  39   1          while (length--)
+  40   1          {
+  41   2              Uart2Send(*p++);
+  42   2          }
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    109    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.56.0.0   UART2                                                             08/29/2018 11:44:19 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

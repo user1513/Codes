@@ -1,0 +1,226 @@
+C51 COMPILER V8.08   DIY视界                                                               05/28/2015 23:25:54 PAGE 1   
+
+
+C51 COMPILER V8.08, COMPILATION OF MODULE DIY视界
+OBJECT MODULE PLACED IN DIY视界.OBJ
+COMPILER INVOKED BY: D:\Program Files\keil-3\C51\BIN\C51.EXE DIY视界.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*************************************************************
+   2                               流水灯测试程序
+   3          程序编写：Fucp   2015-2-4
+   4          DIY套件  http://59tiaoba.taobao.com
+   5          
+   6          单片机 IAP15W4K61S4  或者其他stc15w系列 晶振18.432M
+   7          
+   8          /***********************************************************
+   9          说明：此程序用于测试LED焊接好坏
+  10          
+  11          
+  12          *************************************************************/
+  13          #include "NEW_8051.H"
+  14          #define uchar unsigned char
+  15          #define uint unsigned int    //宏定义
+  16          
+  17          
+  18          sbit D1=P0^4; //定义每个IO控制的LED
+  19          sbit D2=P0^3;  
+  20          sbit D3=P0^2;
+  21          sbit D4=P0^1;
+  22          sbit D5=P0^0;
+  23          sbit D6=P4^6;  
+  24          sbit D7=P4^5;
+  25          sbit D8=P7^7;   
+  26          sbit D9=P2^3;
+  27          sbit D10=P2^4;  
+  28          sbit D11=P2^5;
+  29          sbit D12=P2^6;  
+  30          sbit D13=P2^7;
+  31          sbit D14=P7^4;  
+  32          sbit D15=P7^5;
+  33          sbit D16=P7^6;
+  34          
+  35                  
+  36          sbit D17=P2^1;
+  37          sbit D18=P2^0;  
+  38          sbit D19=P4^4;
+  39          sbit D20=P4^3;  
+  40          sbit D21=P4^2;
+  41          sbit D22=P6^3;  
+  42          sbit D23=P1^0;
+  43          sbit D24=P1^1;  
+  44          sbit D25=P4^7;
+  45          sbit D26=P1^2;  
+  46          sbit D27=P1^3;
+  47          sbit D28=P1^4;
+  48          sbit D29=P1^5;  
+  49          sbit D30=P1^6;
+  50          sbit D31=P1^7;  
+  51          sbit D32=P5^4;
+  52          sbit D33=P5^5;  
+  53          sbit D34=P4^0;
+  54          sbit D35=P6^5;  
+  55          sbit D36=P6^6;
+C51 COMPILER V8.08   DIY视界                                                               05/28/2015 23:25:54 PAGE 2   
+
+  56          sbit D37=P6^7;  
+  57          sbit D38=P3^4;
+  58          sbit D39=P5^0;  
+  59          sbit D40=P3^6;
+  60          sbit D41=P3^5;  
+  61          sbit D42=P5^1;
+  62          sbit D43=P3^7;  
+  63          sbit D44=P7^0;
+  64          sbit D45=P7^1;  
+  65          sbit D46=P7^2;
+  66          sbit D47=P7^3;  
+  67          sbit D48=P4^1;
+  68                  
+  69          uchar DataLow[4];
+  70          unsigned long CeL=0;
+  71          /***************************************/
+  72          void Show_R(uchar r1,uchar r2)//数据输出IO口  R是右边 16灯
+  73          {
+  74   1              D1=(bit)(r1&0x01);
+  75   1              D2=(bit)(r1&0x02);
+  76   1              D3=(bit)(r1&0x04);
+  77   1              D4=(bit)(r1&0x08);
+  78   1              D5=(bit)(r1&0x10);
+  79   1              D6=(bit)(r1&0x20);
+  80   1              D7=(bit)(r1&0x40);
+  81   1              D8=(bit)(r1&0x80);
+  82   1      
+  83   1              D9=(bit)(r2&0x01);
+  84   1              D10=(bit)(r2&0x02);
+  85   1              D11=(bit)(r2&0x04);
+  86   1              D12=(bit)(r2&0x08);
+  87   1              D13=(bit)(r2&0x10);
+  88   1              D14=(bit)(r2&0x20);
+  89   1              D15=(bit)(r2&0x40);
+  90   1              D16=(bit)(r2&0x80);
+  91   1                              
+  92   1      }
+  93          void Show_P(uchar l1,uchar l2,uchar l3,uchar l4)//数据输出IO口  L是左边 32灯
+  94          {
+  95   1              D17=(bit)(l1&0x01);
+  96   1              D18=(bit)(l1&0x02);
+  97   1              D19=(bit)(l1&0x04);
+  98   1              D20=(bit)(l1&0x08);
+  99   1              D21=(bit)(l1&0x10);
+ 100   1              D22=(bit)(l1&0x20);
+ 101   1              D23=(bit)(l1&0x40);
+ 102   1              D24=(bit)(l1&0x80);
+ 103   1      
+ 104   1              D25=(bit)(l2&0x01);
+ 105   1              D26=(bit)(l2&0x02);
+ 106   1              D27=(bit)(l2&0x04);
+ 107   1              D28=(bit)(l2&0x08);
+ 108   1              D29=(bit)(l2&0x10);
+ 109   1              D30=(bit)(l2&0x20);
+ 110   1              D31=(bit)(l2&0x40);
+ 111   1              D32=(bit)(l2&0x80);
+ 112   1      
+ 113   1              D33=(bit)(l3&0x01);
+ 114   1              D34=(bit)(l3&0x02);
+ 115   1              D35=(bit)(l3&0x04);
+ 116   1              D36=(bit)(l3&0x08);
+ 117   1              D37=(bit)(l3&0x10);
+C51 COMPILER V8.08   DIY视界                                                               05/28/2015 23:25:54 PAGE 3   
+
+ 118   1              D38=(bit)(l3&0x20);
+ 119   1              D39=(bit)(l3&0x40);
+ 120   1              D40=(bit)(l3&0x80);
+ 121   1      
+ 122   1              D41=(bit)(l4&0x01);
+ 123   1              D42=(bit)(l4&0x02);
+ 124   1              D43=(bit)(l4&0x04);
+ 125   1              D44=(bit)(l4&0x08);
+ 126   1              D45=(bit)(l4&0x10);
+ 127   1              D46=(bit)(l4&0x20);
+ 128   1              D47=(bit)(l4&0x40);
+ 129   1              D48=(bit)(l4&0x80);
+ 130   1                              
+ 131   1      }
+ 132          void delayMs(void)  //误差 -0.054253472218us 300ms 
+ 133          {
+ 134   1          unsigned char a,b,c;
+ 135   1          for(c=83;c>0;c--)
+ 136   1              for(b=68;b>0;b--)
+ 137   1                  for(a=203;a>0;a--);
+ 138   1      }
+ 139          
+ 140          /*****主函数*****/
+ 141          void main(void)
+ 142          {
+ 143   1          uchar l=0;
+ 144   1              P0M0=0X00;      //IO口初始化准双向IO
+ 145   1              P0M1=0X00;
+ 146   1      
+ 147   1              P1M0=0X00;
+ 148   1              P1M1=0X00;
+ 149   1      
+ 150   1              P2M0=0X00;
+ 151   1              P2M1=0X00;
+ 152   1      
+ 153   1              P3M0=0X00;
+ 154   1              P3M1=0X00;
+ 155   1      
+ 156   1              P4M0=0X00;
+ 157   1              P4M1=0X00;
+ 158   1      
+ 159   1              P5M0=0X00;
+ 160   1              P5M1=0X00;
+ 161   1      
+ 162   1              P6M0=0X00;
+ 163   1              P6M1=0X00;
+ 164   1      
+ 165   1              P7M0=0X00;
+ 166   1              P7M1=0X00;
+ 167   1                      
+ 168   1          //主程序中
+ 169   1              while(1)
+ 170   1          {
+ 171   2                //    CeR=0x0001;
+ 172   2                              CeL=0x00010001;
+ 173   2                              for(l=0;l<16;l++)
+ 174   2                              {
+ 175   3                                      DataLow[0]=CeL;
+ 176   3                                      DataLow[1]=CeL>>8;
+ 177   3                                      DataLow[2]=CeL>>16;
+ 178   3                                      DataLow[3]=CeL>>24;     
+ 179   3                                              
+C51 COMPILER V8.08   DIY视界                                                               05/28/2015 23:25:54 PAGE 4   
+
+ 180   3                              Show_P(~DataLow[0],~DataLow[1],~DataLow[2],~DataLow[3]);
+ 181   3                                  Show_R(~DataLow[0],~DataLow[1]);
+ 182   3                                      delayMs(); 
+ 183   3                                      CeL=CeL<<1;
+ 184   3                                       
+ 185   3                     
+ 186   3                  }     
+ 187   2            }   
+ 188   1          
+ 189   1      }
+ 190          /*********************************************************************************/
+ 191          /*************************************************************************************
+ 192          ************************************************************************************
+ 193          ***********************                                     ***************************
+ 194          *************DIY视界出品   http://59tiaoba.taobao.com       ***************************
+ 195          ***********************                                     ***************************
+ 196          ************************************************************************************
+ 197          **********************************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    365    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,87 @@
+C51 COMPILER V9.56.0.0   UART1                                                             09/19/2018 18:04:59 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE UART1
+OBJECT MODULE PLACED IN .\Objects\uart1.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE ..\HARDWARE\uart1\uart1.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..
+                    -\HARDWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\H
+                    -ARDWARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\uart1.lst) OBJECT(.\Objects\uart1.obj)
+
+line level    source
+
+   1          
+   2          #include "uart1.h"
+   3          
+   4          #define FOSC            24000000UL
+   5          #define BRT             (65536 - FOSC / 100000 / 4)
+   6          
+   7          
+   8          
+   9          
+  10          void UartIsr() interrupt 4 using 1
+  11          {
+  12   1          if (RI)
+  13   1          {
+  14   2              RI = 0;
+  15   2                      DR16DataAnalysis(SBUF);
+  16   2          }
+  17   1      }
+  18          
+  19          void Uart1_Init()
+  20          {
+  21   1          SCON |= 0x50;
+  22   1          TMOD |= 0x00;
+  23   1          TL1 = BRT;
+  24   1          TH1 = BRT >> 8;
+  25   1          TR1 = 1;
+  26   1          AUXR |= 0x40;
+  27   1              ES=1;
+  28   1              EA=1;
+  29   1      }
+  30          
+  31          void Uart1_Send(u8 dat)
+  32          {
+  33   1          SBUF = dat;
+  34   1              while (!TI);
+  35   1          TI=0;
+  36   1          
+  37   1      }
+  38          
+  39          void Uart1_SendStr(u8 *p)
+  40          {
+  41   1          while (*p)
+  42   1          {
+  43   2              Uart1_Send(*p++);
+  44   2          }
+  45   1      }
+  46          
+  47          void Uart1SendStrLen(u8 *p,u8 length)
+  48          {
+  49   1          while (length--)
+  50   1          {
+  51   2              Uart1_Send(*p++);
+  52   2          }
+  53   1      }
+C51 COMPILER V9.56.0.0   UART1                                                             09/19/2018 18:04:59 PAGE 2   
+
+  54          
+  55          
+  56          
+  57          
+  58          
+  59          
+  60          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    128    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

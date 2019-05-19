@@ -1,0 +1,102 @@
+C51 COMPILER V9.50a   SOFT_UART                                                            04/03/2016 12:31:39 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE SOFT_UART
+OBJECT MODULE PLACED IN .\Output\Soft_UART.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE STC15\Soft_UART.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.\App;.\H
+                    -ardwareDrivers;.\STC15;.\App) DEBUG PRINT(.\Output\Soft_UART.lst) TABS(2) OBJECT(.\Output\Soft_UART.obj)
+
+line level    source
+
+   1          /*************  功能说明  **************
+   2          
+   3          本文件为模拟串口发送程序, 一般为测试监控用.
+   4          
+   5          串口参数:9600,8,n,1.
+   6          
+   7          可以根据主时钟自动适应.
+   8          
+   9          ******************************************/
+  10          
+  11          #include  "soft_uart.h"
+  12          
+  13          sbit  P_TXD = P3^1; //定义模拟串口发送端,可以是任意IO
+  14          
+  15          //========================================================================
+  16          // 函数: void BitTime(void)
+  17          // 描述: 位时间函数。
+  18          // 参数: none.
+  19          // 返回: none.
+  20          // 版本: VER1.0
+  21          // 日期: 2013-4-1
+  22          // 备注: 
+  23          //========================================================================
+  24          void  BitTime(void)
+  25          {
+  26   1        u16 i;
+  27   1        i = ((MAIN_Fosc / 100) * 104) / 130000L - 1;    //根据主时钟来计算位时间
+  28   1        while(--i);
+  29   1      }
+  30          
+  31          //========================================================================
+  32          // 函数: void TxSend(uchar dat)
+  33          // 描述: 模拟串口发送一个字节。9600，N，8，1
+  34          // 参数: dat: 要发送的数据字节.
+  35          // 返回: none.
+  36          // 版本: VER1.0
+  37          // 日期: 2013-4-1
+  38          // 备注: 
+  39          //========================================================================
+  40          void  TxSend(u8 dat)
+  41          {
+  42   1        u8  i;
+  43   1        EA = 0;
+  44   1        P_TXD = 0;
+  45   1        BitTime();
+  46   1        for(i=0; i<8; i++)
+  47   1        {
+  48   2          if(dat & 1)   P_TXD = 1;
+  49   2          else      P_TXD = 0;
+  50   2          dat >>= 1;
+  51   2          BitTime();
+  52   2        }
+  53   1        P_TXD = 1;
+  54   1        EA = 1;
+C51 COMPILER V9.50a   SOFT_UART                                                            04/03/2016 12:31:39 PAGE 2   
+
+  55   1        BitTime();
+  56   1        BitTime();
+  57   1      }
+  58          
+  59          //========================================================================
+  60          // 函数: void PrintString(unsigned char code *puts)
+  61          // 描述: 模拟串口发送一串字符串。9600，N，8，1
+  62          // 参数: *puts: 要发送的字符指针.
+  63          // 返回: none.
+  64          // 版本: VER1.0
+  65          // 日期: 2013-4-1
+  66          // 备注: 
+  67          //========================================================================
+  68          void PrintString(unsigned char code *puts)
+  69          {
+  70   1          for (; *puts != 0;  puts++)  TxSend(*puts);
+  71   1      }
+  72          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     73    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,46 @@
+C51 COMPILER V9.56.0.0   TIMER                                                             10/10/2018 18:09:59 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE TIMER
+OBJECT MODULE PLACED IN .\Objects\timer.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE timer.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\timer.lst) OBJECT(.\Objects\timer.obj)
+
+line level    source
+
+   1          #include "timer.h"
+   2          bit flag = 0;
+   3          void Timer2Init(void)           //1毫秒@11.0592MHz
+   4          {
+   5   1      //    AUXR |= 0x04;                   //定时器2为1T模式
+   6   1        AUXR &= ~0x04;                  //定时器2为12T模式
+   7   1          T2L = 0;                     //初始化计时值
+   8   1          T2H = 0;
+   9   1          //AUXR |= 0x10;                   //定时器2开始计时
+  10   1          AUXR &= ~0x10;                   //定时器2停止计时
+  11   1          IE2 |= 0x04;                    //开定时器2中断
+  12   1          EA = 1;
+  13   1      
+  14   1      }
+  15          
+  16          //-----------------------------------------------
+  17          //中断服务程序
+  18          void t2int() interrupt 12           //中断入口
+  19          {
+  20   1              flag=1;
+  21   1      }
+  22          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     20    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -3,7 +3,7 @@
 ..\obj\timer.o: ..\SYSTEM\sys\sys.h
 ..\obj\timer.o: ..\USER\stm32f10x.h
 ..\obj\timer.o: ..\CORE\core_cm3.h
-..\obj\timer.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\timer.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\timer.o: ..\USER\system_stm32f10x.h
 ..\obj\timer.o: ..\USER\stm32f10x_conf.h
 ..\obj\timer.o: ..\STM32F10x_FWLib\inc\stm32f10x_dbgmcu.h
@@ -22,6 +22,6 @@
 ..\obj\timer.o: ..\SYSTEM\delay\delay.h
 ..\obj\timer.o: ..\SYSTEM\sys\sys.h
 ..\obj\timer.o: ..\SYSTEM\usart\usart.h
-..\obj\timer.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
-..\obj\timer.o: C:\Keil\ARM\ARMCC\Bin\..\include\math.h
-..\obj\timer.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\timer.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\timer.o: F:\KEIL\ARM\ARMCC\Bin\..\include\math.h
+..\obj\timer.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdlib.h

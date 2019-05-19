@@ -1,0 +1,1 @@
+如软件打不开，请先安装dotnet，分dotnetfx  64位系统和dotnetfx 32位系统，请根据自己的电脑系统来安装dotnet版本！DIY视界出品   http://59tiaoba.taobao.com 

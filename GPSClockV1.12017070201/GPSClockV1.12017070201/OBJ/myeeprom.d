@@ -1,0 +1,16 @@
+..\obj\myeeprom.o: ..\HARDWARE\MYEEPROM\myeeprom.c
+..\obj\myeeprom.o: ..\HARDWARE\MYEEPROM\myeeprom.h
+..\obj\myeeprom.o: ..\SYSTEM\sys\sys.h
+..\obj\myeeprom.o: ..\USER\stm32f10x.h
+..\obj\myeeprom.o: ..\CORE\core_cm3.h
+..\obj\myeeprom.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\myeeprom.o: ..\USER\system_stm32f10x.h
+..\obj\myeeprom.o: ..\USER\stm32f10x_conf.h
+..\obj\myeeprom.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\myeeprom.o: ..\USER\stm32f10x.h
+..\obj\myeeprom.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\myeeprom.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\myeeprom.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\myeeprom.o: ..\STM32F10x_FWLib\inc\misc.h
+..\obj\myeeprom.o: ..\HARDWARE\24CXX\24cxx.h
+..\obj\myeeprom.o: ..\HARDWARE\IIC\myiic.h

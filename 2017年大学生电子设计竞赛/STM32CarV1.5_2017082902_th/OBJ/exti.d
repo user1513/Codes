@@ -1,0 +1,10 @@
+..\obj\exti.o: ..\HARDWARE\EXTI\exti.c
+..\obj\exti.o: ..\HARDWARE\EXTI\exti.h
+..\obj\exti.o: ..\SYSTEM\sys\sys.h
+..\obj\exti.o: ..\SYSTEM\sys\stm32f10x.h
+..\obj\exti.o: ..\SYSTEM\sys\core_cm3.h
+..\obj\exti.o: C:\Software\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\exti.o: ..\SYSTEM\sys\system_stm32f10x.h
+..\obj\exti.o: ..\SYSTEM\delay\delay.h
+..\obj\exti.o: ..\HARDWARE\KEY\key.h
+..\obj\exti.o: ..\USER\main.h

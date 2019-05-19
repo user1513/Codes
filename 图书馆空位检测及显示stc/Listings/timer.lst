@@ -1,0 +1,118 @@
+C51 COMPILER V9.59.0.0   TIMER                                                             03/13/2019 13:23:32 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE TIMER
+OBJECT MODULE PLACED IN .\Objects\timer.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE timer.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\timer.
+                    -lst) OBJECT(.\Objects\timer.obj)
+
+line level    source
+
+   1          #include "timer.h"
+   2          
+   3          
+   4          /* define constants */
+   5          #define FOSC 11059200L
+   6          
+   7          #define T1MS (65536-FOSC/12/1000)   //1ms timer calculation method in 12T mode
+   8          
+   9          
+  10          #define VARMAX 4
+  11          
+  12          typedef xdata struct MYFUNC
+  13          {
+  14                  u8 Reg;//注冊
+  15                  _bool * FlagName;//標志名稱
+  16                  u32 DelayTime;//延時時間
+  17                  _bool  FlagState;//標準狀態
+  18                  
+  19          }MyFunc;
+  20          
+  21          MyFunc FlagStateFunc[VARMAX];//定義可以同時進行10位
+  22          
+  23          _bool FuncReg(_bool *_FlagName,u32 _DelayTime,_bool _FlagState)//變量指針，延時時間，標準狀態
+  24          {
+  25   1              _bool flag=FLASE;
+  26   1              int i=0;
+  27   1              for(i=0;i<VARMAX;i++)
+  28   1              {
+  29   2                      if(FlagStateFunc[i].FlagName==_FlagName&&FlagStateFunc[i].Reg==0x01)
+  30   2                      {
+  31   3                              FlagStateFunc[i].DelayTime=_DelayTime;
+  32   3                              FlagStateFunc[i].FlagState=_FlagState;
+  33   3                              return flag=TRUE;
+  34   3                      }
+  35   2              }
+  36   1              for(i = 0;i < VARMAX;i++)
+  37   1              {
+  38   2                      if(FlagStateFunc[i].Reg!=0x01)
+  39   2                      {
+  40   3                              FlagStateFunc[i].Reg=0x01;
+  41   3                              FlagStateFunc[i].DelayTime=_DelayTime;
+  42   3                              FlagStateFunc[i].FlagState=_FlagState;
+  43   3                              FlagStateFunc[i].FlagName=_FlagName;
+  44   3                              flag=TRUE;
+  45   3                              break;
+  46   3                      }
+  47   2              }
+  48   1              return flag;
+  49   1      }
+  50          
+  51          
+  52          void FuncTimeTravers(void)
+  53          {
+  54   1              int i = 0;
+C51 COMPILER V9.59.0.0   TIMER                                                             03/13/2019 13:23:32 PAGE 2   
+
+  55   1              for(i = 0; i < VARMAX; i++)
+  56   1              {
+  57   2                      if(FlagStateFunc[i].Reg==0x01)
+  58   2                      {
+  59   3                              FlagStateFunc[i].DelayTime--;
+  60   3                              if(FlagStateFunc[i].DelayTime==0)
+  61   3                              {
+  62   4                                      FlagStateFunc[i].Reg=0x00;
+  63   4                                      FlagStateFunc[i].DelayTime=0;
+  64   4                                      *FlagStateFunc[i].FlagName=FlagStateFunc[i].FlagState;
+  65   4                              }
+  66   3                      }
+  67   2              }
+  68   1      }
+  69          
+  70          void Timer0Init(void)           //1毫秒@11.0592MHz
+  71          {
+  72   1              TMOD |= 0x01;                    //set timer0 as mode1 (16-bit)
+  73   1          TL0 = T1MS;                     //initial timer0 low byte
+  74   1          TH0 = T1MS >> 8;                //initial timer0 high byte
+  75   1          TR0 = 1;                        //timer0 start running
+  76   1          ET0 = 1;                        //enable timer0 interrupt
+  77   1          EA = 1;                         //open global interrupt switch
+  78   1      }
+  79          u16 count=500;
+  80          
+  81          /* Timer0 interrupt routine */
+  82          void tm0_isr() interrupt 1 using 1
+  83          {
+  84   1          TL0 = T1MS;                     //reload timer0 low byte
+  85   1          TH0 = T1MS >> 8;                //reload timer0 high byte
+  86   1          FuncTimeTravers();
+  87   1              if (count-- == 0)               //1ms * 1000 -> 1s
+  88   1          {
+  89   2              count = 500;               //reset counter   
+  90   2                      TEST_LED = ! TEST_LED;      //work LED flash
+  91   2          }
+  92   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    687    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     36    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

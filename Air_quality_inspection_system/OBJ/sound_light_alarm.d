@@ -3,7 +3,7 @@
 ..\obj\sound_light_alarm.o: ..\SYSTEM\sys\sys.h
 ..\obj\sound_light_alarm.o: ..\USER\stm32f10x.h
 ..\obj\sound_light_alarm.o: ..\CORE\core_cm3.h
-..\obj\sound_light_alarm.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\sound_light_alarm.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\sound_light_alarm.o: ..\USER\system_stm32f10x.h
 ..\obj\sound_light_alarm.o: ..\USER\stm32f10x_conf.h
 ..\obj\sound_light_alarm.o: ..\STM32F10x_FWLib\inc\stm32f10x_dbgmcu.h
@@ -22,6 +22,6 @@
 ..\obj\sound_light_alarm.o: ..\SYSTEM\delay\delay.h
 ..\obj\sound_light_alarm.o: ..\SYSTEM\sys\sys.h
 ..\obj\sound_light_alarm.o: ..\SYSTEM\usart\usart.h
-..\obj\sound_light_alarm.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
-..\obj\sound_light_alarm.o: C:\Keil\ARM\ARMCC\Bin\..\include\math.h
-..\obj\sound_light_alarm.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\sound_light_alarm.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\sound_light_alarm.o: F:\KEIL\ARM\ARMCC\Bin\..\include\math.h
+..\obj\sound_light_alarm.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdlib.h

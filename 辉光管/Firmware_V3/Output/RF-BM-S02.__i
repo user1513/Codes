@@ -1,0 +1,1 @@
+"HardwareDrivers\RF-BM-S02.c" COMPACT OMF2 OPTIMIZE (9,SPEED) BROWSE INCDIR(.\App;.\HardwareDrivers;.\STC15) DEBUG PRINT(.\Output\RF-BM-S02.lst) TABS (2) OBJECT(.\Output\RF-BM-S02.obj)

@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\timer.obj",
+".\Objects\usart.obj",
+".\Objects\eeprom.obj" 
+TO ".\Objects\main" 
+PRINT(".\Listings\main.m51")

@@ -1,0 +1,1 @@
+"App\Bluetooth.c" COMPACT OMF2 OPTIMIZE (9,SPEED) BROWSE INCDIR(.\App;.\HardwareDrivers;.\STC15) DEBUG PRINT(.\Output\Bluetooth.lst) TABS (2) OBJECT(.\Output\Bluetooth.obj)

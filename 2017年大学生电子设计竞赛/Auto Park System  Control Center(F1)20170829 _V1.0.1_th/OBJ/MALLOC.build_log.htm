@@ -1,0 +1,2651 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information:  ,  , LIC=LJWDY-I71NB-04BSQ-N8GH3-QR67Q-3PX0R
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.14.0.0
+Toolchain Path:  F:\KEILC51+MDK\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DARMSTM.DLL V1.65.0.0
+Target DLL:      Segger\JL2CM3.dll V2.99.13.0
+Dialog DLL:      TARMSTM.DLL V1.64.0.0
+ 
+<h2>Project:</h2>
+D:\临时\2017年电子设计竞赛\Auto Park System  Control Center(F1)20170829 _V1.0.1_th\USER\AotoParkSystemControlCenter.uvprojx
+Project File Date:  06/17/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\SYSTEM\delay\delay.h(44): error:  #20: identifier "u16" is undefined
+  void delay_ms(u16 nms);
+..\SYSTEM\delay\delay.h(45): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus);
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\HARDWARE\USART3\usart3.h(6): error:  #20: identifier "u32" is undefined
+  void uart3_init(u32 bound);
+..\HARDWARE\USART3\usart3.h(7): error:  #20: identifier "u8" is undefined
+  void USART3Send(u8 data);
+..\HARDWARE\LCD\ILI93xx.h(81): error:  #20: identifier "u16" is undefined
+        u16 width;                      //LCD 宽度
+..\HARDWARE\LCD\ILI93xx.h(82): error:  #20: identifier "u16" is undefined
+        u16 height;                     //LCD 高度
+..\HARDWARE\LCD\ILI93xx.h(83): error:  #20: identifier "u16" is undefined
+        u16 id;                         //LCD ID
+..\HARDWARE\LCD\ILI93xx.h(84): error:  #20: identifier "u8" is undefined
+        u8  dir;                        //横屏还是竖屏控制：0，竖屏；1，横屏。  
+..\HARDWARE\LCD\ILI93xx.h(85): error:  #20: identifier "u16" is undefined
+        u16     wramcmd;                //开始写gram指令
+..\HARDWARE\LCD\ILI93xx.h(86): error:  #20: identifier "u16" is undefined
+        u16  setxcmd;           //设置x坐标指令
+..\HARDWARE\LCD\ILI93xx.h(87): error:  #20: identifier "u16" is undefined
+        u16  setycmd;           //设置y坐标指令 
+..\HARDWARE\LCD\ILI93xx.h(93): error:  #20: identifier "u16" is undefined
+  extern u16  POINT_COLOR;//默认红色    
+..\HARDWARE\LCD\ILI93xx.h(94): error:  #20: identifier "u16" is undefined
+  extern u16  BACK_COLOR; //背景颜色.默认为白色
+..\HARDWARE\LCD\ILI93xx.h(103): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_REG;
+..\HARDWARE\LCD\ILI93xx.h(104): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_RAM;
+..\HARDWARE\LCD\ILI93xx.h(157): error:  #20: identifier "u16" is undefined
+  void LCD_Clear(u16 Color);                                                                                                    //清屏
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+main.c: 1 warning, 30 errors
+compiling stm32f10x_it.c...
+stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+stm32f10x_it.h(34): error:  #40: expected an identifier
+  void NMI_Handler(void);
+stm32f10x_it.h(34): error:  #67: expected a "}"
+  void NMI_Handler(void);
+stm32f10x_it.h(34): warning:  #375-D: declaration requires a typedef name
+  void NMI_Handler(void);
+stm32f10x_it.c: 1 warning, 3 errors
+compiling system_stm32f10x.c...
+stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+system_stm32f10x.c(162): error:  #67: expected a "}"
+    uint32_t SystemCoreClock         = SYSCLK_FREQ_72MHz;        /*!< System Clock Frequency (Core Clock) */
+system_stm32f10x.c(162): warning:  #375-D: declaration requires a typedef name
+    uint32_t SystemCoreClock         = SYSCLK_FREQ_72MHz;        /*!< System Clock Frequency (Core Clock) */
+system_stm32f10x.c(167): error:  #20: identifier "__I" is undefined
+  __I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+system_stm32f10x.c(167): error:  #65: expected a ";"
+  __I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+system_stm32f10x.c(216): error:  #20: identifier "RCC" is undefined
+    RCC->CR |= (uint32_t)0x00000001;
+system_stm32f10x.c(216): error:  #65: expected a ";"
+    RCC->CR |= (uint32_t)0x00000001;
+system_stm32f10x.c(220): error:  #65: expected a ";"
+    RCC->CFGR &= (uint32_t)0xF8FF0000;
+system_stm32f10x.c(226): error:  #65: expected a ";"
+    RCC->CR &= (uint32_t)0xFEF6FFFF;
+system_stm32f10x.c(229): error:  #65: expected a ";"
+    RCC->CR &= (uint32_t)0xFFFBFFFF;
+system_stm32f10x.c(232): error:  #65: expected a ";"
+    RCC->CFGR &= (uint32_t)0xFF80FFFF;
+system_stm32f10x.c(267): error:  #20: identifier "SCB" is undefined
+    SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
+system_stm32f10x.c(267): error:  #20: identifier "FLASH_BASE" is undefined
+    SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
+system_stm32f10x.c(308): warning:  #174-D: expression has no effect
+    uint32_t tmp = 0, pllmull = 0, pllsource = 0;
+system_stm32f10x.c(308): error:  #65: expected a ";"
+    uint32_t tmp = 0, pllmull = 0, pllsource = 0;
+system_stm32f10x.c(319): error:  #20: identifier "tmp" is undefined
+    tmp = RCC->CFGR & RCC_CFGR_SWS;
+system_stm32f10x.c(319): error:  #20: identifier "RCC" is undefined
+    tmp = RCC->CFGR & RCC_CFGR_SWS;
+system_stm32f10x.c(319): error:  #20: identifier "RCC_CFGR_SWS" is undefined
+    tmp = RCC->CFGR & RCC_CFGR_SWS;
+system_stm32f10x.c(324): error:  #20: identifier "SystemCoreClock" is undefined
+        SystemCoreClock = HSI_VALUE;
+system_stm32f10x.c(324): error:  #18: expected a ")"
+        SystemCoreClock = HSI_VALUE;
+system_stm32f10x.c(327): error:  #18: expected a ")"
+        SystemCoreClock = HSE_VALUE;
+system_stm32f10x.c(332): error:  #20: identifier "pllmull" is undefined
+        pllmull = RCC->CFGR & RCC_CFGR_PLLMULL;
+system_stm32f10x.c(332): error:  #20: identifier "RCC_CFGR_PLLMULL" is undefined
+        pllmull = RCC->CFGR & RCC_CFGR_PLLMULL;
+system_stm32f10x.c(333): error:  #20: identifier "pllsource" is undefined
+        pllsource = RCC->CFGR & RCC_CFGR_PLLSRC;
+system_stm32f10x.c(333): error:  #20: identifier "RCC_CFGR_PLLSRC" is undefined
+        pllsource = RCC->CFGR & RCC_CFGR_PLLSRC;
+system_stm32f10x.c(341): error:  #18: expected a ")"
+          SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
+system_stm32f10x.c(351): error:  #20: identifier "RCC_CFGR_PLLXTPRE" is undefined
+          if ((RCC->CFGR & RCC_CFGR_PLLXTPRE) != (uint32_t)RESET)
+system_stm32f10x.c(351): error:  #18: expected a ")"
+          if ((RCC->CFGR & RCC_CFGR_PLLXTPRE) != (uint32_t)RESET)
+system_stm32f10x.c(353): error:  #18: expected a ")"
+            SystemCoreClock = (HSE_VALUE >> 1) * pllmull;
+system_stm32f10x.c(357): error:  #18: expected a ")"
+            SystemCoreClock = HSE_VALUE * pllmull;
+system_stm32f10x.c(403): error:  #18: expected a ")"
+        SystemCoreClock = HSI_VALUE;
+system_stm32f10x.c(409): error:  #20: identifier "AHBPrescTable" is undefined
+    tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
+system_stm32f10x.c: 2 warnings, 30 errors
+compiling led.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\LED\led.c(21): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+   GPIO_InitTypeDef  GPIO_InitStructure;
+..\HARDWARE\LED\led.c(23): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOG, ENABLE);    //使能PB,PE端口时钟
+..\HARDWARE\LED\led.c(23): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOG, ENABLE);    //使能PB,PE端口时钟
+..\HARDWARE\LED\led.c(23): error:  #20: identifier "RCC_APB2Periph_GPIOG" is undefined
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOG, ENABLE);    //使能PB,PE端口时钟
+..\HARDWARE\LED\led.c(23): error:  #20: identifier "ENABLE" is undefined
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOG, ENABLE);    //使能PB,PE端口时钟
+..\HARDWARE\LED\led.c(25): error:  #20: identifier "GPIO_Pin_5" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8;                            //LED0-->PB.5 端口配置
+..\HARDWARE\LED\led.c(25): error:  #20: identifier "GPIO_Pin_6" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8;                            //LED0-->PB.5 端口配置
+..\HARDWARE\LED\led.c(25): error:  #20: identifier "GPIO_Pin_7" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8;                            //LED0-->PB.5 端口配置
+..\HARDWARE\LED\led.c(25): error:  #20: identifier "GPIO_Pin_8" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8;                            //LED0-->PB.5 端口配置
+..\HARDWARE\LED\led.c(26): error:  #20: identifier "GPIO_Mode_Out_PP" is undefined
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;              //推挽输出
+..\HARDWARE\LED\led.c(27): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;             //IO口速度为50MHz
+..\HARDWARE\LED\led.c(28): warning:  #223-D: function "GPIO_Init" declared implicitly
+   GPIO_Init(GPIOB, &GPIO_InitStructure);                                        //根据设定参数初始化GPIOB.5
+..\HARDWARE\LED\led.c(28): error:  #20: identifier "GPIOB" is undefined
+   GPIO_Init(GPIOB, &GPIO_InitStructure);                                        //根据设定参数初始化GPIOB.5
+..\HARDWARE\LED\led.c(29): error:  #20: identifier "GPIO_Pin_15" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15|GPIO_Pin_14;                                //LED0-->PB.5 端口配置
+..\HARDWARE\LED\led.c(29): error:  #20: identifier "GPIO_Pin_14" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15|GPIO_Pin_14;                                //LED0-->PB.5 端口配置
+..\HARDWARE\LED\led.c(32): error:  #20: identifier "GPIOG" is undefined
+   GPIO_Init(GPIOG, &GPIO_InitStructure);                                        //根据设定参数初始化GPIOB.5
+..\HARDWARE\LED\led.c: 3 warnings, 18 errors
+compiling key.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\HARDWARE\KEY\key.h(30): error:  #40: expected an identifier
+  void KEY_Init(void);//IO初始化
+..\HARDWARE\KEY\key.h(30): error:  #67: expected a "}"
+  void KEY_Init(void);//IO初始化
+..\HARDWARE\KEY\key.h(30): warning:  #375-D: declaration requires a typedef name
+  void KEY_Init(void);//IO初始化
+..\HARDWARE\KEY\key.h(31): error:  #20: identifier "u8" is undefined
+  u8 KEY_Scan(u8);      //按键扫描函数                                      
+..\HARDWARE\KEY\key.h(31): error:  #92: identifier-list parameters may only be used in a function definition
+  u8 KEY_Scan(u8);      //按键扫描函数                                      
+..\SYSTEM\delay\delay.h(44): error:  #20: identifier "u16" is undefined
+  void delay_ms(u16 nms);
+..\SYSTEM\delay\delay.h(45): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus);
+..\HARDWARE\KEY\key.c(21): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+        GPIO_InitTypeDef GPIO_InitStructure;
+..\HARDWARE\KEY\key.c(23): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);//使能PORTA,PORTE时钟
+..\HARDWARE\KEY\key.c(23): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);//使能PORTA,PORTE时钟
+..\HARDWARE\KEY\key.c(23): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);//使能PORTA,PORTE时钟
+..\HARDWARE\KEY\key.c(24): error:  #20: identifier "GPIO_Pin_9" is undefined
+        GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_9;
+..\HARDWARE\KEY\key.c(25): error:  #20: identifier "GPIO_Mode_IPD" is undefined
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //PA0设置成输入，默认下拉   
+..\HARDWARE\KEY\key.c(26): warning:  #223-D: function "GPIO_Init" declared implicitly
+        GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIOA.0
+..\HARDWARE\KEY\key.c(26): error:  #20: identifier "GPIOB" is undefined
+        GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIOA.0
+..\HARDWARE\KEY\key.c(41): error:  #20: identifier "u8" is undefined
+  u8 KEY_Scan(u8 mode)
+..\HARDWARE\KEY\key.c(41): error:  #20: identifier "u8" is undefined
+  u8 KEY_Scan(u8 mode)
+..\HARDWARE\KEY\key.c(43): error:  #20: identifier "u8" is undefined
+        static u8 key_up=1;//按键按松开标志
+..\HARDWARE\KEY\key.c(45): warning:  #223-D: function "GPIO_ReadInputDataBit" declared implicitly
+        if(key_up&&(KEY0==1))
+..\HARDWARE\KEY\key.c(45): error:  #20: identifier "GPIOB" is undefined
+        if(key_up&&(KEY0==1))
+..\HARDWARE\KEY\key.c(45): error:  #20: identifier "GPIO_Pin_9" is undefined
+        if(key_up&&(KEY0==1))
+..\HARDWARE\KEY\key.c: 4 warnings, 19 errors
+compiling ILI93xx.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\LCD\ILI93xx.h(81): error:  #20: identifier "u16" is undefined
+        u16 width;                      //LCD 宽度
+..\HARDWARE\LCD\ILI93xx.h(82): error:  #20: identifier "u16" is undefined
+        u16 height;                     //LCD 高度
+..\HARDWARE\LCD\ILI93xx.h(83): error:  #20: identifier "u16" is undefined
+        u16 id;                         //LCD ID
+..\HARDWARE\LCD\ILI93xx.h(84): error:  #20: identifier "u8" is undefined
+        u8  dir;                        //横屏还是竖屏控制：0，竖屏；1，横屏。  
+..\HARDWARE\LCD\ILI93xx.h(85): error:  #20: identifier "u16" is undefined
+        u16     wramcmd;                //开始写gram指令
+..\HARDWARE\LCD\ILI93xx.h(86): error:  #20: identifier "u16" is undefined
+        u16  setxcmd;           //设置x坐标指令
+..\HARDWARE\LCD\ILI93xx.h(87): error:  #20: identifier "u16" is undefined
+        u16  setycmd;           //设置y坐标指令 
+..\HARDWARE\LCD\ILI93xx.h(93): error:  #20: identifier "u16" is undefined
+  extern u16  POINT_COLOR;//默认红色    
+..\HARDWARE\LCD\ILI93xx.h(94): error:  #20: identifier "u16" is undefined
+  extern u16  BACK_COLOR; //背景颜色.默认为白色
+..\HARDWARE\LCD\ILI93xx.h(103): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_REG;
+..\HARDWARE\LCD\ILI93xx.h(104): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_RAM;
+..\HARDWARE\LCD\ILI93xx.h(157): error:  #20: identifier "u16" is undefined
+  void LCD_Clear(u16 Color);                                                                                                    //清屏
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u8" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(163): error:  #20: identifier "u16" is undefined
+  void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2);                                                    //画线
+..\HARDWARE\LCD\ILI93xx.c: 1 warning, 30 errors
+compiling sram.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\HARDWARE\SRAM\sram.h(17): error:  #40: expected an identifier
+  void FSMC_SRAM_Init(void);
+..\HARDWARE\SRAM\sram.h(17): error:  #67: expected a "}"
+  void FSMC_SRAM_Init(void);
+..\HARDWARE\SRAM\sram.h(17): warning:  #375-D: declaration requires a typedef name
+  void FSMC_SRAM_Init(void);
+..\HARDWARE\SRAM\sram.h(18): error:  #20: identifier "u8" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 NumHalfwordToWrite);
+..\HARDWARE\SRAM\sram.h(18): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 NumHalfwordToWrite);
+..\HARDWARE\SRAM\sram.h(18): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 NumHalfwordToWrite);
+..\HARDWARE\SRAM\sram.h(19): error:  #20: identifier "u8" is undefined
+  void FSMC_SRAM_ReadBuffer(u8* pBuffer,u32 ReadAddr,u32 NumHalfwordToRead);
+..\HARDWARE\SRAM\sram.h(19): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_ReadBuffer(u8* pBuffer,u32 ReadAddr,u32 NumHalfwordToRead);
+..\HARDWARE\SRAM\sram.h(19): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_ReadBuffer(u8* pBuffer,u32 ReadAddr,u32 NumHalfwordToRead);
+..\HARDWARE\SRAM\sram.h(22): error:  #20: identifier "u32" is undefined
+  void fsmc_sram_test_write(u32 addr,u8 data);
+..\HARDWARE\SRAM\sram.h(22): error:  #20: identifier "u8" is undefined
+  void fsmc_sram_test_write(u32 addr,u8 data);
+..\HARDWARE\SRAM\sram.h(23): error:  #20: identifier "u8" is undefined
+  u8 fsmc_sram_test_read(u32 addr);
+..\HARDWARE\SRAM\sram.h(23): error:  #20: identifier "u32" is undefined
+  u8 fsmc_sram_test_read(u32 addr);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\HARDWARE\SRAM\sram.c(24): error:  #20: identifier "RCC" is undefined
+        RCC->AHBENR|=1<<8;       //使能FSMC时钟   
+..\HARDWARE\SRAM\sram.c(31): error:  #20: identifier "GPIOD" is undefined
+        GPIOD->CRH&=0X00000000;
+..\HARDWARE\SRAM\sram.c(36): error:  #20: identifier "GPIOE" is undefined
+        GPIOE->CRH&=0X00000000;
+..\HARDWARE\SRAM\sram.c(41): error:  #20: identifier "GPIOF" is undefined
+        GPIOF->CRH&=0X0000FFFF;
+..\HARDWARE\SRAM\sram.c(47): error:  #20: identifier "GPIOG" is undefined
+        GPIOG->CRH&=0XFFFFF0FF;
+..\HARDWARE\SRAM\sram.c(55): error:  #20: identifier "FSMC_Bank1" is undefined
+        FSMC_Bank1->BTCR[4]=0X00000000;
+..\HARDWARE\SRAM\sram.c(57): error:  #20: identifier "FSMC_Bank1E" is undefined
+        FSMC_Bank1E->BWTR[4]=0X00000000;
+..\HARDWARE\SRAM\sram.c(75): error:  #20: identifier "u8" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 n)
+..\HARDWARE\SRAM\sram.c(75): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 n)
+..\HARDWARE\SRAM\sram.c(75): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 n)
+..\HARDWARE\SRAM\sram.c(79): error:  #20: identifier "vu8" is undefined
+                *(vu8*)(Bank1_SRAM3_ADDR+WriteAddr)=*pBuffer;     
+..\HARDWARE\SRAM\sram.c(79): error:  #29: expected an expression
+                *(vu8*)(Bank1_SRAM3_ADDR+WriteAddr)=*pBuffer;     
+..\HARDWARE\SRAM\sram.c: 1 warning, 30 errors
+compiling myiic.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\IIC\myiic.h(30): error:  #20: identifier "u8" is undefined
+  void IIC_Send_Byte(u8 txd);                   //IIC发送一个字节
+..\HARDWARE\IIC\myiic.h(31): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_Byte(unsigned char ack);//IIC读取一个字节
+..\HARDWARE\IIC\myiic.h(32): error:  #20: identifier "u8" is undefined
+  u8 IIC_Wait_Ack(void);                                //IIC等待ACK信号
+..\HARDWARE\IIC\myiic.h(36): error:  #20: identifier "u8" is undefined
+  void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+..\HARDWARE\IIC\myiic.h(36): error:  #20: identifier "u8" is undefined
+  void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+..\HARDWARE\IIC\myiic.h(36): error:  #20: identifier "u8" is undefined
+  void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+..\HARDWARE\IIC\myiic.h(37): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_One_Byte(u8 daddr,u8 addr);         
+..\HARDWARE\IIC\myiic.h(37): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_One_Byte(u8 daddr,u8 addr);         
+..\HARDWARE\IIC\myiic.h(37): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_One_Byte(u8 daddr,u8 addr);         
+..\SYSTEM\delay\delay.h(44): error:  #20: identifier "u16" is undefined
+  void delay_ms(u16 nms);
+..\SYSTEM\delay\delay.h(45): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus);
+..\HARDWARE\IIC\myiic.c(19): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+        GPIO_InitTypeDef GPIO_InitStructure;
+..\HARDWARE\IIC\myiic.c(20): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE ); 
+..\HARDWARE\IIC\myiic.c(20): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE ); 
+..\HARDWARE\IIC\myiic.c(20): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE ); 
+..\HARDWARE\IIC\myiic.c(22): error:  #20: identifier "GPIO_Pin_6" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;
+..\HARDWARE\IIC\myiic.c(22): error:  #20: identifier "GPIO_Pin_7" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;
+..\HARDWARE\IIC\myiic.c(23): error:  #20: identifier "GPIO_Mode_Out_PP" is undefined
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   //推挽输出
+..\HARDWARE\IIC\myiic.c(24): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+..\HARDWARE\IIC\myiic.c(25): warning:  #223-D: function "GPIO_Init" declared implicitly
+        GPIO_Init(GPIOB, &GPIO_InitStructure);
+..\HARDWARE\IIC\myiic.c(25): error:  #20: identifier "GPIOB" is undefined
+        GPIO_Init(GPIOB, &GPIO_InitStructure);
+..\HARDWARE\IIC\myiic.c(26): warning:  #223-D: function "GPIO_SetBits" declared implicitly
+        GPIO_SetBits(GPIOB,GPIO_Pin_6|GPIO_Pin_7);      //PB6,PB7 输出高
+..\HARDWARE\IIC\myiic.c(31): error:  #20: identifier "GPIOB" is undefined
+        SDA_OUT();     //sda线输出
+..\HARDWARE\IIC\myiic.c(31): error:  #20: identifier "u32" is undefined
+        SDA_OUT();     //sda线输出
+..\HARDWARE\IIC\myiic.c(31): error:  #65: expected a ";"
+        SDA_OUT();     //sda线输出
+..\HARDWARE\IIC\myiic.c(32): error:  #20: identifier "GPIOB_BASE" is undefined
+        IIC_SDA=1;                
+..\HARDWARE\IIC\myiic.c(42): error:  #20: identifier "GPIOB" is undefined
+        SDA_OUT();//sda线输出
+..\HARDWARE\IIC\myiic.c(42): error:  #20: identifier "u32" is undefined
+        SDA_OUT();//sda线输出
+..\HARDWARE\IIC\myiic.c(42): error:  #65: expected a ";"
+        SDA_OUT();//sda线输出
+..\HARDWARE\IIC\myiic.c: 4 warnings, 30 errors
+compiling 24cxx.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\IIC\myiic.h(30): error:  #20: identifier "u8" is undefined
+  void IIC_Send_Byte(u8 txd);                   //IIC发送一个字节
+..\HARDWARE\IIC\myiic.h(31): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_Byte(unsigned char ack);//IIC读取一个字节
+..\HARDWARE\IIC\myiic.h(32): error:  #20: identifier "u8" is undefined
+  u8 IIC_Wait_Ack(void);                                //IIC等待ACK信号
+..\HARDWARE\IIC\myiic.h(36): error:  #20: identifier "u8" is undefined
+  void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+..\HARDWARE\IIC\myiic.h(36): error:  #20: identifier "u8" is undefined
+  void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+..\HARDWARE\IIC\myiic.h(36): error:  #20: identifier "u8" is undefined
+  void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+..\HARDWARE\IIC\myiic.h(37): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_One_Byte(u8 daddr,u8 addr);         
+..\HARDWARE\IIC\myiic.h(37): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_One_Byte(u8 daddr,u8 addr);         
+..\HARDWARE\IIC\myiic.h(37): error:  #20: identifier "u8" is undefined
+  u8 IIC_Read_One_Byte(u8 daddr,u8 addr);         
+..\HARDWARE\24CXX\24cxx.h(29): error:  #20: identifier "u8" is undefined
+  u8 AT24CXX_ReadOneByte(u16 ReadAddr);                                                 //指定地址读取一个字节
+..\HARDWARE\24CXX\24cxx.h(29): error:  #20: identifier "u16" is undefined
+  u8 AT24CXX_ReadOneByte(u16 ReadAddr);                                                 //指定地址读取一个字节
+..\HARDWARE\24CXX\24cxx.h(30): error:  #20: identifier "u16" is undefined
+  void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite);              //指定地址写入一个字节
+..\HARDWARE\24CXX\24cxx.h(30): error:  #20: identifier "u8" is undefined
+  void AT24CXX_WriteOneByte(u16 WriteAddr,u8 DataToWrite);              //指定地址写入一个字节
+..\HARDWARE\24CXX\24cxx.h(31): error:  #20: identifier "u16" is undefined
+  void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len);//指定地址开始写入指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(31): error:  #20: identifier "u32" is undefined
+  void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len);//指定地址开始写入指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(31): error:  #20: identifier "u8" is undefined
+  void AT24CXX_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len);//指定地址开始写入指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(32): error:  #20: identifier "u32" is undefined
+  u32 AT24CXX_ReadLenByte(u16 ReadAddr,u8 Len);                                 //指定地址开始读取指定长度数据
+..\HARDWARE\24CXX\24cxx.h(32): error:  #20: identifier "u16" is undefined
+  u32 AT24CXX_ReadLenByte(u16 ReadAddr,u8 Len);                                 //指定地址开始读取指定长度数据
+..\HARDWARE\24CXX\24cxx.h(32): error:  #20: identifier "u8" is undefined
+  u32 AT24CXX_ReadLenByte(u16 ReadAddr,u8 Len);                                 //指定地址开始读取指定长度数据
+..\HARDWARE\24CXX\24cxx.h(33): error:  #20: identifier "u16" is undefined
+  void AT24CXX_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite); //从指定地址开始写入指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(33): error:  #20: identifier "u8" is undefined
+  void AT24CXX_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite); //从指定地址开始写入指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(33): error:  #20: identifier "u16" is undefined
+  void AT24CXX_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite); //从指定地址开始写入指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(34): error:  #20: identifier "u16" is undefined
+  void AT24CXX_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);    //从指定地址开始读出指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(34): error:  #20: identifier "u8" is undefined
+  void AT24CXX_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);    //从指定地址开始读出指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(34): error:  #20: identifier "u16" is undefined
+  void AT24CXX_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);    //从指定地址开始读出指定长度的数据
+..\HARDWARE\24CXX\24cxx.h(36): error:  #20: identifier "u8" is undefined
+  u8 AT24CXX_Check(void);  //检查器件
+..\HARDWARE\24CXX\24cxx.c: 1 warning, 30 errors
+compiling spi.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\SPI\spi.h(18): error:  #20: identifier "u8" is undefined
+  void SPI2_SetSpeed(u8 SpeedSet); //设置SPI速度   
+..\HARDWARE\SPI\spi.h(19): error:  #20: identifier "u8" is undefined
+  u8 SPI2_ReadWriteByte(u8 TxData);//SPI总线读写一个字节
+..\HARDWARE\SPI\spi.h(19): error:  #20: identifier "u8" is undefined
+  u8 SPI2_ReadWriteByte(u8 TxData);//SPI总线读写一个字节
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\HARDWARE\SPI\spi.c(25): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+        GPIO_InitTypeDef GPIO_InitStructure;
+..\HARDWARE\SPI\spi.c(26): error:  #20: identifier "SPI_InitTypeDef" is undefined
+        SPI_InitTypeDef  SPI_InitStructure;
+..\HARDWARE\SPI\spi.c(28): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE );//PORTB时钟使能 
+..\HARDWARE\SPI\spi.c(28): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE );//PORTB时钟使能 
+..\HARDWARE\SPI\spi.c(28): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB, ENABLE );//PORTB时钟使能 
+..\HARDWARE\SPI\spi.c(29): warning:  #223-D: function "RCC_APB1PeriphClockCmd" declared implicitly
+        RCC_APB1PeriphClockCmd( RCC_APB1Periph_SPI2,  ENABLE );//SPI2时钟使能   
+..\HARDWARE\SPI\spi.c(29): error:  #20: identifier "RCC_APB1Periph_SPI2" is undefined
+        RCC_APB1PeriphClockCmd( RCC_APB1Periph_SPI2,  ENABLE );//SPI2时钟使能   
+..\HARDWARE\SPI\spi.c(31): error:  #20: identifier "GPIO_Pin_13" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\HARDWARE\SPI\spi.c(31): error:  #20: identifier "GPIO_Pin_14" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\HARDWARE\SPI\spi.c(31): error:  #20: identifier "GPIO_Pin_15" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\HARDWARE\SPI\spi.c(32): error:  #20: identifier "GPIO_Mode_AF_PP" is undefined
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  //PB13/14/15复用推挽输出 
+..\HARDWARE\SPI\spi.c(33): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+..\HARDWARE\SPI\spi.c(34): warning:  #223-D: function "GPIO_Init" declared implicitly
+        GPIO_Init(GPIOB, &GPIO_InitStructure);
+..\HARDWARE\SPI\spi.c(34): error:  #20: identifier "GPIOB" is undefined
+        GPIO_Init(GPIOB, &GPIO_InitStructure);
+..\HARDWARE\SPI\spi.c(36): warning:  #223-D: function "GPIO_SetBits" declared implicitly
+        GPIO_SetBits(GPIOB,GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);  //PB13/14/15上拉
+..\HARDWARE\SPI\spi.c(38): error:  #20: identifier "SPI_Direction_2Lines_FullDuplex" is undefined
+        SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;  //设置SPI单向或者双向的数据模式:SPI设置为双线双向全双工
+..\HARDWARE\SPI\spi.c(39): error:  #20: identifier "SPI_Mode_Master" is undefined
+        SPI_InitStructure.SPI_Mode = SPI_Mode_Master;           //设置SPI工作模式:设置为主SPI
+..\HARDWARE\SPI\spi.c(40): error:  #20: identifier "SPI_DataSize_8b" is undefined
+        SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;               //设置SPI的数据大小:SPI发送接收8位帧结构
+..\HARDWARE\SPI\spi.c(41): error:  #20: identifier "SPI_CPOL_High" is undefined
+        SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;             //选择了串行时钟的稳态:时钟悬空高
+..\HARDWARE\SPI\spi.c(42): error:  #20: identifier "SPI_CPHA_2Edge" is undefined
+        SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;    //数据捕获于第二个时钟沿
+..\HARDWARE\SPI\spi.c(43): error:  #20: identifier "SPI_NSS_Soft" is undefined
+        SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;               //NSS信号由硬件（NSS管脚）还是软件（使用SSI位）管理:内部NSS信号有SSI位控制
+..\HARDWARE\SPI\spi.c(44): error:  #20: identifier "SPI_BaudRatePrescaler_16" is undefined
+        SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;             //定义波特率预分频的值:波特率预分频值为16
+..\HARDWARE\SPI\spi.c(45): error:  #20: identifier "SPI_FirstBit_MSB" is undefined
+        SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;      //指定数据传输从MSB位还是LSB位开始:数据传输从MSB位开始
+..\HARDWARE\SPI\spi.c: 5 warnings, 30 errors
+compiling ctiic.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TOUCH\ctiic.h(31): error:  #20: identifier "u8" is undefined
+  void CT_IIC_Send_Byte(u8 txd);                        //IIC发送一个字节
+..\HARDWARE\TOUCH\ctiic.h(32): error:  #20: identifier "u8" is undefined
+  u8 CT_IIC_Read_Byte(unsigned char ack);       //IIC读取一个字节
+..\HARDWARE\TOUCH\ctiic.h(33): error:  #20: identifier "u8" is undefined
+  u8 CT_IIC_Wait_Ack(void);                             //IIC等待ACK信号
+..\SYSTEM\delay\delay.h(44): error:  #20: identifier "u16" is undefined
+  void delay_ms(u16 nms);
+..\SYSTEM\delay\delay.h(45): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus);
+..\HARDWARE\TOUCH\ctiic.c(24): error:  #20: identifier "RCC" is undefined
+        RCC->APB2ENR|=1<<3;             //先使能外设IO PORTB时钟        
+..\HARDWARE\TOUCH\ctiic.c(27): error:  #20: identifier "GPIOB" is undefined
+        GPIOB->CRL&=0XFFFFFF0F; //PB1 推挽输出
+..\HARDWARE\TOUCH\ctiic.c(30): error:  #20: identifier "GPIOF" is undefined
+        GPIOF->CRH&=0XFFFFFF0F; //PF9 推挽输出
+..\HARDWARE\TOUCH\ctiic.c(39): error:  #20: identifier "GPIOF" is undefined
+        CT_SDA_OUT();     //sda线输出
+..\HARDWARE\TOUCH\ctiic.c(40): error:  #20: identifier "GPIOF_BASE" is undefined
+        CT_IIC_SDA=1;             
+..\HARDWARE\TOUCH\ctiic.c(41): error:  #20: identifier "GPIOB_BASE" is undefined
+        CT_IIC_SCL=1;
+..\HARDWARE\TOUCH\ctiic.c(50): error:  #20: identifier "GPIOF" is undefined
+        CT_SDA_OUT();//sda线输出
+..\HARDWARE\TOUCH\ctiic.c(51): error:  #20: identifier "GPIOB_BASE" is undefined
+        CT_IIC_SCL=1;
+..\HARDWARE\TOUCH\ctiic.c(53): error:  #20: identifier "GPIOF_BASE" is undefined
+        CT_IIC_SDA=0;//STOP:when CLK is high DATA change form low to high
+..\HARDWARE\TOUCH\ctiic.c(60): error:  #20: identifier "u8" is undefined
+  u8 CT_IIC_Wait_Ack(void)
+..\HARDWARE\TOUCH\ctiic.c(62): error:  #20: identifier "u8" is undefined
+        u8 ucErrTime=0;
+..\HARDWARE\TOUCH\ctiic.c(63): error:  #20: identifier "GPIOF" is undefined
+        CT_SDA_IN();      //SDA设置为输入  
+..\HARDWARE\TOUCH\ctiic.c(64): error:  #20: identifier "GPIOF_BASE" is undefined
+        CT_IIC_SDA=1;      
+..\HARDWARE\TOUCH\ctiic.c(65): error:  #20: identifier "GPIOB_BASE" is undefined
+        CT_IIC_SCL=1;
+..\HARDWARE\TOUCH\ctiic.c(83): error:  #20: identifier "GPIOB_BASE" is undefined
+        CT_IIC_SCL=0;
+..\HARDWARE\TOUCH\ctiic.c(84): error:  #20: identifier "GPIOF" is undefined
+        CT_SDA_OUT();
+..\HARDWARE\TOUCH\ctiic.c(86): error:  #20: identifier "GPIOF_BASE" is undefined
+        CT_IIC_SDA=0;
+..\HARDWARE\TOUCH\ctiic.c(95): error:  #20: identifier "GPIOB_BASE" is undefined
+        CT_IIC_SCL=0;
+..\HARDWARE\TOUCH\ctiic.c(96): error:  #20: identifier "GPIOF" is undefined
+        CT_SDA_OUT();
+..\HARDWARE\TOUCH\ctiic.c(98): error:  #20: identifier "GPIOF_BASE" is undefined
+        CT_IIC_SDA=1;
+..\HARDWARE\TOUCH\ctiic.c(108): error:  #20: identifier "u8" is undefined
+  void CT_IIC_Send_Byte(u8 txd)
+..\HARDWARE\TOUCH\ctiic.c: 1 warning, 30 errors
+compiling ft5206.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u16" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(44): error:  #20: identifier "u16" is undefined
+  void FT5206_RD_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(44): error:  #20: identifier "u8" is undefined
+  void FT5206_RD_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(44): error:  #20: identifier "u8" is undefined
+  void FT5206_RD_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(45): error:  #20: identifier "u8" is undefined
+  u8 FT5206_Init(void);
+..\HARDWARE\TOUCH\ft5206.h(46): error:  #20: identifier "u8" is undefined
+  u8 FT5206_Scan(u8 mode);
+..\HARDWARE\TOUCH\ft5206.h(46): error:  #20: identifier "u8" is undefined
+  u8 FT5206_Scan(u8 mode);
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u16" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u16" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(51): error:  #20: identifier "u8" is undefined
+  void OTT2001A_SensorControl(u8 cmd);//传感器打开/关闭操作
+..\HARDWARE\TOUCH\ott2001a.h(52): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Init(void);                       //4.3电容触摸屏始化函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u16" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.c: 1 warning, 30 errors
+compiling gt9147.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u16" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u16" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(46): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Init(void);
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u16" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u16" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(51): error:  #20: identifier "u8" is undefined
+  void OTT2001A_SensorControl(u8 cmd);//传感器打开/关闭操作
+..\HARDWARE\TOUCH\ott2001a.h(52): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Init(void);                       //4.3电容触摸屏始化函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u16" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.c: 1 warning, 30 errors
+compiling ott2001a.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u16" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u16" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(51): error:  #20: identifier "u8" is undefined
+  void OTT2001A_SensorControl(u8 cmd);//传感器打开/关闭操作
+..\HARDWARE\TOUCH\ott2001a.h(52): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Init(void);                       //4.3电容触摸屏始化函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u16" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u16" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(46): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Init(void);
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u16" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ott2001a.c: 1 warning, 30 errors
+compiling touch.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u16" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u16" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(51): error:  #20: identifier "u8" is undefined
+  void OTT2001A_SensorControl(u8 cmd);//传感器打开/关闭操作
+..\HARDWARE\TOUCH\ott2001a.h(52): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Init(void);                       //4.3电容触摸屏始化函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u16" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u16" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(46): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Init(void);
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u16" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\touch.c: 1 warning, 30 errors
+compiling timer.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TIMER\timer.h(17): error:  #20: identifier "u16" is undefined
+  void TIM3_Int_Init(u16 arr,u16 psc);
+..\HARDWARE\TIMER\timer.h(17): error:  #20: identifier "u16" is undefined
+  void TIM3_Int_Init(u16 arr,u16 psc);
+..\HARDWARE\TIMER\timer.h(18): error:  #20: identifier "u16" is undefined
+  void TIM6_Int_Init(u16 arr,u16 psc);
+..\HARDWARE\TIMER\timer.h(18): error:  #20: identifier "u16" is undefined
+  void TIM6_Int_Init(u16 arr,u16 psc);
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\HARDWARE\TIMER\timer.c(18): error:  #20: identifier "u16" is undefined
+  void TIM3_Int_Init(u16 arr,u16 psc)
+..\HARDWARE\TIMER\timer.c(18): error:  #20: identifier "u16" is undefined
+  void TIM3_Int_Init(u16 arr,u16 psc)
+..\HARDWARE\TIMER\timer.c(20): error:  #20: identifier "TIM_TimeBaseInitTypeDef" is undefined
+        TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+..\HARDWARE\TIMER\timer.c(21): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+        NVIC_InitTypeDef NVIC_InitStructure;
+..\HARDWARE\TIMER\timer.c(22): warning:  #223-D: function "RCC_APB1PeriphClockCmd" declared implicitly
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);//开启TIM3时钟 
+..\HARDWARE\TIMER\timer.c(22): error:  #20: identifier "RCC_APB1Periph_TIM3" is undefined
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);//开启TIM3时钟 
+..\HARDWARE\TIMER\timer.c(22): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);//开启TIM3时钟 
+..\HARDWARE\TIMER\timer.c(25): error:  #20: identifier "TIM_CounterMode_Up" is undefined
+        TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up;      //计数模式
+..\HARDWARE\TIMER\timer.c(27): error:  #20: identifier "TIM_CKD_DIV1" is undefined
+        TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;  //设置时钟分割
+..\HARDWARE\TIMER\timer.c(28): warning:  #223-D: function "TIM_TimeBaseInit" declared implicitly
+        TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure);
+..\HARDWARE\TIMER\timer.c(28): error:  #20: identifier "TIM3" is undefined
+        TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure);
+..\HARDWARE\TIMER\timer.c(29): warning:  #223-D: function "TIM_ITConfig" declared implicitly
+        TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);//允许更新中断
+..\HARDWARE\TIMER\timer.c(29): error:  #20: identifier "TIM_IT_Update" is undefined
+        TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);//允许更新中断
+..\HARDWARE\TIMER\timer.c(31): error:  #20: identifier "TIM3_IRQn" is undefined
+        NVIC_InitStructure.NVIC_IRQChannel=TIM3_IRQn;
+..\HARDWARE\TIMER\timer.c(35): warning:  #223-D: function "NVIC_Init" declared implicitly
+        NVIC_Init(&NVIC_InitStructure);
+..\HARDWARE\TIMER\timer.c(37): warning:  #223-D: function "TIM_Cmd" declared implicitly
+        TIM_Cmd(TIM3,ENABLE);             //使能TIM3
+..\HARDWARE\TIMER\timer.c(42): warning:  #223-D: function "TIM_GetITStatus" declared implicitly
+        if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET)
+..\HARDWARE\TIMER\timer.c(42): error:  #20: identifier "TIM3" is undefined
+        if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET)
+..\HARDWARE\TIMER\timer.c(42): error:  #20: identifier "TIM_IT_Update" is undefined
+        if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET)
+..\HARDWARE\TIMER\timer.c(42): error:  #20: identifier "RESET" is undefined
+        if(TIM_GetITStatus(TIM3,TIM_IT_Update)!=RESET)
+..\HARDWARE\TIMER\timer.c(46): warning:  #223-D: function "TIM_ClearITPendingBit" declared implicitly
+        TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
+..\HARDWARE\TIMER\timer.c(54): error:  #20: identifier "u16" is undefined
+  void TIM6_Int_Init(u16 arr,u16 psc)
+..\HARDWARE\TIMER\timer.c(54): error:  #20: identifier "u16" is undefined
+  void TIM6_Int_Init(u16 arr,u16 psc)
+..\HARDWARE\TIMER\timer.c(56): error:  #20: identifier "TIM_TimeBaseInitTypeDef" is undefined
+        TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+..\HARDWARE\TIMER\timer.c(57): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+        NVIC_InitTypeDef NVIC_InitStructure;
+..\HARDWARE\TIMER\timer.c: 8 warnings, 30 errors
+compiling beep.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\BEEP\beep.c(20): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+   GPIO_InitTypeDef  GPIO_InitStructure;
+..\HARDWARE\BEEP\beep.c(22): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);         //使能GPIOB端口时钟
+..\HARDWARE\BEEP\beep.c(22): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);         //使能GPIOB端口时钟
+..\HARDWARE\BEEP\beep.c(22): error:  #20: identifier "ENABLE" is undefined
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);         //使能GPIOB端口时钟
+..\HARDWARE\BEEP\beep.c(24): error:  #20: identifier "GPIO_Pin_8" is undefined
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;                             //BEEP-->PB.8 端口配置
+..\HARDWARE\BEEP\beep.c(25): error:  #20: identifier "GPIO_Mode_Out_PP" is undefined
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;              //推挽输出
+..\HARDWARE\BEEP\beep.c(26): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
+   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;     //速度为50MHz
+..\HARDWARE\BEEP\beep.c(27): warning:  #223-D: function "GPIO_Init" declared implicitly
+   GPIO_Init(GPIOB, &GPIO_InitStructure);        //根据参数初始化GPIOB.8
+..\HARDWARE\BEEP\beep.c(27): error:  #20: identifier "GPIOB" is undefined
+   GPIO_Init(GPIOB, &GPIO_InitStructure);        //根据参数初始化GPIOB.8
+..\HARDWARE\BEEP\beep.c(29): warning:  #223-D: function "GPIO_ResetBits" declared implicitly
+   GPIO_ResetBits(GPIOB,GPIO_Pin_8);//输出0，关闭蜂鸣器输出
+..\HARDWARE\BEEP\beep.c: 4 warnings, 11 errors
+compiling usart3.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\USART3\usart3.h(6): error:  #20: identifier "u32" is undefined
+  void uart3_init(u32 bound);
+..\HARDWARE\USART3\usart3.h(7): error:  #20: identifier "u8" is undefined
+  void USART3Send(u8 data);
+..\HARDWARE\USART3\usart3.c(5): error:  #20: identifier "u32" is undefined
+  void uart3_init(u32 bound)
+..\HARDWARE\USART3\usart3.c(8): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+        GPIO_InitTypeDef GPIO_InitStructure;
+..\HARDWARE\USART3\usart3.c(9): error:  #20: identifier "USART_InitTypeDef" is undefined
+        USART_InitTypeDef USART_InitStructure;
+..\HARDWARE\USART3\usart3.c(11): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);   // GPIOA时钟
+..\HARDWARE\USART3\usart3.c(11): error:  #20: identifier "RCC_APB2Periph_GPIOA" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);   // GPIOA时钟
+..\HARDWARE\USART3\usart3.c(11): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);   // GPIOA时钟
+..\HARDWARE\USART3\usart3.c(12): warning:  #223-D: function "RCC_APB1PeriphClockCmd" declared implicitly
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);
+..\HARDWARE\USART3\usart3.c(12): error:  #20: identifier "RCC_APB1Periph_USART2" is undefined
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);
+..\HARDWARE\USART3\usart3.c(14): warning:  #223-D: function "USART_DeInit" declared implicitly
+        USART_DeInit(USART2);  //复位串口1
+..\HARDWARE\USART3\usart3.c(14): error:  #20: identifier "USART2" is undefined
+        USART_DeInit(USART2);  //复位串口1
+..\HARDWARE\USART3\usart3.c(16): error:  #20: identifier "GPIO_Pin_2" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //PA.2
+..\HARDWARE\USART3\usart3.c(17): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+..\HARDWARE\USART3\usart3.c(18): error:  #20: identifier "GPIO_Mode_AF_PP" is undefined
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; //复用推挽输出
+..\HARDWARE\USART3\usart3.c(19): warning:  #223-D: function "GPIO_Init" declared implicitly
+        GPIO_Init(GPIOA, &GPIO_InitStructure); //初始化PA2
+..\HARDWARE\USART3\usart3.c(19): error:  #20: identifier "GPIOA" is undefined
+        GPIO_Init(GPIOA, &GPIO_InitStructure); //初始化PA2
+..\HARDWARE\USART3\usart3.c(22): error:  #20: identifier "GPIO_Pin_3" is undefined
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+..\HARDWARE\USART3\usart3.c(23): error:  #20: identifier "GPIO_Mode_IN_FLOATING" is undefined
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
+..\HARDWARE\USART3\usart3.c(27): error:  #20: identifier "USART_WordLength_8b" is undefined
+        USART_InitStructure.USART_WordLength = USART_WordLength_8b;//字长为8位数据格式
+..\HARDWARE\USART3\usart3.c(28): error:  #20: identifier "USART_StopBits_1" is undefined
+        USART_InitStructure.USART_StopBits = USART_StopBits_1;//一个停止位
+..\HARDWARE\USART3\usart3.c(29): error:  #20: identifier "USART_Parity_No" is undefined
+        USART_InitStructure.USART_Parity = USART_Parity_No;//无奇偶校验位
+..\HARDWARE\USART3\usart3.c(30): error:  #20: identifier "USART_HardwareFlowControl_None" is undefined
+        USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;//无硬件数据流控制
+..\HARDWARE\USART3\usart3.c(31): error:  #20: identifier "USART_Mode_Rx" is undefined
+        USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; //收发模式
+..\HARDWARE\USART3\usart3.c(31): error:  #20: identifier "USART_Mode_Tx" is undefined
+        USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; //收发模式
+..\HARDWARE\USART3\usart3.c(33): warning:  #223-D: function "USART_Init" declared implicitly
+        USART_Init(USART2, &USART_InitStructure); //初始化串口  2
+..\HARDWARE\USART3\usart3.c(34): warning:  #223-D: function "USART_Cmd" declared implicitly
+        USART_Cmd(USART2, ENABLE);                    //使能串口 
+..\HARDWARE\USART3\usart3.c(40): error:  #20: identifier "u8" is undefined
+  void USART3Send(u8 data)
+..\HARDWARE\USART3\usart3.c(42): error:  #20: identifier "USART2" is undefined
+        while((USART2->SR&0X40)==0);
+..\HARDWARE\USART3\usart3.c(43): error:  #20: identifier "u8" is undefined
+      USART2->DR = (u8) data;     
+..\HARDWARE\USART3\usart3.c(43): error:  #65: expected a ";"
+      USART2->DR = (u8) data;     
+..\HARDWARE\USART3\usart3.c: 7 warnings, 29 errors
+compiling Speech_control.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\Speech_control\Speech_control.h(7): error:  #20: identifier "u8" is undefined
+  void Speech_SwitchGarage(u8 number);
+..\HARDWARE\Speech_control\Speech_control.h(8): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_Go(u8 number);
+..\HARDWARE\Speech_control\Speech_control.h(9): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision);                       
+..\HARDWARE\Speech_control\Speech_control.h(9): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision);                       
+..\HARDWARE\Speech_control\Speech_control.h(9): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision);                       
+..\HARDWARE\USART3\usart3.h(6): error:  #20: identifier "u32" is undefined
+  void uart3_init(u32 bound);
+..\HARDWARE\USART3\usart3.h(7): error:  #20: identifier "u8" is undefined
+  void USART3Send(u8 data);
+..\HARDWARE\Speech_control\Speech_control.c(5): error:  #20: identifier "u8" is undefined
+  void Speech_SwitchGarage(u8 number)
+..\HARDWARE\Speech_control\Speech_control.c(16): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_Go(u8 number)
+..\HARDWARE\Speech_control\Speech_control.c(27): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision)
+..\HARDWARE\Speech_control\Speech_control.c(27): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision)
+..\HARDWARE\Speech_control\Speech_control.c(27): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision)
+..\HARDWARE\Speech_control\Speech_control.c: 1 warning, 16 errors
+compiling exti.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\KEY\key.h(31): error:  #20: identifier "u8" is undefined
+  u8 KEY_Scan(u8);      //按键扫描函数                                      
+..\HARDWARE\KEY\key.h(31): error:  #92: identifier-list parameters may only be used in a function definition
+  u8 KEY_Scan(u8);      //按键扫描函数                                      
+..\SYSTEM\delay\delay.h(44): error:  #20: identifier "u16" is undefined
+  void delay_ms(u16 nms);
+..\SYSTEM\delay\delay.h(45): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus);
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\HARDWARE\EXTI\exti.c(12): error:  #20: identifier "EXTI_InitTypeDef" is undefined
+        EXTI_InitTypeDef EXTI_InitStructure;
+..\HARDWARE\EXTI\exti.c(13): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+        NVIC_InitTypeDef NVIC_InitStructure;
+..\HARDWARE\EXTI\exti.c(17): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);     //使能复用功能时钟
+..\HARDWARE\EXTI\exti.c(17): error:  #20: identifier "RCC_APB2Periph_AFIO" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);     //使能复用功能时钟
+..\HARDWARE\EXTI\exti.c(17): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO,ENABLE);     //使能复用功能时钟
+..\HARDWARE\EXTI\exti.c(20): warning:  #223-D: function "GPIO_EXTILineConfig" declared implicitly
+        GPIO_EXTILineConfig(GPIO_PortSourceGPIOB,GPIO_PinSource9);
+..\HARDWARE\EXTI\exti.c(20): error:  #20: identifier "GPIO_PortSourceGPIOB" is undefined
+        GPIO_EXTILineConfig(GPIO_PortSourceGPIOB,GPIO_PinSource9);
+..\HARDWARE\EXTI\exti.c(20): error:  #20: identifier "GPIO_PinSource9" is undefined
+        GPIO_EXTILineConfig(GPIO_PortSourceGPIOB,GPIO_PinSource9);
+..\HARDWARE\EXTI\exti.c(22): error:  #20: identifier "EXTI_Line9" is undefined
+        EXTI_InitStructure.EXTI_Line=EXTI_Line9;        
+..\HARDWARE\EXTI\exti.c(23): error:  #20: identifier "EXTI_Mode_Interrupt" is undefined
+        EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;     
+..\HARDWARE\EXTI\exti.c: 3 warnings, 30 errors
+compiling delay.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\SYSTEM\delay\delay.h(44): error:  #20: identifier "u16" is undefined
+  void delay_ms(u16 nms);
+..\SYSTEM\delay\delay.h(45): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\delay\delay.c(46): error:  #20: identifier "u8" is undefined
+  static u8  fac_us=0;                                                  //us延时倍乘数                     
+..\SYSTEM\delay\delay.c(47): error:  #20: identifier "u16" is undefined
+  static u16 fac_ms=0;                                                  //ms延时倍乘数,在ucos下,代表每个节拍的ms数
+..\SYSTEM\delay\delay.c(101): error:  #20: identifier "u32" is undefined
+  void delay_ostimedly(u32 ticks)
+..\SYSTEM\delay\delay.c(131): error:  #20: identifier "u32" is undefined
+        u32 reload;
+..\SYSTEM\delay\delay.c(133): warning:  #223-D: function "SysTick_CLKSourceConfig" declared implicitly
+        SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);   //选择外部时钟  HCLK/8
+..\SYSTEM\delay\delay.c(133): error:  #20: identifier "SysTick_CLKSource_HCLK_Div8" is undefined
+        SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);   //选择外部时钟  HCLK/8
+..\SYSTEM\delay\delay.c(134): error:  #20: identifier "SystemCoreClock" is undefined
+        fac_us=SystemCoreClock/8000000;                         //为系统时钟的1/8  
+..\SYSTEM\delay\delay.c(141): error:  #20: identifier "SysTick" is undefined
+        SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;        //开启SYSTICK中断
+..\SYSTEM\delay\delay.c(141): error:  #20: identifier "SysTick_CTRL_TICKINT_Msk" is undefined
+        SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;        //开启SYSTICK中断
+..\SYSTEM\delay\delay.c(143): error:  #20: identifier "SysTick_CTRL_ENABLE_Msk" is undefined
+        SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk;         //开启SYSTICK    
+..\SYSTEM\delay\delay.c(153): error:  #20: identifier "u32" is undefined
+  void delay_us(u32 nus)
+..\SYSTEM\delay\delay.c(155): error:  #20: identifier "u32" is undefined
+        u32 ticks;
+..\SYSTEM\delay\delay.c(156): error:  #20: identifier "u32" is undefined
+        u32 told,tnow,tcnt=0;
+..\SYSTEM\delay\delay.c(157): error:  #20: identifier "u32" is undefined
+        u32 reload=SysTick->LOAD;                                       //LOAD的值               
+..\SYSTEM\delay\delay.c(157): error:  #20: identifier "SysTick" is undefined
+        u32 reload=SysTick->LOAD;                                       //LOAD的值               
+..\SYSTEM\delay\delay.c: 2 warnings, 30 errors
+compiling sys.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\SYSTEM\sys\sys.c(20): error:  #20: identifier "__ASM" is undefined
+        __ASM volatile("wfi");            
+..\SYSTEM\sys\sys.c(20): error:  #65: expected a ";"
+        __ASM volatile("wfi");            
+..\SYSTEM\sys\sys.c(25): error:  #20: identifier "__ASM" is undefined
+        __ASM volatile("cpsid i");
+..\SYSTEM\sys\sys.c(25): error:  #65: expected a ";"
+        __ASM volatile("cpsid i");
+..\SYSTEM\sys\sys.c(30): error:  #20: identifier "__ASM" is undefined
+        __ASM volatile("cpsie i");                
+..\SYSTEM\sys\sys.c(30): error:  #65: expected a ";"
+        __ASM volatile("cpsie i");                
+..\SYSTEM\sys\sys.c(34): error:  #20: identifier "u32" is undefined
+  __asm void MSR_MSP(u32 addr) 
+..\SYSTEM\sys\sys.c: 1 warning, 11 errors
+compiling usart.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\usart\usart.c(30): error:  #20: identifier "USART1" is undefined
+        while((USART1->SR&0X40)==0);//循环发送,直到发送完毕   
+..\SYSTEM\usart\usart.c(31): error:  #20: identifier "u8" is undefined
+      USART1->DR = (u8) ch;      
+..\SYSTEM\usart\usart.c(31): error:  #65: expected a ";"
+      USART1->DR = (u8) ch;      
+..\SYSTEM\usart\usart.c(57): error:  #20: identifier "u8" is undefined
+  u8 USART_RX_BUF[USART_REC_LEN];     //接收缓冲,最大USART_REC_LEN个字节.
+..\SYSTEM\usart\usart.c(62): error:  #20: identifier "u16" is undefined
+  u16 USART_RX_STA=0;       //接收状态标记        
+..\SYSTEM\usart\usart.c(66): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound){
+..\SYSTEM\usart\usart.c(68): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+      GPIO_InitTypeDef GPIO_InitStructure;
+..\SYSTEM\usart\usart.c(69): error:  #20: identifier "USART_InitTypeDef" is undefined
+        USART_InitTypeDef USART_InitStructure;
+..\SYSTEM\usart\usart.c(70): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+        NVIC_InitTypeDef NVIC_InitStructure;
+..\SYSTEM\usart\usart.c(72): warning:  #223-D: function "RCC_APB2PeriphClockCmd" declared implicitly
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);     //使能USART1，GPIOA时钟
+..\SYSTEM\usart\usart.c(72): error:  #20: identifier "RCC_APB2Periph_USART1" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);     //使能USART1，GPIOA时钟
+..\SYSTEM\usart\usart.c(72): error:  #20: identifier "RCC_APB2Periph_GPIOA" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);     //使能USART1，GPIOA时钟
+..\SYSTEM\usart\usart.c(72): error:  #20: identifier "ENABLE" is undefined
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);     //使能USART1，GPIOA时钟
+..\SYSTEM\usart\usart.c: 2 warnings, 30 errors
+compiling malloc.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\MALLOC\malloc.h(41): error:  #40: expected an identifier
+  struct _m_mallco_dev
+..\MALLOC\malloc.h(42): error:  #67: expected a "}"
+  {
+..\MALLOC\malloc.h(48): warning:  #12-D: parsing restarts here after previous syntax error
+  };
+..\MALLOC\malloc.h(48): warning:  #375-D: declaration requires a typedef name
+  };
+..\MALLOC\malloc.h(51): error:  #20: identifier "u8" is undefined
+  void mymemset(void *s,u8 c,u32 count);        //设置内存
+..\MALLOC\malloc.h(51): error:  #20: identifier "u32" is undefined
+  void mymemset(void *s,u8 c,u32 count);        //设置内存
+..\MALLOC\malloc.h(52): error:  #20: identifier "u32" is undefined
+  void mymemcpy(void *des,void *src,u32 n);//复制内存     
+..\MALLOC\malloc.h(53): error:  #20: identifier "u8" is undefined
+  void my_mem_init(u8 memx);                            //内存管理初始化函数(外/内部调用)
+..\MALLOC\malloc.h(54): error:  #20: identifier "u32" is undefined
+  u32 my_mem_malloc(u8 memx,u32 size);  //内存分配(内部调用)
+..\MALLOC\malloc.h(54): error:  #20: identifier "u8" is undefined
+  u32 my_mem_malloc(u8 memx,u32 size);  //内存分配(内部调用)
+..\MALLOC\malloc.h(54): error:  #20: identifier "u32" is undefined
+  u32 my_mem_malloc(u8 memx,u32 size);  //内存分配(内部调用)
+..\MALLOC\malloc.h(55): error:  #20: identifier "u8" is undefined
+  u8 my_mem_free(u8 memx,u32 offset);           //内存释放(内部调用)
+..\MALLOC\malloc.h(55): error:  #20: identifier "u8" is undefined
+  u8 my_mem_free(u8 memx,u32 offset);           //内存释放(内部调用)
+..\MALLOC\malloc.h(55): error:  #20: identifier "u32" is undefined
+  u8 my_mem_free(u8 memx,u32 offset);           //内存释放(内部调用)
+..\MALLOC\malloc.h(56): error:  #20: identifier "u8" is undefined
+  u8 my_mem_perused(u8 memx);                           //获得内存使用率(外/内部调用) 
+..\MALLOC\malloc.h(56): error:  #20: identifier "u8" is undefined
+  u8 my_mem_perused(u8 memx);                           //获得内存使用率(外/内部调用) 
+..\MALLOC\malloc.h(59): error:  #20: identifier "u8" is undefined
+  void myfree(u8 memx,void *ptr);                       //内存释放(外部调用)
+..\MALLOC\malloc.h(60): error:  #20: identifier "u8" is undefined
+  void *mymalloc(u8 memx,u32 size);                     //内存分配(外部调用)
+..\MALLOC\malloc.h(60): error:  #20: identifier "u32" is undefined
+  void *mymalloc(u8 memx,u32 size);                     //内存分配(外部调用)
+..\MALLOC\malloc.h(61): error:  #20: identifier "u8" is undefined
+  void *myrealloc(u8 memx,void *ptr,u32 size);//重新分配内存(外部调用)
+..\MALLOC\malloc.h(61): error:  #20: identifier "u32" is undefined
+  void *myrealloc(u8 memx,void *ptr,u32 size);//重新分配内存(外部调用)
+..\MALLOC\malloc.c(17): error:  #20: identifier "u8" is undefined
+  __align(32) u8 mem1base[MEM1_MAX_SIZE];                                                                                                       //内部SRAM内存池
+..\MALLOC\malloc.c(18): error:  #20: identifier "u8" is undefined
+  __align(32) u8 mem2base[MEM2_MAX_SIZE] __attribute__((at(0X68000000)));                                       //外部SRAM内存池
+..\MALLOC\malloc.c(20): error:  #20: identifier "u16" is undefined
+  u16 mem1mapbase[MEM1_ALLOC_TABLE_SIZE];                                                                                                       //内部SRAM内存池MAP
+..\MALLOC\malloc.c(21): error:  #20: identifier "u16" is undefined
+  u16 mem2mapbase[MEM2_ALLOC_TABLE_SIZE] __attribute__((at(0X68000000+MEM2_MAX_SIZE))); //外部SRAM内存池MAP
+..\MALLOC\malloc.c(23): error:  #20: identifier "u32" is undefined
+  const u32 memtblsize[SRAMBANK]={MEM1_ALLOC_TABLE_SIZE,MEM2_ALLOC_TABLE_SIZE};                 //内存表大小
+..\MALLOC\malloc.c(24): error:  #20: identifier "u32" is undefined
+  const u32 memblksize[SRAMBANK]={MEM1_BLOCK_SIZE,MEM2_BLOCK_SIZE};                                             //内存分块大小
+..\MALLOC\malloc.c(25): error:  #20: identifier "u32" is undefined
+  const u32 memsize[SRAMBANK]={MEM1_MAX_SIZE,MEM2_MAX_SIZE};                                                            //内存总大小
+..\MALLOC\malloc.c(29): error:  #70: incomplete type is not allowed
+  struct _m_mallco_dev mallco_dev=
+..\MALLOC\malloc.c(42): error:  #20: identifier "u32" is undefined
+  void mymemcpy(void *des,void *src,u32 n)  
+..\MALLOC\malloc.c(44): error:  #20: identifier "u8" is undefined
+      u8 *xdes=des;
+..\MALLOC\malloc.c: 2 warnings, 30 errors
+compiling misc.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(68): warning:  #12-D: parsing restarts here after previous syntax error
+  } NVIC_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(68): error:  #67: expected a "}"
+  } NVIC_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(68): warning:  #375-D: declaration requires a typedef name
+  } NVIC_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(196): error:  #20: identifier "uint32_t" is undefined
+  void NVIC_PriorityGroupConfig(uint32_t NVIC_PriorityGroup);
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(197): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+  void NVIC_Init(NVIC_InitTypeDef* NVIC_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(198): error:  #20: identifier "uint32_t" is undefined
+  void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset);
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(198): error:  #20: identifier "uint32_t" is undefined
+  void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset);
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(199): error:  #20: identifier "uint8_t" is undefined
+  void NVIC_SystemLPConfig(uint8_t LowPowerMode, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(199): error:  #20: identifier "FunctionalState" is undefined
+  void NVIC_SystemLPConfig(uint8_t LowPowerMode, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\misc.h(200): error:  #20: identifier "uint32_t" is undefined
+  void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource);
+..\FWLIB\STM32F10x_FWLib\src\misc.c(96): error:  #20: identifier "uint32_t" is undefined
+  void NVIC_PriorityGroupConfig(uint32_t NVIC_PriorityGroup)
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): warning:  #223-D: function "assert_param" declared implicitly
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): error:  #20: identifier "uint32_t" is undefined
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): error:  #18: expected a ")"
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): error:  #18: expected a ")"
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): error:  #18: expected a ")"
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): error:  #18: expected a ")"
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(99): error:  #18: expected a ")"
+    assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(102): error:  #20: identifier "SCB" is undefined
+    SCB->AIRCR = AIRCR_VECTKEY_MASK | NVIC_PriorityGroup;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(102): error:  #18: expected a ")"
+    SCB->AIRCR = AIRCR_VECTKEY_MASK | NVIC_PriorityGroup;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(112): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+  void NVIC_Init(NVIC_InitTypeDef* NVIC_InitStruct)
+..\FWLIB\STM32F10x_FWLib\src\misc.c(114): error:  #20: identifier "uint32_t" is undefined
+    uint32_t tmppriority = 0x00, tmppre = 0x00, tmpsub = 0x0F;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(117): warning:  #223-D: function "assert_param" declared implicitly
+    assert_param(IS_FUNCTIONAL_STATE(NVIC_InitStruct->NVIC_IRQChannelCmd));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(117): warning:  #223-D: function "IS_FUNCTIONAL_STATE" declared implicitly
+    assert_param(IS_FUNCTIONAL_STATE(NVIC_InitStruct->NVIC_IRQChannelCmd));
+..\FWLIB\STM32F10x_FWLib\src\misc.c(121): error:  #20: identifier "DISABLE" is undefined
+    if (NVIC_InitStruct->NVIC_IRQChannelCmd != DISABLE)
+..\FWLIB\STM32F10x_FWLib\src\misc.c(124): error:  #20: identifier "SCB" is undefined
+      tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(124): error:  #20: identifier "uint32_t" is undefined
+      tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(124): error:  #18: expected a ")"
+      tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(128): error:  #65: expected a ";"
+      tmppriority = (uint32_t)NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority << tmppre;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(132): error:  #20: identifier "NVIC" is undefined
+      NVIC->IP[NVIC_InitStruct->NVIC_IRQChannel] = tmppriority;
+..\FWLIB\STM32F10x_FWLib\src\misc.c(136): error:  #65: expected a ";"
+        (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+..\FWLIB\STM32F10x_FWLib\src\misc.c(141): error:  #20: identifier "NVIC" is undefined
+      NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+..\FWLIB\STM32F10x_FWLib\src\misc.c(142): error:  #20: identifier "uint32_t" is undefined
+        (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+..\FWLIB\STM32F10x_FWLib\src\misc.c: 5 warnings, 30 errors
+compiling stm32f10x_crc.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(70): error:  #40: expected an identifier
+  void CRC_ResetDR(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(70): error:  #67: expected a "}"
+  void CRC_ResetDR(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(70): warning:  #375-D: declaration requires a typedef name
+  void CRC_ResetDR(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(71): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcCRC(uint32_t Data);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(71): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcCRC(uint32_t Data);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(72): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(72): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(72): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(73): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_GetCRC(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(74): error:  #20: identifier "uint8_t" is undefined
+  void CRC_SetIDRegister(uint8_t IDValue);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_crc.h(75): error:  #20: identifier "uint8_t" is undefined
+  uint8_t CRC_GetIDRegister(void);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(86): error:  #20: identifier "CRC" is undefined
+    CRC->CR = CRC_CR_RESET;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(86): error:  #20: identifier "CRC_CR_RESET" is undefined
+    CRC->CR = CRC_CR_RESET;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(94): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcCRC(uint32_t Data)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(94): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcCRC(uint32_t Data)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(96): error:  #20: identifier "CRC" is undefined
+    CRC->DR = Data;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(107): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(107): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(107): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(109): error:  #20: identifier "uint32_t" is undefined
+    uint32_t index = 0;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(113): error:  #20: identifier "CRC" is undefined
+      CRC->DR = pBuffer[index];
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(115): error:  #20: identifier "CRC" is undefined
+    return (CRC->DR);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(123): error:  #20: identifier "uint32_t" is undefined
+  uint32_t CRC_GetCRC(void)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(125): error:  #20: identifier "CRC" is undefined
+    return (CRC->DR);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(133): error:  #20: identifier "uint8_t" is undefined
+  void CRC_SetIDRegister(uint8_t IDValue)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(135): error:  #20: identifier "CRC" is undefined
+    CRC->IDR = IDValue;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(143): error:  #20: identifier "uint8_t" is undefined
+  uint8_t CRC_GetIDRegister(void)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c(145): error:  #20: identifier "CRC" is undefined
+    return (CRC->IDR);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_crc.c: 1 warning, 28 errors
+compiling stm32f10x_fsmc.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(72): warning:  #12-D: parsing restarts here after previous syntax error
+    uint32_t FSMC_CLKDivision;            /*!< Defines the period of CLK clock output signal, expressed in number of HCLK cycles.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(72): error:  #67: expected a "}"
+    uint32_t FSMC_CLKDivision;            /*!< Defines the period of CLK clock output signal, expressed in number of HCLK cycles.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(72): warning:  #375-D: declaration requires a typedef name
+    uint32_t FSMC_CLKDivision;            /*!< Defines the period of CLK clock output signal, expressed in number of HCLK cycles.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(76): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_DataLatency;            /*!< Defines the number of memory clock cycles to issue
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(84): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_AccessMode;             /*!< Specifies the asynchronous access mode. 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(86): error:  #169: expected a declaration
+  }FSMC_NORSRAMTimingInitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(94): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_Bank;                /*!< Specifies the NOR/SRAM memory bank that will be used.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(97): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_DataAddressMux;      /*!< Specifies whether the address and data values are
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(101): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_MemoryType;          /*!< Specifies the type of external memory attached to
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(105): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_MemoryDataWidth;     /*!< Specifies the external memory device width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(108): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_BurstAccessMode;     /*!< Enables or disables the burst access mode for Flash memory,
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(112): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_AsynchronousWait;     /*!< Enables or disables wait signal during asynchronous transfers,
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(116): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WaitSignalPolarity;  /*!< Specifies the wait signal polarity, valid only when accessing
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(120): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WrapMode;            /*!< Enables or disables the Wrapped burst access mode for Flash
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(124): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WaitSignalActive;    /*!< Specifies if the wait signal is asserted by the memory one
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(129): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WriteOperation;      /*!< Enables or disables the write operation in the selected bank by the FSMC. 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(132): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WaitSignal;          /*!< Enables or disables the wait-state insertion via wait
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(136): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_ExtendedMode;        /*!< Enables or disables the extended mode.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(139): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WriteBurst;          /*!< Enables or disables the write burst operation.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(142): error:  #20: identifier "FSMC_NORSRAMTimingInitTypeDef" is undefined
+    FSMC_NORSRAMTimingInitTypeDef* FSMC_ReadWriteTimingStruct; /*!< Timing Parameters for write and read access if the  ExtendedMode is not used*/  
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(144): error:  #20: identifier "FSMC_NORSRAMTimingInitTypeDef" is undefined
+    FSMC_NORSRAMTimingInitTypeDef* FSMC_WriteTimingStruct;     /*!< Timing Parameters for write access if the  ExtendedMode is used*/      
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(153): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_SetupTime;      /*!< Defines the number of HCLK cycles to setup address before
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(159): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_WaitSetupTime;  /*!< Defines the minimum number of HCLK cycles to assert the
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(165): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_HoldSetupTime;  /*!< Defines the number of HCLK clock cycles to hold address
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(172): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_HiZSetupTime;   /*!< Defines the number of HCLK clock cycles during which the
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(185): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_Bank;              /*!< Specifies the NAND memory bank that will be used.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(188): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_Waitfeature;      /*!< Enables or disables the Wait feature for the NAND Memory Bank.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(191): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_MemoryDataWidth;  /*!< Specifies the external memory device width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(194): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_ECC;              /*!< Enables or disables the ECC computation.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_fsmc.h(197): error:  #20: identifier "uint32_t" is undefined
+    uint32_t FSMC_ECCPageSize;      /*!< Defines the page size for the extended ECC.
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_fsmc.c: 2 warnings, 30 errors
+compiling stm32f10x_gpio.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(58): error:  #40: expected an identifier
+  typedef enum
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(63): warning:  #12-D: parsing restarts here after previous syntax error
+  }GPIOSpeed_TypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(63): error:  #67: expected a "}"
+  }GPIOSpeed_TypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(63): warning:  #375-D: declaration requires a typedef name
+  }GPIOSpeed_TypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(93): error:  #20: identifier "uint16_t" is undefined
+    uint16_t GPIO_Pin;             /*!< Specifies the GPIO pins to be configured.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(96): error:  #20: identifier "GPIOSpeed_TypeDef" is undefined
+    GPIOSpeed_TypeDef GPIO_Speed;  /*!< Specifies the speed for the selected pins.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(349): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_DeInit(GPIO_TypeDef* GPIOx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(351): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(353): error:  #20: identifier "uint8_t" is undefined
+  uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(353): error:  #20: identifier "GPIO_TypeDef" is undefined
+  uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(353): error:  #20: identifier "uint16_t" is undefined
+  uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(354): error:  #20: identifier "uint16_t" is undefined
+  uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(354): error:  #20: identifier "GPIO_TypeDef" is undefined
+  uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(355): error:  #20: identifier "uint8_t" is undefined
+  uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(355): error:  #20: identifier "GPIO_TypeDef" is undefined
+  uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(355): error:  #20: identifier "uint16_t" is undefined
+  uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(356): error:  #20: identifier "uint16_t" is undefined
+  uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(356): error:  #20: identifier "GPIO_TypeDef" is undefined
+  uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(357): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(357): error:  #20: identifier "uint16_t" is undefined
+  void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(358): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(358): error:  #20: identifier "uint16_t" is undefined
+  void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(359): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(359): error:  #20: identifier "uint16_t" is undefined
+  void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(360): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(360): error:  #20: identifier "uint16_t" is undefined
+  void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(361): error:  #20: identifier "GPIO_TypeDef" is undefined
+  void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(361): error:  #20: identifier "uint16_t" is undefined
+  void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(362): error:  #20: identifier "uint8_t" is undefined
+  void GPIO_EventOutputConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(362): error:  #20: identifier "uint8_t" is undefined
+  void GPIO_EventOutputConfig(uint8_t GPIO_PortSource, uint8_t GPIO_PinSource);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_gpio.h(363): error:  #20: identifier "FunctionalState" is undefined
+  void GPIO_EventOutputCmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_gpio.c: 2 warnings, 30 errors
+compiling stm32f10x_rcc.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(46): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(53): warning:  #12-D: parsing restarts here after previous syntax error
+  }RCC_ClocksTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(53): error:  #67: expected a "}"
+  }RCC_ClocksTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(53): warning:  #375-D: declaration requires a typedef name
+  }RCC_ClocksTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(648): error:  #20: identifier "uint32_t" is undefined
+  void RCC_HSEConfig(uint32_t RCC_HSE);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(649): error:  #20: identifier "ErrorStatus" is undefined
+  ErrorStatus RCC_WaitForHSEStartUp(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(650): error:  #20: identifier "uint8_t" is undefined
+  void RCC_AdjustHSICalibrationValue(uint8_t HSICalibrationValue);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(651): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_HSICmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(652): error:  #20: identifier "uint32_t" is undefined
+  void RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(652): error:  #20: identifier "uint32_t" is undefined
+  void RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t RCC_PLLMul);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(653): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_PLLCmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(667): error:  #20: identifier "uint32_t" is undefined
+  void RCC_SYSCLKConfig(uint32_t RCC_SYSCLKSource);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(668): error:  #20: identifier "uint8_t" is undefined
+  uint8_t RCC_GetSYSCLKSource(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(669): error:  #20: identifier "uint32_t" is undefined
+  void RCC_HCLKConfig(uint32_t RCC_SYSCLK);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(670): error:  #20: identifier "uint32_t" is undefined
+  void RCC_PCLK1Config(uint32_t RCC_HCLK);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(671): error:  #20: identifier "uint32_t" is undefined
+  void RCC_PCLK2Config(uint32_t RCC_HCLK);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(672): error:  #20: identifier "uint8_t" is undefined
+  void RCC_ITConfig(uint8_t RCC_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(672): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_ITConfig(uint8_t RCC_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(675): error:  #20: identifier "uint32_t" is undefined
+   void RCC_USBCLKConfig(uint32_t RCC_USBCLKSource);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(680): error:  #20: identifier "uint32_t" is undefined
+  void RCC_ADCCLKConfig(uint32_t RCC_PCLK2);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(687): error:  #20: identifier "uint8_t" is undefined
+  void RCC_LSEConfig(uint8_t RCC_LSE);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(688): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_LSICmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(689): error:  #20: identifier "uint32_t" is undefined
+  void RCC_RTCCLKConfig(uint32_t RCC_RTCCLKSource);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(690): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_RTCCLKCmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(691): error:  #20: identifier "RCC_ClocksTypeDef" is undefined
+  void RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(692): error:  #20: identifier "uint32_t" is undefined
+  void RCC_AHBPeriphClockCmd(uint32_t RCC_AHBPeriph, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(692): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_AHBPeriphClockCmd(uint32_t RCC_AHBPeriph, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(693): error:  #20: identifier "uint32_t" is undefined
+  void RCC_APB2PeriphClockCmd(uint32_t RCC_APB2Periph, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(693): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_APB2PeriphClockCmd(uint32_t RCC_APB2Periph, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(694): error:  #20: identifier "uint32_t" is undefined
+  void RCC_APB1PeriphClockCmd(uint32_t RCC_APB1Periph, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_rcc.h(694): error:  #20: identifier "FunctionalState" is undefined
+  void RCC_APB1PeriphClockCmd(uint32_t RCC_APB1Periph, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_rcc.c: 2 warnings, 30 errors
+compiling stm32f10x_spi.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(77): warning:  #12-D: parsing restarts here after previous syntax error
+    uint16_t SPI_FirstBit;            /*!< Specifies whether data transfers start from MSB or LSB bit.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(77): error:  #67: expected a "}"
+    uint16_t SPI_FirstBit;            /*!< Specifies whether data transfers start from MSB or LSB bit.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(77): warning:  #375-D: declaration requires a typedef name
+    uint16_t SPI_FirstBit;            /*!< Specifies whether data transfers start from MSB or LSB bit.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(80): error:  #20: identifier "uint16_t" is undefined
+    uint16_t SPI_CRCPolynomial;       /*!< Specifies the polynomial used for the CRC calculation. */
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(81): error:  #169: expected a declaration
+  }SPI_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(90): error:  #20: identifier "uint16_t" is undefined
+    uint16_t I2S_Mode;         /*!< Specifies the I2S operating mode.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(93): error:  #20: identifier "uint16_t" is undefined
+    uint16_t I2S_Standard;     /*!< Specifies the standard used for the I2S communication.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(96): error:  #20: identifier "uint16_t" is undefined
+    uint16_t I2S_DataFormat;   /*!< Specifies the data format for the I2S communication.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(99): error:  #20: identifier "uint16_t" is undefined
+    uint16_t I2S_MCLKOutput;   /*!< Specifies whether the I2S MCLK output is enabled or not.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(102): error:  #20: identifier "uint32_t" is undefined
+    uint32_t I2S_AudioFreq;    /*!< Specifies the frequency selected for the I2S communication.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(105): error:  #20: identifier "uint16_t" is undefined
+    uint16_t I2S_CPOL;         /*!< Specifies the idle state of the I2S clock.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(446): error:  #20: identifier "SPI_TypeDef" is undefined
+  void SPI_I2S_DeInit(SPI_TypeDef* SPIx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(447): error:  #20: identifier "SPI_TypeDef" is undefined
+  void SPI_Init(SPI_TypeDef* SPIx, SPI_InitTypeDef* SPI_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(447): error:  #20: identifier "SPI_InitTypeDef" is undefined
+  void SPI_Init(SPI_TypeDef* SPIx, SPI_InitTypeDef* SPI_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(448): error:  #20: identifier "SPI_TypeDef" is undefined
+  void I2S_Init(SPI_TypeDef* SPIx, I2S_InitTypeDef* I2S_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(449): error:  #20: identifier "SPI_InitTypeDef" is undefined
+  void SPI_StructInit(SPI_InitTypeDef* SPI_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(451): error:  #20: identifier "SPI_TypeDef" is undefined
+  void SPI_Cmd(SPI_TypeDef* SPIx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(451): error:  #20: identifier "FunctionalState" is undefined
+  void SPI_Cmd(SPI_TypeDef* SPIx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(452): error:  #20: identifier "SPI_TypeDef" is undefined
+  void I2S_Cmd(SPI_TypeDef* SPIx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(452): error:  #20: identifier "FunctionalState" is undefined
+  void I2S_Cmd(SPI_TypeDef* SPIx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(453): error:  #20: identifier "SPI_TypeDef" is undefined
+  void SPI_I2S_ITConfig(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(453): error:  #20: identifier "uint8_t" is undefined
+  void SPI_I2S_ITConfig(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(453): error:  #20: identifier "FunctionalState" is undefined
+  void SPI_I2S_ITConfig(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(454): error:  #20: identifier "SPI_TypeDef" is undefined
+  void SPI_I2S_DMACmd(SPI_TypeDef* SPIx, uint16_t SPI_I2S_DMAReq, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(454): error:  #20: identifier "uint16_t" is undefined
+  void SPI_I2S_DMACmd(SPI_TypeDef* SPIx, uint16_t SPI_I2S_DMAReq, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(454): error:  #20: identifier "FunctionalState" is undefined
+  void SPI_I2S_DMACmd(SPI_TypeDef* SPIx, uint16_t SPI_I2S_DMAReq, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(455): error:  #20: identifier "SPI_TypeDef" is undefined
+  void SPI_I2S_SendData(SPI_TypeDef* SPIx, uint16_t Data);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(455): error:  #20: identifier "uint16_t" is undefined
+  void SPI_I2S_SendData(SPI_TypeDef* SPIx, uint16_t Data);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(456): error:  #20: identifier "uint16_t" is undefined
+  uint16_t SPI_I2S_ReceiveData(SPI_TypeDef* SPIx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_spi.h(456): error:  #20: identifier "SPI_TypeDef" is undefined
+  uint16_t SPI_I2S_ReceiveData(SPI_TypeDef* SPIx);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_spi.c: 2 warnings, 30 errors
+compiling stm32f10x_tim.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(51): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(74): warning:  #12-D: parsing restarts here after previous syntax error
+  } TIM_TimeBaseInitTypeDef;       
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(74): error:  #67: expected a "}"
+  } TIM_TimeBaseInitTypeDef;       
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(74): warning:  #375-D: declaration requires a typedef name
+  } TIM_TimeBaseInitTypeDef;       
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(82): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OCMode;        /*!< Specifies the TIM mode.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(85): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OutputState;   /*!< Specifies the TIM Output Compare state.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(88): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OutputNState;  /*!< Specifies the TIM complementary Output Compare state.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(92): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_Pulse;         /*!< Specifies the pulse value to be loaded into the Capture Compare Register. 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(95): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OCPolarity;    /*!< Specifies the output polarity.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(98): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OCNPolarity;   /*!< Specifies the complementary output polarity.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(102): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OCIdleState;   /*!< Specifies the TIM Output Compare pin state during Idle state.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(106): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OCNIdleState;  /*!< Specifies the TIM Output Compare pin state during Idle state.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(118): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_Channel;      /*!< Specifies the TIM channel.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(121): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_ICPolarity;   /*!< Specifies the active edge of the input signal.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(124): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_ICSelection;  /*!< Specifies the input.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(127): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_ICPrescaler;  /*!< Specifies the Input Capture Prescaler.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(130): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_ICFilter;     /*!< Specifies the input capture filter.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(142): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OSSRState;        /*!< Specifies the Off-State selection used in Run mode.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(145): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_OSSIState;        /*!< Specifies the Off-State used in Idle state.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(148): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_LOCKLevel;        /*!< Specifies the LOCK level parameters.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(151): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_DeadTime;         /*!< Specifies the delay time between the switching-off and the
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(155): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_Break;            /*!< Specifies whether the TIM Break input is enabled or not. 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(158): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_BreakPolarity;    /*!< Specifies the TIM Break Input pin polarity.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(161): error:  #20: identifier "uint16_t" is undefined
+    uint16_t TIM_AutomaticOutput;  /*!< Specifies whether the TIM Automatic Output feature is enabled or not. 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1054): error:  #20: identifier "TIM_TypeDef" is undefined
+  void TIM_DeInit(TIM_TypeDef* TIMx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1055): error:  #20: identifier "TIM_TypeDef" is undefined
+  void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1055): error:  #20: identifier "TIM_TimeBaseInitTypeDef" is undefined
+  void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1056): error:  #20: identifier "TIM_TypeDef" is undefined
+  void TIM_OC1Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1057): error:  #20: identifier "TIM_TypeDef" is undefined
+  void TIM_OC2Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1058): error:  #20: identifier "TIM_TypeDef" is undefined
+  void TIM_OC3Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_tim.h(1059): error:  #20: identifier "TIM_TypeDef" is undefined
+  void TIM_OC4Init(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_tim.c: 2 warnings, 30 errors
+compiling stm32f10x_usart.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(73): warning:  #12-D: parsing restarts here after previous syntax error
+    uint16_t USART_HardwareFlowControl; /*!< Specifies wether the hardware flow control mode is enabled
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(73): error:  #67: expected a "}"
+    uint16_t USART_HardwareFlowControl; /*!< Specifies wether the hardware flow control mode is enabled
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(73): warning:  #375-D: declaration requires a typedef name
+    uint16_t USART_HardwareFlowControl; /*!< Specifies wether the hardware flow control mode is enabled
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(76): error:  #169: expected a declaration
+  } USART_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(85): error:  #20: identifier "uint16_t" is undefined
+    uint16_t USART_Clock;   /*!< Specifies whether the USART clock is enabled or disabled.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(88): error:  #20: identifier "uint16_t" is undefined
+    uint16_t USART_CPOL;    /*!< Specifies the steady state value of the serial clock.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(91): error:  #20: identifier "uint16_t" is undefined
+    uint16_t USART_CPHA;    /*!< Specifies the clock transition on which the bit capture is made.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(94): error:  #20: identifier "uint16_t" is undefined
+    uint16_t USART_LastBit; /*!< Specifies whether the clock pulse corresponding to the last transmitted
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(365): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_DeInit(USART_TypeDef* USARTx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(366): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(366): error:  #20: identifier "USART_InitTypeDef" is undefined
+  void USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(367): error:  #20: identifier "USART_InitTypeDef" is undefined
+  void USART_StructInit(USART_InitTypeDef* USART_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(368): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_ClockInit(USART_TypeDef* USARTx, USART_ClockInitTypeDef* USART_ClockInitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(370): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_Cmd(USART_TypeDef* USARTx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(370): error:  #20: identifier "FunctionalState" is undefined
+  void USART_Cmd(USART_TypeDef* USARTx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(371): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_ITConfig(USART_TypeDef* USARTx, uint16_t USART_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(371): error:  #20: identifier "uint16_t" is undefined
+  void USART_ITConfig(USART_TypeDef* USARTx, uint16_t USART_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(371): error:  #20: identifier "FunctionalState" is undefined
+  void USART_ITConfig(USART_TypeDef* USARTx, uint16_t USART_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(372): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_DMACmd(USART_TypeDef* USARTx, uint16_t USART_DMAReq, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(372): error:  #20: identifier "uint16_t" is undefined
+  void USART_DMACmd(USART_TypeDef* USARTx, uint16_t USART_DMAReq, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(372): error:  #20: identifier "FunctionalState" is undefined
+  void USART_DMACmd(USART_TypeDef* USARTx, uint16_t USART_DMAReq, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(373): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_SetAddress(USART_TypeDef* USARTx, uint8_t USART_Address);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(373): error:  #20: identifier "uint8_t" is undefined
+  void USART_SetAddress(USART_TypeDef* USARTx, uint8_t USART_Address);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(374): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_WakeUpConfig(USART_TypeDef* USARTx, uint16_t USART_WakeUp);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(374): error:  #20: identifier "uint16_t" is undefined
+  void USART_WakeUpConfig(USART_TypeDef* USARTx, uint16_t USART_WakeUp);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(375): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_ReceiverWakeUpCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(375): error:  #20: identifier "FunctionalState" is undefined
+  void USART_ReceiverWakeUpCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(376): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_LINBreakDetectLengthConfig(USART_TypeDef* USARTx, uint16_t USART_LINBreakDetectLength);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(376): error:  #20: identifier "uint16_t" is undefined
+  void USART_LINBreakDetectLengthConfig(USART_TypeDef* USARTx, uint16_t USART_LINBreakDetectLength);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_usart.h(377): error:  #20: identifier "USART_TypeDef" is undefined
+  void USART_LINCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_usart.c: 2 warnings, 30 errors
+compiling stm32f10x_sdio.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(46): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(68): warning:  #12-D: parsing restarts here after previous syntax error
+  } SDIO_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(68): error:  #67: expected a "}"
+  } SDIO_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(68): warning:  #375-D: declaration requires a typedef name
+  } SDIO_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(72): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_Argument;  /*!< Specifies the SDIO command argument which is sent
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(77): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_CmdIndex;  /*!< Specifies the SDIO command index. It must be lower than 0x40. */
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(79): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_Response;  /*!< Specifies the SDIO response type.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(82): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_Wait;      /*!< Specifies whether SDIO wait-for-interrupt request is enabled or disabled.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(85): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_CPSM;      /*!< Specifies whether SDIO Command path state machine (CPSM)
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(92): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_DataTimeOut;    /*!< Specifies the data timeout period in card bus clock periods. */
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(94): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_DataLength;     /*!< Specifies the number of data bytes to be transferred. */
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(96): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_DataBlockSize;  /*!< Specifies the data block size for block transfer.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(99): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_TransferDir;    /*!< Specifies the data transfer direction, whether the transfer
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(103): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_TransferMode;   /*!< Specifies whether data transfer is in stream or block mode.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(106): error:  #20: identifier "uint32_t" is undefined
+    uint32_t SDIO_DPSM;           /*!< Specifies whether SDIO Data path state machine (DPSM)
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(484): error:  #20: identifier "SDIO_InitTypeDef" is undefined
+  void SDIO_Init(SDIO_InitTypeDef* SDIO_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(485): error:  #20: identifier "SDIO_InitTypeDef" is undefined
+  void SDIO_StructInit(SDIO_InitTypeDef* SDIO_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(486): error:  #20: identifier "FunctionalState" is undefined
+  void SDIO_ClockCmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(487): error:  #20: identifier "uint32_t" is undefined
+  void SDIO_SetPowerState(uint32_t SDIO_PowerState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(488): error:  #20: identifier "uint32_t" is undefined
+  uint32_t SDIO_GetPowerState(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(489): error:  #20: identifier "uint32_t" is undefined
+  void SDIO_ITConfig(uint32_t SDIO_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(489): error:  #20: identifier "FunctionalState" is undefined
+  void SDIO_ITConfig(uint32_t SDIO_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(490): error:  #20: identifier "FunctionalState" is undefined
+  void SDIO_DMACmd(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(493): error:  #20: identifier "uint8_t" is undefined
+  uint8_t SDIO_GetCommandResponse(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(494): error:  #20: identifier "uint32_t" is undefined
+  uint32_t SDIO_GetResponse(uint32_t SDIO_RESP);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(494): error:  #20: identifier "uint32_t" is undefined
+  uint32_t SDIO_GetResponse(uint32_t SDIO_RESP);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(497): error:  #20: identifier "uint32_t" is undefined
+  uint32_t SDIO_GetDataCounter(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(498): error:  #20: identifier "uint32_t" is undefined
+  uint32_t SDIO_ReadData(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(499): error:  #20: identifier "uint32_t" is undefined
+  void SDIO_WriteData(uint32_t Data);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(500): error:  #20: identifier "uint32_t" is undefined
+  uint32_t SDIO_GetFIFOCount(void);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_sdio.h(501): error:  #20: identifier "FunctionalState" is undefined
+  void SDIO_StartSDIOReadWait(FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_sdio.c: 2 warnings, 30 errors
+compiling stm32f10x_dma.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): warning:  #12-D: parsing restarts here after previous syntax error
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): error:  #67: expected a "}"
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): warning:  #375-D: declaration requires a typedef name
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(75): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_Mode;               /*!< Specifies the operation mode of the DMAy Channelx.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(80): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_Priority;           /*!< Specifies the software priority for the DMAy Channelx.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(83): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_M2M;                /*!< Specifies if the DMAy Channelx will be used in memory-to-memory transfer.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(85): error:  #169: expected a declaration
+  }DMA_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(410): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(411): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(411): error:  #20: identifier "DMA_InitTypeDef" is undefined
+  void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(412): error:  #20: identifier "DMA_InitTypeDef" is undefined
+  void DMA_StructInit(DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(413): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(413): error:  #20: identifier "FunctionalState" is undefined
+  void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "FunctionalState" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(415): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber); 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(415): error:  #20: identifier "uint16_t" is undefined
+  void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber); 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(416): error:  #20: identifier "uint16_t" is undefined
+  uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(416): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(417): error:  #20: identifier "FlagStatus" is undefined
+  FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(417): error:  #20: identifier "uint32_t" is undefined
+  FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(418): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ClearFlag(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(419): error:  #20: identifier "ITStatus" is undefined
+  ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(419): error:  #20: identifier "uint32_t" is undefined
+  ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(420): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ClearITPendingBit(uint32_t DMAy_IT);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_dma.c(108): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_dma.c(111): warning:  #223-D: function "assert_param" declared implicitly
+    assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_dma.c(111): error:  #20: identifier "DMA1_Channel1" is undefined
+    assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_dma.c(111): error:  #20: identifier "DMA1_Channel2" is undefined
+    assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_dma.c: 3 warnings, 30 errors
+compiling stm32f10x_exti.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(50): error:  #40: expected an identifier
+  typedef enum
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(54): warning:  #12-D: parsing restarts here after previous syntax error
+  }EXTIMode_TypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(54): error:  #67: expected a "}"
+  }EXTIMode_TypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(54): warning:  #375-D: declaration requires a typedef name
+  }EXTIMode_TypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(78): error:  #20: identifier "uint32_t" is undefined
+    uint32_t EXTI_Line;               /*!< Specifies the EXTI lines to be enabled or disabled.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(81): error:  #20: identifier "EXTIMode_TypeDef" is undefined
+    EXTIMode_TypeDef EXTI_Mode;       /*!< Specifies the mode for the EXTI lines.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(87): error:  #20: identifier "FunctionalState" is undefined
+    FunctionalState EXTI_LineCmd;     /*!< Specifies the new state of the selected EXTI lines.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(161): error:  #20: identifier "uint32_t" is undefined
+  void EXTI_GenerateSWInterrupt(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(162): error:  #20: identifier "FlagStatus" is undefined
+  FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(162): error:  #20: identifier "uint32_t" is undefined
+  FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(163): error:  #20: identifier "uint32_t" is undefined
+  void EXTI_ClearFlag(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(164): error:  #20: identifier "ITStatus" is undefined
+  ITStatus EXTI_GetITStatus(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(164): error:  #20: identifier "uint32_t" is undefined
+  ITStatus EXTI_GetITStatus(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_exti.h(165): error:  #20: identifier "uint32_t" is undefined
+  void EXTI_ClearITPendingBit(uint32_t EXTI_Line);
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(87): error:  #20: identifier "EXTI" is undefined
+    EXTI->IMR = 0x00000000;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(103): error:  #20: identifier "uint32_t" is undefined
+    uint32_t tmp = 0;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(106): warning:  #223-D: function "assert_param" declared implicitly
+    assert_param(IS_EXTI_MODE(EXTI_InitStruct->EXTI_Mode));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(106): error:  #20: identifier "EXTI_Mode_Interrupt" is undefined
+    assert_param(IS_EXTI_MODE(EXTI_InitStruct->EXTI_Mode));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(106): error:  #20: identifier "EXTI_Mode_Event" is undefined
+    assert_param(IS_EXTI_MODE(EXTI_InitStruct->EXTI_Mode));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(108): error:  #20: identifier "uint32_t" is undefined
+    assert_param(IS_EXTI_LINE(EXTI_InitStruct->EXTI_Line));  
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(108): error:  #18: expected a ")"
+    assert_param(IS_EXTI_LINE(EXTI_InitStruct->EXTI_Line));  
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(108): error:  #20: identifier "uint16_t" is undefined
+    assert_param(IS_EXTI_LINE(EXTI_InitStruct->EXTI_Line));  
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(108): error:  #18: expected a ")"
+    assert_param(IS_EXTI_LINE(EXTI_InitStruct->EXTI_Line));  
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(109): warning:  #223-D: function "IS_FUNCTIONAL_STATE" declared implicitly
+    assert_param(IS_FUNCTIONAL_STATE(EXTI_InitStruct->EXTI_LineCmd));
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(111): error:  #65: expected a ";"
+    tmp = (uint32_t)EXTI_BASE;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(113): error:  #20: identifier "DISABLE" is undefined
+    if (EXTI_InitStruct->EXTI_LineCmd != DISABLE)
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(116): error:  #20: identifier "EXTI" is undefined
+      EXTI->IMR &= ~EXTI_InitStruct->EXTI_Line;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(121): error:  #20: identifier "__IO" is undefined
+      *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(121): error:  #18: expected a ")"
+      *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(121): error:  #65: expected a ";"
+      *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(136): error:  #65: expected a ";"
+        tmp = (uint32_t)EXTI_BASE;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(139): error:  #18: expected a ")"
+        *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c(139): error:  #65: expected a ";"
+        *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+..\FWLIB\STM32F10x_FWLib\src\stm32f10x_exti.c: 4 warnings, 30 errors
+compiling bsp.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): warning:  #12-D: parsing restarts here after previous syntax error
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): error:  #67: expected a "}"
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): warning:  #375-D: declaration requires a typedef name
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(75): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_Mode;               /*!< Specifies the operation mode of the DMAy Channelx.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(80): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_Priority;           /*!< Specifies the software priority for the DMAy Channelx.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(83): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_M2M;                /*!< Specifies if the DMAy Channelx will be used in memory-to-memory transfer.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(85): error:  #169: expected a declaration
+  }DMA_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(410): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(411): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(411): error:  #20: identifier "DMA_InitTypeDef" is undefined
+  void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(412): error:  #20: identifier "DMA_InitTypeDef" is undefined
+  void DMA_StructInit(DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(413): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(413): error:  #20: identifier "FunctionalState" is undefined
+  void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "FunctionalState" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(415): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber); 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(415): error:  #20: identifier "uint16_t" is undefined
+  void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber); 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(416): error:  #20: identifier "uint16_t" is undefined
+  uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(416): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(417): error:  #20: identifier "FlagStatus" is undefined
+  FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(417): error:  #20: identifier "uint32_t" is undefined
+  FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(418): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ClearFlag(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(419): error:  #20: identifier "ITStatus" is undefined
+  ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(419): error:  #20: identifier "uint32_t" is undefined
+  ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(420): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ClearITPendingBit(uint32_t DMAy_IT);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\UCOSIII\UCOS_BSP\bsp.c: 2 warnings, 30 errors
+compiling GUIConf.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\HARDWARE\SRAM\sram.h(17): error:  #40: expected an identifier
+  void FSMC_SRAM_Init(void);
+..\HARDWARE\SRAM\sram.h(17): error:  #67: expected a "}"
+  void FSMC_SRAM_Init(void);
+..\HARDWARE\SRAM\sram.h(17): warning:  #375-D: declaration requires a typedef name
+  void FSMC_SRAM_Init(void);
+..\HARDWARE\SRAM\sram.h(18): error:  #20: identifier "u8" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 NumHalfwordToWrite);
+..\HARDWARE\SRAM\sram.h(18): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 NumHalfwordToWrite);
+..\HARDWARE\SRAM\sram.h(18): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_WriteBuffer(u8* pBuffer,u32 WriteAddr,u32 NumHalfwordToWrite);
+..\HARDWARE\SRAM\sram.h(19): error:  #20: identifier "u8" is undefined
+  void FSMC_SRAM_ReadBuffer(u8* pBuffer,u32 ReadAddr,u32 NumHalfwordToRead);
+..\HARDWARE\SRAM\sram.h(19): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_ReadBuffer(u8* pBuffer,u32 ReadAddr,u32 NumHalfwordToRead);
+..\HARDWARE\SRAM\sram.h(19): error:  #20: identifier "u32" is undefined
+  void FSMC_SRAM_ReadBuffer(u8* pBuffer,u32 ReadAddr,u32 NumHalfwordToRead);
+..\HARDWARE\SRAM\sram.h(22): error:  #20: identifier "u32" is undefined
+  void fsmc_sram_test_write(u32 addr,u8 data);
+..\HARDWARE\SRAM\sram.h(22): error:  #20: identifier "u8" is undefined
+  void fsmc_sram_test_write(u32 addr,u8 data);
+..\HARDWARE\SRAM\sram.h(23): error:  #20: identifier "u8" is undefined
+  u8 fsmc_sram_test_read(u32 addr);
+..\HARDWARE\SRAM\sram.h(23): error:  #20: identifier "u32" is undefined
+  u8 fsmc_sram_test_read(u32 addr);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\EMWIN\STemWin\Config\GUIConf.c(17): warning:  #223-D: function "mymalloc" declared implicitly
+                U32 *aMemory = mymalloc(SRAMEX,GUI_NUMBYTES); //从外部SRAM中分配GUI_NUMBYTES字节的内存
+..\EMWIN\STemWin\Config\GUIConf.c(17): error:  #20: identifier "SRAMEX" is undefined
+                U32 *aMemory = mymalloc(SRAMEX,GUI_NUMBYTES); //从外部SRAM中分配GUI_NUMBYTES字节的内存
+..\EMWIN\STemWin\Config\GUIConf.c(17): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned long *"
+                U32 *aMemory = mymalloc(SRAMEX,GUI_NUMBYTES); //从外部SRAM中分配GUI_NUMBYTES字节的内存
+..\EMWIN\STemWin\Config\GUIConf.c(23): warning:  #223-D: function "mymalloc" declared implicitly
+                U32 *aMemory = mymalloc(SRAMIN,GUI_NUMBYTES); //从内部RAM中分配GUI_NUMBYTES字节的内存
+..\EMWIN\STemWin\Config\GUIConf.c(23): error:  #20: identifier "SRAMIN" is undefined
+                U32 *aMemory = mymalloc(SRAMIN,GUI_NUMBYTES); //从内部RAM中分配GUI_NUMBYTES字节的内存
+..\EMWIN\STemWin\Config\GUIConf.c(23): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned long *"
+                U32 *aMemory = mymalloc(SRAMIN,GUI_NUMBYTES); //从内部RAM中分配GUI_NUMBYTES字节的内存
+..\EMWIN\STemWin\Config\GUIConf.c: 3 warnings, 18 errors
+compiling GUI_X_UCOSIII.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(50): error:  #40: expected an identifier
+  typedef struct
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): warning:  #12-D: parsing restarts here after previous syntax error
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): error:  #67: expected a "}"
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(72): warning:  #375-D: declaration requires a typedef name
+    uint32_t DMA_MemoryDataSize;     /*!< Specifies the Memory data width.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(75): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_Mode;               /*!< Specifies the operation mode of the DMAy Channelx.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(80): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_Priority;           /*!< Specifies the software priority for the DMAy Channelx.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(83): error:  #20: identifier "uint32_t" is undefined
+    uint32_t DMA_M2M;                /*!< Specifies if the DMAy Channelx will be used in memory-to-memory transfer.
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(85): error:  #169: expected a declaration
+  }DMA_InitTypeDef;
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(410): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(411): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(411): error:  #20: identifier "DMA_InitTypeDef" is undefined
+  void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(412): error:  #20: identifier "DMA_InitTypeDef" is undefined
+  void DMA_StructInit(DMA_InitTypeDef* DMA_InitStruct);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(413): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(413): error:  #20: identifier "FunctionalState" is undefined
+  void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(414): error:  #20: identifier "FunctionalState" is undefined
+  void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(415): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber); 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(415): error:  #20: identifier "uint16_t" is undefined
+  void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber); 
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(416): error:  #20: identifier "uint16_t" is undefined
+  uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(416): error:  #20: identifier "DMA_Channel_TypeDef" is undefined
+  uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(417): error:  #20: identifier "FlagStatus" is undefined
+  FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(417): error:  #20: identifier "uint32_t" is undefined
+  FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(418): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ClearFlag(uint32_t DMAy_FLAG);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(419): error:  #20: identifier "ITStatus" is undefined
+  ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(419): error:  #20: identifier "uint32_t" is undefined
+  ITStatus DMA_GetITStatus(uint32_t DMAy_IT);
+..\FWLIB\STM32F10x_FWLib\inc\stm32f10x_dma.h(420): error:  #20: identifier "uint32_t" is undefined
+  void DMA_ClearITPendingBit(uint32_t DMAy_IT);
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\EMWIN\STemWin\OS\GUI_X_UCOSIII.c: 2 warnings, 30 errors
+compiling GUIDRV_Template.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\LCD\ILI93xx.h(81): error:  #20: identifier "u16" is undefined
+        u16 width;                      //LCD 宽度
+..\HARDWARE\LCD\ILI93xx.h(82): error:  #20: identifier "u16" is undefined
+        u16 height;                     //LCD 高度
+..\HARDWARE\LCD\ILI93xx.h(83): error:  #20: identifier "u16" is undefined
+        u16 id;                         //LCD ID
+..\HARDWARE\LCD\ILI93xx.h(84): error:  #20: identifier "u8" is undefined
+        u8  dir;                        //横屏还是竖屏控制：0，竖屏；1，横屏。  
+..\HARDWARE\LCD\ILI93xx.h(85): error:  #20: identifier "u16" is undefined
+        u16     wramcmd;                //开始写gram指令
+..\HARDWARE\LCD\ILI93xx.h(86): error:  #20: identifier "u16" is undefined
+        u16  setxcmd;           //设置x坐标指令
+..\HARDWARE\LCD\ILI93xx.h(87): error:  #20: identifier "u16" is undefined
+        u16  setycmd;           //设置y坐标指令 
+..\HARDWARE\LCD\ILI93xx.h(93): error:  #20: identifier "u16" is undefined
+  extern u16  POINT_COLOR;//默认红色    
+..\HARDWARE\LCD\ILI93xx.h(94): error:  #20: identifier "u16" is undefined
+  extern u16  BACK_COLOR; //背景颜色.默认为白色
+..\HARDWARE\LCD\ILI93xx.h(103): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_REG;
+..\HARDWARE\LCD\ILI93xx.h(104): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_RAM;
+..\HARDWARE\LCD\ILI93xx.h(157): error:  #20: identifier "u16" is undefined
+  void LCD_Clear(u16 Color);                                                                                                    //清屏
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u8" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(163): error:  #20: identifier "u16" is undefined
+  void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2);                                                    //画线
+..\EMWIN\STemWin\Config\GUIDRV_Template.c: 1 warning, 30 errors
+compiling GUI_X_Touch_Analog.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u16" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(49): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_WR_Reg(u16 reg,u8 *buf,u8 len);           //写寄存器(实际无用)
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u16" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(50): error:  #20: identifier "u8" is undefined
+  void OTT2001A_RD_Reg(u16 reg,u8 *buf,u8 len); //读寄存器
+..\HARDWARE\TOUCH\ott2001a.h(51): error:  #20: identifier "u8" is undefined
+  void OTT2001A_SensorControl(u8 cmd);//传感器打开/关闭操作
+..\HARDWARE\TOUCH\ott2001a.h(52): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Init(void);                       //4.3电容触摸屏始化函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\ott2001a.h(53): error:  #20: identifier "u8" is undefined
+  u8 OTT2001A_Scan(u8 mode);                    //电容触摸屏扫描函数
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(43): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Send_Cfg(u8 mode);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u16" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(44): error:  #20: identifier "u8" is undefined
+  u8 GT9147_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u16" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(45): error:  #20: identifier "u8" is undefined
+  void GT9147_RD_Reg(u16 reg,u8 *buf,u8 len); 
+..\HARDWARE\TOUCH\gt9147.h(46): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Init(void);
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\gt9147.h(47): error:  #20: identifier "u8" is undefined
+  u8 GT9147_Scan(u8 mode); 
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u16" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\HARDWARE\TOUCH\ft5206.h(43): error:  #20: identifier "u8" is undefined
+  u8 FT5206_WR_Reg(u16 reg,u8 *buf,u8 len);
+..\EMWIN\STemWin\Config\GUI_X_Touch_Analog.c: 1 warning, 30 errors
+compiling LCDConf_FlexColor_Template.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\LCD\ILI93xx.h(81): error:  #20: identifier "u16" is undefined
+        u16 width;                      //LCD 宽度
+..\HARDWARE\LCD\ILI93xx.h(82): error:  #20: identifier "u16" is undefined
+        u16 height;                     //LCD 高度
+..\HARDWARE\LCD\ILI93xx.h(83): error:  #20: identifier "u16" is undefined
+        u16 id;                         //LCD ID
+..\HARDWARE\LCD\ILI93xx.h(84): error:  #20: identifier "u8" is undefined
+        u8  dir;                        //横屏还是竖屏控制：0，竖屏；1，横屏。  
+..\HARDWARE\LCD\ILI93xx.h(85): error:  #20: identifier "u16" is undefined
+        u16     wramcmd;                //开始写gram指令
+..\HARDWARE\LCD\ILI93xx.h(86): error:  #20: identifier "u16" is undefined
+        u16  setxcmd;           //设置x坐标指令
+..\HARDWARE\LCD\ILI93xx.h(87): error:  #20: identifier "u16" is undefined
+        u16  setycmd;           //设置y坐标指令 
+..\HARDWARE\LCD\ILI93xx.h(93): error:  #20: identifier "u16" is undefined
+  extern u16  POINT_COLOR;//默认红色    
+..\HARDWARE\LCD\ILI93xx.h(94): error:  #20: identifier "u16" is undefined
+  extern u16  BACK_COLOR; //背景颜色.默认为白色
+..\HARDWARE\LCD\ILI93xx.h(103): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_REG;
+..\HARDWARE\LCD\ILI93xx.h(104): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_RAM;
+..\HARDWARE\LCD\ILI93xx.h(157): error:  #20: identifier "u16" is undefined
+  void LCD_Clear(u16 Color);                                                                                                    //清屏
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u8" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(163): error:  #20: identifier "u16" is undefined
+  void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2);                                                    //画线
+..\EMWIN\STemWin\Config\LCDConf_FlexColor_Template.c: 1 warning, 30 errors
+compiling bitmapdisplay.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\HARDWARE\LCD\ILI93xx.h(81): error:  #20: identifier "u16" is undefined
+        u16 width;                      //LCD 宽度
+..\HARDWARE\LCD\ILI93xx.h(82): error:  #20: identifier "u16" is undefined
+        u16 height;                     //LCD 高度
+..\HARDWARE\LCD\ILI93xx.h(83): error:  #20: identifier "u16" is undefined
+        u16 id;                         //LCD ID
+..\HARDWARE\LCD\ILI93xx.h(84): error:  #20: identifier "u8" is undefined
+        u8  dir;                        //横屏还是竖屏控制：0，竖屏；1，横屏。  
+..\HARDWARE\LCD\ILI93xx.h(85): error:  #20: identifier "u16" is undefined
+        u16     wramcmd;                //开始写gram指令
+..\HARDWARE\LCD\ILI93xx.h(86): error:  #20: identifier "u16" is undefined
+        u16  setxcmd;           //设置x坐标指令
+..\HARDWARE\LCD\ILI93xx.h(87): error:  #20: identifier "u16" is undefined
+        u16  setycmd;           //设置y坐标指令 
+..\HARDWARE\LCD\ILI93xx.h(93): error:  #20: identifier "u16" is undefined
+  extern u16  POINT_COLOR;//默认红色    
+..\HARDWARE\LCD\ILI93xx.h(94): error:  #20: identifier "u16" is undefined
+  extern u16  BACK_COLOR; //背景颜色.默认为白色
+..\HARDWARE\LCD\ILI93xx.h(103): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_REG;
+..\HARDWARE\LCD\ILI93xx.h(104): error:  #20: identifier "vu16" is undefined
+        vu16 LCD_RAM;
+..\HARDWARE\LCD\ILI93xx.h(157): error:  #20: identifier "u16" is undefined
+  void LCD_Clear(u16 Color);                                                                                                    //清屏
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(158): error:  #20: identifier "u16" is undefined
+  void LCD_SetCursor(u16 Xpos, u16 Ypos);                                                                               //设置光标
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(159): error:  #20: identifier "u16" is undefined
+  void LCD_DrawPoint(u16 x,u16 y);                                                                                      //画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(160): error:  #20: identifier "u16" is undefined
+  void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);                                                               //快速画点
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(161): error:  #20: identifier "u16" is undefined
+  u16  LCD_ReadPoint(u16 x,u16 y);                                                                                      //读点 
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u16" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(162): error:  #20: identifier "u8" is undefined
+  void LCD_Draw_Circle(u16 x0,u16 y0,u8 r);                                                                     //画圆
+..\HARDWARE\LCD\ILI93xx.h(163): error:  #20: identifier "u16" is undefined
+  void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2);                                                    //画线
+..\EMWIN_DEMO\BITMAP_DISPLAY\bitmapdisplay.c: 1 warning, 30 errors
+compiling ChooseTheGarageDLG.c...
+..\USER\stm32f10x.h(50): error:  #37: the #endif for this directive is missing
+  #ifndef __STM32F10x_H
+..\SYSTEM\sys\sys.h(69): error:  #40: expected an identifier
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): error:  #67: expected a "}"
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(69): warning:  #375-D: declaration requires a typedef name
+  void WFI_SET(void);           //执行WFI指令
+..\SYSTEM\sys\sys.h(72): error:  #20: identifier "u32" is undefined
+  void MSR_MSP(u32 addr);       //设置堆栈地址
+..\SYSTEM\usart\usart.h(31): error:  #20: identifier "u8" is undefined
+  extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
+..\SYSTEM\usart\usart.h(32): error:  #20: identifier "u16" is undefined
+  extern u16 USART_RX_STA;                      //接收状态标记  
+..\SYSTEM\usart\usart.h(34): error:  #20: identifier "u32" is undefined
+  void uart_init(u32 bound);
+..\SYSTEM\usart\usart.h(35): error:  #20: identifier "u8" is undefined
+  void USART1Send(u8 data);
+..\HARDWARE\Speech_control\Speech_control.h(7): error:  #20: identifier "u8" is undefined
+  void Speech_SwitchGarage(u8 number);
+..\HARDWARE\Speech_control\Speech_control.h(8): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_Go(u8 number);
+..\HARDWARE\Speech_control\Speech_control.h(9): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision);                       
+..\HARDWARE\Speech_control\Speech_control.h(9): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision);                       
+..\HARDWARE\Speech_control\Speech_control.h(9): error:  #20: identifier "u8" is undefined
+  void Speech_Switch_home(u8 time,u8 money,u8 collision);                       
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(108): error:  #20: identifier "u8" is undefined
+  extern u8 CollisionValue;
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(109): error:  #20: identifier "u16" is undefined
+  extern u16 ParkingDurationS;
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(110): error:  #20: identifier "u16" is undefined
+  extern u16 ParkingFeeRMB; 
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(244): error:  #20: identifier "GPIOG_BASE" is undefined
+                                  LED1=1;LED2=0;LED3=0;LED4=0;LED5=0;LED6=0;
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(244): error:  #20: identifier "GPIOB_BASE" is undefined
+                                  LED1=1;LED2=0;LED3=0;LED4=0;LED5=0;LED6=0;
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(277): error:  #20: identifier "u8" is undefined
+                        USART1Send((u8)(Garage+0x01+0x01+0x00));
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(388): error:  #20: identifier "u8" is undefined
+        u8 temp[30] = "Tang wa"; 
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(388): warning:  #520-D: initialization with "{...}" expected for aggregate object
+        u8 temp[30] = "Tang wa"; 
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(389): error:  #20: identifier "u8" is undefined
+        u8 value[3] = "   ";
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c(389): warning:  #520-D: initialization with "{...}" expected for aggregate object
+        u8 value[3] = "   ";
+..\EMWIN_DEMO\GUIBulider\ChooseTheGarageDLG.c: 3 warnings, 21 errors
+"..\OBJ\MALLOC.axf" - 1164 Error(s), 99 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\临时\2017年电子设计竞赛\Auto Park System  Control Center(F1)20170829 _V1.0.1_th\USER\RTE
+  F:\KEILC51+MDK\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+</pre>
+</body>
+</html>

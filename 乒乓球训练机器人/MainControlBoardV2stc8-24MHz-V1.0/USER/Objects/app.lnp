@@ -1,0 +1,12 @@
+".\Objects\STARTUP.obj",
+".\Objects\app.obj",
+".\Objects\pbdata.obj",
+".\Objects\ccp.obj",
+".\Objects\djiReceiver_dr16.obj",
+".\Objects\timer1.obj",
+".\Objects\uart1.obj",
+".\Objects\uart2.obj",
+".\Objects\uart3.obj",
+".\Objects\tabletennisdevice.obj" 
+TO ".\Objects\app" 
+PRINT(".\Listings\app.m51") RAMSIZE(256) 

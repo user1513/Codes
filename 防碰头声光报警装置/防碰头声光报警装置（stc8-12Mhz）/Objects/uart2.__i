@@ -1,0 +1,1 @@
+"uart2.c" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\uart2.lst) OBJECT(.\Objects\uart2.obj)

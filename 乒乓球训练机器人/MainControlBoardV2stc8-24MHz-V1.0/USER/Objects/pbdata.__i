@@ -1,0 +1,1 @@
+"pbdata.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\USER;..\HARDWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\HARDWARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\pbdata.lst) OBJECT(.\Objects\pbdata.obj)

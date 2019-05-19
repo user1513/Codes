@@ -1,0 +1,181 @@
+C51 COMPILER V9.56.0.0   MY1680U                                                           10/22/2018 20:01:40 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MY1680U
+OBJECT MODULE PLACED IN .\Objects\MY1680U.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE MY1680U.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\MY1680U.lst) OBJECT(.\Objects\MY1680U.obj)
+
+line level    source
+
+   1          #include "MY1680U.h"
+   2          
+   3          u32 CallBackNum=0;//定义循环发送次数
+   4          myenum My1680uFlag;//定义uart2允许接收标志位
+   5          typedef xdata struct
+   6          {
+   7                  u32 ulTimeout;//设置时间
+   8                  u32 ulTimesave;//设置时间存储
+   9                  u8 ucInuse;//判断函数是否注册
+  10                  u8 para[7];//发送数据
+  11                  u8 length; //发送数据长度
+  12                  pFuncSystickCallBack  Callback_Func;//设置回调函数
+  13          
+  14          }stSystickCallBack;
+  15          
+  16          stSystickCallBack Myu1680CallbackBuf;
+  17          
+  18          //设置my1680u.h内部自用回调函数
+  19          void MYU1680U_SetCallBack(u32 ulTimeout,
+  20                                    pFuncSystickCallBack callBack,
+  21                                    u8 *_para,
+  22                                                            u8 _length)
+  23          {
+  24   1          if(Myu1680CallbackBuf.ucInuse==0)
+  25   1          {
+  26   2              Myu1680CallbackBuf.Callback_Func=callBack;
+  27   2              Myu1680CallbackBuf.ulTimeout=ulTimeout;
+  28   2              Myu1680CallbackBuf.ulTimesave=ulTimeout;
+  29   2                      Myu1680CallbackBuf.length=_length;
+  30   2                      memcpy(&Myu1680CallbackBuf.para, _para, _length);//取第参数;
+  31   2              Myu1680CallbackBuf.ucInuse=0x01;
+  32   2          }
+  33   1      }
+  34          //中断回调函数
+  35           void HAL_MYU1680U_Callback(void)
+  36          {
+  37   1          if(Myu1680CallbackBuf.ucInuse!=0)
+  38   1          {
+  39   2              Myu1680CallbackBuf.ulTimeout--;
+  40   2              if(Myu1680CallbackBuf.ulTimeout==0)
+  41   2              {
+  42   3                              CallBackNum++;
+  43   3                              Myu1680CallbackBuf.ucInuse=0x00;
+  44   3                              Myu1680CallbackBuf.ulTimeout=Myu1680CallbackBuf.ulTimesave;
+  45   3                  Myu1680CallbackBuf.Callback_Func(Myu1680CallbackBuf.para,
+  46   3                                                                                               Myu1680CallbackBuf.length); 
+  47   3              }
+  48   2          }
+  49   1      }
+  50          //关闭回调函数
+  51           void MYU1680U_CallBackClose()
+  52           {
+  53   1               CallBackNum=0;
+  54   1          Myu1680CallbackBuf.ucInuse=0;
+C51 COMPILER V9.56.0.0   MY1680U                                                           10/22/2018 20:01:40 PAGE 2   
+
+  55   1          Myu1680CallbackBuf.Callback_Func=0;
+  56   1          Myu1680CallbackBuf.ulTimeout=0;
+  57   1          Myu1680CallbackBuf.ulTimesave=0;
+  58   1       }
+  59          
+  60          //起始码 长度 操作码 校验码 结束码
+  61          myenum My1680uControl(u8 _cmd,
+  62                                                  u8 _cmdlength,
+  63                                                  u16 _data)
+  64          {
+  65   1              u8 xdata _able[7]; 
+  66   1          myenum MY1680UFLAG=Disable;
+  67   1              _able[0]=0X7E;//起始码
+  68   1              _able[1]=_cmdlength;//长度（操作码->结束码）
+  69   1              if((_cmdlength>2)&&(_cmdlength<6))
+  70   1              {
+  71   2                      if(_cmdlength==3)
+  72   2                      {
+  73   3                 _able[2]=_cmd;
+  74   3                 _able[3]=XorCheck(_able+1,2);
+  75   3                 _able[4]=0XEF;
+  76   3                 
+  77   3              }
+  78   2              if(_cmdlength==4)
+  79   2                      {
+  80   3                 _able[2]=_cmd;
+  81   3                 _able[3]=(u8)_data;
+  82   3                 _able[4]=XorCheck(_able+1,3);
+  83   3                 _able[5]=0XEF;
+  84   3              }
+  85   2              if(_cmdlength==5)
+  86   2                      {
+  87   3                 _able[2]=_cmd;
+  88   3                 _able[3]=(u8)(_data>>8);
+  89   3                 _able[4]=(u8)(_data);
+  90   3                 _able[5]=XorCheck(_able+1,4);
+  91   3                 _able[6]=0XEF;
+  92   3              }
+  93   2                              My1680uFlag=Enable;
+  94   2                              Uart2SendStrLen(_able,_cmdlength+2);
+  95   2                          while(1)
+  96   2                 {
+  97   3                                 if(My1680uFlag==Disable)
+  98   3                                 {
+  99   4                                         MYU1680U_CallBackClose();
+ 100   4                                         MY1680UFLAG=Enable;
+ 101   4                                         break;
+ 102   4                                 }
+ 103   3                                 if(CallBackNum==5)
+ 104   3                                 {
+ 105   4                                         MYU1680U_CallBackClose();
+ 106   4                                         break;
+ 107   4                                 }
+ 108   3                    MYU1680U_SetCallBack( 100,
+ 109   3                                         (pFuncSystickCallBack) Uart2SendStrLen,
+ 110   3                                                                              _able,
+ 111   3                                          _cmdlength+2);
+ 112   3                 }
+ 113   2              }
+ 114   1              return MY1680UFLAG;
+ 115   1      }
+ 116          
+C51 COMPILER V9.56.0.0   MY1680U                                                           10/22/2018 20:01:40 PAGE 3   
+
+ 117          u8 XorCheck(u8 *_able,u8 length)
+ 118          {
+ 119   1          u8 xorval=*_able;
+ 120   1          int i=0;
+ 121   1          for(i=0;i<length-1;i++)
+ 122   1          {
+ 123   2              xorval ^=*(_able+1+i);
+ 124   2          }
+ 125   1          return xorval;
+ 126   1      }
+ 127          
+ 128          void musicplaymode(u8 num)
+ 129          {
+ 130   1                      My1680uControl(STOPMODE,DATALENGTH3,DATANONE);
+ 131   1                      Delayms(20);
+ 132   1                      My1680uControl(CHOOSEPLAYSONGS,DATALENGTH5,num);
+ 133   1      }
+ 134          
+ 135          
+ 136          
+ 137          
+ 138          
+ 139          
+ 140          
+ 141          
+ 142          
+ 143          
+ 144          
+ 145          
+ 146          
+ 147          
+ 148          
+ 149          
+ 150          
+ 151          
+ 152          
+ 153          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    595    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     20       7
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5      22
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

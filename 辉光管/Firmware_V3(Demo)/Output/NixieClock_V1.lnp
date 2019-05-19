@@ -1,0 +1,17 @@
+".\Output\main.obj",
+".\Output\Display.obj",
+".\Output\TimeUpdate.obj",
+".\Output\RTC.obj",
+".\Output\Sound.obj",
+".\Output\Exti.obj",
+".\Output\HV57708.obj",
+".\Output\SD2405ALPI.obj",
+".\Output\ADC.obj",
+".\Output\delay.obj",
+".\Output\GPIO.obj",
+".\Output\timer.obj",
+".\Output\Soft_I2C.obj",
+".\Output\STARTUP.obj" 
+TO ".\Output\NixieClock_V1" 
+
+PRINT(".\Output\NixieClock_V1.map") REMOVEUNUSED 

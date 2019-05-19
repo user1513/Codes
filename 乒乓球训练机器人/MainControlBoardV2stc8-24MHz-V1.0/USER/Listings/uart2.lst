@@ -1,0 +1,77 @@
+C51 COMPILER V9.56.0.0   UART2                                                             09/19/2018 18:05:00 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE UART2
+OBJECT MODULE PLACED IN .\Objects\uart2.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE ..\HARDWARE\uart2\uart2.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..
+                    -\HARDWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\H
+                    -ARDWARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\uart2.lst) OBJECT(.\Objects\uart2.obj)
+
+line level    source
+
+   1          #include "uart2.h"
+   2          #include "uart1.h"
+   3          #include "djiReceiver_dr16.h"
+   4          
+   5          #define FOSC            24000000UL
+   6          #define BRT             (65536 - FOSC / 100000 / 4)
+   7          
+   8          bit uart2busy=0;
+   9          
+  10          void Uart2Isr() interrupt 8 using 1
+  11          {
+  12   1          if (S2CON & 0x01)
+  13   1          {
+  14   2              S2CON &= ~0x01;
+  15   2              DR16DataAnalysis(S2BUF);
+  16   2          }
+  17   1      }
+  18          
+  19          void Uart2Init()
+  20          {
+  21   1          S2CON |= 0x50;
+  22   1          T2L = BRT;
+  23   1          T2H = BRT >> 8;
+  24   1          AUXR |= 0x14;
+  25   1              //IE2 = 0x01;
+  26   1          //EA = 1;
+  27   1      }
+  28          
+  29          void Uart2Send(u8 dat)
+  30          {
+  31   1              S2BUF = dat;
+  32   1          while ((S2CON & 0x02)!=0x02);
+  33   1          S2CON &= ~0x02; 
+  34   1      }
+  35          
+  36          void Uart2SendStr(u8 *p)
+  37          {
+  38   1          while (*p)
+  39   1          {
+  40   2              Uart2Send(*p++);
+  41   2          }
+  42   1      }
+  43          
+  44          void Uart2SendStrLen(u8 *p,u8 length)
+  45          {
+  46   1          while (length--)
+  47   1          {
+  48   2              Uart2Send(*p++);
+  49   2          }
+  50   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.56.0.0   UART2                                                             09/19/2018 18:05:00 PAGE 2   
+
+   CODE SIZE        =    128    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

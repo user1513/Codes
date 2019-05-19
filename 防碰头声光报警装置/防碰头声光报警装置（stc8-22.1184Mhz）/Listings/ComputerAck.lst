@@ -1,0 +1,65 @@
+C51 COMPILER V9.56.0.0   COMPUTERACK                                                       10/22/2018 20:01:40 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE COMPUTERACK
+OBJECT MODULE PLACED IN .\Objects\ComputerAck.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE ComputerAck.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\ComputerAck.lst) OBJECT(.\Objects\ComputerAck.obj)
+
+line level    source
+
+   1          #include "ComputerAck.h"
+   2          
+   3          
+   4          void ReplyAck(u8 _CmdVal)//收到上位机写的命令后返回ACK
+   5          {
+   6   1              xdata u8 _Dataable[7];
+   7   1              u16 _ModbusCrc=0;
+   8   1              _Dataable[0]=0XA5;
+   9   1              _Dataable[1]=0X5A;
+  10   1              _Dataable[2]=0X04;
+  11   1              _Dataable[3]=_CmdVal;
+  12   1              _Dataable[4]=0XFF;
+  13   1              _ModbusCrc=ModBus_CRC(_Dataable,5);
+  14   1              _Dataable[5]=(u8)_ModbusCrc;
+  15   1              _Dataable[6]=_ModbusCrc>>8;
+  16   1              Uart1SendStrLen(_Dataable,7);//发送7位ACK
+  17   1      }
+  18          
+  19          void ReplyReadCmd(u8 _CmdVal,u16 _Data)//收到上位机读命令后操作
+  20          {
+  21   1              xdata u8 _Dataable[9];
+  22   1              u16 _ModbusCrc=0;
+  23   1              _Dataable[0]=0XA5;
+  24   1              _Dataable[1]=0X5A;
+  25   1              _Dataable[2]=0X06;
+  26   1              _Dataable[3]=_CmdVal;
+  27   1              _Dataable[6]=0XFF;
+  28   1              _Dataable[4]=_Data>>8;
+  29   1              _Dataable[5]=(u8)_Data;
+  30   1              _ModbusCrc=ModBus_CRC(_Dataable,7);
+  31   1              _Dataable[7]=(u8)_ModbusCrc;
+  32   1              _Dataable[8]=_ModbusCrc>>8;
+  33   1              Uart1SendStrLen(_Dataable,9);//发送9位数据
+  34   1      }
+  35          void ReplyError(u16 _errortype)
+  36          {
+  37   1              ReplyReadCmd(0x80,_errortype);
+  38   1      }
+  39          
+  40          
+  41          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    128    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      16
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

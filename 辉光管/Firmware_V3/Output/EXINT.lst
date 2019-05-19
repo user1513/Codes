@@ -1,0 +1,23 @@
+C51 COMPILER V9.50a   EXINT                                                                03/26/2016 23:51:19 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE EXINT
+OBJECT MODULE PLACED IN .\Output\EXINT.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\EXINT.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.\App;.\Hardwar
+                    -eDrivers;.\STC15;.\App) DEBUG PRINT(.\Output\EXINT.lst) TABS(2) OBJECT(.\Output\EXINT.obj)
+
+line level    source
+
+   1          #include "app.h"
+*** ERROR C129 IN LINE 15 OF App\app.h: missing ';' before 'mode'
+   2          void  EXTI_config(void)
+   3          {
+   4            EXTI_InitTypeDef  EXTI_InitStructure;         //结构定义
+   5          
+   6            EXTI_InitStructure.EXTI_Mode      = EXT_MODE_RiseFall;  //中断模式,   EXT_MODE_RiseFall, EXT_MODE_Fall
+   7            EXTI_InitStructure.EXTI_Polity    = PolityHigh;     //中断优先级,   PolityLow,PolityHigh
+   8            EXTI_InitStructure.EXTI_Interrupt = ENABLE;       //中断允许,     ENABLE或DISABLE
+   9            Ext_Inilize(EXT_INT0,&EXTI_InitStructure);        //初始化INT0  EXT_INT0,EXT_INT1,EXT_INT2,EXT_INT3,EXT_INT4
+  10          }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

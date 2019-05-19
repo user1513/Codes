@@ -1,0 +1,86 @@
+C51 COMPILER V9.50a   RF_BM_S02                                                            03/12/2016 18:51:18 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE RF_BM_S02
+OBJECT MODULE PLACED IN .\Output\RF-BM-S02.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE HardwareDrivers\RF-BM-S02.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR
+                    -(.\App;.\HardwareDrivers;.\STC15) DEBUG PRINT(.\Output\RF-BM-S02.lst) TABS(2) OBJECT(.\Output\RF-BM-S02.obj)
+
+line level    source
+
+   1          /**
+   2           * RF-BM-S02 驱动
+   3           * 模块简介：
+   4           *     蓝牙4.0模块，可通过串口与 MCU 通信
+   5           * 作者：    Blanboom
+   6           * 最后更新：2014-07-20
+   7           * http://blanboom.org
+   8           ***************************************
+   9           * 模块 RX 接单片机 P3.7，模块 TX 接单片机 P3.6
+  10           * 同时需要在 "PinDef.h" 中定义引脚 EN, BRTS 和 BCTS，即：
+  11           *         RF_BM_S02_EN
+  12           *         RF_BM_S02_BRTS
+  13           *         RF_BM_S02_BCTS
+  14           * 使用了单片机的 UART1 和 定时器 2
+  15           * 接收到的数据存储在 UART1 的 Buffer 中，具体见 "USART.h"
+  16           */
+  17           
+  18          #include "RF-BM-S02.h"
+  19          
+  20          #include "delay.h"
+  21          #include "USART.h"
+  22          #include "PinDef.h"
+  23          #include "stdio.h"
+  24          
+  25          /**
+  26           * uint8_t RF_BM_S02_Init(void)
+  27           * 简介：初始化 RF_BM_S02 及其所需的硬件资源
+  28           * 功能：初始化串口 1， 波特率为 9600，是用定时器 2 作为波特率发生器，同时初始化相关引脚
+  29           * 输入：无
+  30           * 输出：
+  31           *       RF_BM_S02_ERROR - 初始化错误
+  32           *       RF_BM_S02_OK    - 初始化成功
+  33           */
+  34          uint8_t RF_BM_S02_Init(void)
+  35          {
+  36   1        COMx_InitDefine   COMx_InitStructure;         
+  37   1        COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;
+  38   1        COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;
+  39   1        COMx_InitStructure.UART_BaudRate  = 115200ul;
+  40   1        COMx_InitStructure.UART_RxEnable  = ENABLE;
+  41   1        COMx_InitStructure.BaudRateDouble = DISABLE;
+  42   1        COMx_InitStructure.UART_Interrupt = ENABLE;
+  43   1        COMx_InitStructure.UART_Polity    = PolityHigh;
+  44   1        COMx_InitStructure.UART_P_SW      = UART1_SW_P36_P37;
+  45   1        COMx_InitStructure.UART_RXD_TXD_Short = DISABLE;
+  46   1        if(USART_Configuration(USART1, &COMx_InitStructure) != 0)
+  47   1        {
+  48   2          return RF_BM_S02_ERROR;
+  49   2        }
+  50   1        
+  51   1        RF_BM_S02_EN   = 0;
+  52   1        RF_BM_S02_BCTS = 1;
+  53   1        RF_BM_S02_BRTS = 1;
+  54   1        
+C51 COMPILER V9.50a   RF_BM_S02                                                            03/12/2016 18:51:18 PAGE 2   
+
+  55   1        return RF_BM_S02_OK;
+  56   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     63    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----      13
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

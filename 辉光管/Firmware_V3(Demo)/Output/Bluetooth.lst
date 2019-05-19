@@ -1,0 +1,169 @@
+C51 COMPILER V9.50a   BLUETOOTH                                                            03/12/2016 18:51:17 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE BLUETOOTH
+OBJECT MODULE PLACED IN .\Output\Bluetooth.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\Bluetooth.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.\App;.\Har
+                    -dwareDrivers;.\STC15) DEBUG PRINT(.\Output\Bluetooth.lst) TABS(2) OBJECT(.\Output\Bluetooth.obj)
+
+line level    source
+
+   1          /**
+   2           * 蓝牙相关函数
+   3           * 作者：    Blanboom
+   4           * 最后更新：2014-08-18
+   5           * http://blanboom.org
+   6           **************************
+   7           * 蓝牙指令:
+   8           *     TIMShhmmss    -  设置时间，hhmmss 为 24 时制时间
+   9           *     TIMAhhmmss    -  设置闹钟，hhmmss 为 24 时制时间
+  10           *     TIMLggrrbb    -  设置 LED 颜色，ggrrbb 为 LED 的 RGB 颜色
+  11           *     TIMMx         -  打开/关闭闹钟，x = 0 时打开，x = 1 时关闭
+  12           *     TIMDxxxxxxdd  -  进入自定义显示模式并显示内容，xxxxxx 为要显示的数字
+  13           *                      dd 范围是 0 ~ 15，控制四个点的显示，具体见 "Display.h"
+  14           *     TIMT          -  切换回时钟模式
+  15           */
+  16          
+  17          #include "Bluetooth.h"
+  18          #include "RF-BM-S02.h"
+  19          #include "USART.h"
+  20          #include "app.h"
+  21          #include "Display.h"
+  22          #include "RTC.h" 
+  23          #include "delay.h"
+  24          #include "Sound.h"
+  25          
+  26          /**
+  27           * void bluetoothInit(void)
+  28           * 简介：蓝牙初始化
+  29           * 输入：无
+  30           * 输出：无
+  31           */
+  32          void bluetoothInit(void)
+  33          {
+  34   1        RF_BM_S02_Init();
+  35   1      }
+  36          
+  37          /**
+  38           * void bluetoothCheck(void)
+  39           * 简介：检查并执行蓝牙指令
+  40           * 输入：无
+  41           * 输出：无
+  42           */
+  43          void bluetoothCheck(void)
+  44          {
+  45   1        uint8_t i, j;
+  46   1        if(COM1.RX_TimeOut > 0)   // 超时计数
+  47   1        {
+  48   2          Delay_ms(2);
+  49   2          if(--COM1.RX_TimeOut == 0)
+  50   2          {
+  51   3            if(COM1.RX_Cnt > 0)
+  52   3            {
+  53   4              for(i=0; i<COM1.RX_Cnt; i++)
+  54   4              {
+C51 COMPILER V9.50a   BLUETOOTH                                                            03/12/2016 18:51:17 PAGE 2   
+
+  55   5                if(RX1_Buffer[i] == 'T' && i < (COM_RX1_Lenth - 15))
+  56   5                {
+  57   6                  if(RX1_Buffer[i + 1] == 'I' && RX1_Buffer[i + 2] == 'M')    // 接收到 "TIM" 开头的数据
+  58   6                  {
+  59   7                    if(RX1_Buffer[i + 3] == 'S')    // 设置时间
+  60   7                    {
+  61   8                      mode = MODE_CLOCK;
+  62   8                      hour   = (RX1_Buffer[i + 4] - '0') * 10 + (RX1_Buffer[i + 5] - '0');
+  63   8                      minute = (RX1_Buffer[i + 6] - '0') * 10 + (RX1_Buffer[i + 7] - '0');
+  64   8                      second = (RX1_Buffer[i + 8] - '0') * 10 + (RX1_Buffer[i + 9] - '0');
+  65   8                      EA = 0;
+  66   8                      syncTime();
+  67   8                      EA = 1;
+  68   8                      playSound(10);
+  69   8                      break;
+  70   8                    }
+  71   7                    else if(RX1_Buffer[i + 3] == 'A')    // 设置闹钟
+  72   7                    {
+  73   8                      mode = MODE_CLOCK;
+  74   8                      hour_alarm   = (RX1_Buffer[i + 4] - '0') * 10 + (RX1_Buffer[i + 5] - '0');
+  75   8                      minute_alarm = (RX1_Buffer[i + 6] - '0') * 10 + (RX1_Buffer[i + 7] - '0');
+  76   8                      second_alarm = (RX1_Buffer[i + 8] - '0') * 10 + (RX1_Buffer[i + 9] - '0');
+  77   8                      playSound(10);
+  78   8                      break;
+  79   8                    }
+  80   7                    else if(RX1_Buffer[i + 3] == 'M')    // 闹钟开关
+  81   7                    {
+  82   8                      mode = MODE_CLOCK;
+  83   8                      alarmEnable   = RX1_Buffer[i + 4] - '0';
+  84   8                      if(alarmEnable)
+  85   8                      {
+  86   9                        ledUpdate(31, 0, 31);
+  87   9                      }
+  88   8                      else
+  89   8                      {
+  90   9                        ledUpdate(0, 0, 31);
+  91   9                      }
+  92   8                      playSound(10);
+  93   8                      break;
+  94   8                    }
+  95   7                    else if(RX1_Buffer[i + 3] == 'N')    // 夜间模式
+  96   7                    {
+  97   8                      if(RX1_Buffer[i + 4] == '0')
+  98   8                      {
+  99   9                        sleepMode = 0;
+ 100   9                      }
+ 101   8                      if(RX1_Buffer[i + 4] == '1')
+ 102   8                      {
+ 103   9                        sleepMode = 1;
+ 104   9                      }
+ 105   8                      playSound(10);
+ 106   8                      break;
+ 107   8                    }
+ 108   7                    else if(RX1_Buffer[i + 3] == 'L')     // 设置 LED 颜色
+ 109   7                    {
+ 110   8                      ledUpdate((RX1_Buffer[i + 4] - '0') * 10 + (RX1_Buffer[i + 5] - '0'),
+ 111   8                                (RX1_Buffer[i + 6] - '0') * 10 + (RX1_Buffer[i + 7] - '0'),
+ 112   8                                (RX1_Buffer[i + 8] - '0') * 10 + (RX1_Buffer[i + 9] - '0'));
+ 113   8                      break;
+ 114   8                    }
+ 115   7                    else if(RX1_Buffer[i + 3] == 'D')     // 自定义显示
+ 116   7                    {
+C51 COMPILER V9.50a   BLUETOOTH                                                            03/12/2016 18:51:17 PAGE 3   
+
+ 117   8                      mode = MODE_DISPLAY;                // 进入自定义显示模式
+ 118   8                      for(j = 0; j < 6; j++)
+ 119   8                      {
+ 120   9                        numbertoDisplay[j] = RX1_Buffer[i + j + 4];
+ 121   9                      }
+ 122   8                      displayUserNumber(numbertoDisplay);
+ 123   8                      displayDots((RX1_Buffer[i + 10] - '0') * 10 + (RX1_Buffer[i + 11] - '0'));
+ 124   8                      break;
+ 125   8                    }
+ 126   7                    else if(RX1_Buffer[i + 3] == 'T')     // 切换回时钟模式
+ 127   7                    {
+ 128   8                      mode = MODE_CLOCK;                // 进入自定义显示模式
+ 129   8                    }
+ 130   7                  }
+ 131   6                }
+ 132   5              }
+ 133   4            }
+ 134   3            COM1.RX_Cnt = 0;
+ 135   3          }
+ 136   2        }
+ 137   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    589    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       1
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

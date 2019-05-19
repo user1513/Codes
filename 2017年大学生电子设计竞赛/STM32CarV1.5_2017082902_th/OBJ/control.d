@@ -1,0 +1,14 @@
+..\obj\control.o: control.c
+..\obj\control.o: control.h
+..\obj\control.o: ..\SYSTEM\sys\sys.h
+..\obj\control.o: ..\SYSTEM\sys\stm32f10x.h
+..\obj\control.o: ..\SYSTEM\sys\core_cm3.h
+..\obj\control.o: C:\Software\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\control.o: ..\SYSTEM\sys\system_stm32f10x.h
+..\obj\control.o: main.h
+..\obj\control.o: C:\Software\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\control.o: ..\HARDWARE\ENCODER\encoder.h
+..\obj\control.o: ..\HARDWARE\MOTOR\motor.h
+..\obj\control.o: ..\SYSTEM\delay\delay.h
+..\obj\control.o: ..\HARDWARE\KEY\key.h
+..\obj\control.o: ..\HARDWARE\USART1\usart1.h

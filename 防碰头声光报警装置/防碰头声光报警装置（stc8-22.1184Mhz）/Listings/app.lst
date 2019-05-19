@@ -1,0 +1,135 @@
+C51 COMPILER V9.56.0.0   APP                                                               10/22/2018 20:17:22 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE APP
+OBJECT MODULE PLACED IN .\Objects\app.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE app.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\a
+                    -pp.lst) OBJECT(.\Objects\app.obj)
+
+line level    source
+
+   1          #include "app.h"
+   2          
+   3          #define ULTRASONICALARMDISTANCE 100//超声波报警距离（0-65535mm）
+   4          #define ULTRASONICALARMDISTANCE_H (u8)(ULTRASONICALARMDISTANCE>>8)//超声波报警距离（0-65535mm）
+   5          #define ULTRASONICALARMDISTANCE_L (u8)ULTRASONICALARMDISTANCE//超声波报警距离（0-65535mm）
+   6          u8 ReadorWrite=0XFF;//读写状态位
+   7          u8 ComputerCmd=0X00;//上位机命令状态位
+   8          u16 ComputerData=0X0000;//上位机数据位
+   9          u8 E2promFlag=0x00;//E2PROM状态位
+  10          
+  11          xdata u8 DefaultSetArry[16]={0X01,ULTRASONICALARMDISTANCE_H,ULTRASONICALARMDISTANCE_L,0X01,0X00,0X1E,0X00,
+             -0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00};//默认参数设置
+  12          
+  13          xdata u8 SaveEepromData[16];//读取EEPROM内部数据
+  14                  
+  15          #define SAVEEEPROMDATALENGTH (u8)(sizeof(SaveEepromData)/sizeof(SaveEepromData[0]))
+  16          #define DEFAULTEEPROMDATALENGTH (u8)(sizeof(DefaultSetArry)/sizeof(DefaultSetArry[0]))  
+  17          void EepromInitTest(void);//EEPROM上电检测
+  18          
+  19          
+  20          _bool EquipmentInit = TRUE;
+  21          _bool EquipmentFault = TRUE;
+  22          
+  23          void main()
+  24          {
+  25   1              int numi = 0;
+  26   1              u16 jl = 0;
+  27   1              Timer0Init();
+  28   1              Uart1_Init();
+  29   1              Uart2Init();
+  30   1              musicplaymode(1);
+  31   1              Delayms(5000);
+  32   1              My1680uControl(STOPMODE, DATALENGTH3, DATANONE);
+  33   1              while(1)
+  34   1              {
+  35   2                      if(UltrasonicArray[8] == 0XFF)
+  36   2                      {
+  37   3                              UltrasonicArray[8] = 0X00;      
+  38   3                              jl = (UltrasonicArray[4] << 8) + UltrasonicArray[5];
+  39   3                              Uart1_SendStr("超声波测量距离:/n");
+  40   3      //                      Uart1_Send((char)((jl%10000)/1000+'0'));
+  41   3      //                      Uart1_Send((char)((jl%1000)/100+'0'));  
+  42   3      //                      Uart1_Send((char)((jl%100)/10+'0'));
+  43   3      //                      Uart1_Send((jl%10)+'0');
+  44   3      //                      Uart1_Send(1+'0');
+  45   3      //                      Uart1_Send(1+'0');      
+  46   3      //                      Uart1_Send(1+'0');
+  47   3      //                      Uart1_Send(1+'0');
+  48   3      //                      Uart1_SendStr("mm/n");
+  49   3      //                      Uart1SendStrLen(UltrasonicArray, 9);
+  50   3                      }
+  51   2                      if(UartCmdArray[11] == 0XFF)
+  52   2                      {
+  53   3                              UartCmdArray[11]=0X00;
+C51 COMPILER V9.56.0.0   APP                                                               10/22/2018 20:17:22 PAGE 2   
+
+  54   3                              ReadorWrite=UartCmdArray[3];
+  55   3                              ComputerCmd=UartCmdArray[4];
+  56   3                              ComputerData=UartCmdArray[5]<<8+UartCmdArray[6];
+  57   3                              E2promFlag=UartCmdArray[7];
+  58   3                              if(ReadorWrite==COMWRITECMD)
+  59   3                                      ReplyAck(ComputerCmd);
+  60   3                              else if(ReadorWrite==COMREADCMD)
+  61   3                                      ReplyReadCmd(ComputerCmd,ComputerData);
+  62   3                              //Uart1SendStrLen(UartCmdArray,12);
+  63   3                      }
+  64   2                      if(100 < jl && EquipmentInit == TRUE)
+  65   2                      {
+  66   3                              CleanCallbackFunc(&EquipmentFault, FALSE);
+  67   3                              EquipmentInit = FALSE;
+  68   3                              EquipmentFault = TRUE;
+  69   3                              musicplaymode(3);
+  70   3                              FuncReg(&EquipmentInit, 254000, TRUE);
+  71   3                      }
+  72   2                      else if(EquipmentFault == TRUE && 100 >= jl)
+  73   2                      {
+  74   3                              CleanCallbackFunc(&EquipmentInit, FALSE);
+  75   3                              EquipmentInit = TRUE;
+  76   3                              EquipmentFault = FALSE;
+  77   3                              musicplaymode(2);
+  78   3                              FuncReg(&EquipmentFault, 4000, TRUE);
+  79   3                      }
+  80   2              }
+  81   1      }
+  82          
+  83          void EepromInitTest(void)
+  84          {
+  85   1              if(IfAddrData(0x0000,0x01)!=Enable)//判断EEPROM_ADDR(0X0000)==0X01;
+  86   1          {
+  87   2              ReplyError(0x0001);//发送错误(检测到EEPROM0x0000数据不等于0x01)
+  88   2              if((u8)CollectiveWritData(0x0000,DefaultSetArry,SAVEEEPROMDATALENGTH,12)!=(u8)Enable);//写入默认数
+             -据
+  89   2                              ReplyError(0x0003);//写入数据长度超出定义存取数据长度
+  90   2                      if(IfAddrData(0x0000,0x01)!=Enable)
+  91   2                      {
+  92   3                              ReplyError(0x0002);//发送错误(请检查EEPROM是否正常工作，系统停止工作)
+  93   3                              while(1);
+  94   3                      }
+  95   2          } 
+  96   1              if((u8)(CollectiveReadData(0x0000,SaveEepromData,SAVEEEPROMDATALENGTH,12))!=(u8)Enable)
+  97   1              {       
+  98   2                      ReplyError(0x0004);//读取数据长度超出定义存取数据长度
+  99   2                      while(1);
+ 100   2              }
+ 101   1                      Uart1SendStrLen(SaveEepromData,12);//打印出读取的EEPROM数据（HEX）
+ 102   1      }
+ 103                  
+ 104          
+ 105          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    391    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =     32    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       4
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.56.0.0   APP                                                               10/22/2018 20:17:22 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

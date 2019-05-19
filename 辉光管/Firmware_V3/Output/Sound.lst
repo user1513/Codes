@@ -1,0 +1,301 @@
+C51 COMPILER V9.56.0.0   SOUND                                                             11/09/2018 18:43:01 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE SOUND
+OBJECT MODULE PLACED IN .\Output\Sound.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE App\Sound.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.\App;.\Har
+                    -dwareDrivers;.\STC15;.\App) DEBUG PRINT(.\Output\Sound.lst) OBJECT(.\Output\Sound.obj)
+
+line level    source
+
+   1          /**
+   2           * 声音与闹钟相关函数
+   3           * 作者：hhelib
+   4           * 最后更新：2016-03-13
+   5           */
+   6          
+   7          #include "Sound.h"
+   8          #include "timer.h"
+   9          #include "config.h"
+  10          #include "app.h"
+  11          #include "PinDef.h"
+  12          #include "GPIO.h"
+  13          #include "delay.h"
+  14          
+  15          // 私有函数定义
+  16          void Delay200us(void);
+  17          
+  18          /**
+  19           * void soundInit(void)
+  20           * 简介：声音播放初始化
+  21           * 输入：无
+  22           * 输出：无
+  23           */
+  24          void soundInit(void)
+  25          {
+  26   1              GPIO_InitTypeDef        GPIO_InitStructure;     
+  27   1              //TIM_InitTypeDef               TIM_InitStructure;
+  28   1              
+  29   1              // 将蜂鸣器的 IO 口设置为推挽输出模式，音量更大
+  30   1              GPIO_InitStructure.Pin  = GPIO_Pin_0;   
+  31   1              GPIO_InitStructure.Mode = GPIO_OUT_PP;          
+  32   1              GPIO_Inilize(GPIO_P1, &GPIO_InitStructure);     
+  33   1              BUZ = 0;
+  34   1              
+  35   1              // 初始化定时器 1，用于播放一定频率的声音
+  36   1              /*
+  37   1              TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;
+  38   1              TIM_InitStructure.TIM_Polity    = PolityLow;
+  39   1              TIM_InitStructure.TIM_Interrupt = DISABLE;
+  40   1              TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;
+  41   1              TIM_InitStructure.TIM_ClkOut    = DISABLE;
+  42   1              TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 100000UL);
+  43   1              TIM_InitStructure.TIM_Run       = ENABLE;
+  44   1              Timer_Inilize(Timer1, &TIM_InitStructure);      
+  45   1              */
+  46   1      }
+  47          
+  48          /**
+  49           * void tone(uint16_t freq)
+  50           * 简介：发出特定频率的声音
+  51           * 输入：freq - 声音频率，20~20000
+  52           * 输出：无
+  53           */
+  54          void tone(uint16_t freq)
+C51 COMPILER V9.56.0.0   SOUND                                                             11/09/2018 18:43:01 PAGE 2   
+
+  55          {
+  56   1              uint16_t timerValue = 0;
+  57   1              timerValue = 65536ul - (MAIN_Fosc / (freq * 24));
+  58   1              TH1 = (uint8_t)(timerValue >> 8);
+  59   1              TL1 = (uint8_t)timerValue;
+  60   1              ET1 = 1;
+  61   1      }
+  62          
+  63          /**
+  64           * void noTone(void)
+  65           * 简介：停止播放声音
+  66           * 输入：freq - 声音频率，20~20000
+  67           * 输出：无
+  68           */
+  69          void noTone(void)
+  70          {
+  71   1              ET1 = 0;
+  72   1              BUZ = 0;
+  73   1      }
+  74          
+  75          /**
+  76           * void playSound(uint8_t var)
+  77           * 简介：播放指定的声音
+  78           * 输入：var - 声音种类
+  79           * 输出：无
+  80           */
+  81          void playSound(uint8_t var)
+  82          {
+  83   1              uint16_t i = 0;
+  84   1              // 声音资源由 NodeWee (http://nodewee.me) 提供
+  85   1        switch(var) 
+  86   1              {
+  87   2        case 1://sa jiao
+  88   2          for(i=200;i<990;i++)
+  89   2                      {
+  90   3            tone(i);
+  91   3                              Delay200us();
+  92   3                              noTone();
+  93   3          }
+  94   2          for(i=990;i>200;i--)
+  95   2                      {
+  96   3            tone(i);
+  97   3                              Delay200us();
+  98   3                              noTone();
+  99   3          }
+ 100   2          for(i=200;i<350;i++)
+ 101   2                      {
+ 102   3            tone(i);
+ 103   3                              Delay200us();
+ 104   3                              noTone();
+ 105   3          }
+ 106   2          break;
+ 107   2        case 2: // di di
+ 108   2          tone(900);
+ 109   2          Delay_ms(400);
+ 110   2                noTone();
+ 111   2          Delay_ms(200);
+ 112   2          tone(900);
+ 113   2                Delay_ms(400);
+ 114   2                noTone();
+ 115   2          Delay_ms(200);
+ 116   2          break;
+C51 COMPILER V9.56.0.0   SOUND                                                             11/09/2018 18:43:01 PAGE 3   
+
+ 117   2        case 3: // de li
+ 118   2          tone(300);
+ 119   2                Delay_ms(400);
+ 120   2                noTone();
+ 121   2          Delay_ms(50);
+ 122   2          tone(400);
+ 123   2                Delay_ms(250);
+ 124   2                noTone();
+ 125   2          Delay_ms(50);
+ 126   2          break;
+ 127   2        case 4: // du da
+ 128   2          tone(300);
+ 129   2                Delay_ms(500);
+ 130   2                noTone();
+ 131   2          Delay_ms(100);
+ 132   2          for(i=300;i<500;i++)
+ 133   2                      {
+ 134   3            tone(i);
+ 135   3                              Delay_ms(1);
+ 136   3                              noTone();
+ 137   3          }
+ 138   2          Delay_ms(50);
+ 139   2          break;
+ 140   2        case 5: // du~ do~~
+ 141   2          for(i=450;i<650;i++)
+ 142   2                      {
+ 143   3            tone(i);
+ 144   3            Delay_ms(1);
+ 145   3          }
+ 146   2          noTone();
+ 147   2          Delay_ms(500);
+ 148   2          //
+ 149   2          for(i=450;i< 750;i++)
+ 150   2                      {
+ 151   3            tone(i);
+ 152   3            Delay_ms(1);
+ 153   3          }
+ 154   2          noTone();
+ 155   2          Delay_ms(500);
+ 156   2          break;
+ 157   2        case 6: // du_-`~
+ 158   2          for(i=1000;i<1400;i++)
+ 159   2                      {
+ 160   3            tone(i);
+ 161   3            Delay_ms(1);
+ 162   3          }
+ 163   2          noTone();
+ 164   2          Delay_ms(100);
+ 165   2          break;
+ 166   2        case 7: // di- dang-_
+ 167   2          tone(1200);
+ 168   2          Delay_ms(100);
+ 169   2          noTone();
+ 170   2          Delay_ms(100);
+ 171   2          for(i=900;i>300;i--)
+ 172   2                      {
+ 173   3            tone(i);
+ 174   3            Delay_ms(1);
+ 175   3          }
+ 176   2          noTone();
+ 177   2          Delay_ms(100);
+ 178   2          break;
+C51 COMPILER V9.56.0.0   SOUND                                                             11/09/2018 18:43:01 PAGE 4   
+
+ 179   2        case 8: // dang~ dang-
+ 180   2          tone(1100);
+ 181   2          Delay_ms(120);
+ 182   2          noTone();
+ 183   2          Delay_ms(100);
+ 184   2          tone(600);
+ 185   2          Delay_ms(350);
+ 186   2          noTone();
+ 187   2          Delay_ms(100);
+ 188   2          break;
+ 189   2        case 9: //u- u~
+ 190   2          tone(150);
+ 191   2          Delay_ms(400);
+ 192   2          noTone();
+ 193   2          Delay_ms(250);
+ 194   2          tone(200);
+ 195   2          Delay_ms(400);
+ 196   2          noTone();
+ 197   2          Delay_ms(100);
+ 198   2          break;
+ 199   2        case 12: // bee boo
+ 200   2          for(i=300;i<400;i++)
+ 201   2                      {
+ 202   3            tone(i);
+ 203   3            Delay_ms(1);
+ 204   3          }
+ 205   2          tone(400);
+ 206   2          Delay_ms(200);
+ 207   2          for(i=400;i>350;i--)
+ 208   2                      {
+ 209   3            tone(i);
+ 210   3            Delay_ms(1);
+ 211   3          }
+ 212   2          tone(350);
+ 213   2          Delay_ms(200);
+ 214   2          noTone();
+ 215   2          break;
+ 216   2        default: //bee bee
+ 217   2          tone(500);
+ 218   2                Delay_ms(300);
+ 219   2                noTone();
+ 220   2          Delay_ms(400);
+ 221   2          tone(500);
+ 222   2                Delay_ms(300);
+ 223   2                noTone();
+ 224   2          Delay_ms(400);
+ 225   2        }
+ 226   1      }
+ 227          
+ 228          void alarmDispatcher(void)
+ 229          {
+ 230   1              if((alarmEnable == 1) &&
+ 231   1                       (hour == hour_alarm) &&
+ 232   1                 ((minute - minute_alarm) < 3))
+ 233   1              {
+ 234   2                      if(second % 3 == 0)
+ 235   2                      {
+ 236   3                              // 每隔 3 秒响一次
+ 237   3                        playSound(2);
+ 238   3                      }
+ 239   2              }
+ 240   1      }
+C51 COMPILER V9.56.0.0   SOUND                                                             11/09/2018 18:43:01 PAGE 5   
+
+ 241          
+ 242          void Delay200us()               //@24.000MHz
+ 243          {
+ 244   1              unsigned char i, j;
+ 245   1      
+ 246   1              i = 5;
+ 247   1              j = 168;
+ 248   1              do
+ 249   1              {
+ 250   2                      while (--j);
+ 251   2              } while (--i);
+ 252   1      }
+ 253          
+ 254          /**
+ 255           * void timer1_int (void)
+ 256           * 简介：Timer 1 的 ISR，翻转蜂鸣器 IO 口
+ 257           * 输入：无
+ 258           * 输出：无
+ 259           */
+ 260          /*
+ 261          void timer1_int (void) interrupt TIMER1_VECTOR
+ 262          {
+ 263            BUZ = ~BUZ;
+ 264          }
+ 265          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    838    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       4
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

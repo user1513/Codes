@@ -1,0 +1,102 @@
+C51 COMPILER V9.56.0.0   MYDEMO                                                            10/22/2018 20:01:41 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MYDEMO
+OBJECT MODULE PLACED IN .\Objects\mydemo.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE mydemo.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\mydemo.lst) OBJECT(.\Objects\mydemo.obj)
+
+line level    source
+
+   1          #include "mydemo.h"
+   2          
+   3          
+   4          #define VARMAX 5
+   5          
+   6          typedef xdata struct MYFUNC
+   7          {
+   8                  u8 Reg;//注冊
+   9                  _bool *FlagName;//標志名稱
+  10                  u32 DelayTime;//延時時間
+  11                  _bool  FlagState;//標準狀態
+  12                  
+  13          }MyFunc;
+  14          
+  15          
+  16          MyFunc FlagStateFunc[VARMAX];//定義可以同時進行10位
+  17          
+  18          _bool FuncReg(_bool *_FlagName,u32 _DelayTime,_bool _FlagState)//變量指針，延時時間，標準狀態
+  19          {
+  20   1              _bool flag=FALSE;
+  21   1              int i=0;
+  22   1              for(i=0;i<VARMAX;i++)
+  23   1              {
+  24   2                      if(FlagStateFunc[i].FlagName==_FlagName&&FlagStateFunc[i].Reg==0x01)
+  25   2                      {
+  26   3                              FlagStateFunc[i].DelayTime=_DelayTime;
+  27   3                              FlagStateFunc[i].FlagState=_FlagState;
+  28   3                              return flag=TRUE;
+  29   3                      }
+  30   2              }
+  31   1              for(i = 0;i < VARMAX;i++)
+  32   1              {
+  33   2                      if(FlagStateFunc[i].Reg!=0x01)
+  34   2                      {
+  35   3                              FlagStateFunc[i].Reg=0x01;
+  36   3                              FlagStateFunc[i].DelayTime=_DelayTime;
+  37   3                              FlagStateFunc[i].FlagState=_FlagState;
+  38   3                              FlagStateFunc[i].FlagName=_FlagName;
+  39   3                              flag=TRUE;
+  40   3                              break;
+  41   3                      }
+  42   2              }
+  43   1              return flag;
+  44   1      }
+  45          
+  46          
+  47          void FuncTimeTravers(void)//定时器回调函数
+  48          {
+  49   1              int i = 0;
+  50   1              for(i = 0; i < VARMAX; i++)
+  51   1              {
+  52   2                      if(FlagStateFunc[i].Reg==0x01)
+  53   2                      {
+  54   3                              FlagStateFunc[i].DelayTime--;
+C51 COMPILER V9.56.0.0   MYDEMO                                                            10/22/2018 20:01:41 PAGE 2   
+
+  55   3                              if(FlagStateFunc[i].DelayTime==0)
+  56   3                              {
+  57   4                                      FlagStateFunc[i].Reg=0x00;
+  58   4                                      FlagStateFunc[i].DelayTime=0;
+  59   4                                      *FlagStateFunc[i].FlagName=FlagStateFunc[i].FlagState;
+  60   4                              }
+  61   3                      }
+  62   2              }
+  63   1      }
+  64          
+  65          void CleanCallbackFunc(_bool *_FlagName,_bool _FlagState)
+  66          {
+  67   1              int i=0;
+  68   1              for(i=0;i<VARMAX;i++)
+  69   1              {
+  70   2                      if(FlagStateFunc[i].FlagName==_FlagName)
+  71   2                      {
+  72   3                              FlagStateFunc[i].Reg=0x00;
+  73   3                              *FlagStateFunc[i].FlagName=_FlagState;
+  74   3                      }
+  75   2              }
+  76   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    737    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     45    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

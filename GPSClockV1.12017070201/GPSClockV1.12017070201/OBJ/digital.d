@@ -1,0 +1,15 @@
+..\obj\digital.o: ..\HARDWARE\Digital\Digital.c
+..\obj\digital.o: ..\HARDWARE\Digital\Digital.h
+..\obj\digital.o: ..\SYSTEM\sys\sys.h
+..\obj\digital.o: ..\USER\stm32f10x.h
+..\obj\digital.o: ..\CORE\core_cm3.h
+..\obj\digital.o: C:\Software\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\digital.o: ..\USER\system_stm32f10x.h
+..\obj\digital.o: ..\USER\stm32f10x_conf.h
+..\obj\digital.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\digital.o: ..\USER\stm32f10x.h
+..\obj\digital.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\digital.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\digital.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\digital.o: ..\STM32F10x_FWLib\inc\misc.h
+..\obj\digital.o: ..\SYSTEM\delay\delay.h

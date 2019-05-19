@@ -1,0 +1,50 @@
+C51 COMPILER V9.56.0.0   TABLETENNISDEVICE                                                 09/14/2018 16:07:53 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE TABLETENNISDEVICE
+OBJECT MODULE PLACED IN .\Objects\tabletennisdevice.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE ..\HARDWARE\TableTennisDevice\tabletennisdevice.c OPTIMIZE(8,SPEED) 
+                    -BROWSE INCDIR(..\USER;..\HARDWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart
+                    -2;..\HARDWARE\uart3;..\HARDWARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\tabletennisdevice.lst) OBJECT(.\O
+                    -bjects\tabletennisdevice.obj)
+
+line level    source
+
+   1          #include "tabletennisdevice.h"
+   2          
+   3          //FF090100FF·¢ÅÚ
+   4          void Artillery_Cmd(void)
+   5          {
+   6   1              u8 _able[5];
+   7   1              _able[0]=0XFF;
+   8   1              _able[1]=0X09;
+   9   1              _able[2]=0X01;
+  10   1              _able[3]=0X00;
+  11   1              _able[4]=0XFF;
+  12   1              Uart3SendStrLen(_able,5);
+  13   1      }
+  14          //FF0107xxFF¿ØÖÆ¶æ»ú
+  15          void SteeringEngineAngle(u8 _angle)
+  16          {
+  17   1              u8 _able[5];
+  18   1              _able[0]=0XFF;
+  19   1              _able[1]=0X01;
+  20   1              _able[2]=0X07;
+  21   1              _able[3]=_angle;
+  22   1              _able[4]=0XFF;
+  23   1              Uart3SendStrLen(_able,5);
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,178 @@
+C51 COMPILER V9.56.0.0   USART                                                             10/10/2018 17:55:46 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE USART
+OBJECT MODULE PLACED IN .\Objects\usart.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE usart.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\usart.lst) OBJECT(.\Objects\usart.obj)
+
+line level    source
+
+   1          #include "usart.h"
+   2          
+   3          BYTE TBUF,RBUF;
+   4          BYTE TDAT,RDAT;
+   5          BYTE TCNT,RCNT;
+   6          BYTE TBIT,RBIT;
+   7          BOOL TING,RING;
+   8          BOOL TEND,REND;
+   9          
+  10          void Usart_Init(void)
+  11          {
+  12   1          TMOD = 0x00;                        //timer0 in 16-bit auto reload mode
+  13   1          AUXR = 0x80;                        //timer0 working at 1T mode
+  14   1          TL0 = BAUD;
+  15   1          TH0 = BAUD>>8;                      //initial timer0 and set reload value
+  16   1          TR0 = 1;                            //tiemr0 start running
+  17   1          ET0 = 1;                            //enable timer0 interrupt
+  18   1          PT0 = 1;                            //improve timer0 interrupt priority
+  19   1          EA = 1;                             //open global interrupt switch
+  20   1      
+  21   1          UART_INIT();
+  22   1      /*
+  23   1          while (1)
+  24   1          {                                   //user's function
+  25   1              if (REND)
+  26   1              {
+  27   1                  REND = 0;
+  28   1                  buf[r++ & 0x0f] = RBUF;
+  29   1              }
+  30   1              if (TEND)
+  31   1              {
+  32   1                  if (t != r)
+  33   1                  {
+  34   1                      TEND = 0;
+  35   1                      TBUF = buf[t++ & 0x0f];
+  36   1                      TING = 1;
+  37   1                  }
+  38   1              }
+  39   1          }
+  40   1      */
+  41   1      }
+  42          
+  43          void UserSendString(BYTE *buf,BYTE Length)
+  44          {
+  45   1              int i=0;
+  46   1                      while (i != Length)
+  47   1                      {
+  48   2                              UserSendChar(*(buf++));
+  49   2                              i++;
+  50   2                              /*
+  51   2                              if (TEND)
+  52   2                              {
+  53   2                                      TEND = 0;
+  54   2                                      TBUF = *(buf++);
+C51 COMPILER V9.56.0.0   USART                                                             10/10/2018 17:55:46 PAGE 2   
+
+  55   2                                      TING = 1;
+  56   2                                      i++;
+  57   2                              }
+  58   2                              */
+  59   2                      }
+  60   1      }
+  61          
+  62          void UserSendChar(char Data)
+  63          {
+  64   1              while(!TEND);
+  65   1              TEND = 0;
+  66   1              TBUF = Data;
+  67   1              TING = 1;
+  68   1      }
+  69          
+  70          
+  71          void UserSendString1(char *str )
+  72          {
+  73   1              while(*str !='\0')
+  74   1              {
+  75   2                      UserSendChar(*(str++));
+  76   2              }
+  77   1      }
+  78          
+  79          //-----------------------------------------
+  80          //Timer interrupt routine for UART
+  81          
+  82          void tm0() interrupt 1 using 1
+  83          {
+  84   1          if (RING)
+  85   1          {
+  86   2              if (--RCNT == 0)
+  87   2              {
+  88   3                  RCNT = 3;                   //reset send baudrate counter
+  89   3                  if (--RBIT == 0)
+  90   3                  {
+  91   4                      RBUF = RDAT;            //save the data to RBUF
+  92   4                      RING = 0;               //stop receive
+  93   4                      REND = 1;               //set receive completed flag
+  94   4                  }
+  95   3                  else
+  96   3                  {
+  97   4                      RDAT >>= 1;
+  98   4                      if (RXB) RDAT |= 0x80;  //shift RX data to RX buffer
+  99   4                  }
+ 100   3              }
+ 101   2          }
+ 102   1          else if (!RXB)
+ 103   1          {
+ 104   2              RING = 1;                       //set start receive flag
+ 105   2              RCNT = 4;                       //initial receive baudrate counter
+ 106   2              RBIT = 9;                       //initial receive bit number (8 data bits + 1 stop bit)
+ 107   2          }
+ 108   1      
+ 109   1          if (--TCNT == 0)
+ 110   1          {
+ 111   2              TCNT = 3;                       //reset send baudrate counter
+ 112   2              if (TING)                       //judge whether sending
+ 113   2              {
+ 114   3                  if (TBIT == 0)
+ 115   3                  {
+ 116   4                      TXB = 0;                //send start bit
+C51 COMPILER V9.56.0.0   USART                                                             10/10/2018 17:55:46 PAGE 3   
+
+ 117   4                      TDAT = TBUF;            //load data from TBUF to TDAT
+ 118   4                      TBIT = 9;               //initial send bit number (8 data bits + 1 stop bit)
+ 119   4                  }
+ 120   3                  else
+ 121   3                  {
+ 122   4                      TDAT >>= 1;             //shift data to CY
+ 123   4                      if (--TBIT == 0)
+ 124   4                      {
+ 125   5                          TXB = 1;
+ 126   5                          TING = 0;           //stop send
+ 127   5                          TEND = 1;           //set send completed flag
+ 128   5                      }
+ 129   4                      else
+ 130   4                      {
+ 131   5                          TXB = CY;           //write CY to TX port
+ 132   5                      }
+ 133   4                  }
+ 134   3              }
+ 135   2          }
+ 136   1      }
+ 137          
+ 138          //-----------------------------------------
+ 139          //initial UART module variable
+ 140          
+ 141          void UART_INIT(void)
+ 142          {
+ 143   1          TING = 0;
+ 144   1          RING = 0;
+ 145   1          TEND = 1;
+ 146   1          REND = 0;
+ 147   1          TCNT = 0;
+ 148   1          RCNT = 0;
+ 149   1      }
+ 150          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    236    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      4    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,9 @@
+".\Objects\STARTUP.obj",
+".\Objects\app.obj",
+".\Objects\pbdata.obj",
+".\Objects\timer0.obj",
+".\Objects\uart1.obj",
+".\Objects\uart2.obj",
+".\Objects\UltrasonicDataHandle.obj" 
+TO ".\Objects\main" 
+PRINT(".\Listings\main.m51") RAMSIZE(256) 

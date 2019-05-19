@@ -1,0 +1,72 @@
+C51 COMPILER V9.59.0.0   SEAT                                                              03/13/2019 13:23:32 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SEAT
+OBJECT MODULE PLACED IN .\Objects\seat.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE seat.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\seat.ls
+                    -t) OBJECT(.\Objects\seat.obj)
+
+line level    source
+
+   1          #include "seat.h"
+   2          
+   3          int Seat_Addr()  //座位地址
+   4          {
+   5   1              return LIBRARYSEATADDR;
+   6   1      }
+   7          
+   8          int Seat_Num()//座位总数
+   9          {
+  10   1              return LIBRARYSEATNUM;
+  11   1      }
+  12          
+  13          int Present_Seat_Num()//目前座位有多少位子
+  14          {
+  15   1              u8 temp =~LIBRARYPRESENGTSEATNUM;
+  16   1      //      u8 num=0;
+  17   1      //      u8 temp1=0;
+  18   1      //      int i=0;
+  19   1      //      for(i = 0; i < 8; i++)
+  20   1      //      {
+  21   1      //              temp1 = temp << 7;
+  22   1      //              if (temp1)
+  23   1      //              {
+  24   1      //                      num++;
+  25   1      //              }
+  26   1      //              temp >>= 1;
+  27   1      //      }
+  28   1              
+  29   1              return temp;
+  30   1      }
+  31          
+  32          u8 Check0_add8(u8 *_data,u8 _checklength)
+  33          {
+  34   1              u8 CheckVal=0;
+  35   1              while(_checklength--)
+  36   1              {
+  37   2                      CheckVal +=*_data;
+  38   2                      _data++;
+  39   2              }
+  40   1              CheckVal =0-CheckVal;
+  41   1              return CheckVal;
+  42   1      }
+  43          
+  44          
+  45          
+  46          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     44    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.59.0.0   SEAT                                                              03/13/2019 13:23:32 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

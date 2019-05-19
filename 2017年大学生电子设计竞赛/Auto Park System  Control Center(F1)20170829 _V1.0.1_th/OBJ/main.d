@@ -1,0 +1,10 @@
+..\obj\main.o: main.c
+..\obj\main.o: ..\SYSTEM\sys\sys.h
+..\obj\main.o: ..\USER\stm32f10x.h
+..\obj\main.o: ..\SYSTEM\delay\delay.h
+..\obj\main.o: ..\SYSTEM\usart\usart.h
+..\obj\main.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\main.o: ..\HARDWARE\USART3\usart3.h
+..\obj\main.o: ..\HARDWARE\LED\led.h
+..\obj\main.o: ..\HARDWARE\LCD\ILI93xx.h
+..\obj\main.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdlib.h

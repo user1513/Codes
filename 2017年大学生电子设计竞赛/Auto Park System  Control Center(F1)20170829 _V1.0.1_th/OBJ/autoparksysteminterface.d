@@ -1,0 +1,9 @@
+..\obj\autoparksysteminterface.o: ..\EMWIN_DEMO\BITMAP_DISPLAY\AutoparksystemInterface.c
+..\obj\autoparksysteminterface.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\inc\GUI.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\inc\GUI_ConfDefaults.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\Config\GUIConf.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\inc\GUI_Type.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\inc\LCD.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\inc\Global.h
+..\obj\autoparksysteminterface.o: ..\EMWIN\STemWin\inc\GUI_Version.h

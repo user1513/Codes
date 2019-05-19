@@ -1,0 +1,827 @@
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Software\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <STC12C5A60S2.H>
+   2          #include <intrins.h> 
+   3          #include <math.h>
+   4          #include "lcd12864.h"
+   5          #include "key.h"
+   6          #include "IAP_EEPROM.h"
+   7          #include "string.h"
+   8          
+   9          
+  10          /*
+  11                  2017.08.28
+  12                  创建者：Tang娃
+  13                  
+  14                  注：需要添加参考角(jddisplay)时，需要修改conut()中的算法，同时修改参考角(jddisplay)、buff即可。
+  15          */
+  16          
+  17          //Start address for STC12C5A60S2 EEPROM
+  18          #define IAP_ADDRESS 0x0400
+  19          
+  20          #define uchar unsigned char 
+  21          #define uint unsigned int
+  22          
+  23          
+  24          #define display 1       //1打开测量角度时的时间显示  0关闭测量角度时的时间显示
+  25          
+  26          //接近开关端口
+  27          sbit ProbeA = P3^2;
+  28          sbit ProbeB = P3^3;
+  29          
+  30          
+  31          uchar Y=0;                               //角度
+  32          uchar ball_dir=0;                //方向
+  33          uchar ball_number=0;     //计球数
+  34          uchar Key_value = 0;     //正常测试的按键值
+  35          
+  36          uint xdata buff[]=
+  37          { 
+  38                  0x9a9f,0x5dca,0x11ac,
+  39                  0xe340,0xcbf0,0xb7f1,
+  40                  0xa700,0x986f,0x8e94,
+  41                  0x8445,0x7c86,0x7bc4,
+  42                  
+  43                  0x7752,0x722c,0x6e3f,
+  44                  0x6d00,0x6c00 
+  45                  
+  46          };//table
+  47          
+  48          
+  49          #define TableNumberOfData  sizeof(buff) / 2     //计算buff中的数据个数
+  50          
+  51          
+  52          uchar code jddisplay[TableNumberOfData] = 
+  53          {
+  54                  8,10,15,
+  55                  20,25,30,
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 2   
+
+  56                  35,40,45,
+  57                  50,55,60,
+  58                  
+  59                  65,70,75,
+  60                  80,82
+  61          };
+  62          
+  63          uchar jiaodu[16]  = {"                "};
+  64          
+  65                  
+  66          uchar xdata bufchar[3]; 
+  67          uchar xdata string1[] = {"钢珠量：  个    "};
+  68          uchar xdata string2[]   = {"钢珠方向：      "};
+  69          uchar xdata string3[] = {"角度：          "};
+  70          uchar xdata string4[] = {"周期：          "};
+  71          uchar xdata string5[] = {"请在00度进行学习"};
+  72          
+  73          uchar system_mode = 0;          //0为正常模式-钢珠测试  1为学习模式 2为用学习模式测试的钢珠
+  74          char angle_number = -1;         //角度编号 在学习模式时，按一下A开始学习模式，同时这个变量会加1
+  75          
+  76          unsigned long int buff_average = 0; //时间平均值
+  77          
+  78          void init_time0(void)
+  79          {
+  80   1              TMOD &= 0xF0;
+  81   1              TMOD |= 0x01;
+  82   1              TH0 = 0;
+  83   1              TL0 = 0;
+  84   1              ET0 = 1;
+  85   1      }
+  86          
+  87          void init0() interrupt 0
+  88          {
+  89   1       if((Key_value==1)|(Key_value==4)){++ball_number; ball_dir=0;}  //  计小球个数  ball_dir dir
+  90   1       if(Key_value==2)
+  91   1       {      
+  92   2               EX1=0;
+  93   2               ball_dir=1;     
+  94   2       } 
+  95   1      }       
+  96          void tim0() interrupt 1
+  97          {
+  98   1              TH0 = 0;
+  99   1              TL0 = 0;        
+ 100   1      }
+ 101          
+ 102          
+ 103          void Int1() interrupt 2
+ 104          {
+ 105   1              if(Key_value == 2)
+ 106   1              {
+ 107   2                      ball_dir=2;
+ 108   2                      EX0=0;
+ 109   2              }
+ 110   1      }
+ 111          
+ 112          
+ 113          void EEPROM_WriteAll()
+ 114          {
+ 115   1              uchar i;
+ 116   1              
+ 117   1              IapEraseSector(IAP_ADDRESS);
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 3   
+
+ 118   1              
+ 119   1              for(i=0;i<TableNumberOfData;i++)
+ 120   1              {
+ 121   2                      IapProgramByte(IAP_ADDRESS+i*2+0,buff[i]>>8);   
+ 122   2                      IapProgramByte(IAP_ADDRESS+i*2+1,buff[i]);      
+ 123   2              }
+ 124   1      }
+ 125          
+ 126          
+ 127          void conut0(void)
+ 128          {
+ 129   1              bufchar[2] = TL0;
+ 130   1              bufchar[1] = TH0;
+ 131   1              TH0 = 0;
+ 132   1              TL0 = 0;
+ 133   1              bufchar[0] = TF0;
+ 134   1              TF0 = 0;
+ 135   1      }       
+ 136          #define ERROR 1
+ 137          void conut(void)
+ 138          {               
+ 139   1              uint x;
+ 140   1              conut0(); 
+ 141   1              x=(bufchar[1]*256)|bufchar[2];
+ 142   1      
+ 143   1              if((bufchar[0]==0x01)) 
+ 144   1              {
+ 145   2                      if ((x<=buff[0])&&(x>=buff[1]))                 { Y=10-(((x-buff[1])*1.0)/(buff[0]-buff[1]))*2; }       //8-10
+ 146   2                      else if ((x<=buff[1])&&(x>=buff[2]))    { Y=15-(((x-buff[2])*1.0)/(buff[1]-buff[2]))*5; }       //10-15
+ 147   2                      else if ((x<=buff[2])&&(x>=0))          { Y=16-((x*1.0)/(buff[2])); }                           //15-16     
+ 148   2              }
+ 149   1              else if ((bufchar[0]==0x00))
+ 150   1              { 
+ 151   2                      if ((x<=0xffff)&&(x>=buff[3]))                  { Y=20-(((x-buff[3])*1.0)/(0xffff-buff[3]))*3; }        //17-20 
+ 152   2                      else if ((x<=buff[3])&&(x>=buff[4]))    { Y=25-(((x-buff[4])*1.0)/(buff[3]-buff[4]))*5; }       //20-25
+ 153   2                      else if ((x<=buff[4])&&(x>=buff[5]))    { Y=30-(((x-buff[5])*1.0)/(buff[4]-buff[5]))*5; }       //25-30
+ 154   2                      else if ((x<=buff[5])&&(x>=buff[6]))    { Y=35-(((x-buff[6])*1.0)/(buff[5]-buff[6]))*5; }   //30-35
+ 155   2                      else if ((x<=buff[6])&&(x>=buff[7]))    { Y=40-(((x-buff[7])*1.0)/(buff[6]-buff[7]))*5; }   //35-40 
+ 156   2                      else if ((x<=buff[7])&&(x>=buff[8]))    { Y=45-(((x-buff[8])*1.0)/(buff[7]-buff[8]))*5; }   //40-45
+ 157   2                      else if ((x<=buff[8])&&(x>=buff[9]))    { Y=50-(((x-buff[9])*1.0)/(buff[8]-buff[9]))*5; }   //45-50
+ 158   2                      else if ((x<=buff[9])&&(x>=buff[10]))   { Y=55-(((x-buff[10])*1.0)/(buff[9]-buff[10]))*5; } //50-55 
+ 159   2                      else if ((x<=buff[10])&&(x>=buff[11]))  { Y=60-(((x-buff[11])*1.0)/(buff[10]-buff[11]))*5; }//55-60  
+ 160   2                      else if ((x<=buff[11])&&(x>=buff[12]))  { Y=65-(((x-buff[12])*1.0)/(buff[11]-buff[12]))*5; }//60-65  
+ 161   2                      else if ((x<=buff[12])&&(x>=buff[13]))  { Y=70-(((x-buff[13])*1.0)/(buff[12]-buff[13]))*5; }//65-70   
+ 162   2                      else if ((x<=buff[13])&&(x>=buff[14]))  { Y=75-(((x-buff[14])*1.0)/(buff[13]-buff[14]))*5; }//70-75  
+ 163   2                      else if ((x<=buff[14])&&(x>=buff[15]))  { Y=80-(((x-buff[15])*1.0)/(buff[14]-buff[15]))*5; }//75-80  
+ 164   2                      else if ((x<=buff[15])&&(x>=buff[16]))  { Y=82-(((x-buff[16])*1.0)/(buff[15]-buff[16]))*2; }//80-82  
+ 165   2              }
+ 166   1              else Y=ERROR;
+ 167   1      }
+ 168          
+ 169          void Task1_Init(void)
+ 170          {
+ 171   1              Display_String(1,"  测量钢珠量    ");
+ 172   1              
+ 173   1              ball_number = 0;
+ 174   1              string1[8] = ball_number / 10 + 0x30;
+ 175   1              string1[9] = ball_number % 10 + 0x30;
+ 176   1              Display_String(3,string1);
+ 177   1      }
+ 178          
+ 179          void Task2_Init(void)
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 4   
+
+ 180          {
+ 181   1              Display_String(1,"  测量钢珠方向  "); 
+ 182   1              string3[8]=0+'0';
+ 183   1              string3[9]=0+'0';       
+ 184   1              string2[10]=' '; 
+ 185   1              string2[11]=' '; 
+ 186   1              Display_String(3,string2);
+ 187   1              ball_dir = 0;
+ 188   1      }
+ 189          
+ 190          void Task3_Init(void)
+ 191          {
+ 192   1              Display_String(1,"  测量钢珠角度  "); 
+ 193   1              string3[10]=' '; 
+ 194   1              string3[11]=' '; 
+ 195   1              Display_String(3,string3);
+ 196   1      }
+ 197          
+ 198          void Task4_Init(void)
+ 199          {
+ 200   1              Display_String(1,"  测量钢珠周期  ");
+ 201   1              string4[10]=' '; 
+ 202   1              string4[11]=' '; 
+ 203   1              ball_number = 0;
+ 204   1              Display_String(3,string4);
+ 205   1      }
+ 206          void Task5_Init(void)
+ 207          {
+ 208   1              buff_average = 0;
+ 209   1              
+ 210   1              string5[4] = jddisplay[angle_number]/10 + '0';
+ 211   1              string5[5] = jddisplay[angle_number]%10 + '0';
+ 212   1              Display_String(1,string5);
+ 213   1              
+ 214   1              Display_String(2,"                ");
+ 215   1              Display_String(3,"                ");
+ 216   1              Display_String(4,"                ");
+ 217   1      }
+ 218          //测量钢珠个数
+ 219          void Task_1(void)
+ 220          {
+ 221   1              string1[8] = ball_number / 10 + 0x30;
+ 222   1              string1[9] = ball_number % 10 + 0x30;
+ 223   1              Display_String(3,string1);
+ 224   1      }
+ 225          //测量钢珠方向
+ 226          void Task_2(void)
+ 227          {
+ 228   1              if(ball_dir==1)
+ 229   1              {
+ 230   2                      string2[10]='1'; 
+ 231   2                      string2[11]='0';        
+ 232   2                      Display_String(3,string2);
+ 233   2                      EX0=1;
+ 234   2                      EX1=1;
+ 235   2              } 
+ 236   1              if(ball_dir==2)
+ 237   1              {
+ 238   2                      string2[10]='0'; 
+ 239   2                      string2[11]='1';        
+ 240   2                      Display_String(3,string2);
+ 241   2                      EX0=1;
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 5   
+
+ 242   2                      EX1=1;
+ 243   2              } 
+ 244   1      }
+ 245          
+ 246          
+ 247          
+ 248          
+ 249          
+ 250          
+ 251          //测量钢珠角度
+ 252          void Task_3(void)
+ 253          {
+ 254   1              uint val = 0;
+ 255   1      
+ 256   1              EA=0;
+ 257   1              TH0=0;
+ 258   1              TL0=0;
+ 259   1              TF0=0;
+ 260   1              EX0=0;
+ 261   1              while(ProbeA)
+ 262   1              {
+ 263   2                      if(KEY_A == 0)
+ 264   2                      {
+ 265   3                              goto stop;
+ 266   3                      } 
+ 267   2                      if(KEY_B == 0)
+ 268   2                      {
+ 269   3                              goto stop;
+ 270   3                      } 
+ 271   2              }
+ 272   1              TR0 = 1;
+ 273   1              while(ProbeB)
+ 274   1              {
+ 275   2                      if(KEY_A == 0)
+ 276   2                      {
+ 277   3                              goto stop;
+ 278   3                      }
+ 279   2                      if(KEY_B == 0)
+ 280   2                      {
+ 281   3                              goto stop;
+ 282   3                      } 
+ 283   2              }
+ 284   1              TR0 = 0;
+ 285   1              #if     display
+ 286   1              val = TF0;
+ 287   1              switch(val/16)
+ 288   1              {
+ 289   2                      case 10:jiaodu[1]='A';break;
+ 290   2                      case 11:jiaodu[1]='B';break;
+ 291   2                      case 12:jiaodu[1]='C';break;
+ 292   2                      case 13:jiaodu[1]='D';break;
+ 293   2                      case 14:jiaodu[1]='E';break;
+ 294   2                      case 15:jiaodu[1]='F';break;
+ 295   2                      default:jiaodu[1] = val/16+0x30;break;
+ 296   2              }
+ 297   1              switch(val%16)
+ 298   1              {
+ 299   2                      case 10:jiaodu[2]='A';break;
+ 300   2                      case 11:jiaodu[2]='B';break;
+ 301   2                      case 12:jiaodu[2]='C';break;
+ 302   2                      case 13:jiaodu[2]='D';break;
+ 303   2                      case 14:jiaodu[2]='E';break;
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 6   
+
+ 304   2                      case 15:jiaodu[2]='F';break;
+ 305   2                      default:jiaodu[2] = val%16+0x30;break;
+ 306   2              }
+ 307   1      
+ 308   1              val = TH0;
+ 309   1              switch(val/16)
+ 310   1              {
+ 311   2                      case 10:jiaodu[4]='A';break;
+ 312   2                      case 11:jiaodu[4]='B';break;
+ 313   2                      case 12:jiaodu[4]='C';break;
+ 314   2                      case 13:jiaodu[4]='D';break;
+ 315   2                      case 14:jiaodu[4]='E';break;
+ 316   2                      case 15:jiaodu[4]='F';break;
+ 317   2                      default:jiaodu[4] = val/16+0x30;break;
+ 318   2              }
+ 319   1              switch(val%16)
+ 320   1              {
+ 321   2                      case 10:jiaodu[5]='A';break;
+ 322   2                      case 11:jiaodu[5]='B';break;
+ 323   2                      case 12:jiaodu[5]='C';break;
+ 324   2                      case 13:jiaodu[5]='D';break;
+ 325   2                      case 14:jiaodu[5]='E';break;
+ 326   2                      case 15:jiaodu[5]='F';break;
+ 327   2                      default:jiaodu[5] = val%16+0x30;break;
+ 328   2              }
+ 329   1      
+ 330   1              val = TL0;
+ 331   1              switch(val/16)
+ 332   1              {
+ 333   2                      case 10:jiaodu[7]='A';break;
+ 334   2                      case 11:jiaodu[7]='B';break;
+ 335   2                      case 12:jiaodu[7]='C';break;
+ 336   2                      case 13:jiaodu[7]='D';break;
+ 337   2                      case 14:jiaodu[7]='E';break;
+ 338   2                      case 15:jiaodu[7]='F';break;
+ 339   2                      default:jiaodu[7] = val/16+0x30;break;
+ 340   2              }
+ 341   1              switch(val%16)
+ 342   1              {
+ 343   2                      case 10:jiaodu[8]='A';break;
+ 344   2                      case 11:jiaodu[8]='B';break;
+ 345   2                      case 12:jiaodu[8]='C';break;
+ 346   2                      case 13:jiaodu[8]='D';break;
+ 347   2                      case 14:jiaodu[8]='E';break;
+ 348   2                      case 15:jiaodu[8]='F';break;
+ 349   2                      default:jiaodu[8] = val%16+0x30;break;
+ 350   2              }
+ 351   1              Display_String(4,jiaodu);
+ 352   1              #endif
+ 353   1      
+ 354   1              conut();
+ 355   1              if(Y != ERROR)
+ 356   1              {
+ 357   2                      string3[8] = Y / 10 + 0x30;
+ 358   2                      string3[9] = Y % 10 + 0x30;
+ 359   2                      string3[10] = ' ';
+ 360   2                      string3[11] = ' ';
+ 361   2                      string3[12] = ' ';
+ 362   2              }else
+ 363   1              {
+ 364   2                      string3[8] = 'E';
+ 365   2                      string3[9] = 'R';
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 7   
+
+ 366   2                      string3[10] = 'R';
+ 367   2                      string3[11] = 'O';
+ 368   2                      string3[12] = 'R';
+ 369   2              }
+ 370   1              Display_String(3,string3);      
+ 371   1              stop:;
+ 372   1      } 
+ 373          
+ 374          
+ 375          
+ 376          //测量钢珠周期
+ 377          void Task_4(void)
+ 378          {
+ 379   1              EX0=1;
+ 380   1              EA=1;
+ 381   1              string4[10]=ball_number/2/10+'0'; 
+ 382   1              string4[11]=ball_number/2%10+'0';
+ 383   1              Display_String(3,string4);      
+ 384   1      }
+ 385          
+ 386          void Task_5(void)
+ 387          {
+ 388   1              uint val = 0;
+ 389   1              EA=0;
+ 390   1              TH0=0;
+ 391   1              TL0=0;
+ 392   1              TF0=0;
+ 393   1              EX0=0;
+ 394   1              while(ProbeA)
+ 395   1              {
+ 396   2                      if(KEY_A == 0)
+ 397   2                      {
+ 398   3                              goto stop;
+ 399   3                      } 
+ 400   2                      if(KEY_B == 0)
+ 401   2                      {
+ 402   3                              goto stop;
+ 403   3                      } 
+ 404   2              }
+ 405   1              TR0 = 1;
+ 406   1              while(ProbeB)
+ 407   1              {
+ 408   2                      if(KEY_A == 0)
+ 409   2                      {
+ 410   3                              goto stop;
+ 411   3                      } 
+ 412   2                      if(KEY_B == 0)
+ 413   2                      {
+ 414   3                              goto stop;
+ 415   3                      } 
+ 416   2              }
+ 417   1              TR0 = 0;
+ 418   1              
+ 419   1              val = TF0;
+ 420   1              switch(val/16)
+ 421   1              {
+ 422   2                      case 10:jiaodu[1]='A';break;
+ 423   2                      case 11:jiaodu[1]='B';break;
+ 424   2                      case 12:jiaodu[1]='C';break;
+ 425   2                      case 13:jiaodu[1]='D';break;
+ 426   2                      case 14:jiaodu[1]='E';break;
+ 427   2                      case 15:jiaodu[1]='F';break;
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 8   
+
+ 428   2                      default:jiaodu[1] = val/16+0x30;break;
+ 429   2              }
+ 430   1              switch(val%16)
+ 431   1              {
+ 432   2                      case 10:jiaodu[2]='A';break;
+ 433   2                      case 11:jiaodu[2]='B';break;
+ 434   2                      case 12:jiaodu[2]='C';break;
+ 435   2                      case 13:jiaodu[2]='D';break;
+ 436   2                      case 14:jiaodu[2]='E';break;
+ 437   2                      case 15:jiaodu[2]='F';break;
+ 438   2                      default:jiaodu[2] = val%16+0x30;break;
+ 439   2              }
+ 440   1      
+ 441   1              val = TH0;
+ 442   1              switch(val/16)
+ 443   1              {
+ 444   2                      case 10:jiaodu[4]='A';break;
+ 445   2                      case 11:jiaodu[4]='B';break;
+ 446   2                      case 12:jiaodu[4]='C';break;
+ 447   2                      case 13:jiaodu[4]='D';break;
+ 448   2                      case 14:jiaodu[4]='E';break;
+ 449   2                      case 15:jiaodu[4]='F';break;
+ 450   2                      default:jiaodu[4] = val/16+0x30;break;
+ 451   2              }
+ 452   1              switch(val%16)
+ 453   1              {
+ 454   2                      case 10:jiaodu[5]='A';break;
+ 455   2                      case 11:jiaodu[5]='B';break;
+ 456   2                      case 12:jiaodu[5]='C';break;
+ 457   2                      case 13:jiaodu[5]='D';break;
+ 458   2                      case 14:jiaodu[5]='E';break;
+ 459   2                      case 15:jiaodu[5]='F';break;
+ 460   2                      default:jiaodu[5] = val%16+0x30;break;
+ 461   2              }
+ 462   1              val = TL0;
+ 463   1              switch(val/16)
+ 464   1              {
+ 465   2                      case 10:jiaodu[7]='A';break;
+ 466   2                      case 11:jiaodu[7]='B';break;
+ 467   2                      case 12:jiaodu[7]='C';break;
+ 468   2                      case 13:jiaodu[7]='D';break;
+ 469   2                      case 14:jiaodu[7]='E';break;
+ 470   2                      case 15:jiaodu[7]='F';break;
+ 471   2                      default:jiaodu[7] = val/16+0x30;break;
+ 472   2              }
+ 473   1              switch(val%16)
+ 474   1              {
+ 475   2                      case 10:jiaodu[8]='A';break;
+ 476   2                      case 11:jiaodu[8]='B';break;
+ 477   2                      case 12:jiaodu[8]='C';break;
+ 478   2                      case 13:jiaodu[8]='D';break;
+ 479   2                      case 14:jiaodu[8]='E';break;
+ 480   2                      case 15:jiaodu[8]='F';break;
+ 481   2                      default:jiaodu[8] = val%16+0x30;break;
+ 482   2              }
+ 483   1              
+ 484   1              jiaodu[10] = '-';
+ 485   1              jiaodu[11] = 'N';
+ 486   1              jiaodu[12] = 'e';
+ 487   1              jiaodu[13] = 'w';
+ 488   1              Display_String(4,jiaodu);
+ 489   1              conut0();
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 9   
+
+ 490   1              
+ 491   1              if(buff_average == 0)
+ 492   1              {
+ 493   2                      buff_average = (bufchar[1]*256)|bufchar[2];
+ 494   2              }else
+ 495   1              {
+ 496   2                      buff_average += (bufchar[1]*256)|bufchar[2];
+ 497   2                      buff_average = buff_average / 2;
+ 498   2              }
+ 499   1              val = buff_average/256;
+ 500   1              switch(val/16)
+ 501   1              {
+ 502   2                      case 10:jiaodu[4]='A';break;
+ 503   2                      case 11:jiaodu[4]='B';break;
+ 504   2                      case 12:jiaodu[4]='C';break;
+ 505   2                      case 13:jiaodu[4]='D';break;
+ 506   2                      case 14:jiaodu[4]='E';break;
+ 507   2                      case 15:jiaodu[4]='F';break;
+ 508   2                      default:jiaodu[4] = val/16+0x30;break;
+ 509   2              }
+ 510   1              switch(val%16)
+ 511   1              {
+ 512   2                      case 10:jiaodu[5]='A';break;
+ 513   2                      case 11:jiaodu[5]='B';break;
+ 514   2                      case 12:jiaodu[5]='C';break;
+ 515   2                      case 13:jiaodu[5]='D';break;
+ 516   2                      case 14:jiaodu[5]='E';break;
+ 517   2                      case 15:jiaodu[5]='F';break;
+ 518   2                      default:jiaodu[5] = val%16+0x30;break;
+ 519   2              }
+ 520   1              val = buff_average%256;
+ 521   1              switch(val/16)
+ 522   1              {
+ 523   2                      case 10:jiaodu[7]='A';break;
+ 524   2                      case 11:jiaodu[7]='B';break;
+ 525   2                      case 12:jiaodu[7]='C';break;
+ 526   2                      case 13:jiaodu[7]='D';break;
+ 527   2                      case 14:jiaodu[7]='E';break;
+ 528   2                      case 15:jiaodu[7]='F';break;
+ 529   2                      default:jiaodu[7] = val/16+0x30;break;
+ 530   2              }
+ 531   1              switch(val%16)
+ 532   1              {
+ 533   2                      case 10:jiaodu[8]='A';break;
+ 534   2                      case 11:jiaodu[8]='B';break;
+ 535   2                      case 12:jiaodu[8]='C';break;
+ 536   2                      case 13:jiaodu[8]='D';break;
+ 537   2                      case 14:jiaodu[8]='E';break;
+ 538   2                      case 15:jiaodu[8]='F';break;
+ 539   2                      default:jiaodu[8] = val%16+0x30;break;
+ 540   2              }
+ 541   1              jiaodu[10] = '-';
+ 542   1              jiaodu[11] = 'A';
+ 543   1              jiaodu[12] = 'V';
+ 544   1              jiaodu[13] = 'E';
+ 545   1              Display_String(3,jiaodu);       
+ 546   1              buff[angle_number] = buff_average;
+ 547   1              EEPROM_WriteAll();
+ 548   1              stop:;
+ 549   1      }
+ 550          
+ 551          void layout(uchar ball_numberer)
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 10  
+
+ 552          {
+ 553   1              LCD12864_Clear();
+ 554   1              switch(ball_numberer)
+ 555   1              {
+ 556   2                      case 1:
+ 557   2                               
+ 558   2                              Task1_Init();
+ 559   2                              break;
+ 560   2                      case 2:
+ 561   2                              Task2_Init();
+ 562   2      
+ 563   2                              break;
+ 564   2                      case 3:
+ 565   2                              Task3_Init();
+ 566   2                              
+ 567   2                              break;
+ 568   2                      case 4:
+ 569   2                              Task4_Init();
+ 570   2                              
+ 571   2                              break;
+ 572   2                      default:
+ 573   2                              break;
+ 574   2              }
+ 575   1      }
+ 576          
+ 577          void measure(uchar ball_numberer)
+ 578          {
+ 579   1              switch(ball_numberer)
+ 580   1              {
+ 581   2                      case 1:
+ 582   2                              Task_1();
+ 583   2                              break;
+ 584   2                      case 2:
+ 585   2                              Task_2();
+ 586   2                              break;
+ 587   2                      case 3:
+ 588   2                              Task_3();
+ 589   2                              break;
+ 590   2                      case 4:
+ 591   2                              Task_4();
+ 592   2                              break;
+ 593   2                      default:
+ 594   2                              break;
+ 595   2              }
+ 596   1      }
+ 597          
+ 598          void init_ext()         //外部中断初始化
+ 599          {
+ 600   1         EX0=1;
+ 601   1         IT0=1;
+ 602   1         EX1=1;
+ 603   1         IT1=1;
+ 604   1         EA=1;
+ 605   1      }
+ 606          uchar xdata datadisp[16] = "                ";
+ 607          
+ 608          void Delay500ms()               //@11.0592MHz
+ 609          {
+ 610   1              unsigned char i, j, k;
+ 611   1      
+ 612   1              i = 22;
+ 613   1              j = 3;
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 11  
+
+ 614   1              k = 227;
+ 615   1              do
+ 616   1              {
+ 617   2                      do
+ 618   2                      {
+ 619   3                              while (--k);
+ 620   3                      } while (--j);
+ 621   2              } while (--i);
+ 622   1      }
+ 623          
+ 624          
+ 625          
+ 626          void main(void)
+ 627          {
+ 628   1              uchar i,j,k;            //i：个数  j：行数  k：页数
+ 629   1              uchar k_max;            //k的最大值
+ 630   1              uchar keyval;           //学习模式下按键的键值
+ 631   1              uchar gotoflag = 0;     //跳出循环标志位
+ 632   1              Lcm_Init();                     //LCD初始化
+ 633   1              
+ 634   1              system_mode = KeyScan();        //获取模式  什么都不按是正常用钢珠测试的模式  按A表示进入学习模式  按B表示用学习
+             -模式的数据测试钢珠角度
+ 635   1              if(system_mode == 0)
+ 636   1              {
+ 637   2                      Display_String(1,"2017年全国大学生"); 
+ 638   2                      Display_String(2,"  电子设计竞赛  "); 
+ 639   2                      Display_String(3,"钢珠运动测量装置");
+ 640   2                      Display_String(4,"请按KEYA开始测试");           
+ 641   2              }else if(system_mode == 1)
+ 642   1              {
+ 643   2                      Display_String(1,"2017年全国大学生"); 
+ 644   2                      Display_String(2,"  电子设计竞赛  "); 
+ 645   2                      Display_String(3,"    学习模式    ");
+ 646   2                      Display_String(4,"请按KEYA开始学习");
+ 647   2                      Key_value = 3;//默认在测量角度模式
+ 648   2                      EEPROM_WriteAll();
+ 649   2      
+ 650   2              }else if(system_mode == 2)
+ 651   1              {
+ 652   2                      for(i=0;i<TableNumberOfData;i++)
+ 653   2                      {
+ 654   3                              buff[i] = IapReadByte(IAP_ADDRESS+i*2+0);
+ 655   3                              buff[i] = buff[i] << 8;
+ 656   3                              buff[i] += IapReadByte(IAP_ADDRESS+i*2+1);      
+ 657   3                      }
+ 658   2                      k_max = TableNumberOfData/12;
+ 659   2                      k_max += (5>0)?1:0;
+ 660   2                      for(k=0;k<k_max;k++)                    //16一页  如果除不尽余数大于0，则页数加1
+ 661   2                      {
+ 662   3                              LCD12864_Clear();                       //清屏
+ 663   3                              for(j=(0+4*k);j<(4+4*k);j++)
+ 664   3                              {
+ 665   4                                      for(i=0;i<3;i++)
+ 666   4                                      {
+ 667   5                                              if(TableNumberOfData <= ((j*3) + i)) //跳出内层循环      注：外层循环可以自动跳出，一般手动退出较为稳妥
+ 668   5                                              {
+ 669   6                                                      gotoflag = 1; 
+ 670   6                                                      break;
+ 671   6                                              }       
+ 672   5                                              switch(buff[i+j*3]/16/16/16)
+ 673   5                                              {
+ 674   6                                                      case 10:datadisp[0 + i*6]='A';break;
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 12  
+
+ 675   6                                                      case 11:datadisp[0 + i*6]='B';break;
+ 676   6                                                      case 12:datadisp[0 + i*6]='C';break;
+ 677   6                                                      case 13:datadisp[0 + i*6]='D';break;
+ 678   6                                                      case 14:datadisp[0 + i*6]='E';break;
+ 679   6                                                      case 15:datadisp[0 + i*6]='F';break;
+ 680   6                                                      default:datadisp[0 + i*6] = buff[i+j*3]/16/16/16+0x30;break;
+ 681   6                                              }
+ 682   5                                              switch(buff[i+j*3]/16/16%16)
+ 683   5                                              {
+ 684   6                                                      case 10:datadisp[1 + i*6]='A';break;
+ 685   6                                                      case 11:datadisp[1 + i*6]='B';break;
+ 686   6                                                      case 12:datadisp[1 + i*6]='C';break;
+ 687   6                                                      case 13:datadisp[1 + i*6]='D';break;
+ 688   6                                                      case 14:datadisp[1 + i*6]='E';break;
+ 689   6                                                      case 15:datadisp[1 + i*6]='F';break;
+ 690   6                                                      default:datadisp[1 + i*6] = buff[i+j*3]/16/16%16+0x30;break;
+ 691   6                                              }
+ 692   5                                              switch(buff[i+j*3]/16%16%16)
+ 693   5                                              {
+ 694   6                                                      case 10:datadisp[2 + i*6]='A';break;
+ 695   6                                                      case 11:datadisp[2 + i*6]='B';break;
+ 696   6                                                      case 12:datadisp[2 + i*6]='C';break;
+ 697   6                                                      case 13:datadisp[2 + i*6]='D';break;
+ 698   6                                                      case 14:datadisp[2 + i*6]='E';break;
+ 699   6                                                      case 15:datadisp[2 + i*6]='F';break;
+ 700   6                                                      default:datadisp[2 + i*6] = buff[i+j*3]/16%16%16+0x30;break;
+ 701   6                                              }
+ 702   5                                              switch(buff[i+j*3]%16%16%16)
+ 703   5                                              {
+ 704   6                                                      case 10:datadisp[3 + i*6]='A';break;
+ 705   6                                                      case 11:datadisp[3 + i*6]='B';break;
+ 706   6                                                      case 12:datadisp[3 + i*6]='C';break;
+ 707   6                                                      case 13:datadisp[3 + i*6]='D';break;
+ 708   6                                                      case 14:datadisp[3 + i*6]='E';break;
+ 709   6                                                      case 15:datadisp[3 + i*6]='F';break;
+ 710   6                                                      default:datadisp[3 + i*6] = buff[i+j*3]%16%16%16+0x30;break;
+ 711   6                                              }
+ 712   5                                      }
+ 713   4                                      Display_String(j+1-4*k,datadisp); //显示
+ 714   4                                      for(i=0;i<16;i++)
+ 715   4                                      {
+ 716   5                                              datadisp[i] = ' ';
+ 717   5                                      }
+ 718   4                                      if(gotoflag == 1) //跳出中层循环         注：外层循环可以自动跳出，一般手动退出较为稳妥
+ 719   4                                      {
+ 720   5                                              break;
+ 721   5                                      }
+ 722   4                              }
+ 723   3                              for(i=0;i<6;i++)        //延迟6*500ms
+ 724   3                              {
+ 725   4                                      Delay500ms();
+ 726   4                              }
+ 727   3                              if(gotoflag == 1)        //跳出中层循环  注：外层循环可以自动跳出，一般手动退出较为稳妥
+ 728   3                              {
+ 729   4                                      break;
+ 730   4                              }
+ 731   3                      }
+ 732   2                      Display_String(1,"2017年全国大学生"); 
+ 733   2                      Display_String(2,"电子设计竞赛--UP"); 
+ 734   2                      Display_String(3,"钢珠运动测量装置");
+ 735   2                      Display_String(4,"请按KEYA开始测试"); 
+ 736   2              }
+C51 COMPILER V9.54   MAIN                                                                  08/28/2017 18:45:14 PAGE 13  
+
+ 737   1      
+ 738   1              init_ext();             //外部中断初始化
+ 739   1              EA = 1;
+ 740   1              init_time0();   //定时器0初始化
+ 741   1              TR0 = 0;
+ 742   1              while(1)
+ 743   1              {
+ 744   2                      if(system_mode != 1)
+ 745   2                      {
+ 746   3                              if(KeyScan() == 1)
+ 747   3                              {
+ 748   4                                      Key_value++;
+ 749   4                                      if(Key_value == 5)
+ 750   4                                      {
+ 751   5                                              Key_value = 1;
+ 752   5                                      }
+ 753   4                                      layout(Key_value);
+ 754   4                              }
+ 755   3                              measure(Key_value);                     
+ 756   3                      }else
+ 757   2                      {
+ 758   3                              keyval = KeyScan();
+ 759   3                              if(keyval == 1)
+ 760   3                              {
+ 761   4                                      angle_number++;
+ 762   4                                      if(angle_number == TableNumberOfData)
+ 763   4                                      {
+ 764   5                                              angle_number = 0;
+ 765   5                                      }
+ 766   4                                      Task5_Init();
+ 767   4                              }else if(keyval == 2)
+ 768   3                              {
+ 769   4                                      if(angle_number == 0)
+ 770   4                                      {
+ 771   5                                              angle_number = TableNumberOfData;
+ 772   5                                      }
+ 773   4                                      angle_number--;
+ 774   4                                      Task5_Init();
+ 775   4                              }
+ 776   3                              Task_5();
+ 777   3                      }
+ 778   2              }
+ 779   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   5485    ----
+   CONSTANT SIZE    =    221    ----
+   XDATA SIZE       =    138    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     26      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

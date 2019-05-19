@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\app.obj",
+".\Objects\timer.obj",
+".\Objects\usart.obj",
+".\Objects\seat.obj" 
+TO ".\Objects\app" 
+PRINT(".\Listings\app.m51") RAMSIZE(256) 

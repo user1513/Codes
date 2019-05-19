@@ -1,0 +1,6 @@
+"main.obj",
+"key.obj",
+"lcd12864.obj",
+"IAP_EEPROM.obj" 
+TO "Project" 
+RAMSIZE(256) 

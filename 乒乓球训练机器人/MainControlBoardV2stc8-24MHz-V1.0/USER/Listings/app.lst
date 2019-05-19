@@ -1,0 +1,100 @@
+C51 COMPILER V9.56.0.0   APP                                                               09/19/2018 18:04:59 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE APP
+OBJECT MODULE PLACED IN .\Objects\app.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE app.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\HARDWARE\ccp;..\HAR
+                    -DWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\HARDWARE\TableTennisD
+                    -evice) DEBUG OBJECTEXTEND PRINT(.\Listings\app.lst) OBJECT(.\Objects\app.obj)
+
+line level    source
+
+   1          #include "uart1.h"
+   2          #include "uart2.h"
+   3          #include "uart3.h"
+   4          #include "timer1.h"
+   5          #include "djiReceiver_dr16.h"
+   6          #include "pbdata.h"
+   7          #include <intrins.h>
+   8          #include "ccp.h"
+   9          #include "tabletennisdevice.h"
+  10          #define MotorMode P17
+  11          
+  12          u16 G_dr16_ch0_value = 0;
+  13          u16 G_dr16_ch1_value = 0;
+  14          u16 G_dr16_ch2_value = 0;
+  15          u16 G_dr16_ch3_value = 0;
+  16          
+  17          int tabletennisangle=tabletennisangleInit;
+  18          
+  19          u8 Artilleryflag=0;//发炮标志位
+  20          extern u8 flag;
+  21          
+  22          
+  23          void Delay1000ms()              //@24.000MHz
+  24          {
+  25   1              unsigned char i, j, k;
+  26   1      
+  27   1              _nop_();
+  28   1              _nop_();
+  29   1              i = 122;
+  30   1              j = 193;
+  31   1              k = 128;
+  32   1              do
+  33   1              {
+  34   2                      do
+  35   2                      {
+  36   3                              while (--k);
+  37   3                      } while (--j);
+  38   2              } while (--i);
+  39   1      }
+  40          
+  41          
+  42          void main(void)
+  43          {
+  44   1              Uart1_Init();
+  45   1              //ccp_Init();//没有使用
+  46   1              Uart2Init();
+  47   1              Timer0Init();
+  48   1              Uart3Init();
+  49   1              Delay1000ms();
+  50   1              Delay1000ms();
+  51   1              SteeringEngineAngle(tabletennisangle);//设置初始角度90度
+  52   1              while(1)
+  53   1              {
+C51 COMPILER V9.56.0.0   APP                                                               09/19/2018 18:04:59 PAGE 2   
+
+  54   2                      if(UsartFlag == Enable&&flag==Enable)
+  55   2                      {
+  56   3                              Send_dji_Data(0x01,0x00,Remote_Control(G_dr16_ch0_value,G_dr16_ch1_value,(u8)MotorMode,0));//发送给小车
+             -的串口指令
+  57   3                              if(tabletennisangle>=180)tabletennisangle=180;
+  58   3                              if(tabletennisangle<=0)tabletennisangle=0;
+  59   3                              tabletennisangle=tabletennisdata(G_dr16_ch2_value,G_dr16_ch3_value,tabletennisangle);
+  60   3                              SteeringEngineAngle(tabletennisangle);
+  61   3                              Artillerydata(G_dr16_ch2_value,G_dr16_ch3_value);
+  62   3                              if(Artilleryflag&0x01==0x01&&Artilleryflag&0x80==0x80)
+  63   3                              {
+  64   4                                      Artilleryflag=0;
+  65   4                                      Artillery_Cmd();
+  66   4                              }
+  67   3                              flag = Disable;
+  68   3                              UsartFlag=Disable;
+  69   3                              ES=1;
+  70   3                      }               
+  71   2              }
+  72   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    168    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

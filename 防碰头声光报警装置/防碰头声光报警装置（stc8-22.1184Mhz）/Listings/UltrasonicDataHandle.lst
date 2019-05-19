@@ -1,0 +1,97 @@
+C51 COMPILER V9.56.0.0   ULTRASONICDATAHANDLE                                              10/22/2018 20:01:41 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE ULTRASONICDATAHANDLE
+OBJECT MODULE PLACED IN .\Objects\UltrasonicDataHandle.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE UltrasonicDataHandle.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\UltrasonicDataHandle.lst) OBJECT(.\Objects\UltrasonicDataHandle.obj)
+
+line level    source
+
+   1          #include "UltrasonicDataHandle.h"
+   2          
+   3          //u8 UltrasonicArray[9]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+   4          
+   5          //modbus_CRC16ะฃั้
+   6          u16 ModBus_CRC(u8 *arg,u8 length)
+   7          {
+   8   1          u16 Reg_CRC=0xffff;
+   9   1          u8 Temp_Reg=0x00;
+  10   1          u8 i,j;
+  11   1          for(i=0;i<length;i++)
+  12   1          {
+  13   2              Reg_CRC ^= *arg++;
+  14   2              for(j=0;j<8;j++)
+  15   2              {
+  16   3                  if(Reg_CRC&0x0001)
+  17   3                  {
+  18   4                      Reg_CRC=Reg_CRC>>1^0xA001;
+  19   4                  }
+  20   3                  else
+  21   3                  {
+  22   4                      Reg_CRC >>=1;
+  23   4                  }
+  24   3              }
+  25   2          }
+  26   1          Temp_Reg=Reg_CRC;
+  27   1          Reg_CRC=(Reg_CRC&0xff00)|Temp_Reg;
+  28   1          return Reg_CRC;
+  29   1      }
+  30          
+  31          
+  32          u8 Add8check(u8 *Data,u8 length)
+  33          {
+  34   1              u8 sum=0,i=0;
+  35   1              for(i=0;i<length;i++)
+  36   1              {
+  37   2                      sum +=*Data;
+  38   2                      Data++;
+  39   2              }
+  40   1              return sum;
+  41   1      }
+  42          //u8 num=0;
+  43          //void UltrasonicDataFunc(u8 _data)
+  44          //{
+  45          //      u8 sumval=0;
+  46          //      UltrasonicArray[num]=_data;
+  47          //              switch(num)
+  48          //              {
+  49          //              case 0:if(UltrasonicArray[num]==0x5A) num++; else num=0;break;
+  50          //              case 1:if(UltrasonicArray[num]==0x5A) num++; else num=0;break;
+  51          //              case 2:
+  52          //              case 3:
+  53          //              case 4:
+  54          //              case 5:
+C51 COMPILER V9.56.0.0   ULTRASONICDATAHANDLE                                              10/22/2018 20:01:41 PAGE 2   
+
+  55          //              case 6:num++;break;
+  56          //              case 7:
+  57          //                      sumval=Add8check(UltrasonicArray,7);
+  58          //                      if(UltrasonicArray[num]==sumval)
+  59          //                      {
+  60          //                              UltrasonicArray[num+1]=0xFF;
+  61          //                              num=0;
+  62          //                      }
+  63          //                      else 
+  64          //                      {
+  65          //                              num=0;
+  66          //                      }
+  67          //                      break;
+  68          //              default :num=0;break;
+  69          //              }
+  70          //}
+  71          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    129    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

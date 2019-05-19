@@ -1,0 +1,1 @@
+"..\HARDWARE\timer1\timer1.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\USER;..\HARDWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\HARDWARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\timer1.lst) OBJECT(.\Objects\timer1.obj)

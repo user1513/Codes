@@ -1,0 +1,26 @@
+C51 COMPILER V9.56.0.0   PBDATA                                                            09/14/2018 16:07:52 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE PBDATA
+OBJECT MODULE PLACED IN .\Objects\pbdata.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE pbdata.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\HARDWARE\ccp;..\
+                    -HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\HARDWARE\TableTenn
+                    -isDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\pbdata.lst) OBJECT(.\Objects\pbdata.obj)
+
+line level    source
+
+   1          #include "pbdata.h"
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

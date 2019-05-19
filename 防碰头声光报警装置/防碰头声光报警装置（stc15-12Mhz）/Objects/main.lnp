@@ -1,0 +1,9 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\timer.obj",
+".\Objects\usart.obj",
+".\Objects\Ultrasonic.obj",
+".\Objects\HC_SR04.obj",
+".\Objects\Exti.obj" 
+TO ".\Objects\main" 
+PRINT(".\Listings\main.m51")

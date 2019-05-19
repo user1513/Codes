@@ -1,0 +1,13 @@
+".\Objects\STARTUP.obj",
+".\Objects\app.obj",
+".\Objects\pbdata.obj",
+".\Objects\ComputerAck.obj",
+".\Objects\E2PROM.obj",
+".\Objects\MY1680U.obj",
+".\Objects\timer0.obj",
+".\Objects\uart1.obj",
+".\Objects\uart2.obj",
+".\Objects\UltrasonicDataHandle.obj",
+".\Objects\mydemo.obj" 
+TO ".\Objects\app" 
+PRINT(".\Listings\app.m51") RAMSIZE(256) 

@@ -1,0 +1,63 @@
+C51 COMPILER V9.56.0.0   RTC                                                               11/09/2018 18:43:01 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE RTC
+OBJECT MODULE PLACED IN .\Output\RTC.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE App\RTC.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.\App;.\Hardw
+                    -areDrivers;.\STC15;.\App) DEBUG PRINT(.\Output\RTC.lst) OBJECT(.\Output\RTC.obj)
+
+line level    source
+
+   1          /**
+   2           * 实时时钟读写相关函数
+   3           * 作者：hhelib
+   4           * 最后更新：2016-03-13
+   5           */
+   6           
+   7          #include "RTC.h"
+   8          #include "SD2405ALPI.h"
+   9          #include "app.h"
+  10          
+  11          /**
+  12           * void getTime(void)
+  13           * 简介：将实时时钟的时间发送至单片机
+  14           * 输入：无
+  15           * 输出：无
+  16           */
+  17          void getTime(void)
+  18          {
+  19   1              uint32_t time = 0;
+  20   1              time = SD2405ALPI_GetTime();
+  21   1              hour = (time / 100000ul) * 10 + (time % 100000ul) / 10000ul;
+  22   1              minute = ((time % 10000ul) / 1000)* 10 + (time % 1000) / 100;
+  23   1              second = ((time % 100) / 10)* 10 + (time % 10);
+  24   1      }
+  25          
+  26          /**
+  27           * void syncTime(void)
+  28           * 简介：将单片机的时间同步到实时时钟,设置好全局变量时、分、秒后调用此函数即可
+  29           * 输入：无
+  30           * 输出：无
+  31           */
+  32          void syncTime(void)
+  33          {
+  34   1              SD2405ALPI_SetTime(hour * 10000ul + minute * 100 + second);
+  35   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    297    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       4
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

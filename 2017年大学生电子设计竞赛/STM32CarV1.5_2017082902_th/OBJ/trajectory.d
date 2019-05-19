@@ -1,0 +1,12 @@
+..\obj\trajectory.o: trajectory.c
+..\obj\trajectory.o: trajectory.h
+..\obj\trajectory.o: ..\SYSTEM\sys\sys.h
+..\obj\trajectory.o: ..\SYSTEM\sys\stm32f10x.h
+..\obj\trajectory.o: ..\SYSTEM\sys\core_cm3.h
+..\obj\trajectory.o: C:\Software\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\trajectory.o: ..\SYSTEM\sys\system_stm32f10x.h
+..\obj\trajectory.o: main.h
+..\obj\trajectory.o: ..\HARDWARE\MOTOR\motor.h
+..\obj\trajectory.o: control.h
+..\obj\trajectory.o: ..\SYSTEM\delay\delay.h
+..\obj\trajectory.o: ..\HARDWARE\LED\led.h

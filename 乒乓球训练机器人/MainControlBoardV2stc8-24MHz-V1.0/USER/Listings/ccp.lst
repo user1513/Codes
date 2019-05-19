@@ -1,0 +1,70 @@
+C51 COMPILER V9.56.0.0   CCP                                                               09/19/2018 18:04:59 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE CCP
+OBJECT MODULE PLACED IN .\Objects\ccp.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE ..\HARDWARE\ccp\ccp.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\HAR
+                    -DWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;..\HARDWARE\uart3;..\HARDW
+                    -ARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\ccp.lst) OBJECT(.\Objects\ccp.obj)
+
+line level    source
+
+   1          #include "ccp.h"
+   2          
+   3          
+   4          /*
+   5          void PCA_Isr() interrupt 7 using 1
+   6          {
+   7              if (CF)
+   8              {
+   9                  CF = 0;
+  10          //        cnt++;                                  //PCA计时溢出次数+1
+  11          //              Uart1_SendStr("CF中断：");
+  12              }
+  13              if (CCF0)
+  14              {
+  15                  CCF0 = 0;
+  16                          Uart1_SendStr("CF中断：");
+  17          //        count0 = count1;                        //备份上一次的捕获值
+  18          //        ((unsigned char *)&count1)[3] = CCAP0L;
+  19          //        ((unsigned char *)&count1)[2] = CCAP0H;
+  20          //        ((unsigned char *)&count1)[1] = cnt;
+  21          //        ((unsigned char *)&count1)[0] = 0;
+  22          //        length = count1 - count0;              //length保存的即为捕获的脉冲宽度
+  23              }
+  24          }
+  25          
+  26          void ccp_Init()
+  27          {
+  28          
+  29              CCON = 0x00;
+  30              CMOD = 0x09;                                //PCA时钟为系统时钟,使能PCA计时中断
+  31              CL = 0x00;
+  32              CH = 0x00;
+  33              CCAPM0 = 0x11;                              //PCA模块0为16位捕获模式（下降沿捕获）
+  34              //CCAPM0 = 0x21;                              //PCA模块0为16位捕获模式（下降沿捕获）
+  35              //CCAPM0 = 0x31;                              //PCA模块0为16位捕获模式（上下降沿捕获）
+  36              CCAP0L = 0x00;
+  37              CCAP0H = 0x00;
+  38              CR = 1;                                     //启动PCA计时器
+  39              EA = 1;
+  40          
+  41          }
+  42          */
+  43          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.56.0.0   CCP                                                               09/19/2018 18:04:59 PAGE 2   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

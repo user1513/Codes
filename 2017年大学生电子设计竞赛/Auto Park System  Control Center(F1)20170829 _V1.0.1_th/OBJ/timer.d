@@ -1,0 +1,14 @@
+..\obj\timer.o: ..\HARDWARE\TIMER\timer.c
+..\obj\timer.o: ..\HARDWARE\TIMER\timer.h
+..\obj\timer.o: ..\SYSTEM\sys\sys.h
+..\obj\timer.o: ..\USER\stm32f10x.h
+..\obj\timer.o: ..\HARDWARE\LED\led.h
+..\obj\timer.o: ..\EMWIN\STemWin\inc\GUI.h
+..\obj\timer.o: ..\EMWIN\STemWin\inc\GUI_ConfDefaults.h
+..\obj\timer.o: ..\EMWIN\STemWin\Config\GUIConf.h
+..\obj\timer.o: ..\EMWIN\STemWin\inc\GUI_Type.h
+..\obj\timer.o: ..\EMWIN\STemWin\inc\LCD.h
+..\obj\timer.o: ..\EMWIN\STemWin\inc\Global.h
+..\obj\timer.o: ..\EMWIN\STemWin\inc\GUI_Version.h
+..\obj\timer.o: ..\SYSTEM\usart\usart.h
+..\obj\timer.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdio.h

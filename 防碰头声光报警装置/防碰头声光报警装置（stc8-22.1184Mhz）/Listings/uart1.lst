@@ -1,0 +1,141 @@
+C51 COMPILER V9.56.0.0   UART1                                                             10/22/2018 20:01:40 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE UART1
+OBJECT MODULE PLACED IN .\Objects\uart1.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE uart1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\uart1.lst) OBJECT(.\Objects\uart1.obj)
+
+line level    source
+
+   1          #include "uart1.h"
+   2          
+   3          #define FOSC            22118400UL
+   4          #define BRT             (65536 - FOSC / 9600 / 4)
+   5          
+   6          xdata u8 UltrasonicArray[9]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+   7          xdata u8 UartCmdArray[12]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+   8          u8 num=0,Cmdnum=0;
+   9          u16 crcval=0;
+  10          
+  11          void UartIsr() interrupt 4 
+  12          {
+  13   1              u8 sumval=0,temp=0;
+  14   1          if (RI)
+  15   1          {
+  16   2                      RI = 0; 
+  17   2                      temp=SBUF;
+  18   2                      UltrasonicArray[num]=temp;
+  19   2                      switch(num)
+  20   2                      {
+  21   3                      case 0:if(UltrasonicArray[num]==0x5A) num++; else num=0;break;
+  22   3                      case 1:if(UltrasonicArray[num]==0xA5) num++; else num=0;break;
+  23   3                      case 2:
+  24   3                      case 3:
+  25   3                      case 4:
+  26   3                      case 5:
+  27   3                      case 6:num++;break;
+  28   3                      case 7:
+  29   3                              sumval=Add8check(UltrasonicArray,7);
+  30   3                              if(UltrasonicArray[num]==sumval)
+  31   3                              {
+  32   4                                      UltrasonicArray[num+1]=0xFF;
+  33   4                                      num=0;
+  34   4                              }
+  35   3                              else 
+  36   3                              {
+  37   4                                      num=0;
+  38   4                              }
+  39   3                              break;
+  40   3                      default :num=0;break;
+  41   3                      }
+  42   2                      
+  43   2                      UartCmdArray[Cmdnum]=temp;
+  44   2                      switch(Cmdnum)
+  45   2                      {
+  46   3                      case 0:if(UartCmdArray[num]==0xA5) Cmdnum++; else Cmdnum=0;break;
+  47   3                      case 1:if(UartCmdArray[num]==0x5A) Cmdnum++; else Cmdnum=0;break;
+  48   3                      case 2:
+  49   3                      case 3:
+  50   3                      case 4:
+  51   3                      case 5:
+  52   3                      case 6:
+  53   3                      case 7:Cmdnum++;break;
+  54   3                      case 8:if(UartCmdArray[Cmdnum]==0xFF) Cmdnum++;else Cmdnum=0;break;
+C51 COMPILER V9.56.0.0   UART1                                                             10/22/2018 20:01:40 PAGE 2   
+
+  55   3                      case 9:crcval=ModBus_CRC(UartCmdArray,9);
+  56   3                              if((u8)(crcval)==UartCmdArray[Cmdnum])Cmdnum++; else Cmdnum=0;break;
+  57   3                      case 10:
+  58   3                              if((u8)(crcval>>8)==UartCmdArray[Cmdnum])
+  59   3                              {
+  60   4                                      UartCmdArray[Cmdnum+1]=0xFF;
+  61   4                                      Cmdnum=0;
+  62   4                                      crcval=0;
+  63   4                              }
+  64   3                              else 
+  65   3                              {
+  66   4                                      crcval=0;
+  67   4                                      Cmdnum=0;
+  68   4                              }
+  69   3                              break;
+  70   3                      default :Cmdnum=0;break;
+  71   3                      }
+  72   2          }
+  73   1      }
+  74          
+  75          void Uart1_Init(void)           //9600bps@11.0592MHz
+  76          {
+  77   1              SCON |= 0x50;           //8位数据,可变波特率
+  78   1              AUXR |= 0x40;           //定时器1时钟为Fosc,即1T
+  79   1              AUXR &= 0xFE;           //串口1选择定时器1为波特率发生器
+  80   1              TMOD &= 0x0F;           //设定定时器1为16位自动重装方式
+  81   1              TL1 = BRT;
+  82   1          TH1 = BRT >> 8;
+  83   1              ET1 = 0;                //禁止定时器1中断
+  84   1              TR1 = 1;                //启动定时器1
+  85   1              ES=1;
+  86   1              EA=1;
+  87   1      }
+  88          
+  89          void Uart1_Send(u8 dat)
+  90          {
+  91   1          SBUF = dat;
+  92   1              while (!TI);
+  93   1          TI=0;
+  94   1          
+  95   1      }
+  96          
+  97          void Uart1_SendStr(u8 *p)
+  98          {
+  99   1          while (*p!='\0')
+ 100   1          {
+ 101   2              Uart1_Send(*p);
+ 102   2                      p++;
+ 103   2          }
+ 104   1      }
+ 105          
+ 106          void Uart1SendStrLen(u8 *p,u8 length)
+ 107          {
+ 108   1          while (length--)
+ 109   1          {
+ 110   2              Uart1_Send(*p);
+ 111   2                      p++;
+ 112   2          }
+ 113   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.56.0.0   UART1                                                             10/22/2018 20:01:40 PAGE 3   
+
+   CODE SIZE        =    493    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     21    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

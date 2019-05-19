@@ -3,7 +3,7 @@
 ..\obj\delay.o: ..\SYSTEM\sys\sys.h
 ..\obj\delay.o: ..\USER\stm32f10x.h
 ..\obj\delay.o: ..\CORE\core_cm3.h
-..\obj\delay.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\delay.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\delay.o: ..\USER\system_stm32f10x.h
 ..\obj\delay.o: ..\USER\stm32f10x_conf.h
 ..\obj\delay.o: ..\STM32F10x_FWLib\inc\stm32f10x_dbgmcu.h
@@ -21,7 +21,7 @@
 ..\obj\delay.o: ..\STM32F10x_FWLib\inc\stm32f10x_sdio.h
 ..\obj\delay.o: ..\SYSTEM\delay\delay.h
 ..\obj\delay.o: ..\SYSTEM\usart\usart.h
-..\obj\delay.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\delay.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\delay.o: ..\SYSTEM\sys\sys.h
-..\obj\delay.o: C:\Keil\ARM\ARMCC\Bin\..\include\math.h
-..\obj\delay.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\delay.o: F:\KEIL\ARM\ARMCC\Bin\..\include\math.h
+..\obj\delay.o: F:\KEIL\ARM\ARMCC\Bin\..\include\stdlib.h

@@ -1,0 +1,626 @@
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 1   
+
+
+C51 COMPILER V8.08, COMPILATION OF MODULE SHOWTIME
+OBJECT MODULE PLACED IN ShowTime.OBJ
+COMPILER INVOKED BY: D:\Program Files\keil-3\C51\BIN\C51.EXE ShowTime.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "NEW_8051.H"
+   2          #include "task.h"
+   3          #define ucNumRows 190 //定义一周显示列数
+   4          uchar  id;
+   5          uint  i=0,j=0;
+   6          uchar  k=0,m=0;
+   7          bit Time=0;
+   8          uchar l=8;
+   9          uchar xdata TimeBuff[20];
+  10          uchar code dazimo[];
+  11          uchar code zimo[];
+  12          const uchar code tab1[15][16];
+  13          uchar code shuziP[15][16];
+  14          void PortA(uchar temp)//送显示
+  15          {
+  16   1              D24=(bit)(temp&0x01);
+  17   1              D23=(bit)(temp&0x02);
+  18   1              D22=(bit)(temp&0x04);
+  19   1              D21=(bit)(temp&0x08);
+  20   1              D20=(bit)(temp&0x10);
+  21   1              D19=(bit)(temp&0x20);
+  22   1              D18=(bit)(temp&0x40);
+  23   1              D17=(bit)(temp&0x80);
+  24   1      }
+  25          void PortB(uchar temp)//送显示
+  26          {
+  27   1              D32=(bit)(temp&0x01);
+  28   1              D31=(bit)(temp&0x02);
+  29   1              D30=(bit)(temp&0x04);
+  30   1              D29=(bit)(temp&0x08);
+  31   1              D28=(bit)(temp&0x10);
+  32   1              D27=(bit)(temp&0x20);
+  33   1              D26=(bit)(temp&0x40);
+  34   1              D25=(bit)(temp&0x80);
+  35   1      }
+  36          void PortC(uchar temp)//送显示
+  37          {
+  38   1              D40=(bit)(temp&0x01);
+  39   1              D39=(bit)(temp&0x02);
+  40   1              D38=(bit)(temp&0x04);
+  41   1              D37=(bit)(temp&0x08);
+  42   1              D36=(bit)(temp&0x10);
+  43   1              D35=(bit)(temp&0x20);
+  44   1              D34=(bit)(temp&0x40);
+  45   1              D33=(bit)(temp&0x80);
+  46   1      }
+  47          void PortD(uchar temp)//送显示
+  48          {
+  49   1              D41=(bit)(temp&0x01);
+  50   1              D42=(bit)(temp&0x02);
+  51   1              D43=(bit)(temp&0x04);
+  52   1              D44=(bit)(temp&0x08);
+  53   1              D45=(bit)(temp&0x10);
+  54   1              D46=(bit)(temp&0x20);
+  55   1              D47=(bit)(temp&0x40);
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 2   
+
+  56   1              D48=(bit)(temp&0x80);
+  57   1      }
+  58          void Show_R(uchar r1,uchar r2)//送显示
+  59          {
+  60   1              D1=(bit)(r1&0x01);
+  61   1              D2=(bit)(r1&0x02);
+  62   1              D3=(bit)(r1&0x04);
+  63   1              D4=(bit)(r1&0x08);
+  64   1              D5=(bit)(r1&0x10);
+  65   1              D6=(bit)(r1&0x20);
+  66   1              D7=(bit)(r1&0x40);
+  67   1              D8=(bit)(r1&0x80);
+  68   1      
+  69   1              D9=(bit)(r2&0x01);
+  70   1              D10=(bit)(r2&0x02);
+  71   1              D11=(bit)(r2&0x04);
+  72   1              D12=(bit)(r2&0x08);
+  73   1              D13=(bit)(r2&0x10);
+  74   1              D14=(bit)(r2&0x20);
+  75   1              D15=(bit)(r2&0x40);
+  76   1              D16=(bit)(r2&0x80);
+  77   1                              
+  78   1      }
+  79          void Show_L(uchar l1,uchar l2,uchar l3,uchar l4)//送显示
+  80          {
+  81   1              D17=(bit)(l1&0x01);
+  82   1              D18=(bit)(l1&0x02);
+  83   1              D19=(bit)(l1&0x04);
+  84   1              D20=(bit)(l1&0x08);
+  85   1              D21=(bit)(l1&0x10);
+  86   1              D22=(bit)(l1&0x20);
+  87   1              D23=(bit)(l1&0x40);
+  88   1              D24=(bit)(l1&0x80);
+  89   1      
+  90   1              D25=(bit)(l2&0x01);
+  91   1              D26=(bit)(l2&0x02);
+  92   1              D27=(bit)(l2&0x04);
+  93   1              D28=(bit)(l2&0x08);
+  94   1              D29=(bit)(l2&0x10);
+  95   1              D30=(bit)(l2&0x20);
+  96   1              D31=(bit)(l2&0x40);
+  97   1              D32=(bit)(l2&0x80);
+  98   1      
+  99   1              D33=(bit)(l3&0x01);
+ 100   1              D34=(bit)(l3&0x02);
+ 101   1              D35=(bit)(l3&0x04);
+ 102   1              D36=(bit)(l3&0x08);
+ 103   1              D37=(bit)(l3&0x10);
+ 104   1              D38=(bit)(l3&0x20);
+ 105   1              D39=(bit)(l3&0x40);
+ 106   1              D40=(bit)(l3&0x80);
+ 107   1      
+ 108   1              D41=(bit)(l4&0x01);
+ 109   1              D42=(bit)(l4&0x02);
+ 110   1              D43=(bit)(l4&0x04);
+ 111   1              D44=(bit)(l4&0x08);
+ 112   1              D45=(bit)(l4&0x10);
+ 113   1              D46=(bit)(l4&0x20);
+ 114   1              D47=(bit)(l4&0x40);
+ 115   1              D48=(bit)(l4&0x80);
+ 116   1                              
+ 117   1      }
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 3   
+
+ 118          
+ 119          /************************************** ***/
+ 120          void Close(void) //IO口高电平关闭LED显示
+ 121          {
+ 122   1              P0=0XFF;
+ 123   1              P1=0XFF;
+ 124   1              P2=0XFF;
+ 125   1              P3=0XFF;
+ 126   1              P4=0XFF;
+ 127   1              P5=0XFF;
+ 128   1              P6=0XFF;
+ 129   1              P7=0XFF;
+ 130   1      }
+ 131          /*********************每列显示的时间************************************/
+ 132          /*****n（us）延时子程序*****/
+ 133          void Delay10us()                //@18.432MHz
+ 134          {
+ 135   1      
+ 136   1          unsigned char a,b;
+ 137   1          for(b=153;b>0;b--)
+ 138   1              for(a=3;a>0;a--);
+ 139   1      }
+ 140          /****************************************/
+ 141          void Delay30us()                //@18.432MHz
+ 142          {
+ 143   1      
+ 144   1          unsigned char a,b;
+ 145   1          for(b=170;b>0;b--)
+ 146   1              for(a=3;a>0;a--);
+ 147   1      }
+ 148          /***************************************************/
+ 149          void Show_plane_time(void)//立体显示时间
+ 150          {
+ 151   1                      j++;                                       
+ 152   1              if( j>768 )//显示完文字后 循环； j=16*需要显示的字数 768/16=48
+ 153   1              {
+ 154   2                  j=0;
+ 155   2              }
+ 156   1             for(i=j;i<ucNumRows+j;i++)  //显示190列 数据
+ 157   1              {                               
+ 158   2                              if(m<8)
+ 159   2                              {
+ 160   3                                      Show_L(shuziP[TimeBuff[m]][k*2],shuziP[TimeBuff[m]][k*2+1],0xFF,0XFF);//平面送时间显示
+ 161   3                              }
+ 162   2                              else if((m>7)&&(m<16))
+ 163   2                              {
+ 164   3                                      Show_L(tab1[TimeBuff[m]][k*2],tab1[TimeBuff[m]][k*2+1],0xFF,0XFF);//平面送月日显示              
+ 165   3                              }
+ 166   2                              else
+ 167   2                              {
+ 168   3                                      Show_L(0XFF,0XFF,0xFF,0XFF);
+ 169   3                              }
+ 170   2                              Show_R(Lzimo[i*2],Lzimo[i*2+1]);//侧面送16*16文字显示   
+ 171   2                              Delay30us();//延时一段时间
+ 172   2                      
+ 173   2                                                      
+ 174   2                 if(BIT_timeout==1)//这里如果没有显示完一圈的数据 回到起点了 
+ 175   2                                        //直接跳出 就不会出现头吃尾的现象 而且盲点很小
+ 176   2                         {
+ 177   3                                      return;
+ 178   3                         }
+ 179   2                          k++;
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 4   
+
+ 180   2                               if(k>7)  //一个数字8列
+ 181   2                               {
+ 182   3                                      k=0;
+ 183   3                                      if((m<8)&&(Time==0))
+ 184   3                                      {
+ 185   4                                              m++;
+ 186   4                                      }
+ 187   3                                      if((m>7)&&(Time==0))  //间隔显示 时间 和日期 
+ 188   3                                      {
+ 189   4                                              m=20;
+ 190   4                                              if(l>0)
+ 191   4                                              l--;
+ 192   4                                              if(l==0)
+ 193   4                                              {
+ 194   5                                                m=7;
+ 195   5                                                Time=1;       
+ 196   5                                              }
+ 197   4                                              
+ 198   4                                      }                                                                                                                                                                                                                  
+ 199   3                                      if((m<16)&&(Time==1))
+ 200   3                                      {
+ 201   4                                              m++;    
+ 202   4                                      }
+ 203   3                                  if(m==16)
+ 204   3                                      m=20;
+ 205   3                                  
+ 206   3                       }
+ 207   2                       Close();
+ 208   2                      } 
+ 209   1                      Time=0;
+ 210   1                      l=6;
+ 211   1                      k=0;
+ 212   1                      m=0;
+ 213   1                      Close(); 
+ 214   1              
+ 215   1      }
+ 216          /*************************************************/
+ 217          void Show_line_time(void)//立体显示时间
+ 218          {
+ 219   1              if(id==0)       //如果不是调时 显示时间信息
+ 220   1              {
+ 221   2                      j++;                                       
+ 222   2              if( j>768 )//显示完文字后 循环； j=16*需要显示的字数 768/16=48
+ 223   2              {
+ 224   3                  j=0;
+ 225   3              }
+ 226   2             for(i=j;i<ucNumRows+j;i++)  //显示190列 数据
+ 227   2              {                               
+ 228   3                              if(m<16)
+ 229   3                              {
+ 230   4                                      Show_R(shuzi[TimeBuff[m]][k*2],shuzi[TimeBuff[m]][k*2+1]);//侧面送时间显示
+ 231   4                              }
+ 232   3                              else
+ 233   3                              {
+ 234   4                                      Show_R(0XFF,0XFF);
+ 235   4                              }
+ 236   3                              Show_L(dazimo[i*2],dazimo[i*2+1],0xFF,0XFF);//平面送16*16文字显示       
+ 237   3                              Delay10us();//延时一段时间
+ 238   3                                                                                      
+ 239   3                 if(BIT_timeout==1)//这里如果没有显示完一圈的数据 回到起点了 
+ 240   3                                        //直接跳出 就不会出现头吃尾的现象 而且盲点很小
+ 241   3                         {
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 5   
+
+ 242   4                                      return;
+ 243   4                         }
+ 244   3                          k++;
+ 245   3                               if(k>7)  //一个数字8列
+ 246   3                               {
+ 247   4                                      k=0;
+ 248   4                                      if((m<8)&&(Time==0))
+ 249   4                                      {
+ 250   5                                              m++;
+ 251   5                                      }
+ 252   4                                      if((m>7)&&(Time==0))  //间隔显示 时间 和日期 
+ 253   4                                      {
+ 254   5                                              m=20;
+ 255   5                                              if(l>0)
+ 256   5                                              l--;
+ 257   5                                              if(l==0)
+ 258   5                                              {
+ 259   6                                                m=7;
+ 260   6                                                Time=1;       
+ 261   6                                              }
+ 262   5                                              
+ 263   5                                      }                                                                                                                                                                                                                  
+ 264   4                                      if((m<16)&&(Time==1))
+ 265   4                                      {
+ 266   5                                              m++;    
+ 267   5                                      }
+ 268   4                                  if(m==16)
+ 269   4                                      m=20;
+ 270   4                                  
+ 271   4                       }
+ 272   3                       Close();
+ 273   3                      } 
+ 274   2                      Time=0;
+ 275   2                      l=6;
+ 276   2                      k=0;
+ 277   2                      m=0;
+ 278   2                      Close(); 
+ 279   2              }
+ 280   1              /****************************************************************/
+ 281   1              else//如果是调时间
+ 282   1              {
+ 283   2                 Close();
+ 284   2                if(id==1)      //调时
+ 285   2                {
+ 286   3                      for(i=0;i<8;i++) 
+ 287   3                      { 
+ 288   4                              Show_R(shuzi[Hour%16][i*2],shuzi[Hour%16][i*2+1]); //时的个位     
+ 289   4                              Delay10us();                     
+ 290   4                      }
+ 291   3                      Close();
+ 292   3                      for(i=0;i<8;i++) 
+ 293   3                      { 
+ 294   4                              Show_R(shuzi[Hour/16][i*2],shuzi[Hour/16][i*2+1]);       //时的十位
+ 295   4                              Delay10us();
+ 296   4                                               
+ 297   4                      }
+ 298   3                      Close();
+ 299   3                      for(i=0;i<8;i++) 
+ 300   3                      { 
+ 301   4                              Show_R(shuzi[15][i*2],shuzi[15][i*2+1]);         //时字符                 
+ 302   4                              Delay10us();                     
+ 303   4                      }
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 6   
+
+ 304   3                      Close();
+ 305   3                      for(i=0;i<8;i++) 
+ 306   3                      { 
+ 307   4                              Show_R(shuzi[16][i*2],shuzi[16][i*2+1]);         //时字符
+ 308   4                              Delay10us();                     
+ 309   4                      }
+ 310   3                      Close();
+ 311   3                      
+ 312   3                                       
+ 313   3                }
+ 314   2                /***********************************************/
+ 315   2                if(id==2)      //调分
+ 316   2                {
+ 317   3                      for(i=0;i<8;i++) 
+ 318   3                      { 
+ 319   4                              Show_R(shuzi[Cent%16][i*2],shuzi[Cent%16][i*2+1]); //分的个位             
+ 320   4                              Delay10us();                     
+ 321   4                      }
+ 322   3                      Close();
+ 323   3                      for(i=0;i<8;i++) 
+ 324   3                      { 
+ 325   4                              Show_R(shuzi[Cent/16][i*2],shuzi[Cent/16][i*2+1]);  //分的十位
+ 326   4                              Delay10us();
+ 327   4                                               
+ 328   4                      }
+ 329   3                      Close();
+ 330   3                      for(i=0;i<8;i++) 
+ 331   3                      { 
+ 332   4                              Show_R(shuzi[17][i*2],shuzi[17][i*2+1]);         //分字符         
+ 333   4                              Delay10us();                     
+ 334   4                      }
+ 335   3                              Close();
+ 336   3                      for(i=0;i<8;i++) 
+ 337   3                      { 
+ 338   4                              Show_R(shuzi[18][i*2],shuzi[18][i*2+1]);         //分字符                 
+ 339   4                              Delay10us();                     
+ 340   4                      }
+ 341   3                      Close();
+ 342   3                      
+ 343   3                                       
+ 344   3                }
+ 345   2                /*********************************************************/
+ 346   2                if(id==3)      //调秒
+ 347   2                {
+ 348   3                      for(i=0;i<8;i++) 
+ 349   3                      { 
+ 350   4                              Show_R(shuzi[Sec%16][i*2],shuzi[Sec%16][i*2+1]);        //秒的个位                        
+ 351   4                              Delay10us();                     
+ 352   4                      }
+ 353   3                      Close();
+ 354   3                      for(i=0;i<8;i++) 
+ 355   3                      { 
+ 356   4                              Show_R(shuzi[Sec/16][i*2],shuzi[Sec/16][i*2+1]);        //秒的十位                      ;
+ 357   4                              Delay10us();
+ 358   4                                               
+ 359   4                      }
+ 360   3                      Close();
+ 361   3                      for(i=0;i<8;i++) 
+ 362   3                      { 
+ 363   4                              Show_R(shuzi[19][i*2],shuzi[19][i*2+1]);        //秒字符                  
+ 364   4                              Delay10us();                     
+ 365   4                      }
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 7   
+
+ 366   3                      Close();
+ 367   3                      for(i=0;i<8;i++) 
+ 368   3                      { 
+ 369   4                              Show_R(shuzi[20][i*2],shuzi[20][i*2+1]);        //秒字符                  
+ 370   4                              Delay10us();                     
+ 371   4                      }
+ 372   3                      Close();
+ 373   3                      
+ 374   3                                       
+ 375   3                }
+ 376   2                /**********************************************************/
+ 377   2                if(id==4)      //调月
+ 378   2                {
+ 379   3                      for(i=0;i<8;i++) 
+ 380   3                      { 
+ 381   4                              Show_R(shuzi[Month%16][i*2],shuzi[Month%16][i*2+1]);    //月的个位                
+ 382   4                              Delay10us();                             
+ 383   4                      }
+ 384   3                      Close();
+ 385   3                      for(i=0;i<8;i++) 
+ 386   3                      { 
+ 387   4                              Show_R(shuzi[Month/16][i*2],shuzi[Month/16][i*2+1]);    //月的十位
+ 388   4                              Delay10us();
+ 389   4                                               
+ 390   4                      }
+ 391   3                      Close();
+ 392   3                      for(i=0;i<8;i++) 
+ 393   3                      { 
+ 394   4                              Show_R(shuzi[11][i*2],shuzi[11][i*2+1]);        //月字符          
+ 395   4                              Delay10us();                     
+ 396   4                      }
+ 397   3                      Close();
+ 398   3                      for(i=0;i<8;i++) 
+ 399   3                      { 
+ 400   4                              Show_R(shuzi[12][i*2],shuzi[12][i*2+1]);        //月字符
+ 401   4                              Delay10us();                     
+ 402   4                      }
+ 403   3                      Close();
+ 404   3                      
+ 405   3                                       
+ 406   3                }
+ 407   2                /*********************************************************/
+ 408   2                if(id==5)      //调日
+ 409   2                {
+ 410   3                      for(i=0;i<8;i++) 
+ 411   3                      { 
+ 412   4                              Show_R(shuzi[Day%16][i*2],shuzi[Day%16][i*2+1]);        //日的个位                                
+ 413   4                              Delay10us();                     
+ 414   4                      }
+ 415   3                      Close();
+ 416   3                      for(i=0;i<8;i++) 
+ 417   3                      { 
+ 418   4                              Show_R(shuzi[Day/16][i*2],shuzi[Day/16][i*2+1]);        //日的十位                      ;
+ 419   4                              Delay10us();
+ 420   4                                               
+ 421   4                      }
+ 422   3                      Close();
+ 423   3                      for(i=0;i<8;i++) 
+ 424   3                      { 
+ 425   4                              Show_R(shuzi[13][i*2],shuzi[13][i*2+1]);//日字符                  
+ 426   4                              Delay10us();                     
+ 427   4                      }
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 8   
+
+ 428   3                      Close();
+ 429   3                      for(i=0;i<8;i++) 
+ 430   3                      { 
+ 431   4                              Show_R(shuzi[14][i*2],shuzi[14][i*2+1]);        //日字符                  
+ 432   4                              Delay10us();                     
+ 433   4                      }
+ 434   3                      Close();
+ 435   3                      
+ 436   3                                       
+ 437   3                }
+ 438   2                /***********************************************************/
+ 439   2              }
+ 440   1      }
+ 441          
+ 442          //逐列 阳码 逆向  加 文字垂直翻转 加左右翻转 59tiaoba.taobao.com
+ 443          const uchar code tab1[15][16]={
+ 444          
+ 445          {0xFF,0xFF,0x0F,0xF8,0xF7,0xF7,0xFB,0xEF,0xFB,0xEF,0xF7,0xF7,0x0F,0xF8,0xFF,0xFF},/*"0",0*/
+ 446          
+ 447          {0xFF,0xFF,0xFF,0xFF,0xFB,0xFF,0xFB,0xFF,0x03,0xE0,0xFB,0xF7,0xFB,0xF7,0xFF,0xFF},/*"1",1*/
+ 448          
+ 449          {0xFF,0xFF,0xF3,0xF1,0x7B,0xEE,0xBB,0xEF,0xDB,0xEF,0xEB,0xEF,0xF3,0xF1,0xFF,0xFF},/*"2",2*/
+ 450          
+ 451          {0xFF,0xFF,0x8F,0xF3,0x77,0xED,0xFB,0xEE,0xFB,0xEE,0xFB,0xEF,0xE7,0xF3,0xFF,0xFF},/*"3",3*/
+ 452          
+ 453          {0xFF,0xFF,0xDB,0xFF,0x03,0xE0,0xDB,0xF7,0xDB,0xFB,0xDF,0xFC,0x1F,0xFF,0xFF,0xFF},/*"4",4*/
+ 454          
+ 455          {0xFF,0xFF,0x8F,0xEF,0x77,0xEF,0xFB,0xEE,0xFB,0xEE,0x7B,0xEF,0x67,0xE0,0xFF,0xFF},/*"5",5*/
+ 456          
+ 457          {0xFF,0xFF,0x8F,0xFF,0x77,0xE7,0xFB,0xEE,0xFB,0xEE,0x77,0xF7,0x0F,0xF8,0xFF,0xFF},/*"6",6*/
+ 458          
+ 459          {0xFF,0xFF,0xFF,0xEF,0xFF,0xE3,0xFF,0xEC,0x03,0xEF,0xFF,0xEF,0xFF,0xE3,0xFF,0xFF},/*"7",7*/
+ 460          
+ 461          {0xFF,0xFF,0xC7,0xF1,0xBB,0xEE,0x7B,0xEF,0x7B,0xEF,0xBB,0xEE,0xC7,0xF1,0xFF,0xFF},/*"8",8*/
+ 462          
+ 463          {0xFF,0xFF,0x0F,0xF8,0x77,0xF7,0xBB,0xEF,0xBB,0xEF,0x73,0xF7,0xFF,0xF8,0xFF,0xFF},/*"9",9*/
+ 464          
+ 465          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xF3,0xFC,0xF3,0xFC,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*":",10*/
+ 466          
+ 467          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x01,0x80,0xBE,0xBB,0xBD,0xBB,0xBF,0xBB,0xBF,0xBB},
+ 468          {0xBF,0xBB,0xBF,0xBB,0xBF,0xBB,0xBF,0xBB,0x0F,0x80,0xF3,0xFF,0xFD,0xFF,0xFE,0xFF},/*"月",11*/
+ 469          
+ 470          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x80,0xFD,0xBE,0xFD,0xBE,0xFD,0xBE},
+ 471          {0xFD,0xBE,0xFD,0xBE,0xFD,0xBE,0xFD,0xBE,0x00,0x80,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*"日",12*/
+ 472          };
+ 473          
+ 474          //PC2002字幕软件  配置 （逐列 阳码 逆向 ） 字大小16X16   59tiaoba.taobao.com
+ 475          uchar code shuziP[15][16]={
+ 476          
+ 477          {0xFF,0xFF,0x1F,0xF0,0xEF,0xEF,0xF7,0xDF,0xF7,0xDF,0xEF,0xEF,0x1F,0xF0,0xFF,0xFF},/*"0",0*/
+ 478          
+ 479          {0xFF,0xFF,0xEF,0xDF,0xEF,0xDF,0x07,0xC0,0xFF,0xDF,0xFF,0xDF,0xFF,0xFF,0xFF,0xFF},/*"1",1*/
+ 480          
+ 481          {0xFF,0xFF,0x8F,0xCF,0xF7,0xD7,0xF7,0xDB,0xF7,0xDD,0x77,0xDE,0x8F,0xCF,0xFF,0xFF},/*"2",2*/
+ 482          
+ 483          {0xFF,0xFF,0xCF,0xE7,0xF7,0xDF,0x77,0xDF,0x77,0xDF,0xB7,0xEE,0xCF,0xF1,0xFF,0xFF},/*"3",3*/
+ 484          
+ 485          {0xFF,0xFF,0xFF,0xF8,0x3F,0xFB,0xDF,0xDB,0xEF,0xDB,0x07,0xC0,0xFF,0xDB,0xFF,0xFF},/*"4",4*/
+ 486          
+ 487          {0xFF,0xFF,0x07,0xE6,0xF7,0xDE,0x77,0xDF,0x77,0xDF,0xF7,0xEE,0xF7,0xF1,0xFF,0xFF},/*"5",5*/
+ 488          
+ 489          {0xFF,0xFF,0x1F,0xF0,0xEF,0xEE,0x77,0xDF,0x77,0xDF,0xE7,0xEE,0xFF,0xF1,0xFF,0xFF},/*"6",6*/
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 9   
+
+ 490          
+ 491          {0xFF,0xFF,0xC7,0xFF,0xF7,0xFF,0xF7,0xC0,0x37,0xFF,0xC7,0xFF,0xF7,0xFF,0xFF,0xFF},/*"7",7*/
+ 492          
+ 493          {0xFF,0xFF,0x8F,0xE3,0x77,0xDD,0xF7,0xDE,0xF7,0xDE,0x77,0xDD,0x8F,0xE3,0xFF,0xFF},/*"8",8*/
+ 494          
+ 495          {0xFF,0xFF,0x1F,0xFF,0xEF,0xCE,0xF7,0xDD,0xF7,0xDD,0xEF,0xEE,0x1F,0xF0,0xFF,0xFF},/*"9",9*/
+ 496          
+ 497          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x3F,0xCF,0x3F,0xCF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*":",10*/
+ 498          
+ 499          {0xFF,0x7F,0xFF,0xBF,0xFF,0xCF,0x01,0xF0,0xDD,0xFD,0xDD,0xFD,0xDD,0xFD,0xDD,0xFD},
+ 500          {0xDD,0xFD,0xDD,0xFD,0xDD,0xBD,0xDD,0x7D,0x01,0x80,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*"月",11*/
+ 501          
+ 502          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x7D,0xBF,0x7D,0xBF,0x7D,0xBF,0x7D,0xBF},
+ 503          {0x7D,0xBF,0x7D,0xBF,0x7D,0xBF,0x01,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*"日",12*/
+ 504          
+ 505          };
+ 506          //PC2002字幕软件  配置 （逐列 阳码 逆向 左右翻转） 字大小16X16   59tiaoba.taobao.com
+ 507          uchar code shuzi[21][16]={
+ 508          
+ 509          {0xFF,0xFF,0x1F,0xF0,0xEF,0xEF,0xF7,0xDF,0xF7,0xDF,0xEF,0xEF,0x1F,0xF0,0xFF,0xFF},/*"0",0*/
+ 510          
+ 511          {0xFF,0xFF,0xFF,0xFF,0xFF,0xDF,0xFF,0xDF,0x07,0xC0,0xEF,0xDF,0xEF,0xDF,0xFF,0xFF},/*"1",1*/
+ 512          
+ 513          {0xFF,0xFF,0x8F,0xCF,0x77,0xDE,0xF7,0xDD,0xF7,0xDB,0xF7,0xD7,0x8F,0xCF,0xFF,0xFF},/*"2",2*/
+ 514          
+ 515          {0xFF,0xFF,0xCF,0xF1,0xB7,0xEE,0x77,0xDF,0x77,0xDF,0xF7,0xDF,0xCF,0xE7,0xFF,0xFF},/*"3",3*/
+ 516          
+ 517          {0xFF,0xFF,0xFF,0xDB,0x07,0xC0,0xEF,0xDB,0xDF,0xDB,0x3F,0xFB,0xFF,0xF8,0xFF,0xFF},/*"4",4*/
+ 518          
+ 519          {0xFF,0xFF,0xF7,0xF1,0xF7,0xEE,0x77,0xDF,0x77,0xDF,0xF7,0xDE,0x07,0xE6,0xFF,0xFF},/*"5",5*/
+ 520          
+ 521          {0xFF,0xFF,0xFF,0xF1,0xE7,0xEE,0x77,0xDF,0x77,0xDF,0xEF,0xEE,0x1F,0xF0,0xFF,0xFF},/*"6",6*/
+ 522          
+ 523          {0xFF,0xFF,0xF7,0xFF,0xC7,0xFF,0x37,0xFF,0xF7,0xC0,0xF7,0xFF,0xC7,0xFF,0xFF,0xFF},/*"7",7*/
+ 524          
+ 525          {0xFF,0xFF,0x8F,0xE3,0x77,0xDD,0xF7,0xDE,0xF7,0xDE,0x77,0xDD,0x8F,0xE3,0xFF,0xFF},/*"8",8*/
+ 526          
+ 527          {0xFF,0xFF,0x1F,0xF0,0xEF,0xEE,0xF7,0xDD,0xF7,0xDD,0xEF,0xCE,0x1F,0xFF,0xFF,0xFF},/*"9",9*/
+ 528          
+ 529          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x3F,0xCF,0x3F,0xCF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*":",10*/
+ 530          
+ 531          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x01,0x80,0xDD,0x7D,0xDD,0xBD,0xDD,0xFD,0xDD,0xFD},
+ 532          {0xDD,0xFD,0xDD,0xFD,0xDD,0xFD,0xDD,0xFD,0x01,0xF0,0xFF,0xCF,0xFF,0xBF,0xFF,0x7F},/*"月",11*/
+ 533          
+ 534          {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x01,0x00,0x7D,0xBF,0x7D,0xBF,0x7D,0xBF},
+ 535          {0x7D,0xBF,0x7D,0xBF,0x7D,0xBF,0x7D,0xBF,0x01,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},/*"日",12*/
+ 536          
+ 537          {0xFF,0xFF,0xEF,0xFF,0xEF,0xFF,0x00,0x80,0xEF,0x7F,0xEF,0xBF,0xEF,0xF9,0xEF,0xFE},
+ 538          {0xEF,0xFF,0xFF,0xFF,0x03,0xC0,0x7B,0xEF,0x7B,0xEF,0x7B,0xEF,0x03,0xC0,0xFF,0xFF},/*"时",13*/
+ 539          
+ 540          {0xFF,0xFF,0x7F,0xFF,0xBF,0xFF,0xDF,0xFF,0xEF,0xFF,0x73,0xC0,0x7C,0xBF,0x7F,0x7F},
+ 541          {0x7F,0xBF,0x7F,0xFF,0x79,0xF8,0x77,0xE7,0x6F,0xDF,0xDF,0xBF,0xBF,0x7F,0x7F,0xFF},/*"分",14*/
+ 542          
+ 543          {0xFF,0xFF,0x9F,0xFF,0xEF,0xFC,0xF7,0xF3,0xFF,0xEF,0x00,0xD8,0xFF,0xBF,0xC7,0xBF},
+ 544          {0x3F,0x7F,0xFF,0x7E,0xDD,0xF9,0xDC,0xFE,0x01,0x00,0x5B,0xFE,0xDB,0xF9,0xDB,0xF7},/*"秒",15*/
+ 545          
+ 546          
+ 547          
+ 548          
+ 549          };
+ 550          
+ 551          const uchar code lshuzi[11][8]=
+C51 COMPILER V8.08   SHOWTIME                                                              05/23/2015 23:20:30 PAGE 10  
+
+ 552          {
+ 553          0xFF,0x83,0x7D,0x7D,0x83,0xFF,0xFF,0xFF,/*"0",0*/
+ 554          
+ 555          0xFF,0xBD,0x01,0xFD,0xFF,0xFF,0xFF,0xFF,/*"1",1*/
+ 556          
+ 557          0xFF,0xB9,0x75,0x6D,0x9D,0xFF,0xFF,0xFF,/*"2",2*/
+ 558          
+ 559          0xFF,0xBB,0x6D,0x6D,0x93,0xFF,0xFF,0xFF,/*"3",3*/
+ 560          
+ 561          0xFF,0xE3,0x9B,0x01,0xFB,0xFF,0xFF,0xFF,/*"4",4*/
+ 562          
+ 563          0xFF,0x0D,0x6D,0x6D,0x73,0xFF,0xFF,0xFF,/*"5",5*/
+ 564          
+ 565          0xFF,0x83,0x6D,0x6D,0xB3,0xFF,0xFF,0xFF,/*"6",6*/
+ 566          
+ 567          0xFF,0x3F,0x71,0x6F,0x1F,0xFF,0xFF,0xFF,/*"7",7*/
+ 568          
+ 569          0xFF,0x93,0x6D,0x6D,0x93,0xFF,0xFF,0xFF,/*"8",8*/
+ 570          
+ 571          0xFF,0x9B,0x6D,0x6D,0x83,0xFF,0xFF,0xFF,/*"9",9*/
+ 572          
+ 573          0xFF,0xFF,0xBB,0xBB,0xFF,0xFF,0xFF,0xFF,/*":",10*/
+ 574          
+ 575          };
+ 576          
+ 577          
+ 578          /*********************************************************************************/
+ 579          /*************************************************************************************
+ 580          ************************************************************************************
+ 581          ***********************                                     ***************************
+ 582          ***********************    http://59tiaoba.taobao.com       ***************************
+ 583          ***********************                                     ***************************
+ 584          ************************************************************************************
+ 585          **********************************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2069    ----
+   CONSTANT SIZE    =    904    ----
+   XDATA SIZE       =     20    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

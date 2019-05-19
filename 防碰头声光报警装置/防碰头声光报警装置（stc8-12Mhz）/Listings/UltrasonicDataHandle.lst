@@ -1,0 +1,76 @@
+C51 COMPILER V9.56.0.0   ULTRASONICDATAHANDLE                                              08/29/2018 11:54:44 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE ULTRASONICDATAHANDLE
+OBJECT MODULE PLACED IN .\Objects\UltrasonicDataHandle.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE UltrasonicDataHandle.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\UltrasonicDataHandle.lst) OBJECT(.\Objects\UltrasonicDataHandle.obj)
+
+line level    source
+
+   1          #include "UltrasonicDataHandle.h"
+   2          
+   3          u8 UltrasonicArray[9]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+   4          
+   5          u8 Add8check(u8 *Data,u8 length)
+   6          {
+   7   1              u8 sum=0,i=0;
+   8   1              for(i=0;i<length;i++)
+   9   1              {
+  10   2                      sum +=*Data;
+  11   2                      Data++;
+  12   2              }
+  13   1              // 
+  14   1              return sum;
+  15   1      }
+  16          
+  17          u8 num=0;
+  18          void UltrasonicDataFunc(u8 GetData)
+  19          {
+  20   1      
+  21   1              u8 sumval=0;
+  22   1      
+  23   1              switch(num)
+  24   1              {
+  25   2                      case 0:if(GetData==0x5A) {UltrasonicArray[num]=GetData;num++;} else num=0;break;
+  26   2                      case 1:if(GetData==0x5A) {UltrasonicArray[num]=GetData;num++;} else num=0;break;
+  27   2                      case 2:
+  28   2                      case 3:
+  29   2                      case 4:
+  30   2                      case 5:
+  31   2                      case 6:UltrasonicArray[num]=GetData; num++;break;
+  32   2                      case 7:UltrasonicArray[8]=0xFF;
+  33   2      //                      sumval=Add8check(UltrasonicArray,7);
+  34   2      //              if(GetData==sumval)
+  35   2      //              {
+  36   2      //                      UltrasonicArray[num++]=GetData;
+  37   2      //                      UltrasonicArray[num]=0xFF;
+  38   2      //                      Uart1_Send(UltrasonicArray[7]);
+  39   2      //                      num=0;
+  40   2      //              }
+  41   2      //              else 
+  42   2      //              {
+  43   2      //              //Uart1_Send((u8)Add8check(UltrasonicArray,7));
+  44   2      //                      Uart1_Send(num);
+  45   2      //                      num=0;
+  46   2      //              }
+  47   2              break;
+  48   2                      default :num=0;break;
+  49   2              }
+  50   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     74    ----
+C51 COMPILER V9.56.0.0   ULTRASONICDATAHANDLE                                              08/29/2018 11:54:44 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

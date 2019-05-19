@@ -1,0 +1,113 @@
+Dependencies for Project 'STM32Car', Target 'Target 1': (DO NOT MODIFY !)
+F (.\startup_stm32f10x_hd.s)(0x598FF0AA)(--cpu Cortex-M3 -g --apcs=interwork -I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 520" --pd "STM32F10X_HD SETA 1"--list ..\obj\startup_stm32f10x_hd.lst --xref -o ..\obj\startup_stm32f10x_hd.o --depend ..\obj\startup_stm32f10x_hd.d)
+F (.\main.c)(0x59A56D1B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+I (main.h)(0x598D02ED)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\delay\delay.h)(0x555AC61F)
+I (..\HARDWARE\LED\led.h)(0x598FB48D)
+I (..\HARDWARE\KEY\key.h)(0x59A248A5)
+I (..\HARDWARE\MOTOR\motor.h)(0x598D0590)
+I (..\HARDWARE\ENCODER\encoder.h)(0x598ACF09)
+I (..\HARDWARE\TIMER\timer.h)(0x598B10D4)
+I (..\HARDWARE\USART1\usart1.h)(0x598C11A0)
+I (..\HARDWARE\EXTI\exti.h)(0x59A24383)
+I (control.h)(0x59936F7B)
+I (trajectory.h)(0x598CFF64)
+F (.\control.c)(0x59A26101)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\control.o --omf_browse ..\obj\control.crf --depend ..\obj\control.d)
+I (control.h)(0x59936F7B)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+I (main.h)(0x598D02ED)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\math.h)(0x56FE42D6)
+I (..\HARDWARE\ENCODER\encoder.h)(0x598ACF09)
+I (..\HARDWARE\MOTOR\motor.h)(0x598D0590)
+I (..\SYSTEM\delay\delay.h)(0x555AC61F)
+I (..\HARDWARE\KEY\key.h)(0x59A248A5)
+I (..\HARDWARE\USART1\usart1.h)(0x598C11A0)
+F (.\trajectory.c)(0x59A5754F)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\trajectory.o --omf_browse ..\obj\trajectory.crf --depend ..\obj\trajectory.d)
+I (trajectory.h)(0x598CFF64)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+I (main.h)(0x598D02ED)
+I (..\HARDWARE\MOTOR\motor.h)(0x598D0590)
+I (control.h)(0x59936F7B)
+I (..\SYSTEM\delay\delay.h)(0x555AC61F)
+I (..\HARDWARE\LED\led.h)(0x598FB48D)
+F (..\SYSTEM\delay\delay.c)(0x598C5FA5)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\delay.o --omf_browse ..\obj\delay.crf --depend ..\obj\delay.d)
+I (..\SYSTEM\delay\delay.h)(0x555AC61F)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+F (..\SYSTEM\sys\sys.c)(0x598BF277)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\sys.o --omf_browse ..\obj\sys.crf --depend ..\obj\sys.d)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+F (..\HARDWARE\LED\led.c)(0x598AEADD)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\led.o --omf_browse ..\obj\led.crf --depend ..\obj\led.d)
+I (..\HARDWARE\LED\led.h)(0x598FB48D)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+F (..\HARDWARE\KEY\key.c)(0x59A24950)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\key.o --omf_browse ..\obj\key.crf --depend ..\obj\key.d)
+I (..\HARDWARE\KEY\key.h)(0x59A248A5)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\delay\delay.h)(0x555AC61F)
+F (..\HARDWARE\MOTOR\motor.c)(0x598AEB91)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\motor.o --omf_browse ..\obj\motor.crf --depend ..\obj\motor.d)
+I (..\HARDWARE\MOTOR\motor.h)(0x598D0590)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+F (..\HARDWARE\ENCODER\encoder.c)(0x598C6FB2)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\encoder.o --omf_browse ..\obj\encoder.crf --depend ..\obj\encoder.d)
+I (..\HARDWARE\ENCODER\encoder.h)(0x598ACF09)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+F (..\HARDWARE\TIMER\timer.c)(0x598B1260)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\timer.o --omf_browse ..\obj\timer.crf --depend ..\obj\timer.d)
+I (..\HARDWARE\TIMER\timer.h)(0x598B10D4)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+F (..\HARDWARE\USART1\usart1.c)(0x59A57644)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\usart1.o --omf_browse ..\obj\usart1.crf --depend ..\obj\usart1.d)
+I (..\HARDWARE\USART1\usart1.h)(0x598C11A0)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+I (..\USER\main.h)(0x598D02ED)
+F (..\HARDWARE\EXTI\exti.c)(0x59A25C8C)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\USER -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\IIC -I ..\HARDWARE\24CXX -I ..\HARDWARE\EXTI -I ..\HARDWARE\MOTOR -I ..\HARDWARE\ENCODER -I ..\HARDWARE\TIMER -I ..\HARDWARE\USART1-I E:\CreativeWorks\项目\2017.08\2017ElectronicsMatch\Car\STM32CarV1.5_2017082902_th\USER\RTE-I C:\Software\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I C:\Software\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="520" -DSTM32F10X_HD -DSTM32F10X_HD-o ..\obj\exti.o --omf_browse ..\obj\exti.crf --depend ..\obj\exti.d)
+I (..\HARDWARE\EXTI\exti.h)(0x59A24383)
+I (..\SYSTEM\sys\sys.h)(0x550EC367)
+I (..\SYSTEM\sys\stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\sys\core_cm3.h)(0x4D523B58)
+I (C:\Software\Keil_v5\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\SYSTEM\sys\system_stm32f10x.h)(0x4F1E2E3C)
+I (..\SYSTEM\delay\delay.h)(0x555AC61F)
+I (..\HARDWARE\KEY\key.h)(0x59A248A5)
+I (..\USER\main.h)(0x598D02ED)
+F (..\README.TXT)(0x54B133A0)()

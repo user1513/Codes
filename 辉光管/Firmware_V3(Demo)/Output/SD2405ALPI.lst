@@ -1,0 +1,125 @@
+C51 COMPILER V9.56.0.0   SD2405ALPI                                                        11/03/2018 20:02:56 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE SD2405ALPI
+OBJECT MODULE PLACED IN .\Output\SD2405ALPI.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE HardwareDrivers\SD2405ALPI.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE I
+                    -NCDIR(.\App;.\HardwareDrivers;.\STC15;.\App) DEBUG PRINT(.\Output\SD2405ALPI.lst) OBJECT(.\Output\SD2405ALPI.obj)
+
+line level    source
+
+   1          /**
+   2           * SD2405ALPI 驱动
+   3           * 芯片简介：
+   4           *       内置电池和晶振和 I2C 总线的实时时钟，数据以 8421BCD 码的形式储存
+   5           * 作者：hhelib
+   6           * 最后更新：2016-03-13
+   7           *********************************************
+   8           * 使用本程序时，需要在 PinDef.h 中
+   9           * 定义 I2C_SDA 和 I2C_SCL 两个 I2C 引脚
+  10           */
+  11           
+  12          #include "SD2405ALPI.h"
+  13          #include "delay.h"
+  14          #include "Soft_I2C.h"
+  15          
+  16          /**
+  17           * uint32_t SD2405ALPI_GetTime(void)
+  18           * 简介：从 SD2405ALPI 获取当前时间
+  19           * 输入：无
+  20           * 输出：当前时间（HHMMSS）
+  21           */
+  22          uint32_t SD2405ALPI_GetTime(void)
+  23          {
+  24   1              uint32_t time = 0;
+  25   1              uint8_t tmp = 0;
+  26   1              // 发送需要读取的地址
+  27   1        // I2C_Send_Start();
+  28   1        // I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_WRITE);
+  29   1        // I2C_Write_Byte(SD2405ALPI_SECOND_ADDRESS);
+  30   1              
+  31   1              // 开始读取数据
+  32   1              I2C_Send_Start();
+  33   1              I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_READ);
+  34   1              
+  35   1              tmp = I2C_Read_Byte();
+  36   1              time += (tmp & 0x0f) + ((tmp & 0xf0) >> 4) * 10;
+  37   1              I2C_Send_Master_Ack();
+  38   1              
+  39   1              tmp = I2C_Read_Byte();
+  40   1              time += ((tmp & 0x0f) + ((tmp & 0xf0) >> 4) * 10) * 100;
+  41   1              I2C_Send_Master_Ack();
+  42   1              
+  43   1              tmp = I2C_Read_Byte();
+  44   1              time += ((tmp & 0x0f) + ((tmp & 0x70) >> 4) * 10) * 10000ul;
+  45   1              
+  46   1              // 停止
+  47   1              I2C_Send_Master_Ack();
+  48   1              I2C_Send_Stop();
+  49   1              
+  50   1              return time;
+  51   1      }
+  52          
+  53          /**
+  54           * void SD2405ALPI_SetTime(uint32_t time)
+C51 COMPILER V9.56.0.0   SD2405ALPI                                                        11/03/2018 20:02:56 PAGE 2   
+
+  55           * 简介：调整 SD2405ALPI 内部时间
+  56           * 输入：当前时间（HHMMSS）
+  57           * 输出：无
+  58           */
+  59          void SD2405ALPI_SetTime(uint32_t time)
+  60          {
+  61   1              // 写允许
+  62   1              I2C_Send_Start();
+  63   1              I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_WRITE);
+  64   1              I2C_Write_Byte(SD2405ALPI_CTR2_ADDRESS);
+  65   1              I2C_Write_Byte(0x80);
+  66   1              I2C_Send_Stop();
+  67   1              I2C_Send_Start();
+  68   1              I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_WRITE);
+  69   1              I2C_Write_Byte(SD2405ALPI_CTR1_ADDRESS);
+  70   1              I2C_Write_Byte(0x84);
+  71   1              I2C_Send_Stop();
+  72   1              
+  73   1              
+  74   1              // 写入时间
+  75   1              I2C_Send_Start();
+  76   1              I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_WRITE);
+  77   1              I2C_Write_Byte(SD2405ALPI_SECOND_ADDRESS);
+  78   1              I2C_Write_Byte((time % 100) / 10 | (time % 10) << 4);
+  79   1              I2C_Write_Byte((time % 1000) / 100 | ((time % 10000) / 1000) << 4);
+  80   1              I2C_Write_Byte((time % 100000ul) / 10000 | ((time / 100000ul)) << 4 | 0x80);
+  81   1              I2C_Send_Stop();
+  82   1              
+  83   1              
+  84   1              // 写禁止
+  85   1              I2C_Send_Start();
+  86   1              I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_WRITE);
+  87   1              I2C_Write_Byte(SD2405ALPI_CTR1_ADDRESS);
+  88   1              I2C_Write_Byte(0x00);
+  89   1              I2C_Send_Stop();
+  90   1              I2C_Send_Start();
+  91   1              I2C_Write_Byte(SD2405ALPI_DEVICE_ADDRESS | I2C_WRITE);
+  92   1              I2C_Write_Byte(SD2405ALPI_CTR2_ADDRESS);
+  93   1              I2C_Write_Byte(0x00);
+  94   1              I2C_Send_Stop();
+  95   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    544    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       9
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

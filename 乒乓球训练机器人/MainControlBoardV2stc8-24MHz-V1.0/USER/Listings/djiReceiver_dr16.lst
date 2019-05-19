@@ -1,0 +1,477 @@
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE DJIRECEIVER_DR16
+OBJECT MODULE PLACED IN .\Objects\djiReceiver_dr16.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE ..\HARDWARE\djiReceiver_dr16\djiReceiver_dr16.c OPTIMIZE(8,SPEED) BR
+                    -OWSE INCDIR(..\USER;..\HARDWARE\ccp;..\HARDWARE\djiReceiver_dr16;..\HARDWARE\timer1;..\HARDWARE\uart1;..\HARDWARE\uart2;
+                    -..\HARDWARE\uart3;..\HARDWARE\TableTennisDevice) DEBUG OBJECTEXTEND PRINT(.\Listings\djiReceiver_dr16.lst) OBJECT(.\Obje
+                    -cts\djiReceiver_dr16.obj)
+
+line level    source
+
+   1          #include "djiReceiver_dr16.h"
+   2          
+   3          
+   4          #define ORIGINCH0 1024
+   5          #define ORIGINCH1 1024
+   6          
+   7          extern u16 G_dr16_ch0_value ;
+   8          extern u16 G_dr16_ch1_value ;
+   9          extern u16 G_dr16_ch2_value ;
+  10          extern u16 G_dr16_ch3_value ;
+  11          extern u8 Artilleryflag;
+  12          unsigned char xdata G_dr16_array[25] = {
+  13                  0x00,0x00,0x00,0x00,0x00,
+  14                  0x00,0x00,0x00,0x00,0x00,
+  15                  0x00,0x00,0x00,0x00,0x00,
+  16                  0x00,0x00,0x00,0x00,0x00,
+  17                  0x00,0x00,0x00,0x00,0x00
+  18          };
+  19          u8 G_dr16_count = 0;
+  20          
+  21          u8 flag = 0;
+  22          
+  23          u16 NumberOfFetching(u8 _value, u8 _bit)
+  24          {
+  25   1              u8 number = 0;
+  26   1              u8 mask = 0;
+  27   1      
+  28   1              switch(_bit)
+  29   1              {
+  30   2                      case 1:
+  31   2                              mask = 0x01 << 0;
+  32   2                              number = _value & mask;
+  33   2                              number = number >> 0;
+  34   2                              return number;
+  35   2                      case 2:
+  36   2                              mask = 0x01 << 1;
+  37   2                              number = _value & mask;
+  38   2                              number = number >> 1;
+  39   2                              return number;
+  40   2                      case 3:
+  41   2                              mask = 0x01 << 2;
+  42   2                              number = _value & mask;
+  43   2                              number = number >> 2;
+  44   2                              return number;
+  45   2                      case 4:
+  46   2                              mask = 0x01 << 3;
+  47   2                              number = _value & mask;
+  48   2                              number = number >> 3;
+  49   2                              return number;
+  50   2                      case 5:
+  51   2                              mask = 0x01 << 4;
+  52   2                              number = _value & mask;
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 2   
+
+  53   2                              number = number >> 4;
+  54   2                              return number;
+  55   2                      case 6:
+  56   2                              mask = 0x01 << 5;
+  57   2                              number = _value & mask;
+  58   2                              number = number >> 5;
+  59   2                              return number;
+  60   2                      case 7:
+  61   2                              mask = 0x01 << 6;
+  62   2                              number = _value & mask;
+  63   2                              number = number >> 6;
+  64   2                              return number;
+  65   2                      case 8:
+  66   2                              mask = 0x01 << 7;
+  67   2                              number = _value & mask;
+  68   2                              number = number >> 7;
+  69   2                              return number;
+  70   2                      default:
+  71   2                              return 2;
+  72   2              }
+  73   1      }
+  74          
+  75          
+  76          void DR16DataAnalysis(u8 _data)
+  77          {
+  78   1      
+  79   1              
+  80   1              if(flag != Enable)
+  81   1              {
+  82   2                      //SendUart1Data(G_dr16_array[G_dr16_count]);
+  83   2                              G_dr16_array[G_dr16_count] = _data;
+  84   2                      switch(G_dr16_count)
+  85   2                      {
+  86   3                              case 0:
+  87   3                                      if(G_dr16_array[G_dr16_count] == 0x0F)
+  88   3                                      {
+  89   4                                              G_dr16_count ++;
+  90   4                                      }else
+  91   3                                      {
+  92   4                                              G_dr16_count = 0;
+  93   4                                      }
+  94   3                                      break;
+  95   3                              case 1:
+  96   3                              case 2:
+  97   3                              case 3:
+  98   3                              case 4:
+  99   3                              case 5:
+ 100   3                              case 6:
+ 101   3                              case 7:
+ 102   3                              case 8:
+ 103   3                              case 9:
+ 104   3                              case 10:
+ 105   3                                      G_dr16_count ++;
+ 106   3                                      //Uart2SendStr("OK");
+ 107   3                                      break;
+ 108   3                              case 11:
+ 109   3                              case 12:
+ 110   3                              case 13:
+ 111   3                              case 14:
+ 112   3                              case 15:
+ 113   3                              case 16:
+ 114   3                              case 17:
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 3   
+
+ 115   3                              case 18:
+ 116   3                              case 19:
+ 117   3                              case 20:
+ 118   3                              case 21:
+ 119   3                              case 22:
+ 120   3                                      G_dr16_count ++;
+ 121   3                                      //Uart2SendStr("OK");
+ 122   3                                      break;
+ 123   3                              case 23:
+ 124   3                                      if(G_dr16_array[G_dr16_count] == 0x00)
+ 125   3                                      {
+ 126   4                                              G_dr16_count ++;
+ 127   4                                      }else
+ 128   3                                      {
+ 129   4                                              G_dr16_count = 0;
+ 130   4                                      }
+ 131   3                                      break;
+ 132   3                              case 24:
+ 133   3                                      if(G_dr16_array[G_dr16_count] == 0x00)
+ 134   3                                      {
+ 135   4                                              
+ 136   4                                              G_dr16_ch0_value  = NumberOfFetching(G_dr16_array[2], 3) * 1024;
+ 137   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[2], 2) * 512;
+ 138   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[2], 1) * 256;
+ 139   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 8) * 128;
+ 140   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 7) * 64;
+ 141   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 6) * 32;
+ 142   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 5) * 16;
+ 143   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 4) * 8;
+ 144   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 3) * 4;
+ 145   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 2) * 2;
+ 146   4                                              G_dr16_ch0_value += NumberOfFetching(G_dr16_array[1], 1) * 1;
+ 147   4                                              
+ 148   4                                              
+ 149   4                                              G_dr16_ch1_value  = NumberOfFetching(G_dr16_array[3], 6) * 1024;
+ 150   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[3], 5) * 512;
+ 151   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[3], 4) * 256;
+ 152   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[3], 3) * 128;
+ 153   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[3], 2) * 64;
+ 154   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[3], 1) * 32;
+ 155   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[2], 8) * 16;
+ 156   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[2], 7) * 8;
+ 157   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[2], 6) * 4;
+ 158   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[2], 5) * 2;
+ 159   4                                              G_dr16_ch1_value += NumberOfFetching(G_dr16_array[2], 4) * 1;
+ 160   4      
+ 161   4                                              G_dr16_ch2_value  = NumberOfFetching(G_dr16_array[6], 4) * 1024;
+ 162   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[6], 3) * 512;
+ 163   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[6], 2) * 256;
+ 164   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[6], 1) * 128;
+ 165   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 8) * 64;
+ 166   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 7) * 32;
+ 167   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 6) * 16;
+ 168   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 5) * 8;
+ 169   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 4) * 4;
+ 170   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 3) * 2;
+ 171   4                                              G_dr16_ch2_value += NumberOfFetching(G_dr16_array[5], 2) * 1;
+ 172   4      
+ 173   4                                              G_dr16_ch3_value  = NumberOfFetching(G_dr16_array[5], 1) * 1024;
+ 174   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 8) * 512;
+ 175   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 7) * 256;
+ 176   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 6) * 128;
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 4   
+
+ 177   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 5) * 64;
+ 178   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 4) * 32;
+ 179   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 3) * 16;
+ 180   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 2) * 8;
+ 181   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[4], 1) * 4;
+ 182   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[3], 8) * 2;
+ 183   4                                              G_dr16_ch3_value += NumberOfFetching(G_dr16_array[3], 7) * 1;
+ 184   4      
+ 185   4                                              if ((G_dr16_array[7] == 0xC0) && (G_dr16_array[8] == 0x02) && (G_dr16_array[9] == 0x17) && (G_dr16_ar
+             -ray[10] == 0x18))
+ 186   4                                              {
+ 187   5                                                      //原位
+ 188   5                                                      
+ 189   5                                              }
+ 190   4                                              else if ((G_dr16_array[7] == 0xC0) && (G_dr16_array[8] == 0xFF) && (G_dr16_array[9] == 0x14))
+ 191   4                                              {
+ 192   5                                                      //HL
+ 193   5                                                      
+ 194   5                                              }
+ 195   4                                              else if ((G_dr16_array[7] == 0x40) && (G_dr16_array[8] == 0x00) && (G_dr16_array[9] == 0x16))
+ 196   4                                              {
+ 197   5                                                      
+ 198   5                                                      //CL
+ 199   5                                              }
+ 200   4                                              
+ 201   4                                              if ((G_dr16_array[7] == 0xC0) && (G_dr16_array[8] == 0x02) && (G_dr16_array[9] == 0x17) && (G_dr16_ar
+             -ray[10] == 0x18))
+ 202   4                                              {
+ 203   5                                                      //原位
+ 204   5                                              }
+ 205   4                                              else if ((G_dr16_array[8] == 0x02) && (G_dr16_array[9] == 0x03) && (G_dr16_array[10] == 0x10))
+ 206   4                                              {
+ 207   5                                                      //ATTI中
+ 208   5                                              }
+ 209   4                                              else if ((G_dr16_array[8] == 0x02) && (G_dr16_array[9] == 0xFF) && (G_dr16_array[10] == 0x07))
+ 210   4                                              {
+ 211   5                                                      //ATTI下
+ 212   5                                              }
+ 213   4      
+ 214   4                                              //滑轮
+ 215   4                                              if ((G_dr16_array[7] == 0xC0) && (G_dr16_array[6] == 0x08))
+ 216   4                                              {
+ 217   5                                                      //"滑轮原位";
+ 218   5                                                      
+ 219   5                                              }
+ 220   4                                              else if ((G_dr16_array[7] == 0xC2) && (G_dr16_array[6] == 0x38))
+ 221   4                                              {
+ 222   5                                                      //滑轮上
+ 223   5                                                      
+ 224   5                                              }
+ 225   4                                              else if ((G_dr16_array[7] == 0xE9) && (G_dr16_array[6] == 0x48))
+ 226   4                                              {
+ 227   5                                                      //滑轮下
+ 228   5                                                      
+ 229   5                                              }
+ 230   4                                              //Uart1_SendStr("OK");
+ 231   4                                              flag = Enable;
+ 232   4                                              ES=0;
+ 233   4                                      }
+ 234   3                                      G_dr16_count = 0;
+ 235   3                                      break;
+ 236   3                              default:
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 5   
+
+ 237   3                                      G_dr16_count = 0;
+ 238   3                                      break;
+ 239   3                      }
+ 240   2              }
+ 241   1      }
+ 242          
+ 243          
+ 244          
+ 245          //modbus_CRC16校验
+ 246          u16 ModBus_CRC(u8 *arg,u8 length)
+ 247          {
+ 248   1          u16 Reg_CRC=0xffff;
+ 249   1          u8 Temp_Reg=0x00;
+ 250   1          u8 i,j;
+ 251   1          for(i=0;i<length;i++)
+ 252   1          {
+ 253   2              Reg_CRC ^= *arg++;
+ 254   2              for(j=0;j<8;j++)
+ 255   2              {
+ 256   3                  if(Reg_CRC&0x0001)
+ 257   3                  {
+ 258   4                      Reg_CRC=Reg_CRC>>1^0xA001;
+ 259   4                  }
+ 260   3                  else
+ 261   3                  {
+ 262   4                      Reg_CRC >>=1;
+ 263   4                  }
+ 264   3              }
+ 265   2          }
+ 266   1          Temp_Reg=Reg_CRC;
+ 267   1          Reg_CRC=(Reg_CRC&0xff00)|Temp_Reg;
+ 268   1          return Reg_CRC;
+ 269   1      }
+ 270          
+ 271          
+ 272          void Send_dji_Data(u8 _cmd,u8 _data0,u8 _data1)
+ 273          {
+ 274   1          u8 Data_able[8];
+ 275   1          u16 Check_val=0;
+ 276   1               Data_able[0]=0x55;
+ 277   1               Data_able[1]=0xAA;     
+ 278   1               Data_able[2]=_cmd;  
+ 279   1               Data_able[3]=_data0;  
+ 280   1               Data_able[4]=_data1;  
+ 281   1               Data_able[5]=0XFF;    
+ 282   1               Check_val=ModBus_CRC(Data_able,6);     
+ 283   1               Data_able[6]=Check_val;  
+ 284   1               Data_able[7]=Check_val>>8;   
+ 285   1               Uart2SendStrLen(Data_able,8);
+ 286   1               
+ 287   1      }
+ 288          
+ 289          
+ 290          
+ 291          
+ 292          u8 last_Val=0xFF,qjflag=0,htflag=0;
+ 293          
+ 294          u8 Remote_Control(u16 ch0,u16 ch1,u8 data1,u8 data2)
+ 295          {
+ 296   1              u8 Remote_Control_Val=0XFF;
+ 297   1              data2=0;
+ 298   1              if((data1&0x01)==0)
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 6   
+
+ 299   1              {
+ 300   2                      while(1)
+ 301   2                      {
+ 302   3                        if(ch0==1024&&ch1==1024) break;
+ 303   3                        if(ch0>(ORIGINCH0+500)&&(ch1<(ORIGINCH1+275)&&ch1>(ORIGINCH1-275)))  {Remote_Control_Val=Angle_0;break
+             -;}
+ 304   3                        if(ch0<(ORIGINCH0-500)&&(ch1<(ORIGINCH1+275)&&ch1>(ORIGINCH1-275)))   {Remote_Control_Val=Angle_180;br
+             -eak;}
+ 305   3                        if(ch1>(ORIGINCH0+500)&&(ch0<(ORIGINCH0+275)&&ch0>(ORIGINCH0-275)))  {Remote_Control_Val=Angle_90;brea
+             -k;}
+ 306   3                        if(ch1<(ORIGINCH0-500)&&(ch0<(ORIGINCH0+275)&&ch0>(ORIGINCH0-275)))   {Remote_Control_Val=Angle_270;br
+             -eak;}
+ 307   3                        if(ch1>1500&&ch0>1500)                          {Remote_Control_Val=Angle_45;break;}
+ 308   3                        if(ch1>1500&&ch0<500)                           {Remote_Control_Val=Angle_135;break;}
+ 309   3                        if(ch0>1500&&ch1<500)                           {Remote_Control_Val=Angle_315;break;}
+ 310   3                        if(ch0<500&&ch1<500)                        {Remote_Control_Val=Angle_225;break;}
+ 311   3                        break;
+ 312   3                      }
+ 313   2                      
+ 314   2                      if(last_Val==Angle_90||qjflag)
+ 315   2                      {
+ 316   3                              if(ch1>1250&&ch0>1250)                    {Remote_Control_Val=AngleR_360;qjflag=1;}
+ 317   3                              else if(ch1>1250&&ch0<750)                        {Remote_Control_Val=AngleL_360;qjflag=1;}
+ 318   3                              else qjflag=0;
+ 319   3                      }
+ 320   2                      if(last_Val==Angle_270||htflag)
+ 321   2                      {
+ 322   3                              if(ch0>1250&&ch1<750)                     {Remote_Control_Val=AngleL_360;htflag=1;}
+ 323   3                              else if(ch0<750&&ch1<750)                             {Remote_Control_Val=AngleR_360;htflag=1;}
+ 324   3                              else htflag=0;
+ 325   3                      }               
+ 326   2                      last_Val=Remote_Control_Val;
+ 327   2              }
+ 328   1              else if((data1&0x01)==0x01)
+ 329   1              {
+ 330   2                      while(1)
+ 331   2                      {
+ 332   3                        if(ch0==1024&&ch1==1024) break;
+ 333   3                        if(ch0>(ORIGINCH0+500)&&(ch1<(ORIGINCH1+275)&&ch1>(ORIGINCH1-275)))  {Remote_Control_Val=AngleR_360;br
+             -eak;}
+ 334   3                        if(ch0<(ORIGINCH0-500)&&(ch1<(ORIGINCH1+275)&&ch1>(ORIGINCH1-275)))   {Remote_Control_Val=AngleL_360;b
+             -reak;}
+ 335   3                        if(ch1>(ORIGINCH0+500)&&(ch0<(ORIGINCH0+275)&&ch0>(ORIGINCH0-275)))  {Remote_Control_Val=Angle_90;brea
+             -k;}
+ 336   3                        if(ch1<(ORIGINCH0-500)&&(ch0<(ORIGINCH0+275)&&ch0>(ORIGINCH0-275)))   {Remote_Control_Val=Angle_270;br
+             -eak;}
+ 337   3                        break;
+ 338   3                      }
+ 339   2              }
+ 340   1              return Remote_Control_Val;
+ 341   1      }
+ 342          
+ 343          
+ 344          
+ 345          
+ 346          
+ 347          int tabletennisdata(u16 ch2,u16 ch3,int _angleval)
+ 348          {
+ 349   1              while(1)
+ 350   1              {
+ 351   2                      if(ch2==1024&&ch3==1024) break;
+ 352   2                      if(ch2>1500&&(ch3<1100&&ch3>1000))  {_angleval-=2;break;}
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 7   
+
+ 353   2                      if(ch2<500&&(ch3<1100&&ch3>1000))   {_angleval+=2;break;}
+ 354   2                      if(ch3<500&&(ch2<1100&&ch2>1000))   {_angleval=tabletennisangleInit;break;}
+ 355   2                      break;
+ 356   2              }
+ 357   1              return _angleval;
+ 358   1      }
+ 359          
+ 360          void Artillerydata(u16 ch2,u16 ch3)
+ 361          {
+ 362   1              if(ch3>(ORIGINCH0+500)&&(ch2<(ORIGINCH0+275)&&ch2>(ORIGINCH0-275)))  
+ 363   1              {
+ 364   2                      Artilleryflag|=0x01;
+ 365   2              }
+ 366   1              else
+ 367   1              {
+ 368   2                      Artilleryflag|=0x80;
+ 369   2              }
+ 370   1      }
+ 371          
+ 372          
+ 373          
+ 374          //u8 Remote_Control(u16 ch0,u16 ch1,u8 data1,u8 data2)
+ 375          //{
+ 376          //      u8 Remote_Control_Val=0XFF;
+ 377          //      data2=0;
+ 378          //      if((data1&0x01)==0)
+ 379          //      {
+ 380          //              while(1)
+ 381          //              {
+ 382          //                if(ch0==1024&&ch1==1024) break;
+ 383          //                if(ch0>1500&&(ch1<1100&&ch1>1000))  {Remote_Control_Val=Angle_0;break;}
+ 384          //                if(ch0<500&&(ch1<1100&&ch1>1000))   {Remote_Control_Val=Angle_180;break;}
+ 385          //                if(ch1>1500&&(ch0<1100&&ch0>1000))  {Remote_Control_Val=Angle_90;break;}
+ 386          //                z
+ 387          //                if(ch1>1500&&ch0>1500)                          {Remote_Control_Val=Angle_45;break;}
+ 388          //                if(ch1>1500&&ch0<500)                           {Remote_Control_Val=Angle_135;break;}
+ 389          //                if(ch0>1500&&ch1<500)                           {Remote_Control_Val=Angle_315;break;}
+ 390          //                if(ch0<500&&ch1<500)                        {Remote_Control_Val=Angle_225;break;}
+ 391          //                break;
+ 392          //              }
+ 393          //              
+ 394          //              if(last_Val==Angle_90||qjflag)
+ 395          //              {
+ 396          //                      if(ch1>1250&&ch0>1250)                    {Remote_Control_Val=AngleR_360;qjflag=1;}
+ 397          //                      else if(ch1>1250&&ch0<750)                        {Remote_Control_Val=AngleL_360;qjflag=1;}
+ 398          //                      else qjflag=0;
+ 399          //              }
+ 400          //              if(last_Val==Angle_270||htflag)
+ 401          //              {
+ 402          //                      if(ch0>1250&&ch1<750)                     {Remote_Control_Val=AngleL_360;htflag=1;}
+ 403          //                      else if(ch0<750&&ch1<750)                             {Remote_Control_Val=AngleR_360;htflag=1;}
+ 404          //                      else htflag=0;
+ 405          //              }
+ 406          //              
+ 407          //              last_Val=Remote_Control_Val;            
+ 408          //      }
+ 409          //      else if((data1&0x01)==0x01)
+ 410          //      {
+ 411          //              while(1)
+ 412          //              {
+ 413          //                if(ch0==1024&&ch1==1024) break;
+ 414          //                if(ch0>1500&&(ch1<1100&&ch1>1000))  {Remote_Control_Val=AngleR_360;break;}
+C51 COMPILER V9.56.0.0   DJIRECEIVER_DR16                                                  09/19/2018 18:15:05 PAGE 8   
+
+ 415          //                if(ch0<500&&(ch1<1100&&ch1>1000))   {Remote_Control_Val=AngleL_360;break;}
+ 416          //                if(ch1>1500&&(ch0<1100&&ch0>1000))  {Remote_Control_Val=Angle_90;break;}
+ 417          //                if(ch1<500&&(ch0<1100&&ch0>1000))   {Remote_Control_Val=Angle_270;break;}
+ 418          //                break;
+ 419          //              }
+ 420          //      }
+ 421          //      return Remote_Control_Val;
+ 422          //}
+ 423          
+ 424          
+ 425          
+ 426          
+ 427          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2237    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     25    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5      21
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

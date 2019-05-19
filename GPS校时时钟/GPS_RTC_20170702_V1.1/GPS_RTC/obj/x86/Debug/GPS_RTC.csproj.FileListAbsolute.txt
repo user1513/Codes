@@ -1,0 +1,9 @@
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\bin\Debug\GPS_RTC.exe
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\bin\Debug\GPS_RTC.pdb
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.Login.resources
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.MainControl.resources
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.Properties.Resources.resources
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.csproj.GenerateResource.Cache
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.exe
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.pdb
+E:\创新作品区\GPS校时时钟\V3上位机源代码\GPS_RTC\GPS_RTC\obj\x86\Debug\GPS_RTC.csprojResolveAssemblyReference.cache

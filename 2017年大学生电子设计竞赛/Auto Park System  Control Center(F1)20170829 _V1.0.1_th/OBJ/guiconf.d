@@ -1,0 +1,12 @@
+..\obj\guiconf.o: ..\EMWIN\STemWin\Config\GUIConf.c
+..\obj\guiconf.o: ..\EMWIN\STemWin\inc\GUI.h
+..\obj\guiconf.o: ..\EMWIN\STemWin\inc\GUI_ConfDefaults.h
+..\obj\guiconf.o: ..\EMWIN\STemWin\Config\GUIConf.h
+..\obj\guiconf.o: ..\EMWIN\STemWin\inc\GUI_Type.h
+..\obj\guiconf.o: ..\EMWIN\STemWin\inc\LCD.h
+..\obj\guiconf.o: ..\EMWIN\STemWin\inc\Global.h
+..\obj\guiconf.o: ..\EMWIN\STemWin\inc\GUI_Version.h
+..\obj\guiconf.o: ..\HARDWARE\SRAM\sram.h
+..\obj\guiconf.o: ..\USER\stm32f10x.h
+..\obj\guiconf.o: ..\MALLOC\malloc.h
+..\obj\guiconf.o: ..\USER\stm32f10x.h

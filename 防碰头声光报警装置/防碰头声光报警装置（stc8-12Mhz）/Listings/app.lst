@@ -1,0 +1,44 @@
+C51 COMPILER V9.56.0.0   APP                                                               08/29/2018 11:57:38 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE APP
+OBJECT MODULE PLACED IN .\Objects\app.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE app.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\a
+                    -pp.lst) OBJECT(.\Objects\app.obj)
+
+line level    source
+
+   1          #include "app.h"
+   2          
+   3          
+   4          
+   5          void main()
+   6          {
+   7   1              Timer0Init();
+   8   1              Uart1_Init();
+   9   1              Uart2Init();
+  10   1              while(1)
+  11   1              {
+  12   2      
+  13   2                      if(UltrasonicArray[8]==0XFF)
+  14   2                      {
+  15   3                              UltrasonicArray[8]=0X00;
+  16   3                              //Uart1SendStrLen(UltrasonicArray,9);
+  17   3                      }
+  18   2              }
+  19   1      }
+  20                  
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     19    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

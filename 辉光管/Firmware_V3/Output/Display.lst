@@ -1,0 +1,163 @@
+C51 COMPILER V9.56.0.0   DISPLAY                                                           11/09/2018 18:43:01 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE DISPLAY
+OBJECT MODULE PLACED IN .\Output\Display.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE App\Display.c COMPACT OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.\App;.\H
+                    -ardwareDrivers;.\STC15;.\App) DEBUG PRINT(.\Output\Display.lst) OBJECT(.\Output\Display.obj)
+
+line level    source
+
+   1          /**
+   2           * 显示相关函数
+   3           * 作者:hhelib
+   4           * 最后更新：2016-03-13
+   5           */
+   6           
+   7          #include "Display.h"
+   8          #include "app.h"
+   9          #include "PinDef.h"
+  10          #include "delay.h"
+  11          #include "HV57708.h"
+  12          
+  13          //defination of pin actions
+  14          #define DIN_HIGH    MAX6921_DIN = 1;
+  15          #define DIN_LOW     MAX6921_DIN = 0;
+  16          #define CLK_HIGH    MAX6921_CLK = 1;
+  17          #define CLK_LOW     MAX6921_CLK = 0;
+  18          #define BLANK_HIGH  MAX6921_BLANK = 1;
+  19          #define BLANK_LOW   MAX6921_BLANK = 0;
+  20          #define LOAD_HIGH   MAX6921_LOAD = 1;
+  21          #define LOAD_LOW    MAX6921_LOAD = 0;
+  22          
+  23          /**
+  24           * void displayInit(void)
+  25           * 简介：显示初始化
+  26           * 输入：无
+  27           * 输出：无
+  28           */
+  29          void displayInit(void)
+  30          {
+  31   1              //MAX6921_Init(MAX6921_MODE_INVERTION);
+  32   1      }
+  33          
+  34          /**
+  35           * void displayNumber()
+  36           * 简介：显示数字
+  37           * 功能：发送数字到 MAX6921
+  38           * 输入：需要显示的字符编号以及位置
+  39           * 输出：无
+  40           */
+  41          void displayNumber(int num,int seg)
+  42          {
+  43   1              int data_sequ[20] = {0};//依次存储D19至DD0
+  44   1              int i;
+  45   1              BLANK_HIGH//关闭显示
+  46   1              LOAD_LOW//锁存
+  47   1              data_sequ[num - 1] = 1;
+  48   1              switch(seg)//data_sequ[19] = D0
+  49   1              {
+  50   2              case(0):{data_sequ[16] = 1;data_sequ[15] = 1;data_sequ[14] = 1;data_sequ[13] = 1;data_sequ[12] = 1;data_s
+             -equ[11] = 1;}
+  51   2              break;
+  52   2              case(1):{data_sequ[15] = 1;data_sequ[14] = 1;}
+  53   2              break;
+C51 COMPILER V9.56.0.0   DISPLAY                                                           11/09/2018 18:43:01 PAGE 2   
+
+  54   2              case(2):{data_sequ[16] = 1;data_sequ[15] = 1;data_sequ[10] = 1;data_sequ[12] = 1;data_sequ[13] = 1;}
+  55   2              break;
+  56   2              case(3):{data_sequ[16] = 1;data_sequ[15] = 1;data_sequ[10] = 1;data_sequ[14] = 1;data_sequ[13] = 1;}
+  57   2              break;
+  58   2              case(4):{data_sequ[11] = 1;data_sequ[10] = 1;data_sequ[15] = 1;data_sequ[14] = 1;}
+  59   2              break;
+  60   2              case(5):{data_sequ[16] = 1;data_sequ[11] = 1;data_sequ[10] = 1;data_sequ[14] = 1;data_sequ[13] = 1;}
+  61   2              break;
+  62   2              case(6):{data_sequ[16] = 1;data_sequ[11] = 1;data_sequ[12] = 1;data_sequ[10] = 1;data_sequ[14] = 1;data_s
+             -equ[13] = 1;}
+  63   2              break;
+  64   2              case(7):{data_sequ[16] = 1;data_sequ[15] = 1;data_sequ[14] = 1;}
+  65   2              break;
+  66   2              case(8):{data_sequ[11] = 1;data_sequ[16] = 1;data_sequ[15] = 1;data_sequ[14] = 1;data_sequ[13] = 1;data_s
+             -equ[12] = 1;data_sequ[10] = 1;}
+  67   2              break;
+  68   2              case(9):{data_sequ[11] = 1;data_sequ[16] = 1;data_sequ[15] = 1;data_sequ[14] = 1;data_sequ[13] = 1;data_s
+             -equ[10] = 1;}
+  69   2              break;
+  70   2              case(10):{data_sequ[10] = 1;}
+  71   2              break;//显示段杠
+  72   2              case(11):{data_sequ[9] = 1;}
+  73   2              break;//显示小数点
+  74   2              case(12):{;}
+  75   2              break;//NULL
+  76   2              case(13):{data_sequ[11] = 1;data_sequ[16] = 1;data_sequ[12] = 1;data_sequ[10] = 1;}
+  77   2              break;//F
+  78   2              case(14):{data_sequ[14] = 1;data_sequ[13] = 1;data_sequ[12] = 1;}
+  79   2              break;//u
+  80   2              case(15):{data_sequ[14] = 1;data_sequ[12] = 1;data_sequ[10] = 1;}
+  81   2              break;//n
+  82   2              case(16):{data_sequ[13] = 1;data_sequ[12] = 1;data_sequ[10] = 1;}
+  83   2              break;//c
+  84   2              }
+  85   1          for(i = 0;i < 20;i++)
+  86   1          {
+  87   2          CLK_LOW
+  88   2                      Delay5us();
+  89   2              if(data_sequ[i] == 1)
+  90   2              {
+  91   3          DIN_HIGH
+  92   3                      Delay5us();
+  93   3              }
+  94   2              else
+  95   2              {
+  96   3          DIN_LOW
+  97   3                      Delay5us();
+  98   3              }
+  99   2                      CLK_HIGH
+ 100   2                      Delay5us();
+ 101   2          }
+ 102   1              LOAD_HIGH//载入并输出
+ 103   1              BLANK_LOW//允许输出
+ 104   1      }
+ 105          
+ 106          /**
+ 107           * void displayTime(void)
+ 108           * 简介：显示时间
+ 109           * 功能：发送时间显示数据到MAX6921，时间在全局变量中储存
+ 110           * 输入：无
+ 111           * 输出：无
+ 112           */
+C51 COMPILER V9.56.0.0   DISPLAY                                                           11/09/2018 18:43:01 PAGE 3   
+
+ 113          void displayTime(void)
+ 114          {
+ 115   1              displayNumber(8,hour/10);
+ 116   1              displayNumber(7,hour%10);
+ 117   1              
+ 118   1              displayNumber(5,minute/10);
+ 119   1              displayNumber(4,minute%10);
+ 120   1              
+ 121   1              displayNumber(2,second/10);
+ 122   1              displayNumber(1,second%10);     
+ 123   1      
+ 124   1        displayNumber(9,12);
+ 125   1              displayNumber(6,12);
+ 126   1              displayNumber(3,12);                    
+ 127   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    567    ----
+   CONSTANT SIZE    =     40    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----      46
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

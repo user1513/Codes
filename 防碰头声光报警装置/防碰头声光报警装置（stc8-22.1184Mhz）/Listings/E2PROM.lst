@@ -1,0 +1,146 @@
+C51 COMPILER V9.56.0.0   E2PROM                                                            10/22/2018 20:01:40 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE E2PROM
+OBJECT MODULE PLACED IN .\Objects\E2PROM.obj
+COMPILER INVOKED BY: F:\KEILC51+MDK\C51\BIN\C51.EXE E2PROM.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\E2PROM.lst) OBJECT(.\Objects\E2PROM.obj)
+
+line level    source
+
+   1          #include "E2PROM.h"
+   2          
+   3          
+   4          
+   5          #define WT_30M          0x80
+   6          #define WT_24M          0x81
+   7          #define WT_20M          0x82
+   8          #define WT_12M          0x83
+   9          #define WT_6M           0x84
+  10          #define WT_3M           0x85
+  11          #define WT_2M           0x86
+  12          #define WT_1M           0x87
+  13          
+  14          void IapIdle()//¹Ø±ÕIAP¹¦ÄÜ
+  15          {
+  16   1          IAP_CONTR = 0;                              //¹Ø±ÕIAP¹¦ÄÜ
+  17   1          IAP_CMD = 0;                                //Çå³ıÃüÁî¼Ä´æÆ÷
+  18   1          IAP_TRIG = 0;                               //Çå³ı´¥·¢¼Ä´æÆ÷
+  19   1          IAP_ADDRH = 0x80;                           //½«µØÖ·ÉèÖÃµ½·ÇIAPÇøÓò
+  20   1          IAP_ADDRL = 0;
+  21   1      }
+  22          
+  23          u8 IapRead(u16 addr)//¶ÁÈ¡Ö¸¶¨addrµÄÊı¾İ
+  24          {
+  25   1          char dat;
+  26   1      
+  27   1          IAP_CONTR = WT_24M;                         //Ê¹ÄÜIAP
+  28   1          IAP_CMD = 1;                                //ÉèÖÃIAP¶ÁÃüÁî
+  29   1          IAP_ADDRL = addr;                           //ÉèÖÃIAPµÍµØÖ·
+  30   1          IAP_ADDRH = addr >> 8;                      //ÉèÖÃIAP¸ßµØÖ·
+  31   1          IAP_TRIG = 0x5a;                            //Ğ´´¥·¢ÃüÁî(0x5a)
+  32   1          IAP_TRIG = 0xa5;                            //Ğ´´¥·¢ÃüÁî(0xa5)
+  33   1          _nop_();
+  34   1          dat = IAP_DATA;                             //¶ÁIAPÊı¾İ
+  35   1          IapIdle();                                  //¹Ø±ÕIAP¹¦ÄÜ
+  36   1      
+  37   1          return dat;
+  38   1      }
+  39          
+  40          void IapProgram(u16 addr, u8 dat)//ÏòÖ¸¶¨µÄaddrĞ´ÈëDATA
+  41          {
+  42   1          IAP_CONTR = WT_24M;                         //Ê¹ÄÜIAP
+  43   1          IAP_CMD = 2;                                //ÉèÖÃIAPĞ´ÃüÁî
+  44   1          IAP_ADDRL = addr;                           //ÉèÖÃIAPµÍµØÖ·
+  45   1          IAP_ADDRH = addr >> 8;                      //ÉèÖÃIAP¸ßµØÖ·
+  46   1          IAP_DATA = dat;                             //Ğ´IAPÊı¾İ
+  47   1          IAP_TRIG = 0x5a;                            //Ğ´´¥·¢ÃüÁî(0x5a)
+  48   1          IAP_TRIG = 0xa5;                            //Ğ´´¥·¢ÃüÁî(0xa5)
+  49   1          _nop_();
+  50   1              _nop_();
+  51   1          IapIdle();                                  //¹Ø±ÕIAP¹¦ÄÜ
+  52   1      }
+  53          
+  54          void IapErase(u16 addr)//Çå³ıÖ¸¶¨ÉÈÇøÊı¾İ
+C51 COMPILER V9.56.0.0   E2PROM                                                            10/22/2018 20:01:40 PAGE 2   
+
+  55          {
+  56   1          IAP_CONTR = WT_24M;                         //Ê¹ÄÜIAP
+  57   1          IAP_CMD = 3;                                //ÉèÖÃIAP²Á³ıÃüÁî
+  58   1          IAP_ADDRL = addr;                           //ÉèÖÃIAPµÍµØÖ·
+  59   1          IAP_ADDRH = addr >> 8;                      //ÉèÖÃIAP¸ßµØÖ·
+  60   1          IAP_TRIG = 0x5a;                            //Ğ´´¥·¢ÃüÁî(0x5a)
+  61   1          IAP_TRIG = 0xa5;                            //Ğ´´¥·¢ÃüÁî(0xa5)
+  62   1          _nop_();  
+  63   1              _nop_();        //
+  64   1          IapIdle();                                  //¹Ø±ÕIAP¹¦ÄÜ
+  65   1      }
+  66          
+  67          
+  68          myenum IfAddrData(u16 _addr,u8 _comparisonvalue)//¶ÁÈ¡_addrµÄÊı¾İÓë_comparisonvalue±È½Ï(ÕıÈ·Êä³öEnable/´íÎ
+             -óÊä³öDisable)
+  69          {
+  70   1          u8 _tempval=0x00;
+  71   1          myenum _stateflag=Disable;
+  72   1          _tempval=IapRead(_addr);
+  73   1          if(_tempval==_comparisonvalue)
+  74   1          {
+  75   2              _stateflag=Enable;
+  76   2          }
+  77   1          return _stateflag;
+  78   1      }
+  79          
+  80          myenum CollectiveWritData(u16 _RestAdrr,u8 *_able,u8 _ablelength,u8 _length)//¼¯ÌåĞ´Èëº¯Êı(Ä¬ÈÏµÚÒ»ÉÈÇø)
+  81          {
+  82   1          int _RestAdrrVal=0;
+  83   1          myenum _stateflag=Enable;
+  84   1              if(_ablelength<_length)
+  85   1              {
+  86   2                      _stateflag=Disable;
+  87   2                      return _stateflag;
+  88   2              }
+  89   1                      
+  90   1          IapErase(0x0000);//Ä¬ÈÏÇå³ıµÚÒ»ÉÈÇø(0-512 byte)
+  91   1          for(_RestAdrrVal;_RestAdrrVal<_length;_RestAdrrVal++,_RestAdrr++,_able++)
+  92   1          {
+  93   2              IapProgram(_RestAdrr,*_able);
+  94   2          }
+  95   1          return _stateflag;
+  96   1      }
+  97          
+  98          myenum CollectiveReadData(u16 _RestAdrr,u8 *_able,u8 _ablelength,u8 _length)//¼¯Ìå¶Á³öº¯Êı(Ä¬ÈÏµÚÒ»ÉÈÇø)
+  99          {
+ 100   1          int _RestAdrrVal=0;
+ 101   1          myenum _stateflag=Enable;
+ 102   1              if(_ablelength<_length)
+ 103   1              {
+ 104   2                      _stateflag=Disable;
+ 105   2                      return _stateflag;
+ 106   2              }
+ 107   1              for(_RestAdrrVal=0;_RestAdrrVal<_length;_RestAdrrVal++,_RestAdrr++,_able++)
+ 108   1          {
+ 109   2              *_able=IapRead(_RestAdrr);
+ 110   2          }
+ 111   1          return _stateflag;
+ 112   1      }
+ 113          
+ 114          
+ 115          
+C51 COMPILER V9.56.0.0   E2PROM                                                            10/22/2018 20:01:40 PAGE 3   
+
+ 116              
+ 117          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    251    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

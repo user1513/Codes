@@ -1,0 +1,17 @@
+..\obj\ds3231.o: ..\HARDWARE\DS3231\ds3231.c
+..\obj\ds3231.o: ..\HARDWARE\DS3231\ds3231.h
+..\obj\ds3231.o: ..\SYSTEM\sys\sys.h
+..\obj\ds3231.o: ..\USER\stm32f10x.h
+..\obj\ds3231.o: ..\CORE\core_cm3.h
+..\obj\ds3231.o: F:\KEILC51+MDK\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\ds3231.o: ..\USER\system_stm32f10x.h
+..\obj\ds3231.o: ..\USER\stm32f10x_conf.h
+..\obj\ds3231.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\ds3231.o: ..\USER\stm32f10x.h
+..\obj\ds3231.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\ds3231.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\ds3231.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\ds3231.o: ..\STM32F10x_FWLib\inc\misc.h
+..\obj\ds3231.o: ..\HARDWARE\IIC\myiic.h
+..\obj\ds3231.o: ..\SYSTEM\delay\delay.h
+..\obj\ds3231.o: ..\USER\main.h
