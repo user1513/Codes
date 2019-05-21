@@ -32,7 +32,7 @@ void Delay1000ms()		//@11.0592MHz
 int main(void)
 {
 	int i = 0;
-	Ds1302Init();
+	
 	buzzer = 1;
 	LED = 1;
 	Init_DS18B20();
@@ -55,6 +55,7 @@ int main(void)
 	
 	Timer0Init();
 	uart_init();
+	Ds1302Init();
 	while(1)
 	{
 			

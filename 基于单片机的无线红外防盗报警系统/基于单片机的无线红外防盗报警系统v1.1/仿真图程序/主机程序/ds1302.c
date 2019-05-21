@@ -110,10 +110,10 @@ void Ds1302Init()
 {
 	uchar n;
 	Ds1302Write(0x8E,0X00);		 //禁止写保护，就是关闭写保护功能
-	for (n=0; n<7; n++)//写入7个字节的时钟信号：分秒时日月周年
-	{
-		Ds1302Write(WRITE_RTC_ADDR[n],TIME[n]);	
-	}
+//	for (n=0; n<7; n++)//写入7个字节的时钟信号：分秒时日月周年
+//	{
+//		Ds1302Write(WRITE_RTC_ADDR[n],TIME[n]);	
+//	}
 	Ds1302Write(0x8E,0x80);		 //打开写保护功能
 }
 

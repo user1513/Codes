@@ -44,11 +44,11 @@ void Timer0() interrupt 1
 		LED_ShowString_length(4, 7, _pDs18b20 ,4);
 		
 		_pDs1302 = Ds1302_datapros();	 //数据处理函数
-		LCD_ShowNumber(0, 7, _pDs1302[3], 2);
+		LCD_ShowNumber(0, 7, _pDs1302[0], 2);
 		LCD_ShowChar(0, 9, '-');
 		LCD_ShowNumber(0, 10, _pDs1302[2], 2);
 		LCD_ShowChar(0, 12, '-');
-		LCD_ShowNumber(0, 13, _pDs1302[0], 2);
+		LCD_ShowNumber(0, 13, _pDs1302[3], 2);
 		LCD_ShowNumber(2, 7, _pDs1302[4], 2);
 		LCD_ShowChar(2, 9, '-');
 		LCD_ShowNumber(2, 10, _pDs1302[5], 2);
